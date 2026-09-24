@@ -108,14 +108,19 @@ for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
 # =========================================================
-# 3. DİNAMİK SVG GEOMETRİ & ŞEKİL MOTORU
+# 3. DİNAMİK SVG GEOMETRİ & ÜÇGEN ÇEŞİTLİLİK MOTORU
 # =========================================================
-def svg_dinamik_ucgen_ciz(a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
-    max_aci = max(a_aci, b_aci, c_aci)
-    if max_aci == 90:
+def svg_dinamik_ucgen_ciz(t_tip, a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
+    if t_tip == "eskenar":
+        p_top, p_left, p_right = "140, 15", "40, 115", "240, 115"
+        dik_sembol = ""
+    elif t_tip == "dik":
         p_top, p_left, p_right = "50, 20", "50, 110", "220, 110"
         dik_sembol = '<path d="M 50 95 L 65 95 L 65 110" fill="none" stroke="#ef4444" stroke-width="2"/>'
-    elif max_aci > 90:
+    elif t_tip == "ikizkenar":
+        p_top, p_left, p_right = "140, 20", "60, 110", "220, 110"
+        dik_sembol = ""
+    elif t_tip == "genis":
         p_top, p_left, p_right = "180, 25", "30, 110", "230, 110"
         dik_sembol = ""
     else:
@@ -131,8 +136,8 @@ def svg_dinamik_ucgen_ciz(a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
       <rect width="100%" height="100%" fill="#ffffff" rx="8" stroke="#cbd5e1"/>
       <polygon points="{p_top} {p_left} {p_right}" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
       {dik_sembol}
-      <text x="130" y="16" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[0]} ({a_lbl})</text>
-      <text x="25" y="125" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[1]} ({b_lbl})</text>
+      <text x="140" y="16" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[0]} ({a_lbl})</text>
+      <text x="35" y="125" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[1]} ({b_lbl})</text>
       <text x="235" y="125" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[2]} ({c_lbl})</text>
     </svg>
     '''
@@ -142,16 +147,16 @@ def svg_aci_ciz(aci_degeri):
     <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
       <rect width="100%" height="100%" fill="#f8fafc" rx="8" stroke="#cbd5e1"/>
       <path d="M 50 100 L 150 100" stroke="#334155" stroke-width="3"/>
-      <path d="M 50 100 L {50 + int(80 * random.choice([0.7, 0.8, 0.9]))} {100 - int(80 * random.choice([0.5, 0.7, 0.8]))}" stroke="#2563eb" stroke-width="3"/>
+      <path d="M 50 100 L {50 + int(80 * 0.8)} {100 - int(80 * 0.6)}" stroke="#2563eb" stroke-width="3"/>
       <text x="100" y="50" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2563eb">{aci_degeri}°</text>
     </svg>
     '''
 
 # =========================================================
-# 4. TRİLYONLARCA KOMBİNASYON ÜRETEN BAĞIMSIZ ALT KATEGORİ MOTORU
+# 4. BAĞIMSIZ ALT KATEGORİ & ÇEŞİTLİ SORU ÜRETİCİ
 # =========================================================
-ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Yara", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz", "Kerim"]
-NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon", "kalemtıraş", "silgi", "defter"]
+ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz"]
+NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon"]
 YEMEKLER = ["Mantı", "Çiğ Köfte", "Cağ Kebabı", "Tantuni", "Künefe", "Yağlama", "Baklava", "Kuru Fasulye", "İskender", "Lahmacun", "Pide"]
 SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep", "Konya", "Samsun", "Adana"]
 
@@ -161,7 +166,6 @@ def dinamik_soru_uretici(ders, unite):
     nesne = random.choice(NESNELER)
     kisi2 = random.choice([i for i in ISIMLER if i != kisi])
 
-    # --- MATEMATİK ALT KATEGORİLERİ ---
     if ders == "Matematik":
         if "1. ünite" in u_low:
             alt_tip = random.choice(["okuma", "toplama_cikarma", "carpma_bolme", "yuvarlama", "oruntu"])
@@ -204,7 +208,7 @@ def dinamik_soru_uretici(ders, unite):
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "2. ünite" in u_low:
-            alt_tip = random.choice(["bilesik", "toplama_kesir", "cikarma_kesir"])
+            alt_tip = random.choice(["bilesik", "toplama_kesir"])
             if alt_tip == "bilesik":
                 tam, payda = random.randint(1, 8), random.randint(4, 12)
                 pay = random.randint(1, payda - 1)
@@ -232,15 +236,52 @@ def dinamik_soru_uretici(ders, unite):
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "4. ünite" in u_low or "5. ünite" in u_low:
-            sec_geometri = random.choice(["ucgen", "aci_olcum"])
-            if sec_geometri == "ucgen":
-                koseler = random.choice([("A", "B", "C"), ("K", "L", "M"), ("P", "R", "S"), ("D", "E", "F"), ("X", "Y", "Z")])
-                a, b = random.randint(30, 85), random.randint(25, 75)
-                c = 180 - (a + b)
-                q = f"Şekildeki {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {a}° ve m({koseler[1]}) = {b}° ise m({koseler[2]}) kaç derecedir?"
-                ans = f"{c}°"
-                celd = [f"{c + random.randint(5, 15)}°", f"{abs(c - random.randint(5, 15))}°", f"{c + 30}°"]
-                svg = svg_dinamik_ucgen_ciz(a, b, 0, koseler)
+            sec_geometri = random.choice(["ucgen_cesitleri", "aci_olcum"])
+            koseler = random.choice([("A", "B", "C"), ("K", "L", "M"), ("P", "R", "S"), ("D", "E", "F")])
+            
+            if sec_geometri == "ucgen_cesitleri":
+                ucgen_tipi = random.choice(["eskenar", "ikizkenar", "dik", "genis"])
+                if ucgen_tipi == "eskenar":
+                    gizlenen = random.choice(["a", "b", "c"])
+                    if gizlenen == "a":
+                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) kaç derecedir?"
+                        ans, a_val, b_val, c_val = "60°", 0, 60, 60
+                    elif gizlenen == "b":
+                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[1]}) kaç derecedir?"
+                        ans, a_val, b_val, c_val = "60°", 60, 0, 60
+                    else:
+                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[2]}) kaç derecedir?"
+                        ans, a_val, b_val, c_val = "60°", 60, 60, 0
+                    celd = ["90°", "45°", "30°"]
+                    svg = svg_dinamik_ucgen_ciz("eskenar", a_val, b_val, c_val, koseler)
+                elif ucgen_tipi == "ikizkenar":
+                    taban_aci = random.choice([40, 50, 65, 70, 75])
+                    tepe_aci = 180 - (2 * taban_aci)
+                    gizlenen = random.choice(["tepe", "taban"])
+                    if gizlenen == "tepe":
+                        q = f"Şekildeki ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde taban açılar {taban_aci}° ise tepe açısı m({koseler[0]}) kaç derecedir?"
+                        ans, a_val, b_val, c_val = f"{tepe_aci}°", 0, taban_aci, taban_aci
+                    else:
+                        q = f"Şekildeki ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde tepe açısı {tepe_aci}° ise taban açısı m({koseler[1]}) kaç derecedir?"
+                        ans, a_val, b_val, c_val = f"{taban_aci}°", tepe_aci, 0, taban_aci
+                    celd = [f"{tepe_aci + 10}°", f"{abs(taban_aci - 15)}°", "90°"]
+                    svg = svg_dinamik_ucgen_ciz("ikizkenar", a_val, b_val, c_val, koseler)
+                elif ucgen_tipi == "dik":
+                    d_aci = random.choice([30, 40, 45, 50, 60])
+                    diger = 90 - d_aci
+                    q = f"Şekildeki dik {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[1]}) = 90° ve m({koseler[2]}) = {d_aci}° ise m({koseler[0]}) kaç derecedir?"
+                    ans = f"{diger}°"
+                    celd = [f"{diger + 10}°", f"{abs(diger - 15)}°", "90°"]
+                    svg = svg_dinamik_ucgen_ciz("dik", 0, 90, d_aci, koseler)
+                else:
+                    genis_aci = random.choice([100, 110, 120, 130])
+                    kalan = 180 - genis_aci
+                    dar1 = random.randint(20, kalan - 10)
+                    dar2 = kalan - dar1
+                    q = f"Şekildeki geniş açılı {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {genis_aci}° ve m({koseler[1]}) = {dar1}° ise m({koseler[2]}) kaç derecedir?"
+                    ans = f"{dar2}°"
+                    celd = [f"{dar2 + 15}°", f"{abs(dar2 - 10)}°", f"{genis_aci - 30}°"]
+                    svg = svg_dinamik_ucgen_ciz("genis", genis_aci, dar1, 0, koseler)
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": svg}
             else:
                 aci = random.choice([35, 45, 60, 90, 120, 135, 150])
@@ -254,12 +295,11 @@ def dinamik_soru_uretici(ders, unite):
             saat = random.randint(2, 8)
             dakika = random.choice([15, 30, 45, 0])
             toplam_dakika = saat * 60 + dakika
-            q = f"{kisi} sinemada <b>{saat} saat {dakika} dakika</b> süren film izlemiştir. Bu süre toplam kaç dakikadır?" if dakika > 0 else f"{kisi} sinemada <b>{saat} saat</b> süren film izlemiştir. Süre kaç dakikadır?"
+            q = f"{kisi} sinemada <b>{saat} saat {dakika} dakika</b> süren film izlemiştir. Toplam kaç dakikadır?" if dakika > 0 else f"{kisi} sinemada <b>{saat} saat</b> süren film izlemiştir. Süre kaç dakikadır?"
             ans = str(toplam_dakika)
             celd = [str(toplam_dakika + 30), str(toplam_dakika - 15), str(saat * 100)]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    # --- FEN BİLİMLERİ ALT KATEGORİLERİ ---
     elif ders == "Fen Bilimleri":
         alt_tip = random.choice(["sicaklik", "canli", "dinamometre", "hal", "isik"])
         if alt_tip == "sicaklik":
@@ -280,7 +320,6 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "Tahta Parçası", ["Pencere Camı", "Şeffaf Naylon", "Temiz Su"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    # --- TÜRKÇE ALT KATEGORİLERİ ---
     elif ders == "Türkçe":
         alt_tip = random.choice(["es_anlam", "noktalama", "yim_kurali"])
         if alt_tip == "es_anlam":
@@ -298,7 +337,6 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "herkez", ["herkes", "yalnız", "itiraf"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    # --- SOSYAL BİLGİLER ALT KATEGORİLERİ ---
     elif ders == "Sosyal Bilgiler":
         alt_tip = random.choice(["sorumluluk", "kultur", "dogal_varlik"])
         if alt_tip == "sorumluluk":
@@ -312,7 +350,6 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "Pamukkale Travertenleri", ["Topkapı Sarayı", "Sultanahmet Camii", "Anıtkabir"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    # --- DİN KÜLTÜRÜ ALT KATEGORİLERİ ---
     elif ders == "Din Kültürü ve Ahlak Bilgisi":
         alt_tip = random.choice(["zekat", "ibadet", "adap"])
         if alt_tip == "zekat":
@@ -326,7 +363,6 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "Adap ve Nezaket", ["İnatçılık", "Bencillik", "Kıskançlık"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    # --- İNGİLİZCE ALT KATEGORİLERİ ---
     elif ders == "İngilizce":
         alt_tip = random.choice(["tanisma", "yon", "hobi"])
         if alt_tip == "tanisma":
@@ -340,7 +376,6 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "Yüzmek (Swimming)", ["Satranç oynamak", "Resim yapmak", "İkisi de"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    # --- BİLGİ YARIŞMASI ALT KATEGORİLERİ ---
     else:
         alt_tip = random.choice(["yemek", "baskent", "genel"])
         if alt_tip == "yemek":
@@ -399,16 +434,16 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     return tam_soru_listesi[:hedef_sayi]
 
 # =========================================================
-# 6. STREAMLIT ARAYÜZÜ
+# 6. STREAMLIT ARAYÜZÜ (HİÇBİR ŞEY ÖNCEDEN SEÇİLİ DEĞİL)
 # =========================================================
 st.title("🎓 MEB 5. Sınıf Soru Bankası & Deneme Sınavı Motoru")
 
-st.sidebar.header("⚙️ Müfredat ve Yarışma Ayarları")
+st.sidebar.header("⚙️ Müfredat ve Sınav Ayarları")
 
 is_disabled = st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
 
 with st.sidebar.expander("📌 Çalışma Modu Seçiniz", expanded=True):
-    mod_deneme = st.checkbox("📅 40 Haftalık MEB Deneme Sınavları", value=True, disabled=is_disabled, key="mod_deneme_cb")
+    mod_deneme = st.checkbox("📅 40 Haftalık MEB Deneme Sınavları", value=False, disabled=is_disabled, key="mod_deneme_cb")
     mod_serbest = st.checkbox("📚 Serbest Konu / Ünite Seçimi", value=False, disabled=is_disabled, key="mod_serbest_cb")
 
 secilen_uniteler = []
@@ -417,7 +452,7 @@ if mod_deneme:
     with st.sidebar.expander("📅 40 Haftalık MEB Deneme Sınavları", expanded=True):
         deneme_secimleri = []
         for h in range(1, 41):
-            cb_hafta = st.checkbox(f"{h}. Hafta Deneme Sınavı", value=(h == 1), disabled=is_disabled, key=f"deneme_cb_{h}")
+            cb_hafta = st.checkbox(f"{h}. Hafta Deneme Sınavı", value=False, disabled=is_disabled, key=f"deneme_cb_{h}")
             if cb_hafta:
                 deneme_secimleri.append(h)
         
@@ -430,7 +465,7 @@ if mod_serbest:
     for ders_adi in DERS_ONCELIK_SIRASI:
         uniteler = MEB_MUFREDAT[ders_adi]
         with st.sidebar.expander(f"{ders_adi}", expanded=False):
-            select_all = st.checkbox(f"Tümünü Seç", key=f"all_{ders_adi}", disabled=is_disabled)
+            select_all = st.checkbox(f"Tümünü Seç", value=False, key=f"all_{ders_adi}", disabled=is_disabled)
             for idx, u in enumerate(uniteler):
                 cb = st.checkbox(u, value=select_all, key=f"cb_{ders_adi}_{idx}", disabled=is_disabled)
                 if cb:
@@ -451,7 +486,7 @@ st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🚀 Hazırla ve Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            with st.spinner("Tüm ders ve kategorilerden bağımsız benzersiz sorular üretiliyor..."):
+            with st.spinner("Seçtiğiniz kriterlere göre benzersiz sorular üretiliyor..."):
                 sorular = ders_sirali_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
                 st.session_state["toplam_sure_sn"] = len(sorular) * 90
@@ -468,17 +503,17 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 # --- EKRAN AKIŞI ---
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.subheader("📋 Sınav Başlatma Alanı")
-    st.info("Sol paneldeki **'Çalışma Modu Seçiniz'** alanından haftanızı veya ünitenizi seçip **'Hazırla ve Başlat'** butonuna tıklayın.")
+    st.info("Sol paneldeki **'Çalışma Modu Seçiniz'** alanından dilediğiniz haftayı veya üniteleri seçip **'Hazırla ve Başlat'** butonuna tıklayın.")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.success("✅ Alt Kategorilere Göre Bağımsız Sorular Hazırlandı!")
+    st.success("✅ Benzersiz ve Çeşitli Sorular Hazırlandı!")
     st.markdown(f"**Toplam Soru Sayısı:** {len(st.session_state['soru_listesi'])}")
     
     ders_sayilari = {}
     for s in st.session_state['soru_listesi']:
         ders_sayilari[s['ders']] = ders_sayilari.get(s['ders'], 0) + 1
     
-    st.markdown("##### 📌 Sınav Ders Dağılımı (Sırasıyla):")
+    st.markdown("##### 📌 Sınav Ders Dağılımı:")
     cols = st.columns(len(ders_sayilari))
     for i, (d_isimlendirme, d_adet) in enumerate(ders_sayilari.items()):
         cols[i].metric(d_isimlendirme, f"{d_adet} Soru")
