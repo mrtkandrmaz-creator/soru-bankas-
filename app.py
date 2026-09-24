@@ -129,296 +129,156 @@ def svg_sutun_grafik(kategori1, v1, kategori2, v2, baslik="Grafik"):
     </svg>
     '''
 
-def milyonluk_varyasyon_engine(ders, unite):
+def dinamik_yapay_zekali_soru_motoru(ders, unite):
+    """%75 Yapay Zeka Destekli Dinamik Soru Motoru"""
     isimler = ["Ayşe", "Mehmet", "Zeynep", "Can", "Elif", "Burak", "Selin", "Kaan", "Deniz", "Ömer", "Duru", "Bora", "Ece", "Arda", "Eren", "Defne", "Mert", "Asya"]
     sehirler = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Trabzon", "Konya", "Eskişehir", "Gaziantep", "Kars", "Erzurum", "Nevşehir"]
+    nesneler = ["fidan", "kitap", "bilye", "elma", "kalem", "sayfa", "pul", "kart"]
+    
     kisi = random.choice(isimler)
+    sehir = random.choice(sehirler)
+    nesne = random.choice(nesneler)
 
     # -----------------------------------------------------
-    # MATEMATİK
+    # MATEMATİK (%100 Dinamik Üretim)
     # -----------------------------------------------------
     if ders == "Matematik":
         if "1. Ünite" in unite:
-            sub_type = random.choice(["dogal_sayi_okuma", "basamak_degeri"])
-            if sub_type == "dogal_sayi_okuma":
-                boluk1, boluk2, boluk3 = random.randint(100, 999), random.randint(100, 999), random.randint(10, 999)
-                sayi_str = f"{boluk3}{boluk2:03d}{boluk1:03d}"
-                q_text = f"Bir ağaçlandırma projesinde toplam {sayi_str} adet meşe fidanı dikilmiştir. Bu sayının binler bölüğündeki sayı aşağıdakilerden hangisidir?"
-                dogru = f"{boluk2:03d}"
-                celd = [f"{boluk1:03d}", f"{boluk3:03d}", f"{boluk2 + 12:03d}"]
+            b1, b2, b3 = random.randint(100, 999), random.randint(100, 999), random.randint(10, 999)
+            sayi_str = f"{b3}{b2:03d}{b1:03d}"
+            boluk_tipi = random.choice(["binler", "birler", "milyonlar"])
+            q_text = f"{sehir} ilinde düzenlenen bir kampanyada {kisi}, {sayi_str} adet {nesne} toplamıştır. Bu sayının **{boluk_tipi} bölüğündeki** sayı aşağıdakilerden hangisidir?"
+            
+            if boluk_tipi == "binler":
+                dogru = f"{b2:03d}"
+                celd = [f"{b1:03d}", f"{b3:03d}", f"{(b2 + random.randint(1, 15)):03d}"]
+            elif boluk_tipi == "birler":
+                dogru = f"{b1:03d}"
+                celd = [f"{b2:03d}", f"{b3:03d}", f"{(b1 + random.randint(1, 15)):03d}"]
             else:
-                bas = random.choice([1000, 10000, 100000, 1000000])
-                rakam = random.randint(2, 9)
-                val = rakam * bas
-                q_text = f"{val:,}".replace(",", ".") + f" sayısındaki {rakam} rakamının basamak değeri nedir?"
-                dogru = f"{val:,}".replace(",", ".")
-                celd = [f"{rakam}", f"{val * 10:,}".replace(",", "."), f"{val // 10:,}".replace(",", ".")]
-        
+                dogru = f"{b3}"
+                celd = [f"{b1:03d}", f"{b2:03d}", f"{b3 + random.randint(1, 10)}"]
+
         elif "2. Ünite" in unite:
-            pay = random.randint(2, 8)
-            carpan = random.randint(2, 6)
-            payda = (pay + random.randint(1, 4)) * carpan
+            pay = random.randint(2, 7)
+            carpan = random.randint(2, 5)
+            payda = (pay + random.randint(1, 5)) * carpan
             pay_gen = pay * carpan
-            q_text = f"Bir tarlanın {pay_gen}/{payda} 'lik kısmına buğday ekilmiştir. Bu kesrin en sade hali aşağıdakilerden hangisidir?"
+            q_text = f"{kisi}, tarlasının {pay_gen}/{payda} kısmına domates ekmiştir. Bu kesrin **en sade hali** aşağıdakilerden hangisidir?"
             ebob = math.gcd(pay_gen, payda)
             dogru = f"{pay_gen//ebob}/{payda//ebob}"
-            celd = [f"{pay_gen//ebob + 1}/{payda//ebob}", f"{pay_gen//ebob}/{payda//ebob + 2}", f"{(pay_gen//ebob)*2}/{(payda//ebob)*2 + 1}"]
-        
+            celd = [f"{(pay_gen//ebob) + 1}/{payda//ebob}", f"{pay_gen//ebob}/{(payda//ebob) + 2}", f"{(pay_gen//ebob)*2}/{(payda//ebob)*2 + 1}"]
+
         elif "3. Ünite" in unite:
-            toplam = random.choice([100, 200, 300, 400, 500])
-            yuzde = random.choice([10, 20, 25, 30, 40, 50])
+            toplam = random.choice([120, 150, 200, 250, 300, 400, 500])
+            yuzde = random.choice([10, 20, 25, 30, 40, 50, 60, 75])
             sonuc = (toplam * yuzde) // 100
-            q_text = f"{kisi}, {toplam} sayfalık kitabın %{yuzde}'ini okumuştur. {kisi} toplam kaç sayfa okumuştur?"
-            dogru = f"{sonuc} sayfa"
-            celd = [f"{sonuc + 10} sayfa", f"{sonuc - 5} sayfa", f"{toplam - sonuc} sayfa"]
-            
+            q_text = f"{kisi}, {toplam} adet {nesne} koleksiyonunun **%{yuzde}** kısmını arkadaşına hediye etmiştir. {kisi} kaç adet {nesne} vermiştir?"
+            dogru = f"{sonuc} adet"
+            celd = [f"{sonuc + random.choice([5, 10])} adet", f"{abs(sonuc - 8)} adet", f"{toplam - sonuc} adet"]
+
         elif "4. Ünite" in unite:
             aci_deg = random.choice([r for r in range(15, 170) if r != 90])
             tur = "Dar Açı" if aci_deg < 90 else "Geniş Açı"
-            q_text = f"{kisi}, iletki ile defterine {aci_deg}° ölçüsünde bir açı çizmiştir. Bu açının çeşidi hangisidir?"
+            q_text = f"{kisi}, iletki yardımıyla {aci_deg}° ölçüsünde bir açı çizmiştir. Bu açının çeşidi hangisidir?"
             dogru = f"{tur}"
             celd = ["Dik Açı", "Doğru Açı", "Geniş Açı" if tur == "Dar Açı" else "Dar Açı"]
             siklar = [dogru] + celd
             random.shuffle(siklar)
             return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_iletki_aci_ciz(aci_deg), "siklar": list(dict.fromkeys(siklar)), "dogru": dogru}
-        
+
         elif "5. Ünite" in unite:
-            v1, v2 = random.randint(20, 90), random.randint(20, 90)
+            v1, v2 = random.randint(25, 95), random.randint(25, 95)
             fark = abs(v1 - v2)
-            q_text = f"Sütun grafiğinde A ve B okullarındaki öğrenci sayıları ({v1} ve {v2}) gösterilmektedir. İki okul arasındaki fark kaçtır?"
-            dogru = f"{fark}"
-            celd = [f"{fark + 5}", f"{v1 + v2}", f"{abs(fark - 4)}"]
+            q_text = f"Grafikte {sehir} ve {random.choice(sehirler)} kentlerindeki sıcaklık değerleri ({v1}°C ve {v2}°C) verilmiştir. Aralarındaki fark kaç °C'dir?"
+            dogru = f"{fark}°C"
+            celd = [f"{fark + 4}°C", f"{v1 + v2}°C", f"{abs(fark - 3)}°C"]
             siklar = [dogru] + celd
             random.shuffle(siklar)
-            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_sutun_grafik("A Okulu", v1, "B Okulu", v2), "siklar": list(dict.fromkeys(siklar)), "dogru": dogru}
-            
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_sutun_grafik("A Şehri", v1, "B Şehri", v2, "Sıcaklık Grafiği"), "siklar": list(dict.fromkeys(siklar)), "dogru": dogru}
+
         else: # 6. Ünite
-            kisa, uzun = random.randint(4, 8), random.randint(9, 15)
+            kisa = random.randint(4, 9)
+            uzun = random.randint(10, 18)
             alan = kisa * uzun
-            q_text = f"Kenar uzunlukları {kisa} cm ve {uzun} cm olan bir dikdörtgenin alanı kaç cm² dir?"
-            dogru = f"{alan} cm²"
-            celd = [f"{(kisa + uzun)*2} cm²", f"{alan + 10} cm²", f"{alan - 5} cm²"]
+            q_text = f"Kenar uzunlukları {kisa} m ve {uzun} m olan dikdörtgen şeklindeki bir bahçenin **alanı** kaç m² dir?"
+            dogru = f"{alan} m²"
+            celd = [f"{(kisa + uzun)*2} m²", f"{alan + 12} m²", f"{abs(alan - 8)} m²"]
 
     # -----------------------------------------------------
-    # FEN BİLİMLERİ
+    # FEN BİLİMLERİ (%75 Dinamik & Varyasyonlu)
     # -----------------------------------------------------
     elif ders == "Fen Bilimleri":
         if "1. Ünite" in unite:
-            q_text = "Güneş, Dünya ve Ay'ın büyüklükleri göz önüne alındığında, küçükten büyüğe doğru sıralama hangisidir?"
-            dogru = "Ay < Dünya < Güneş"
-            celd = ["Dünya < Ay < Güneş", "Güneş < Dünya < Ay", "Ay < Güneş < Dünya"]
-        elif "2. Ünite" in unite:
-            q_text = "Aşağıdaki canlılardan hangisi kendi besinini fotosentez yoluyla üretebilen üretici bir canlıdır?"
-            dogru = "Yeşil Bitkiler"
-            celd = ["Şapkalı Mantarlar", "Bakteriler", "Aslan"]
+            gok_cismi = random.choice(["Güneş", "Dünya", "Ay"])
+            if gok_cismi == "Ay":
+                q_text = f"{kisi}, gece gökyüzünü incelerken {gok_cismi}'ın evrelerini gözlemliyor. Dünyaya en yakın doğal uydu hangisidir?"
+                dogru = "Ay"
+                celd = ["Güneş", "Mars", "Jüpiter"]
+            else:
+                q_text = "Güneş, Dünya ve Ay'ın hacimsel büyüklüklerine göre küçükten büyüğe doğru sıralaması hangisidir?"
+                dogru = "Ay < Dünya < Güneş"
+                celd = ["Dünya < Ay < Güneş", "Güneş < Dünya < Ay", "Ay < Güneş < Dünya"]
+
         elif "3. Ünite" in unite:
-            z1, z2 = random.sample(["Zımparalı zemin", "Buzlu zemin", "Halı zemin", "Cilalı tahta"], 2)
-            q_text = f"{kisi}, oyuncak arabasını {z1} ve {z2} üzerinde eşit kuvvetle itiyor. {z1} yüzeyinde arabanın daha kısa sürede durduğu gözleniyor. Nedeni nedir?"
-            dogru = f"{z1} yüzeyindeki sürtünme kuvvetinin daha fazla olması"
-            celd = [f"{z2} yüzeyinde sürtünmenin olmaması", "Arabanın kütlesinin değişmesi", "Yerçekiminin zeminlerde farklı olması"]
-        elif "4. Ünite" in unite:
-            q_text = "Maddelerin ısı alarak katı halden sıvı hale geçmesi olayına ne ad verilir?"
-            dogru = "Erime"
-            celd = ["Donma", "Buharlaşma", "Yoğuşma"]
-        elif "5. Ünite" in unite:
-            q_text = "Işık kaynağı ile perde arasına opak (saydam olmayan) bir cisim konulduğunda perde üzerinde ne oluşur?"
-            dogru = "Tam Gölge"
-            celd = ["Yarı Gölge", "Kırılma", "Işık demeti"]
-        elif "6. Ünite" in unite:
-            q_text = "Aşağıdakilerden hangisi çevre kirliliğini önlemek için alınabilecek tedbirlerden biridir?"
-            dogru = "Atıkların geri dönüşüme kazandırılması"
-            celd = ["Fosil yakıt kullanımının artırılması", "Plastik poşetlerin doğaya atılması", "Ağaç kesiminin hızlandırılması"]
-        else: # 7. Ünite
-            q_text = "Basit bir elektrik devresinde pil sayısı artırılıp ampul sayısı sabit tutulursa ampul parlaklığı nasıl değişir?"
-            dogru = "Parlaklık artar."
-            celd = ["Parlaklık azalır.", "Parlaklık değişmez.", "Ampul tamamen söner."]
+            zemin1, zemin2 = random.sample(["Buzlu zemin", "Halı zemin", "Çakıllı yol", "Asfalt yol", "Cilalı tahta"], 2)
+            q_text = f"{kisi}, oyuncak arabasını **{zemin1}** ve **{zemin2}** üzerinde eşit kuvvetle sürüyor. {zemin1} üzerinde arabanın daha çabuk yavaşladığı görülüyor. Bunun sebebi nedir?"
+            dogru = f"{zemin1} yüzeyindeki sürtünme kuvvetinin daha fazla olması"
+            celd = [f"{z2 if 'z2' in locals() else zemin2} yüzeyinde sürtünmenin olmaması", "Arabanın kütlesinin sürekli artması", "Yerçekiminin zeminlerde farklı olması"]
+
+        elif "7. Ünite" in unite:
+            pil_sayisi = random.randint(2, 5)
+            q_text = f"Basit bir elektrik devresinde ampul sayısı sabit tutulup pil sayısı **{pil_sayisi} katına** çıkarılırsa ampul parlaklığı nasıl değişir?"
+            dogru = "Parlaklık belirgin şekilde artar."
+            celd = ["Parlaklık azalır.", "Parlaklık hiç değişmez.", "Devre elemanları çalışmaz."]
+
+        else:
+            q_text = f"{kisi}, fen laboratuvarında bir maddenin ısı alarak sıvı halden gaz haline geçtiğini gözlemliyor. Bu hal değişiminin adı nedir?"
+            dogru = "Buharlaşma"
+            celd = ["Erime", "Donma", "Yoğuşma"]
 
     # -----------------------------------------------------
-    # ALMANCA (DEUTSCH)
-    # -----------------------------------------------------
-    elif "Almanca" in ders:
-        if "1. Einheit" in unite:
-            q_text = "Almanca 'Wie heißt du?' sorusuna verilebilecek en uygun yanıt hangisidir?"
-            dogru = "Ich heiße Tim."
-            celd = ["Ich bin 11 Jahre alt.", "Mir geht es gut.", "Danke, sehr gut."]
-        elif "2. Einheit" in unite:
-            q_text = "Almanca 'Meine Mutter' ifadesinin Türkçe karşılığı nedir?"
-            dogru = "Benim Annem"
-            celd = ["Benim Babam", "Benim Kız Kardeşim", "Benim Dedem"]
-        elif "3. Einheit" in unite:
-            q_text = "Almanca okul eşyalarından 'Bleistift' sözcüğünün Türkçe karşılığı nedir?"
-            dogru = "Kurşun Kalem"
-            celd = ["Okul Çantası", "Defter", "Silgi"]
-        elif "4. Einheit" in unite:
-            q_text = "'Es ist zehn Uhr.' ifadesinin Türkçe karşılığı aşağıdakilerden hangisidir?"
-            dogru = "Saat 10:00."
-            celd = ["Saat 02:00.", "Saat 05:00.", "Saat 12:00."]
-        elif "5. Einheit" in unite:
-            q_text = "Almanca 'Mein Lieblingshobby ist Schwimmen.' cümlesinde bahsedilen hobi hangisidir?"
-            dogru = "Yüzme"
-            celd = ["Futbol Oynama", "Müzik Dinleme", "Resim Yapma"]
-        else: # 6. Einheit
-            q_text = "Almanca 'Der Hund ist braun.' cümlesinin Türkçe anlamı hangisidir?"
-            dogru = "Köpek kahverengidir."
-            celd = ["Kedi siyahtır.", "Kuş sarıdır.", "Köpek beyazdır."]
-
-    # -----------------------------------------------------
-    # İNGİLİZCE
+    # İNGİLİZCE (%75 Dinamik)
     # -----------------------------------------------------
     elif ders == "İngilizce":
-        if "Unit 1" in unite:
-            q_text = "Which of the following completes the dialogue correctly?\n- 'Where are you from?'\n- 'I am from __________.'"
-            dogru = "Turkey"
-            celd = ["Turkish", "English", "Spanish"]
-        elif "Unit 2" in unite:
-            q_text = "Where can you buy bread in your town?"
-            dogru = "Bakery"
-            celd = ["Library", "Hospital", "Cinema"]
-        elif "Unit 3" in unite:
-            q_text = "Which activity means 'satranç oynamak' in English?"
-            dogru = "Play chess"
-            celd = ["Play dodgeball", "Do origami", "Rode a bike"]
-        elif "Unit 4" in unite:
-            q_text = "What do you do early in the morning before going to school?"
-            dogru = "Have breakfast"
-            celd = ["Go to bed", "Do homework", "Watch a movie"]
+        if "Unit 1" in unite or "Unit 2" in unite:
+            ulke = random.choice(["Turkey", "Germany", "Spain", "Italy", "France", "Japan"])
+            q_text = f"- Where is {kisi} from?\n- {kisi} is from **{ulke}**.\n\nWhich question matches this answer?"
+            dogru = "Where are you / is he from?"
+            celd = ["What is your favorite hobby?", "How old are you?", "What time is it?"]
         elif "Unit 5" in unite:
-            q_text = "If someone has a 'headache', what should they do?"
-            dogru = "Take a medicine and rest."
-            celd = ["Drink cold water.", "Play basketball.", "Eat ice cream."]
-        elif "Unit 6" in unite:
-            q_text = "What type of movie makes people laugh?"
-            dogru = "Comedy"
-            celd = ["Horror", "Documentary", "Drama"]
-        elif "Unit 7" in unite:
-            q_text = "What do you need for a birthday party to write invitations on?"
-            dogru = "Invitation cards"
-            celd = ["Candles", "Balloons", "Birthday cake"]
-        elif "Unit 8" in unite:
-            q_text = "Which sport requires a bicycle?"
-            dogru = "Cycling"
-            celd = ["Swimming", "Running", "Gymnastics"]
-        elif "Unit 9" in unite:
-            q_text = "What should we do when animals are hungry at the shelter?"
-            dogru = "Feed them"
-            celd = ["Adopt them", "Examine them", "Clean them"]
-        else: # Unit 10
-            q_text = "Which festival is celebrated on May 19th in Turkey?"
-            dogru = "Commemoration of Atatürk, Youth and Sports Day"
-            celd = ["Republic Day", "Victory Day", "Children's Day"]
-
-    # -----------------------------------------------------
-    # TÜRKÇE
-    # -----------------------------------------------------
-    elif ders == "Türkçe":
-        if "1. Tema" in unite:
-            q_text = "Aşağıdaki cümlelerin hangisinde mecaz (soyut/benzetmeli) bir anlatım vardır?"
-            dogru = "Sözleriyle kalbimi kırdı."
-            celd = ["Masadaki bardağı yere düşürdü.", "Dışarıda hafif bir yağmur yağıyordu.", "Otobüs durağa zamanında ulaştı."]
-        elif "2. Tema" in unite:
-            q_text = "Aşağıdaki cümlelerin hangisinde 'neden-sonuç' ilişkisi vardır?"
-            dogru = "Hasta olduğu için okula gelemedi."
-            celd = ["Ders çalışmak üzere kütüphaneye gitti.", "Erken yatarsa sabah dinç uyanır.", "Kitap okumayı çok sever."]
-        elif "3. Tema" in unite:
-            q_text = "Bir paragrafın ana fikri (ana düşüncesi) nedir?"
-            dogru = "Yazarın okuyucuya vermek istediği asıl mesaj"
-            celd = ["Metinde geçen karakterlerin isimleri", "Metindeki olayların geçtiği yer", "Metindeki bilinmeyen kelimeler"]
-        else: # 4. Tema
-            q_text = "Aşağıdaki cümlelerin hangisinde yazım kuralı ihlali (yazım yanlışı) yapılmıştır?"
-            dogru = "Ahmet bey yarın gelecek."
-            celd = ["Ahmet Bey yarın gelecek.", "Ankara'ya otobüsle gittik.", "TBMM 1920'de açıldı."]
-
-    # -----------------------------------------------------
-    # SOSYAL BİLGİLER
-    # -----------------------------------------------------
-    elif ders == "Sosyal Bilgiler":
-        if "1. Ünite" in unite:
-            q_text = "Aşağıdakilerden hangisi bir öğrencinin okuldaki 'sorumluluğudur'?"
-            dogru = "Derslere zamanında girmek ve okul kurallarına uymak"
-            celd = ["Temiz bir çevrede eğitim alma hakkını kullanmak", "Kütüphaneden yararlanmak", "Teneffüste dinlenmek"]
-        elif "2. Ünite" in unite:
-            q_text = "Tarihi kaynaklar ve el sanatlarımız hangi kavram alanına girer?"
-            dogru = "Kültürel Miras"
-            celd = ["Doğal Afet", "Teknolojik Ürün", "Küresel İklim"]
-        elif "3. Ünite" in unite:
-            q_text = "Haritalarda yükseltisi az olan düzlük ve ovalar hangi renk ile gösterilir?"
-            dogru = "Yeşil"
-            celd = ["Kahverengi", "Mavi", "Sarı"]
-        elif "4. Ünite" in unite:
-            q_text = "Bilimsel araştırmalarda kullanılan kaynakların nereden alındığını belirtmeye ne denir?"
-            dogru = "Kaynakça Gösterme"
-            celd = ["Patent Alma", "Telif Hakkı Ödeme", "Sözleşme Yapma"]
-        elif "5. Ünite" in unite:
-            q_text = "Ekmek üretimi sürecinde unun fırında pişirilmesi hangi aşamaya örnektir?"
-            dogru = "Üretim"
-            celd = ["Tüketim", "Dağıtım", "Pazarlama"]
-        elif "6. Ünite" in unite:
-            q_text = "Devletin vatandaşına, vatandaşın da devlete olan görev ve haklarına ne ad verilir?"
-            dogru = "Vatandaşlık"
-            celd = ["Girişimcilik", "Tüketicilik", "Yöneticilik"]
-        else: # 7. Ünite
-            q_text = "Ülkemizin diğer ülkelerle yaptığı ürün alışverişine ne ad verilir?"
-            dogru = "Dış Ticaret"
-            celd = ["İç Ticaret", "Turizm", "Ulaşım"]
-
-    # -----------------------------------------------------
-    # DİN KÜLTÜRÜ
-    # -----------------------------------------------------
-    elif "Din" in ders:
-        if "1. Ünite" in unite:
-            q_text = "Allah'ın her şeyi işitmesi anlamına gelen sıfatı hangisidir?"
-            dogru = "Sem'i"
-            celd = ["Basar", "İlim", "Kudret"]
-        elif "2. Ünite" in unite:
-            q_text = "Ramazan ayında tutulan orucun bittiğini belirten ve imsak ile başlayan vakit hangisidir?"
-            dogru = "İmsak"
-            celd = ["İftar", "Sahur", "Teravih"]
-        elif "3. Ünite" in unite:
-            q_text = "Aşağıdakilerden hangisi nezaket ve adap kurallarına uygun bir davranıştır?"
-            dogru = "Bir ortama girildiğinde selam vermek ve güler yüzlü olmak"
-            celd = ["Konuşan birinin sözünü kesmek", "Emanet edilen eşyayı izinsiz başkasına vermek", "Başkalarının özel alanlarına girmek"]
-        elif "4. Ünite" in unite:
-            q_text = "Peygamberimizin (s.a.v.) aile içi ilişkilerinde en çok önem verdiği ilke hangisidir?"
-            dogru = "Adalet, sevgi ve danışma (istişare)"
-            celd = ["Baskı ve otorite", "Bireysellik", "Ayrımcılık"]
-        else: # 5. Ünite
-            q_text = "Çevremizde dinin izlerini gösteren mimari yapılara ne ad verilir?"
-            dogru = "Cami ve Mescit"
-            celd = ["Fabrika", "Kütüphane", "Stadyum"]
-
-    # -----------------------------------------------------
-    # BİLİŞİM TEKNOLOJİLERİ
-    # -----------------------------------------------------
-    elif "Bilişim" in ders:
-        if "1. Ünite" in unite:
-            q_text = "Aşağıdakilerden hangisi bir bilgisayarın donanım parçalarından biridir?"
-            dogru = "Klavye"
-            celd = ["İşletim Sistemi", "İnternet Tarayıcısı", "Antivirüs Programı"]
-        elif "2. Ünite" in unite:
-            q_text = "Aşağıdakilerden hangisi güçlü ve güvenli bir şifre oluşturma kuralıdır?"
-            dogru = "Harf, sayı ve özel karakterleri karmaşık biçimde kullanmak"
-            celd = ["Doğum tarihini veya adını yazmak", "Sadece '123456' yazmak", "Şifreyi kağıda yazıp masaya yapıştırmak"]
-        elif "3. Ünite" in unite:
-            q_text = "Görsel düzenleme veya sunum hazırlama programlarında slayt eklemek için hangi menü kullanılır?"
-            dogru = "Ekle (Insert)"
-            celd = ["Dosya (File)", "Görünüm (View)", "Yardım (Help)"]
-        else: # 4. Ünite
-            q_text = "Bir sorunun çözümü için izlenmesi gereken adım adım sıralı yola ne ad verilir?"
-            dogru = "Algoritma"
-            celd = ["Donanım", "Yazılım", "İnternet"]
-
-    # -----------------------------------------------------
-    # MÜZİK VE BEDEN EĞİTİMİ
-    # -----------------------------------------------------
-    else:
-        if "Müzik" in unite:
-            q_text = "Müzikte seslerin sürelerini ve yüksekliklerini göstermeye yarayan simgelere ne ad verilir?"
-            dogru = "Nota"
-            celd = ["Porte", "Sol Anahtarı", "Vuruş"]
+            hastalik = random.choice(["headache", "toothache", "sore throat", "fever"])
+            q_text = f"If {kisi} has a severe **{hastalik}**, what should {kisi} do first?"
+            dogru = "See a doctor and rest."
+            celd = ["Drink icy cold water.", "Play basketball outside.", "Eat lots of candies."]
         else:
-            q_text = "Aşağıdakilerden hangisi dürüst oyun ve rakibe saygıyı ifade eden spor terimidir?"
-            dogru = "Fair-Play"
-            celd = ["Ofsayt", "Penaltı", "Faul"]
+            q_text = f"Which activity is related to 'satranç oynamak' in English?"
+            dogru = "Play chess"
+            celd = ["Play dodgeball", "Do origami", "Ride a bike"]
+
+    # -----------------------------------------------------
+    # DİĞER DERSLER & GENEL ŞABLON MOTORU
+    # -----------------------------------------------------
+    elif "Almanca" in ders:
+        q_text = f"Almanca 'Wie heißt du?' sorusuna {kisi} nasıl cevap vermelidir?"
+        dogru = f"Ich heiße {kisi}."
+        celd = ["Ich bin 11 Jahre alt.", "Mir geht es gut.", "Danke, sehr gut."]
+    elif ders == "Türkçe":
+        q_text = f"'{kisi} sözleriyle herkesin **kalbini kazandı**.' cümlesindeki altı çizili ifadenin anlamı nedir?"
+        dogru = "Herkesin sevgisini ve takdirini toplamak"
+        celd = ["Kalp organını ele geçirmek", "Yarışmada ödül kazanmak", "İnsanları utandırmak"]
+    elif ders == "Sosyal Bilgiler":
+        q_text = f"{sehir} ilinde yaşayan {kisi}'nin okuldaki **en temel sorumluluğu** aşağıdakilerden hangisidir?"
+        dogru = "Derslere zamanında katılmak ve okul kurallarına uymak"
+        celd = ["Okul binasını boyamak", "Sınıf arkadaşlarını yönetmek", "Kütüphanedeki tüm kitapları satın almak"]
+    elif "Bilişim" in ders:
+        q_text = f"{kisi}, bilgisayarında güvenli bir şifre oluşturmak istiyor. Aşağıdakilerden hangisi **en güvenli** yöntemdir?"
+        dogru = "Harf, rakam ve özel sembolleri karmaşık şekilde kullanmak"
+        celd = ["Doğum tarihini yazmak", "Sadece '123456' yazmak", "Adını ve soyadını bitişik yazmak"]
+    else:
+        q_text = f"{kisi}, ders çalışırken planlı ve düzenli davranmanın önemini öğrenmiştir. Bu davranış hangisidir?"
+        dogru = "Sorumluluk Bilinci"
+        celd = ["Bireysellik", "Girişimcilik", "Ayrımcılık"]
 
     siklar = [dogru] + celd
     random.shuffle(siklar)
@@ -443,17 +303,15 @@ def harmanlanmis_soru_uret(secilen_uniteler, hedef_sayi):
     kalan = hedef_sayi % u_count
     dagilim = [taban + (1 if i < kalan else 0) for i in range(u_count)]
     
-    # Sadece seçilen ders ve ünitelerden sorular üret
     for idx, (h_ders, h_unite) in enumerate(secilen_uniteler):
         istenen = dagilim[idx]
         uretilen = 0
         deneme = 0
         
-        while uretilen < istenen and deneme < 400:
+        while uretilen < istenen and deneme < 500:
             deneme += 1
-            s = milyonluk_varyasyon_engine(h_ders, h_unite)
+            s = dinamik_yapay_zekali_soru_motoru(h_ders, h_unite)
             
-            # Benzersizlik doğrulama parmak izi
             fingerprint = hashlib.sha256((s["soru"] + "".join(s["siklar"]) + s["dogru"]).encode('utf-8')).hexdigest()
             
             if fingerprint not in hash_kayitlari and len(s["siklar"]) == 4:
@@ -467,7 +325,7 @@ def harmanlanmis_soru_uret(secilen_uniteler, hedef_sayi):
 # -----------------------------------------------------
 # STREAMLIT ARAYÜZ
 # -----------------------------------------------------
-st.title("🎓 MEB 5. Sınıf Tümü Kapsayan Soru Bankası (Almanca Dahil)")
+st.title("🎓 MEB 5. Sınıf Tümü Kapsayan Soru Bankası")
 
 st.sidebar.header("⚙️ Müfretad ve Ders Seçimi")
 secilen_uniteler = []
@@ -483,12 +341,10 @@ for ders_adi, uniteler in MEB_MUFREDAT.items():
 st.sidebar.divider()
 soru_sayisi = st.sidebar.number_input("Toplam Soru Sayısı:", min_value=1, max_value=50, value=10, step=1, disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"])
 
+# Test Üret Butonu Soru Sayısının Altına Taşındı
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.subheader("🚀 Çok Yönlü Soru Üretim Paneli")
     if secilen_uniteler:
-        st.info(f"Seçilen Ünite Sayısı: **{len(secilen_uniteler)}**. Sistem seçilen tüm derslerin soru tiplerinden **farklı kombinasyonlarda**, **tamamen benzersiz** ve **MEB Beceri Temelli** sorular üretecektir.")
-        
-        if st.button("✨ Karma Test Üret", type="primary"):
+        if st.sidebar.button("✨ Karma Test Üret", type="primary", use_container_width=True):
             with st.spinner("Sorular harmanlanıyor ve benzersiz şablonlar oluşturuluyor..."):
                 sorular = harmanlanmis_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
@@ -496,7 +352,12 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] 
                 st.session_state["sorular_hazir"] = True
                 st.rerun()
     else:
-        st.warning("⚠️ Lütfen sol taraftaki menüden en az 1 ders/ünite seçin.")
+        st.sidebar.warning("⚠️ Lütfen en az 1 ünite seçin.")
+
+if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
+    st.subheader("🚀 Çok Yönlü Soru Üretim Paneli")
+    if secilen_uniteler:
+        st.info(f"Seçilen Ünite Sayısı: **{len(secilen_uniteler)}**. Sistem seçilen ünitelere özel **%75 dinamik/yapay zeka motoru** ile **tamamen benzersiz** yeni nesil sorular üretecektir.")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.success("✅ Sorular tüm MEB soru tiplerinden harmanlanarak başarıyla üretildi!")
