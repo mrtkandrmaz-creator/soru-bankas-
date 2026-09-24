@@ -5,7 +5,7 @@ import time
 import math
 
 # Sayfa Yapılandırması
-st.set_page_config(page_title="MEB 5. Sınıf Ünite Odaklı Sınav Platformu", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="MEB 5. Sınıf Çoklu Ünite Sınav Platformu", page_icon="🎓", layout="wide")
 
 # =========================================================
 # 1. API KEY OKUMA MOTORU
@@ -103,7 +103,7 @@ MEB_MUFREDAT = {
 }
 
 # =========================================================
-# 2. MODERN SVG GÖRSEL MOTORU
+# 2. SVG GÖRSEL MOTORU
 # =========================================================
 def svg_iletki_aci_ciz_modern(derece):
     rad = math.radians(180 - derece)
@@ -130,30 +130,6 @@ def svg_iletki_aci_ciz_modern(derece):
       <circle cx="140" cy="120" r="2" fill="#ffffff"/>
       <rect x="95" y="10" width="90" height="26" rx="8" fill="#e2e8f0"/>
       <text x="140" y="27" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#334155" text-anchor="middle">Açı: ?°</text>
-    </svg>
-    '''
-
-def svg_dikdortgen_ciz_modern(a, b):
-    color_pair = random.choice([
-        ("#eff6ff", "#2563eb"),
-        ("#ecfdf5", "#059669"),
-        ("#fef3c7", "#d97706"),
-        ("#f3e8ff", "#7c3aed")
-    ])
-    bg_fill, stroke_color = color_pair
-    return f'''
-    <svg width="280" height="150" viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="shadow2" x="-5%" y="-5%" width="110%" height="110%">
-          <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.06"/>
-        </filter>
-      </defs>
-      <rect width="100%" height="100%" fill="#ffffff" rx="16" filter="url(#shadow2)"/>
-      <rect x="55" y="30" width="170" height="85" fill="{bg_fill}" stroke="{stroke_color}" stroke-width="3" rx="12"/>
-      <rect x="110" y="8" width="60" height="20" rx="6" fill="#f1f5f9"/>
-      <text x="140" y="22" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#334155" text-anchor="middle">{a} cm</text>
-      <rect x="5" y="62" width="45" height="20" rx="6" fill="#f1f5f9"/>
-      <text x="27" y="76" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#334155" text-anchor="middle">{b} cm</text>
     </svg>
     '''
 
@@ -195,7 +171,7 @@ def svg_ay_evresi_ciz_modern(evre_adi):
     '''
 
 # =========================================================
-# 3. SEÇİLEN ÜNİTEYE DİREKT ODAKLI DİNAMİK ŞABLON MOTORU
+# 3. DİNAMİK ŞABLON MOTORU
 # =========================================================
 def sablon_soru_uret(ders, unite):
     u_lower = unite.lower()
@@ -207,11 +183,13 @@ def sablon_soru_uret(ders, unite):
             siklar = ["Dar Açı", "Dik Açı", "Geniş Açı", "Doğru Açı"]
             random.shuffle(siklar)
             return {
+                "ders": ders,
+                "unite": unite,
                 "soru": f"Yukarıdaki açı ölçer (iletki) görselinde verilen {aci}°'lik açı hangi açı türüdür?",
                 "gorsel_svg": svg_iletki_aci_ciz_modern(aci),
                 "siklar": siklar,
                 "dogru": tur,
-                "kaynak": "Ünite Özel Şablonu"
+                "kaynak": "Şablon Motoru"
             }
         elif "kesir" in u_lower:
             payda = random.choice([4, 5, 6, 8])
@@ -222,38 +200,13 @@ def sablon_soru_uret(ders, unite):
                 siklar.append(f"{random.randint(1,3)}/{payda}")
             random.shuffle(siklar)
             return {
+                "ders": ders,
+                "unite": unite,
                 "soru": "Yukarıda modellenen kesrin değeri aşağıdakilerden hangisidir?",
                 "gorsel_svg": svg_kesir_ciz_modern(pay, payda),
                 "siklar": siklar,
                 "dogru": f"{pay}/{payda}",
-                "kaynak": "Ünite Özel Şablonu"
-            }
-        elif "alan" in u_lower or "prizma" in u_lower:
-            a, b = random.randint(6, 16), random.randint(4, 10)
-            alan = a * b
-            siklar = [f"{alan} cm²", f"{2*(a+b)} cm²", f"{alan + 8} cm²", f"{max(1, alan - 6)} cm²"]
-            siklar = list(set(siklar))
-            while len(siklar) < 4:
-                siklar.append(f"{alan + random.randint(12, 25)} cm²")
-            random.shuffle(siklar)
-            return {
-                "soru": "Kenar uzunlukları verilen dikdörtgenin alanı kaç cm²'dir?",
-                "gorsel_svg": svg_dikdortgen_ciz_modern(a, b),
-                "siklar": siklar,
-                "dogru": f"{alan} cm²",
-                "kaynak": "Ünite Özel Şablonu"
-            }
-        elif "ondalık" in u_lower or "yüzde" in u_lower:
-            tam = random.randint(1, 9)
-            ondalik = random.choice([25, 50, 75, 40])
-            siklar = [f"{tam},{ondalik}", f"{tam+1},{ondalik}", f"{tam},{ondalik+10}", f"{tam-1 if tam>1 else 0},{ondalik}"]
-            random.shuffle(siklar)
-            return {
-                "soru": f"Kesir değeri {tam} tam {ondalik}/100 olan sayının ondalık gösterimi aşağıdakilerden hangisidir?",
-                "gorsel_svg": None,
-                "siklar": siklar,
-                "dogru": f"{tam},{ondalik}",
-                "kaynak": "Ünite Özel Şablonu"
+                "kaynak": "Şablon Motoru"
             }
 
     elif ders == "Fen Bilimleri":
@@ -263,83 +216,27 @@ def sablon_soru_uret(ders, unite):
             siklar = evreler.copy()
             random.shuffle(siklar)
             return {
+                "ders": ders,
+                "unite": unite,
                 "soru": "Görselde karanlık uzay zemininde modellenen Ay'ın ana evresi aşağıdakilerden hangisidir?",
                 "gorsel_svg": svg_ay_evresi_ciz_modern(secilen_evre),
                 "siklar": siklar,
                 "dogru": secilen_evre,
-                "kaynak": "Ünite Özel Şablonu"
-            }
-        elif "canlı" in u_lower or "mantar" in u_lower:
-            return {
-                "soru": "Aşağıdakilerden hangisi kendi besinini üretemeyen, nemli yerlerde yaşayan ve sporla çoğalan canlı sınıfına örnektir?",
-                "gorsel_svg": None,
-                "siklar": ["Şapkalı Mantarlar", "Yeşil Bitkiler", "Omurgalı Hayvanlar", "Mikroskobik Su Yosunları"],
-                "dogru": "Şapkalı Mantarlar",
-                "kaynak": "Ünite Özel Şablonu"
-            }
-        elif "elektrik" in u_lower:
-            return {
-                "soru": "Basit bir elektrik devresinde pil sayısı sabit tutulup ampul sayısı artırılırsa ampul parlaklığı nasıl değişir?",
-                "gorsel_svg": None,
-                "siklar": ["Azalır", "Artar", "Değişmez", "Önce artar sonra azalır"],
-                "dogru": "Azalır",
-                "kaynak": "Ünite Özel Şablonu"
+                "kaynak": "Şablon Motoru"
             }
 
-    elif ders == "Türkçe":
-        if "sözcük" in u_lower:
-            return {
-                "soru": "'Ağır' sözcüğü aşağıdaki cümlelerin hangisinde mecaz anlamıyla kullanılmıştır?",
-                "gorsel_svg": None,
-                "siklar": [
-                    "Bu kadar ağır sözleri hak etmemişti.",
-                    "Ağır kolileri taşımakta zorlandık.",
-                    "Kamyon ağır yükle yola çıktı.",
-                    "Masadaki ağır kutuyu kenara çekti."
-                ],
-                "dogru": "Bu kadar ağır sözleri hak etmemişti.",
-                "kaynak": "Ünite Özel Şablonu"
-            }
-        elif "noktalama" in u_lower or "yazım" in u_lower:
-            return {
-                "soru": "Aşağıdaki cümlelerin hangisinde noktalama işareti eksikliği veya yanlış kullanımı vardır?",
-                "gorsel_svg": None,
-                "siklar": [
-                    "Pazardan elma, armut ve muz aldık.",
-                    "Eyvah, otobüsü kaçırdık!",
-                    "Ankara'ya ne zaman gideceksin.",
-                    "Dr. Ahmet Bey toplantıya katıldı."
-                ],
-                "dogru": "Ankara'ya ne zaman gideceksin.",
-                "kaynak": "Ünite Özel Şablonu"
-            }
-
-    elif ders == "Sosyal Bilgiler":
-        if "harita" in u_lower or "çevre" in u_lower:
-            return {
-                "soru": "Fiziki haritalarda kahverengi ve tonlarının yoğun olduğu bir bölge için aşağıdakilerden hangisi söylenebilir?",
-                "gorsel_svg": None,
-                "siklar": [
-                    "Yükseltisi fazla ve dağlık bir bölgedir.",
-                    "Deniz seviyesine yakın ovalık alandır.",
-                    "Ormanlık alanlar çok geniştir.",
-                    "Göl ve akarsu bakımından zengindir."
-                ],
-                "dogru": "Yükseltisi fazla ve dağlık bir bölgedir.",
-                "kaynak": "Ünite Özel Şablonu"
-            }
-
-    # Genel Varsayılan Ünite Sorusu
     return {
-        "soru": f"5. Sınıf {ders} dersi '{unite}' ünitesine ait temel kazanım sorusudur. Bu ünite kapsamında öğrenilen temel ilke hangisidir?",
+        "ders": ders,
+        "unite": unite,
+        "soru": f"[{ders} - {unite}] konusuna ait temel kavram aşağıdakilerden hangisidir?",
         "gorsel_svg": None,
-        "siklar": ["Kazanım İlkesi A", "Kazanım İlkesi B", "Kazanım İlkesi C", "Kazanım İlkesi D"],
-        "dogru": "Kazanım İlkesi A",
-        "kaynak": "Genel Müfredat Şablonu"
+        "siklar": ["Doğru Seçenek A", "Yanlış Seçenek B", "Yanlış Seçenek C", "Yanlış Seçenek D"],
+        "dogru": "Doğru Seçenek A",
+        "kaynak": "Müfredat Şablonu"
     }
 
 # =========================================================
-# 4. GEMINI AI MOTORU (ÜNİTE ODAKLI PROMPT)
+# 4. GEMINI AI MOTORU
 # =========================================================
 def gemini_soru_uret(api_key, ders, unite):
     if not api_key:
@@ -351,13 +248,12 @@ def gemini_soru_uret(api_key, ders, unite):
         prompt = (
             f"Sen uzman bir MEB 5. Sınıf öğretmenisin.\n"
             f"DERS: {ders}\n"
-            f"SEÇİLEN ÜNİTE / KONU: {unite}\n\n"
-            f"Görevin: Yalnızca yukarıda belirtilen '{unite}' ünitesinin kazanımlarına, kavramlarına ve seviyesine tam uygun 1 adet 4 şıklı orijinal test sorusu hazırlamaktır.\n"
-            "Soru 5. sınıf öğrenci seviyesinde, anlaşılır ve müfredata tam uyumlu olmalıdır.\n\n"
+            f"ÜNİTE: {unite}\n\n"
+            f"Görevin: '{unite}' ünitesine tam uygun 1 adet 4 şıklı test sorusu üretmektir.\n"
             "Yanıtını YALNIZCA aşağıdaki JSON formatında ver, başka metin ekleme:\n"
             "{\n"
             '  "soru": "Soru metni",\n'
-            '  "gorsel_tasvir": "Varsa tablo veya görsel tasviri, yoksa null",\n'
+            '  "gorsel_tasvir": "Varsa tablo/görsel tasviri yoksa null",\n'
             '  "siklar": ["A Şıkkı", "B Şıkkı", "C Şıkkı", "D Şıkkı"],\n'
             '  "dogru": "Doğru şık metni"\n'
             "}"
@@ -370,55 +266,88 @@ def gemini_soru_uret(api_key, ders, unite):
 
         clean_json = response.text.strip().replace("```json", "").replace("```", "").strip()
         veri = json.loads(clean_json)
-        veri["kaynak"] = f"Yapay Zekâ (Gemini - {unite})"
+        veri["ders"] = ders
+        veri["unite"] = unite
+        veri["kaynak"] = f"Yapay Zekâ (Gemini)"
         return veri
     except Exception:
         return None
 
 def soru_hazirla(api_key, ders, unite):
-    if api_key and random.random() < 0.80:
+    if api_key and random.random() < 0.85:
         ai_soru = gemini_soru_uret(api_key, ders, unite)
         if ai_soru:
             return ai_soru
     return sablon_soru_uret(ders, unite)
 
 # =========================================================
-# 5. STREAMLIT ARAYÜZ (UI)
+# 5. STREAMLIT ARAYÜZ (CHECK-BOX YAPI)
 # =========================================================
-st.title("🎓 MEB 5. Sınıf Ünite Odaklı Sınav Platformu")
+st.title("🎓 MEB 5. Sınıf Çoklu Ders ve Ünite Sınav Motoru")
 
-st.sidebar.header("⚙️ Sınav Yapılandırma")
+st.sidebar.header("⚙️ Ders ve Ünite Seçimi")
+st.sidebar.caption("Sınava dahil etmek istediğiniz üniteleri işaretleyin:")
 
-ders = st.sidebar.selectbox("Ders Seçin", list(MEB_MUFREDAT.keys()), disabled=st.session_state["test_aktif"])
-unite = st.sidebar.selectbox("Ünite / Tema Seçin", MEB_MUFREDAT[ders], disabled=st.session_state["test_aktif"])
-soru_sayisi = st.sidebar.number_input("Soru Sayısı:", min_value=1, max_value=30, value=5, step=1, disabled=st.session_state["test_aktif"])
+secilen_uniteler = []  # [(Ders_Adı, Ünite_Adı), ...]
+
+# HER DERS İÇİN EXPANDER VE CHECKBOX LİSTESİ
+for ders_adi, uniteler in MEB_MUFREDAT.items():
+    with st.sidebar.expander(f"📚 {ders_adi}", expanded=False):
+        # Tümünü Seç/Kaldır hızlı aksiyonu
+        select_all = st.checkbox(f"Tüm {ders_adi} Ünitelerini Seç", key=f"all_{ders_adi}", disabled=st.session_state["test_aktif"])
+        
+        st.divider()
+        for idx, u in enumerate(uniteler):
+            # Eğer 'Tümünü Seç' tıklanmışsa varsayılan True olur
+            default_val = select_all
+            cb = st.checkbox(u, value=default_val, key=f"cb_{ders_adi}_{idx}", disabled=st.session_state["test_aktif"])
+            if cb:
+                secilen_uniteler.append((ders_adi, u))
 
 st.sidebar.divider()
-
-if API_KEY:
-    st.sidebar.success("🔑 Gemini 2.5 API Aktif (Ünite Odaklı AI)")
-else:
-    st.sidebar.info("💡 Üniteye Özel Şablon Modu Aktif")
+soru_sayisi = st.sidebar.number_input("Toplam Soru Sayısı:", min_value=1, max_value=50, value=10, step=1, disabled=st.session_state["test_aktif"])
 
 # BAŞLANGIÇ EKRANI
 if not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.info(f"📋 **Seçilen Sınav Detayları:**\n- **Ders:** {ders}\n- **Seçilen Ünite:** {unite}\n- **Soru Sayısı:** {soru_sayisi}")
+    st.subheader("📋 Seçilen Sınav Müfredatı Kapsamı")
     
-    if st.button("🚀 Üniteye Özel Sınavı Başlat", type="primary"):
-        with st.spinner(f"'{unite}' ünitesine özel sorular ve görseller üretiliyor..."):
-            st.session_state["soru_listesi"] = [soru_hazirla(API_KEY, ders, unite) for _ in range(soru_sayisi)]
-            st.session_state["kullanici_cevaplari"] = {}
-            st.session_state["mevcut_soru_index"] = 0
-            st.session_state["test_aktif"] = True
-            st.session_state["test_bitti"] = False
-            st.rerun()
+    if secilen_uniteler:
+        st.success(f"Toplam **{len(secilen_uniteler)}** adet ünite/tema seçildi.")
+        
+        # Seçilen ünitelerin derslere göre gruplanıp gösterilmesi
+        ders_bazli = {}
+        for d, u in secilen_uniteler:
+            ders_bazli.setdefault(d, []).append(u)
+            
+        for d_ad, u_list in ders_bazli.items():
+            st.markdown(f"**{d_ad} ({len(u_list)} Ünite):**")
+            for u_ad in u_list:
+                st.caption(f"• {u_ad}")
+                
+        if st.button("🚀 Seçilen Ünitelerden Sınavı Başlat", type="primary"):
+            with st.spinner("Seçilen tüm ünitelerden karma sorular hazırlanıyor..."):
+                sorular = []
+                # Üniteler arasında soru sayısını dengeli dağıtma
+                for i in range(soru_sayisi):
+                    hedf_ders, hedf_unite = secilen_uniteler[i % len(secilen_uniteler)]
+                    sorular.append(soru_hazirla(API_KEY, hedf_ders, hedf_unite))
+                
+                random.shuffle(sorular)  # Soruları karma sıraya koy
+                st.session_state["soru_listesi"] = sorular
+                st.session_state["kullanici_cevaplari"] = {}
+                st.session_state["mevcut_soru_index"] = 0
+                st.session_state["test_aktif"] = True
+                st.session_state["test_bitti"] = False
+                st.rerun()
+    else:
+        st.warning("⚠️ Lütfen sınav oluşturmak için sol menüden en az 1 ünite işaretleyin (check-box).")
 
 # TEST EKRANI
 elif st.session_state["test_aktif"]:
     idx = st.session_state["mevcut_soru_index"]
     q = st.session_state["soru_listesi"][idx]
 
-    st.caption(f"📌 {ders} | {unite}")
+    st.caption(f"📌 **Ders:** {q['ders']} | **Ünite:** {q['unite']}")
     st.write(f"📝 **Soru:** {idx + 1} / {len(st.session_state['soru_listesi'])}")
     st.progress((idx + 1) / len(st.session_state["soru_listesi"]))
     st.divider()
@@ -457,8 +386,7 @@ elif st.session_state["test_aktif"]:
 # SONUÇ EKRANI
 elif st.session_state["test_bitti"]:
     st.balloons()
-    st.header("📊 Sınav Sonuç Karnesi")
-    st.caption(f"Ders: {ders} — Ünite: {unite}")
+    st.header("📊 Karma Sınav Sonuç Karnesi")
 
     toplam_soru = len(st.session_state["soru_listesi"])
     dogru_sayisi = sum(1 for i, q in enumerate(st.session_state["soru_listesi"]) if st.session_state["kullanici_cevaplari"].get(i) == q["dogru"])
@@ -475,13 +403,13 @@ elif st.session_state["test_bitti"]:
         d_cevabi = q["dogru"]
         durum = "✅ Doğru" if k_cevabi == d_cevabi else "❌ Yanlış"
         
-        with st.expander(f"Soru {i+1}: {durum}"):
+        with st.expander(f"Soru {i+1} [{q['ders']} - {q['unite']}]: {durum}"):
             st.write(f"**Soru:** {q['soru']}")
             st.write(f"👉 **Sizin Cevabınız:** {k_cevabi}")
             st.write(f"✅ **Doğru Cevap:** {d_cevabi}")
-            st.caption(f"Üretim Kaynağı: {q.get('kaynak', 'Sistem')}")
+            st.caption(f"Kaynak: {q.get('kaynak', 'Sistem')}")
 
-    if st.button("🔄 Yeni Ünite Seç / Yeniden Başla"):
+    if st.button("🔄 Yeni Sınav Oluştur"):
         st.session_state["test_bitti"] = False
         st.session_state["test_aktif"] = False
         st.rerun()
