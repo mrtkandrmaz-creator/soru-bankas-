@@ -89,7 +89,6 @@ MEB_MUFREDAT = {
 MEB_HAFTALIK_MAPI = {}
 for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h] = []
-    
     t_idx = min((h - 1) // 10, len(MEB_MUFREDAT["Türkçe"]) - 1)
     MEB_HAFTALIK_MAPI[h].append(("Türkçe", MEB_MUFREDAT["Türkçe"][t_idx]))
 
@@ -139,20 +138,22 @@ def svg_dinamik_ucgen_ciz(a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
     '''
 
 # =========================================================
-# 4. RASTGELE MATRİS VE SORU ÜRETİCİ
+# 4. TRİLYONLARCA KOMBİNASYON ÜRETEN BAĞIMSIZ MATRİS MOTORU
 # =========================================================
-ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Yara", "Onur", "Görkem", "Arda", "Defne"]
-NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon"]
-YEMEKLER = ["Mantı", "Çiğ Köfte", "Cağ Kebabı", "Tantuni", "Künefe", "Yağlama", "Baklava", "Kuru Fasulye"]
+ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Yara", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz", "Kerim"]
+NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon", "kalemtıraş", "silgi", "defter"]
+YEMEKLER = ["Mantı", "Çiğ Köfte", "Cağ Kebabı", "Tantuni", "Künefe", "Yağlama", "Baklava", "Kuru Fasulye", "İskender", "Lahmacun", "Pide"]
+SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep", "Konya", "Samsun", "Adana"]
 
 def dinamik_soru_uretici(ders, unite):
     u_low = unite.lower()
     kisi = random.choice(ISIMLER)
     nesne = random.choice(NESNELER)
+    kisi2 = random.choice([i for i in ISIMLER if i != kisi])
 
     if ders == "Matematik":
         if "1. ünite" in u_low:
-            alt_tip = random.choice(["okuma", "toplama_cikarma", "carpma_bolme", "yuvarlama"])
+            alt_tip = random.choice(["okuma", "toplama_cikarma", "carpma_bolme", "yuvarlama", "fark_bulma"])
             if alt_tip == "okuma":
                 sayi = random.randint(100000, 9999999)
                 b_isimleri = ["yüz binler", "on binler", "binler", "yüzler", "onlar"]
@@ -161,104 +162,111 @@ def dinamik_soru_uretici(ders, unite):
                 b_deg = ((sayi // carpan) % 10) * carpan
                 q = f"{kisi}'in yazdığı <b>{sayi}</b> sayısındaki {b_sec} basamağının basamak değeri kaçtır?"
                 ans = str(b_deg)
-                celd = [str(b_deg * 10), str(max(10, b_deg // 10)), str((sayi // carpan) % 10)]
+                celd = [str(b_deg * 10 if b_deg > 0 else 100), str(max(10, b_deg // 10 if b_deg > 0 else 50)), str((sayi // (carpan if carpan > 0 else 1)) % 10 * 100)]
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
             elif alt_tip == "toplama_cikarma":
-                n1, n2 = random.randint(1500, 9500), random.randint(1200, 8500)
-                if random.choice([True, False]):
-                    ans = str(n1 + n2)
-                    q = f"{kisi}'in {n1} adet {nesne}si vardı. Arkadaşı ona {n2} adet daha {nesne} verirse toplam kaç {nesne}si olur?"
-                    celd = [str(n1 + n2 + 100), str(n1 + n2 - 50), str(n1 + n2 + 500)]
-                else:
-                    ans = str(max(n1, n2) - min(n1, n2))
-                    q = f"{kisi} {max(n1, n2)} TL parasının {min(n1, n2)} TL'sini harcadı. Geriye kaç TL'si kalmıştır?"
-                    celd = [str(int(ans) + 100), str(abs(int(ans) - 50)), str(int(ans) + 200)]
+                n1, n2 = random.randint(1200, 9800), random.randint(1100, 8900)
+                ans = str(n1 + n2)
+                q = f"{kisi}'in {n1} adet {nesne}si vardı. {kisi2} ona {n2} adet daha {nesne} verirse toplam kaç {nesne}si olur?"
+                celd = [str(n1 + n2 + random.randint(10, 150)), str(abs(n1 + n2 - random.randint(20, 200))), str(n1 + n2 + random.randint(200, 500))]
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
             elif alt_tip == "carpma_bolme":
-                n1, n2 = random.randint(12, 85), random.randint(10, 45)
+                n1, n2 = random.randint(15, 95), random.randint(12, 50)
                 ans = str(n1 * n2)
                 q = f"{kisi} her birinde {n1} adet {nesne} bulunan {n2} koli satın almıştır. Toplam kaç adet {nesne} vardır?"
-                celd = [str(n1 * n2 + n1), str(n1 * n2 - n2), str((n1 + 2) * n2)]
+                celd = [str(n1 * n2 + n1), str(n1 * n2 - n2), str((n1 + 5) * n2)]
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
             else:
-                sayi = random.randint(105, 995)
+                sayi = random.randint(110, 990)
                 ans = str(round(sayi, -1))
                 q = f"<b>{sayi}</b> sayısı en yakın onluğa yuvarlandığında {kisi} hangi sonucu bulmalıdır?"
-                celd = [str(int(ans) + 10), str(int(ans) - 10), str(sayi)]
+                celd = [str(int(ans) + 10), str(int(ans) - 10), str(sayi + random.choice([1, 2, 3]))]
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "2. ünite" in u_low:
-            tam, payda = random.randint(1, 5), random.randint(3, 8)
+            tam, payda = random.randint(1, 8), random.randint(4, 12)
             pay = random.randint(1, payda - 1)
             b_pay = tam * payda + pay
-            q = f"<b>{tam} tam {pay}/{payda}</b> tam sayılı kesrinin bileşik kesre dönüştürülmüş hali aşağıdakilerden hangisidir?"
+            q = f"<b>{tam} tam {pay}/{payda}</b> tam sayılı kesrinin bileşik kesre dönüştürülmüş hali hangisidir?"
             ans = f"{b_pay}/{payda}"
-            celd = [f"{b_pay + 1}/{payda}", f"{b_pay - 1}/{payda}", f"{tam * pay}/{payda}"]
+            celd = [f"{b_pay + random.randint(1, 3)}/{payda}", f"{b_pay - 1}/{payda}", f"{tam * pay}/{payda}"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "3. ünite" in u_low:
-            p = random.choice([10, 20, 25, 50, 75])
-            q = f"<b>%{p}</b> ifadesinin kesir gösterimi aşağıdakilerden hangisidir?"
-            ans = f"{p}/100"
-            celd = [f"100/{p}", f"{p}/10", f"1/{p}"]
+            p = random.choice([5, 10, 15, 20, 25, 30, 40, 50, 75])
+            fiyat = random.randint(120, 950)
+            indirim = (fiyat * p) // 100
+            ans = str(fiyat - indirim)
+            q = f"{kisi} fiyatı {fiyat} TL olan ürünü <b>%{p}</b> indirimle aldığında kaç TL öder?"
+            celd = [str(indirim), str(fiyat + indirim), str(fiyat - indirim + random.randint(5, 25))]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "4. ünite" in u_low or "5. ünite" in u_low:
-            koseler = random.choice([("A", "B", "C"), ("K", "L", "M"), ("P", "R", "S"), ("D", "E", "F")])
-            a, b = random.randint(35, 80), random.randint(30, 70)
+            koseler = random.choice([("A", "B", "C"), ("K", "L", "M"), ("P", "R", "S"), ("D", "E", "F"), ("X", "Y", "Z")])
+            a, b = random.randint(30, 85), random.randint(25, 75)
             c = 180 - (a + b)
-            q = f"Şekildeki {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {a}° ve m({koseler[1]}) = {b}° olduğuna göre verilmeyen m({koseler[2]}) açısı kaç derecedir?"
+            q = f"Şekildeki {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {a}° ve m({koseler[1]}) = {b}° ise m({koseler[2]}) kaç derecedir?"
             ans = f"{c}°"
-            celd = [f"{c + 10}°", f"{abs(c - 15)}°", f"{c + 20}°"]
+            celd = [f"{c + random.randint(5, 15)}°", f"{abs(c - random.randint(5, 15))}°", f"{c + 30}°"]
             svg = svg_dinamik_ucgen_ciz(a, b, 0, koseler)
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": svg}
 
         else:
-            saat = random.randint(2, 5)
-            ans = str(saat * 60)
-            q = f"{kisi} sinemada <b>{saat} saat</b> süren bir film izlemiştir. Bu süre kaç dakikadır?"
-            celd = [str(saat * 60 + 30), str(saat * 100), str(saat * 45)]
+            saat = random.randint(2, 8)
+            dakika = random.choice([15, 30, 45, 0])
+            toplam_dakika = saat * 60 + dakika
+            q = f"{kisi} sinemada <b>{saat} saat {dakika} dakika</b> süren film izlemiştir. Bu süre toplam kaç dakikadır?" if dakika > 0 else f"{kisi} sinemada <b>{saat} saat</b> süren film izlemiştir. Süre kaç dakikadır?"
+            ans = str(toplam_dakika)
+            celd = [str(toplam_dakika + 30), str(toplam_dakika - 15), str(saat * 100)]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Fen Bilimleri":
-        if "1. ünite" in u_low:
-            q = f"Güneş'in yüzey sıcaklığı yaklaşık olarak kaç °C'dir?"
+        alt_tip = random.choice(["sicaklik", "canli", "dinamometre", "hal", "isik"])
+        if alt_tip == "sicaklik":
+            q = f"Güneş'in yüzey sıcaklığı yaklaşık olarak kaç °C civarındadır?"
             ans, celd = "6000 °C", ["15 Milyon °C", "1000 °C", "100 °C"]
-        elif "2. ünite" in u_low:
-            q = f"Sütten yoğurt yapılmasını sağlayan faydalı canlı grubu hangisidir?"
-            ans, celd = "Yararlı Bakteriler", ["Mantar", "Virüs", "Amip"]
-        elif "3. ünite" in u_low:
-            a1 = random.randint(5, 50)
-            q = f"Bir dinamometreye {a1} N ağırlığında cisim asıldığında kaç N kuvvet gösterir?"
-            ans, celd = f"{a1} N", [f"{a1 * 10} N", f"{a1 + 5} N", f"{max(1, a1 - 2)} N"]
-        else:
-            q = f"Sıvı bir maddenin ısı vererek katı hale geçmesine ne denir?"
+        elif alt_tip == "canli":
+            q = f"Sütten yoğurt yapılmasını sağlayan mikroskobik canlı grubu hangisidir?"
+            ans, celd = "Yararlı Bakteriler", ["Zararlı Mantarlar", "Virüsler", "Amip"]
+        elif alt_tip == "dinamometre":
+            a1 = random.randint(10, 90)
+            q = f"Bir dinamometreye {a1} N ağırlığında cisim asıldığında yaydaki kuvvet göstergesi kaç N'yi gösterir?"
+            ans, celd = f"{a1} N", [f"{a1 * 2} N", f"{max(2, a1 - 5)} N", f"{a1 + 15} N"]
+        elif alt_tip == "hal":
+            q = f"Saf bir sıvının ısı vererek dışarıya enerji aktarıp katı hale geçiş olayına ne denir?"
             ans, celd = "Donma", ["Erime", "Buharlaşma", "Süblimleşme"]
+        else:
+            q = f"Aşağıdaki maddelerden hangisi ışığı kesinlikle geçirmeyen <b>opak maddedir</b>?"
+            ans, celd = "Tahta Parçası", ["Pencere Camı", "Şeffaf Naylon", "Temiz Su"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Türkçe":
-        q = f"'{random.choice(['Mektep', 'Muallim', 'Hediye'])}' sözcüğünün eş anlamlısı nedir?"
-        ans, celd = "Okul", ["Sınıf", "Öğrenci", "Kitap"]
+        kelime_havuzu = [("Mektep", "Okul"), ("Muallim", "Öğretmen"), ("Hediye", "Armağan"), ("Fakir", "Yoksul"), ("Yaşlı", "İhtiyar"), ("Kırmızı", "Al")]
+        sec_kelime = random.choice(kelime_havuzu)
+        q = f"Paragrafta geçen '{sec_kelime[0]}' sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?"
+        ans, celd = sec_kelime[1], [i[1] for i in kelime_havuzu if i[1] != sec_kelime[1]][:3]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Sosyal Bilgiler":
-        q = f"{kisi}'in evde üstlendiği hangisi bir sorumluluk örneğidir?"
-        ans, celd = "Odasını toplamak", ["Oyun oynamak", "Ders dinlemek", "Dinlenmek"]
+        q = f"{kisi} gün içinde evde üzerine düşen görevleri yapmaktadır. Aşağıdakilerden hangisi {kisi}'in evdeki bir <b>sorumluluğudur</b>?"
+        ans, celd = "Kendi odasını düzenli tutmak", ["Televizyon kumandasını saklamak", "Sürekli dışarıda oynamak", "Oda kapısını kilitlemek"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Din Kültürü ve Ahlak Bilgisi":
-        q = f"İslam dininde paylaşma ve yardımlaşma ibadetine ne ad verilir?"
-        ans, celd = "Zekat", ["Oruç", "Hac", "Namaz"]
+        q = f"İslam'da yardımlaşma ve dayanışmayı esas alan, malın belirli bir miktarının ihtiyaç sahiplerine verilmesi ibadeti nedir?"
+        ans, celd = "Zekat", ["Oruç", "Hac", "Namaz kılmak"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "İngilizce":
-        q = f"Choose the correct option: 'Where are you from?'"
-        ans, celd = "I am from Turkey.", ["I am 10 years old.", "My name is Can.", "Fine, thanks."]
+        q = f"{kisi} tanıştığı arkadaşına ülkesini sormak için hangi cümleyi kurmalıdır?"
+        ans, celd = "Where are you from?", ["How old are you?", "What is your name?", "How are you?"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     else:
-        q = f"<b>{random.choice(YEMEKLER)}</b> lezzeti ile meşhur olan ilimiz/ülkemiz hangisidir?"
-        ans, celd = "Gaziantep", ["Kayseri", "Adana", "Trabzon"]
+        sehir_yemek = random.choice(list(zip(SEHIRLER, YEMEKLER)))
+        q = f"Ülkemizin eşsiz lezzetlerinden biri olan <b>{sehir_yemek[1]}</b> hangi yöremiz/ilimizle özdeşleşmiştir?"
+        ans = sehir_yemek[0]
+        celd = [s for s in SEHIRLER if s != ans][:3]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
@@ -286,7 +294,7 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
         
         uretilen_sayi = 0
         deneme = 0
-        while uretilen_sayi < dersin_hedef_sayisi and deneme < 500:
+        while uretilen_sayi < dersin_hedef_sayisi and deneme < 1000:
             deneme += 1
             secilen_u = random.choice(uniteler)
             s = dinamik_soru_uretici(ders, secilen_u)
@@ -304,7 +312,7 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     return tam_soru_listesi[:hedef_sayi]
 
 # =========================================================
-# 6. STREAMLIT ARAYÜZÜ (KUTUCUK / CHECKBOX TASARIMLI)
+# 6. STREAMLIT ARAYÜZÜ
 # =========================================================
 st.title("🎓 MEB 5. Sınıf Soru Bankası & Deneme Sınavı Motoru")
 
@@ -312,24 +320,20 @@ st.sidebar.header("⚙️ Müfredat ve Yarışma Ayarları")
 
 is_disabled = st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
 
-# --- 1. AŞAMA: ÇALIŞMA MODU SEÇİMİ (EXPANDER & CHECKBOX TASARIMI) ---
 with st.sidebar.expander("📌 Çalışma Modu Seçiniz", expanded=True):
     mod_deneme = st.checkbox("📅 40 Haftalık MEB Deneme Sınavları", value=True, disabled=is_disabled, key="mod_deneme_cb")
     mod_serbest = st.checkbox("📚 Serbest Konu / Ünite Seçimi", value=False, disabled=is_disabled, key="mod_serbest_cb")
 
 secilen_uniteler = []
 
-# --- 2. AŞAMA: MODA GÖRE SEÇİM ALANLARI (CHECKBOX YAPISINDA) ---
 if mod_deneme:
     with st.sidebar.expander("📅 40 Haftalık MEB Deneme Sınavları", expanded=True):
         deneme_secimleri = []
         for h in range(1, 41):
-            # Checkbox tasarımıyla deneme sınavları
             cb_hafta = st.checkbox(f"{h}. Hafta Deneme Sınavı", value=(h == 1), disabled=is_disabled, key=f"deneme_cb_{h}")
             if cb_hafta:
                 deneme_secimleri.append(h)
         
-        # Seçilen tüm haftalara ait üniteleri ekle
         for h in deneme_secimleri:
             for k in range(1, h + 1):
                 secilen_uniteler.extend(MEB_HAFTALIK_MAPI[k])
@@ -360,7 +364,7 @@ st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🚀 Hazırla ve Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            with st.spinner("Sınav ders sıralamasına uygun şekilde oluşturuluyor..."):
+            with st.spinner("Trilyonlarca kombinasyon arasından benzersiz sorular üretiliyor..."):
                 sorular = ders_sirali_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
                 st.session_state["toplam_sure_sn"] = len(sorular) * 90
@@ -377,13 +381,12 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 # --- EKRAN AKIŞI ---
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.subheader("📋 Sınav Başlatma Alanı")
-    st.info("Sol paneldeki **'Çalışma Modu Seçiniz'** veya **'40 Haftalık MEB Deneme Sınavları'** alanından seçimlerinizi yapıp **'Hazırla ve Başlat'** butonuna tıklayın.")
+    st.info("Sol paneldeki **'Çalışma Modu Seçiniz'** alanından haftanızı veya ünitenizi seçip **'Hazırla ve Başlat'** butonuna tıklayın.")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.success("✅ Sorular Ders Sırasına Göre Hazırlandı!")
+    st.success("✅ Benzersiz Sorular Hazırlandı!")
     st.markdown(f"**Toplam Soru Sayısı:** {len(st.session_state['soru_listesi'])}")
     
-    # Ders dağılımı metrikleri
     ders_sayilari = {}
     for s in st.session_state['soru_listesi']:
         ders_sayilari[s['ders']] = ders_sayilari.get(s['ders'], 0) + 1
@@ -413,7 +416,6 @@ elif st.session_state["test_aktif"]:
     idx = st.session_state["mevcut_soru_index"]
     q = st.session_state["soru_listesi"][idx]
 
-    # ÜST BİLGİ & SINAVI BİTİR ÜST BUTONU
     c_left, c_middle, c_right = st.columns([3, 1, 1])
     c_left.markdown(f"📖 **Ders:** {q['ders']} | 📌 **Konu:** {q['unite']}")
     c_middle.metric("⏳ Kalan Süre", f"{kalan_sure // 60:02d}:{kalan_sure % 60:02d}")
