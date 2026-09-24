@@ -7,8 +7,11 @@ import time
 st.set_page_config(page_title="5. Sınıf Akıllı Test Platformu", page_icon="🎓", layout="wide")
 
 # Streamlit Secrets'tan API Anahtarını Güvenli Şekilde Alma
-API_KEY = st.secrets.get("GEMINI_API_KEY", None)
-
+API_KEY = (
+    st.secrets.get("GEMINI_API_KEY") 
+    or st.secrets.get("API_KEY") 
+    or st.secrets.get("gemini_api_key")
+)
 # Session State Başlatma
 if "test_aktif" not in st.session_state:
     st.session_state["test_aktif"] = False
