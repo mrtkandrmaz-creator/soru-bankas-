@@ -90,27 +90,21 @@ MEB_HAFTALIK_MAPI = {}
 for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h] = []
     
-    # Türkçe
     t_idx = min((h - 1) // 10, len(MEB_MUFREDAT["Türkçe"]) - 1)
     MEB_HAFTALIK_MAPI[h].append(("Türkçe", MEB_MUFREDAT["Türkçe"][t_idx]))
 
-    # Matematik
     m_idx = min((h - 1) // 7, len(MEB_MUFREDAT["Matematik"]) - 1)
     MEB_HAFTALIK_MAPI[h].append(("Matematik", MEB_MUFREDAT["Matematik"][m_idx]))
 
-    # Fen Bilimleri
     f_idx = min((h - 1) // 8, len(MEB_MUFREDAT["Fen Bilimleri"]) - 1)
     MEB_HAFTALIK_MAPI[h].append(("Fen Bilimleri", MEB_MUFREDAT["Fen Bilimleri"][f_idx]))
 
-    # Sosyal Bilgiler
     s_idx = min((h - 1) // 10, len(MEB_MUFREDAT["Sosyal Bilgiler"]) - 1)
     MEB_HAFTALIK_MAPI[h].append(("Sosyal Bilgiler", MEB_MUFREDAT["Sosyal Bilgiler"][s_idx]))
 
-    # Din Kültürü
     d_idx = min((h - 1) // 13, len(MEB_MUFREDAT["Din Kültürü ve Ahlak Bilgisi"]) - 1)
     MEB_HAFTALIK_MAPI[h].append(("Din Kültürü ve Ahlak Bilgisi", MEB_MUFREDAT["Din Kültürü ve Ahlak Bilgisi"][d_idx]))
 
-    # İngilizce
     i_idx = min((h - 1) // 10, len(MEB_MUFREDAT["İngilizce"]) - 1)
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
@@ -278,7 +272,6 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     for ders, unite in secilen_uniteler:
         ders_gruplari.setdefault(ders, []).append(unite)
 
-    # DERS_ONCELIK_SIRASI sırasına göre sıralı gruplama
     aktif_dersler = [d for d in DERS_ONCELIK_SIRASI if d in ders_gruplari]
     if not aktif_dersler:
         return []
@@ -311,44 +304,44 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     return tam_soru_listesi[:hedef_sayi]
 
 # =========================================================
-# 6. STREAMLIT ARAYÜZÜ
+# 6. STREAMLIT ARAYÜZÜ (KUTUCUK / CHECKBOX TASARIMLI)
 # =========================================================
 st.title("🎓 MEB 5. Sınıf Soru Bankası & Deneme Sınavı Motoru")
 
-st.sidebar.header("⚙️ Sınav ve Mod Seçimi")
+st.sidebar.header("⚙️ Müfredat ve Yarışma Ayarları")
 
-mod_secim = st.sidebar.radio(
-    "Çalışma Modu Seçiniz:",
-    ["📅 40 Haftalık MEB Deneme Sınavları", "📚 Serbest Konu / Ünite Seçimi"],
-    disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
-)
+is_disabled = st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
+
+# --- 1. AŞAMA: ÇALIŞMA MODU SEÇİMİ (EXPANDER & CHECKBOX TASARIMI) ---
+with st.sidebar.expander("📌 Çalışma Modu Seçiniz", expanded=True):
+    mod_deneme = st.checkbox("📅 40 Haftalık MEB Deneme Sınavları", value=True, disabled=is_disabled, key="mod_deneme_cb")
+    mod_serbest = st.checkbox("📚 Serbest Konu / Ünite Seçimi", value=False, disabled=is_disabled, key="mod_serbest_cb")
 
 secilen_uniteler = []
 
-if mod_secim == "📅 40 Haftalık MEB Deneme Sınavları":
-    st.sidebar.subheader("📅 Deneme Sınavı Haftası")
-    secilen_hafta = st.sidebar.slider(
-        "Deneme Sınavı Haftasını Seçin:",
-        min_value=1,
-        max_value=40,
-        value=1,
-        disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
-    )
-    
-    # O haftaya kadar kapsanan tüm konuları ekle
-    for h in range(1, secilen_hafta + 1):
-        secilen_uniteler.extend(MEB_HAFTALIK_MAPI[h])
-    
-    st.sidebar.info(f"💡 **{secilen_hafta}. Hafta Denemesi:** 1. haftadan {secilen_hafta}. haftaya kadar işlenen tüm müfredat konularını kapsar.")
+# --- 2. AŞAMA: MODA GÖRE SEÇİM ALANLARI (CHECKBOX YAPISINDA) ---
+if mod_deneme:
+    with st.sidebar.expander("📅 40 Haftalık MEB Deneme Sınavları", expanded=True):
+        deneme_secimleri = []
+        for h in range(1, 41):
+            # Checkbox tasarımıyla deneme sınavları
+            cb_hafta = st.checkbox(f"{h}. Hafta Deneme Sınavı", value=(h == 1), disabled=is_disabled, key=f"deneme_cb_{h}")
+            if cb_hafta:
+                deneme_secimleri.append(h)
+        
+        # Seçilen tüm haftalara ait üniteleri ekle
+        for h in deneme_secimleri:
+            for k in range(1, h + 1):
+                secilen_uniteler.extend(MEB_HAFTALIK_MAPI[k])
 
-else:
+if mod_serbest:
     st.sidebar.subheader("📚 Ünite Seçimi")
     for ders_adi in DERS_ONCELIK_SIRASI:
         uniteler = MEB_MUFREDAT[ders_adi]
         with st.sidebar.expander(f"{ders_adi}", expanded=False):
-            select_all = st.checkbox(f"Tümünü Seç", key=f"all_{ders_adi}", disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"])
+            select_all = st.checkbox(f"Tümünü Seç", key=f"all_{ders_adi}", disabled=is_disabled)
             for idx, u in enumerate(uniteler):
-                cb = st.checkbox(u, value=select_all, key=f"cb_{ders_adi}_{idx}", disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"])
+                cb = st.checkbox(u, value=select_all, key=f"cb_{ders_adi}_{idx}", disabled=is_disabled)
                 if cb:
                     secilen_uniteler.append((ders_adi, u))
 
@@ -360,7 +353,7 @@ soru_sayisi = st.sidebar.number_input(
     max_value=100, 
     value=20, 
     step=5, 
-    disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
+    disabled=is_disabled
 )
 
 st.sidebar.write("")
@@ -374,7 +367,7 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
                 st.session_state["sorular_hazir"] = True
                 st.rerun()
         else:
-            st.sidebar.error("⚠️ Lütfen ünite seçimi yapın!")
+            st.sidebar.error("⚠️ Lütfen en az bir deneme veya ünite seçimi yapın!")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🔄 Yeniden Hazırla", use_container_width=True):
@@ -384,13 +377,13 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 # --- EKRAN AKIŞI ---
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.subheader("📋 Sınav Başlatma Alanı")
-    st.info("Sol panelden modu seçin ve **'Hazırla ve Başlat'** butonuna tıklayın.")
+    st.info("Sol paneldeki **'Çalışma Modu Seçiniz'** veya **'40 Haftalık MEB Deneme Sınavları'** alanından seçimlerinizi yapıp **'Hazırla ve Başlat'** butonuna tıklayın.")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.success("✅ Sorular Ders Sırasına Göre Hazırlandı!")
     st.markdown(f"**Toplam Soru Sayısı:** {len(st.session_state['soru_listesi'])}")
     
-    # Ders dağılım özeti gösterimi
+    # Ders dağılımı metrikleri
     ders_sayilari = {}
     for s in st.session_state['soru_listesi']:
         ders_sayilari[s['ders']] = ders_sayilari.get(s['ders'], 0) + 1
@@ -420,7 +413,7 @@ elif st.session_state["test_aktif"]:
     idx = st.session_state["mevcut_soru_index"]
     q = st.session_state["soru_listesi"][idx]
 
-    # --- ÜST BİLGİ & SINAVI BİTİR ÜST BUTONU ---
+    # ÜST BİLGİ & SINAVI BİTİR ÜST BUTONU
     c_left, c_middle, c_right = st.columns([3, 1, 1])
     c_left.markdown(f"📖 **Ders:** {q['ders']} | 📌 **Konu:** {q['unite']}")
     c_middle.metric("⏳ Kalan Süre", f"{kalan_sure // 60:02d}:{kalan_sure % 60:02d}")
