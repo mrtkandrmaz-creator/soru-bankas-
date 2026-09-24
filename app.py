@@ -153,7 +153,7 @@ def svg_kesir_ciz_modern(pay, payda):
     <svg width="260" height="130" viewBox="0 0 260 130" xmlns="http://www.w3.org/2000/svg">
       <rect width="100%" height="100%" fill="#ffffff" rx="16" stroke="#f1f5f9" stroke-width="2"/>
       {dilimler}
-      <text x="130" y="112" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">Modelleme: {pay}/{payda}</text>
+      <text x="130" y="112" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#334155" text-anchor="middle">Modellenen Kesir</text>
     </svg>
     '''
 
@@ -173,7 +173,7 @@ def svg_ay_evresi_ciz_modern(evre_adi):
       <circle cx="150" cy="120" r="1" fill="#ffffff" opacity="0.4"/>
       {cizim}
       <rect x="40" y="122" width="120" height="20" rx="6" fill="#1e293b"/>
-      <text x="100" y="136" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#f1f5f9" text-anchor="middle">{evre_adi}</text>
+      <text x="100" y="136" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#f1f5f9" text-anchor="middle">Ay Evresi</text>
     </svg>
     '''
 
@@ -190,21 +190,22 @@ def gemini_soru_uret_ozgun(api_key, ders, unite, onceki_sorular=[]):
         client = genai.Client(api_key=api_key)
         
         unique_seed = str(uuid.uuid4())[:8]
-        onceki_metinler = "\n".join([f"- {s}" for s in onceki_sorular[-5:]]) # Son 5 soruyu girmesini engelle
+        gecmis_sorular_str = "\n".join([f"- {s}" for s in onceki_sorular[-10:]]) if onceki_sorular else "Henüz soru üretilmedi."
         
         prompt = (
-            f"Tarih/Kod Tohumu: {unique_seed}\n"
+            f"BENZERSİZ KOD: {unique_seed}\n"
             f"DERS: {ders}\n"
             f"ÜNİTE: {unite}\n"
             f"SEVİYE: MEB 5. Sınıf Müfredatı\n\n"
-            f"Daha önce sorulmuş benzer sorular (BUNLARDAN FARKLI OLACAK):\n{onceki_metinler}\n\n"
-            "Görevin: Yukarıda belirtilen üniteyle ilgili TAMAMEN ÖZGÜN, daha önce sorulmamış, yaratıcı 1 adet çoktan seçmeli test sorusu hazırlamaktır.\n\n"
-            "KESİN KURALLAR:\n"
-            "1. 'siklar' dizisinde tam olarak 4 adet seçenek olmalıdır.\n"
-            "2. 'siklar' içerisindeki her seçenek sorunun konusuna uygun GERÇEK metinlerden, sayılardan veya ifadelerden oluşmalıdır.\n"
-            "3. 'Seçenek A', 'Şık A', 'A şıkkı', 'Hiçbiri' gibi jenerik veya kalıplaşmış ifadeler KESİNLİKLE KULLANILAMAZ.\n"
-            "4. 'dogru' alanı, 'siklar' dizisi içindeki doğru cevabın BİREBİR METİN KOPYASI olmalıdır.\n"
-            "5. Soru açık, net, çelişkisiz ve 5. sınıf seviyesine tam uygun olmalıdır.\n"
+            f"Daha önce sorulan sorular (BUNLARLA BENZER VE AYNI OLMAMALIDIR):\n{gecmis_sorular_str}\n\n"
+            "GÖREV:\n"
+            "Yukarıdaki üniteyle ilgili TAMAMEN ÖZGÜN, çelişkisiz, MEB 5. sınıf seviyesine tam uygun 1 adet çoktan seçmeli test sorusu yaz.\n\n"
+            "ÇOK ÖNEMLİ KURALLAR:\n"
+            "1. SORU METNİ İÇİNDE DOĞRU CEVAP VEYA CEVABI BİLİNMEYİ KOLAYLAŞTIRAN HİÇBİR İPUCU OLMAMALIDIR!\n"
+            "2. 'siklar' dizisinde tam olarak 4 adet çeldirici ve dengeli seçenek bulunmalıdır.\n"
+            "3. Seçeneklerin uzunlukları ve üslupları birbirine yakın olmalıdır (Doğru cevap sırıtacak kadar uzun veya farklı olmamalıdır).\n"
+            "4. 'Seçenek A', 'Şık A', 'Hiçbiri', 'Hepsi' gibi jenerik ifadeler KULLANILAMAZ.\n"
+            "5. 'dogru' alanı, 'siklar' dizisindeki doğru şık metninin BİREBİR KOPYASI olmalıdır.\n"
         )
         
         response_schema = {
@@ -223,10 +224,9 @@ def gemini_soru_uret_ozgun(api_key, ders, unite, onceki_sorular=[]):
         config = types.GenerateContentConfig(
             response_mime_type="application/json",
             response_schema=response_schema,
-            temperature=0.95, # Yaratıcılık artırıldı
+            temperature=1.0,
         )
 
-        # Model ismi düzeltildi: gemini-1.5-flash
         response = client.models.generate_content(
             model="gemini-3.6-flash",
             contents=prompt,
@@ -239,10 +239,15 @@ def gemini_soru_uret_ozgun(api_key, ders, unite, onceki_sorular=[]):
         siklar = [str(s).strip() for s in veri.get("siklar", [])]
         dogru = str(veri.get("dogru", "")).strip()
 
+        # Doğrulama kontrolleri
         if len(siklar) != 4 or len(set(siklar)) != 4:
             return None
             
-        if any(jenerik in s.lower() for s in siklar for jenerik in ["seçenek", "şık", "şablon", "hiçbiri"]):
+        if any(jenerik in s.lower() for s in siklar for jenerik in ["seçenek", "şık", "şablon", "hiçbiri", "hepsi"]):
+            return None
+
+        # Doğru cevabın soru metninde geçip geçmediğini kontrol et
+        if len(dogru) > 3 and dogru.lower() in soru_metni.lower():
             return None
 
         if dogru not in siklar:
@@ -268,47 +273,60 @@ def gemini_soru_uret_ozgun(api_key, ders, unite, onceki_sorular=[]):
         return None
 
 # =========================================================
-# 4. YEDEK DİNAMİK ŞABLON MOTORU (GÖÖRSEL VE DERS ŞABLONLARI)
+# 4. YEDEK DİNAMİK ŞABLON MOTORU (GÖRSEL VE DERS ŞABLONLARI)
 # =========================================================
-def sablon_soru_uret(ders, unite):
+def sablon_soru_uret(ders, unite, onceki_sorular=[]):
     u_lower = unite.lower()
     
+    # Matematik İçin Dinamik Soru Üreteci
     if ders == "Matematik":
         if "geometrik" in u_lower or "açı" in u_lower:
-            aci = random.choice([30, 45, 60, 90, 120, 135, 150])
+            aci = random.choice([30, 45, 60, 75, 90, 105, 120, 135, 150])
             tur = "Dar Açı" if aci < 90 else ("Dik Açı" if aci == 90 else "Geniş Açı")
             siklar = ["Dar Açı", "Dik Açı", "Geniş Açı", "Doğru Açı"]
             random.shuffle(siklar)
             return {
                 "ders": ders, "unite": unite,
-                "soru": f"Yukarıdaki iletki görselinde ölçüsü verilen {aci}°'lik açı hangi açı türüne örnektir?",
-                "gorsel_svg": svg_iletki_aci_ciz_modern(aci), "siklar": siklar, "dogru": tur, "kaynak": "Dinamik Görsel Motoru"
+                "soru": f"Yukarıdaki iletkide gösterilen {aci}°'lik açı, açı türlerine göre hangisidir?",
+                "gorsel_svg": svg_iletki_aci_ciz_modern(aci), "siklar": siklar, "dogru": tur, "kaynak": "Dinamik Matematik Motoru"
             }
         elif "kesir" in u_lower:
-            payda = random.choice([4, 5, 6, 8])
+            payda = random.choice([4, 5, 6, 8, 10])
             pay = random.randint(1, payda - 1)
             dogru_cevap = f"{pay}/{payda}"
             siklar = [dogru_cevap, f"{payda-pay}/{payda}", f"{pay}/{payda+1}", f"{pay+1}/{payda}"]
             siklar = list(set(siklar))
             while len(siklar) < 4:
-                siklar.append(f"{random.randint(1,3)}/{payda}")
+                siklar.append(f"{random.randint(1,4)}/{payda}")
             random.shuffle(siklar)
             return {
                 "ders": ders, "unite": unite,
-                "soru": "Yukarıda eş parçalara bölünerek modellenen kesrin sayısal değeri aşağıdakilerden hangisidir?",
-                "gorsel_svg": svg_kesir_ciz_modern(pay, payda), "siklar": siklar, "dogru": dogru_cevap, "kaynak": "Dinamik Görsel Motoru"
+                "soru": "Yukarıdaki modelde boyalı bölgeye karşılık gelen kesir sayısı kaçtır?",
+                "gorsel_svg": svg_kesir_ciz_modern(pay, payda), "siklar": siklar, "dogru": dogru_cevap, "kaynak": "Dinamik Matematik Motoru"
             }
         else:
-            a, b = random.randint(1000, 9999), random.randint(100, 999)
-            toplam = a + b
-            siklar = [str(toplam), str(toplam + 10), str(toplam - 100), str(toplam + 5)]
+            a, b = random.randint(1200, 8900), random.randint(300, 950)
+            islem_turu = random.choice(["toplama", "cikarma"])
+            if islem_turu == "toplama":
+                sonuc = a + b
+                soru_metni = f"{a} + {b} işleminin sonucu kaçtır?"
+            else:
+                a = max(a, b) + random.randint(100, 500)
+                sonuc = a - b
+                soru_metni = f"{a} - {b} işleminin sonucu kaçtır?"
+            
+            siklar = [str(sonuc), str(sonuc + 10), str(sonuc - 10), str(sonuc + 100)]
+            siklar = list(set(siklar))
+            while len(siklar) < 4:
+                siklar.append(str(sonuc + random.randint(1, 50)))
             random.shuffle(siklar)
             return {
                 "ders": ders, "unite": unite,
-                "soru": f"{a} + {b} işleminin sonucu kaçtır?",
-                "gorsel_svg": None, "siklar": siklar, "dogru": str(toplam), "kaynak": "Dinamik Matematik Motoru"
+                "soru": soru_metni,
+                "gorsel_svg": None, "siklar": siklar, "dogru": str(sonuc), "kaynak": "Dinamik Hesap Motoru"
             }
 
+    # Fen Bilimleri İçin Dinamik Soru Üreteci
     elif ders == "Fen Bilimleri":
         if "güneş" in u_lower or "ay" in u_lower:
             evreler = ["Yeni Ay", "İlk Dördün", "Dolunay", "Son Dördün"]
@@ -317,40 +335,44 @@ def sablon_soru_uret(ders, unite):
             random.shuffle(siklar)
             return {
                 "ders": ders, "unite": unite,
-                "soru": "Görselde verilen Ay'ın ana evresi aşağıdakilerden hangisidir?",
-                "gorsel_svg": svg_ay_evresi_ciz_modern(secilen_evre), "siklar": siklar, "dogru": secilen_evre, "kaynak": "Dinamik Görsel Motoru"
+                "soru": "Görselde görünümü verilen Ay'ın ana evresi aşağıdakilerden hangisidir?",
+                "gorsel_svg": svg_ay_evresi_ciz_modern(secilen_evre), "siklar": siklar, "dogru": secilen_evre, "kaynak": "Dinamik Fen Motoru"
             }
 
-    # Rastgele Farklı Soru Şablonları (Tekrarı Önlemek İçin Çeşitlendirildi)
+    # Çeşitlendirilmiş Genel Soru Havuz Kalıpları
     havuz = {
         "Türkçe": [
-            ("Aşağıdaki cümlelerin hangisinde mecaz anlamlı bir sözcük kullanılmıştır?", ["Bugün bize karşı çok soğuk davrandı.", "Sıcak çayı yudumlayarak kitap okudu.", "Kutuyu odanın köşesine koydu.", "Ağacın yaprakları sararmıştı."], "Bugün bize karşı çok soğuk davrandı."),
-            ("Aşağıdaki sözcüklerden hangisi türemiş yapılıdır?", ["Simitçi", "Masa", "Kitap", "Kalem"], "Simitçi"),
-            ("Hangi cümlede yazım hatası yapılmıştır?", ["Ahmet'de bizimle gelecek.", "Ankara'ya otobüsle gittik.", "Her şey yolunda gidiyor.", "Birkaç gün sonra geleceğim."], "Ahmet'de bizimle gelecek.")
+            ("Aşağıdaki cümlelerin hangisinde altı çizili sözcük mecaz anlamıyla kullanılmıştır?", ["Sözleriyle kalbimi kırdı.", "Kutuyu yere bıraktı.", "Pencereden dışarı baktı.", "Yemeğe biraz tuz ekledi."], "Sözleriyle kalbimi kırdı."),
+            ("Hangisi türemiş yapılı bir sözcüktür?", ["Gözlük", "Masa", "Kalem", "Kitap"], "Gözlük"),
+            ("Aşağıdakilerden hangisi bir duygu bildirmektedir?", ["Sonunda ödevlerimi bitirebildim, çok rahatladım!", "Yarın saat sekizde okulda olacağım.", "Kitabı sıranın üzerine bıraktım.", "Hava bugün oldukça bulutluydu."], "Sonunda ödevlerimi bitirebildim, çok rahatladım!")
         ],
         "Sosyal Bilgiler": [
-            ("Aşağıdakilerden hangisi bilinçli bir tüketicinin yapması gereken davranıştır?", ["Ürünün son kullanma tarihini kontrol etmek", "Ambalajı yırtık ürünleri satın almak", "Sadece ucuz olduğu için kalitesiz ürün almak", "Alışveriş sonrası fiş almamak"], "Ürünün son kullanma tarihini kontrol etmek"),
-            ("Haritalarda mavi renk neyi temsil eder?", ["Su kaynaklarını (Deniz, Göl)", "Dağları", "Ormanları", "Ovaları"], "Su kaynaklarını (Deniz, Göl)")
+            ("Bilinçli bir tüketicinin yapması gereken en uygun davranış hangisidir?", ["Alışveriş sonrasında satış fişi almak", "Ürünün sadece ambalajına bakarak karar vermek", "Son kullanma tarihini dikkate almamak", "Sadece ucuz olan ürünleri tercih etmek"], "Alışveriş sonrasında satış fişi almak"),
+            ("Fiziki haritalarda yeşil renkler hangi yeryüzü şeklini gösterir?", ["Deniz seviyesine yakın alçak yerleri", "Yüksek dağ zirvelerini", "Derin göl tabanlarını", "Kutupsal buzulları"], "Deniz seviyesine yakın alçak yerleri")
         ],
         "Din Kültürü ve Ahlak Bilgisi": [
-            ("Allah'ın her şeyi bilmesi anlamına gelen sıfatı hangisidir?", ["İlim", "Kudret", "Basar", "Tekvin"], "İlim"),
-            ("Peygamberimizin doğduğu şehir hangisidir?", ["Mekke", "Medine", "Kudüs", "Taif"], "Mekke")
+            ("Yüce Allah'ın her şeyi görmesi anlamına gelen sıfatı hangisidir?", ["Basar", "İlim", "Kudret", "Kelam"], "Basar"),
+            ("Aşağıdakilerden hangisi nezaket kurallarına uygun bir davranıştır?", ["Konuşan birinin sözünü kesmemek", "Eşyaları izinsiz kullanmak", "Başkalarının özel alanlarına girmek", "Toplu alanlarda yüksek sesle konuşmak"], "Konuşan birinin sözünü kesmemek")
         ],
         "İngilizce": [
-            ("Which of the following is a school subject?", ["Maths", "Hospital", "Bakery", "Doctor"], "Maths"),
-            ("Where do you go to buy bread?", ["Bakery", "Library", "Cinema", "Park"], "Bakery")
+            ("Which option is a school subject?", ["Science", "Hospital", "Bakery", "Doctor"], "Science"),
+            ("Where do you go to see animals?", ["Zoo", "Pharmacy", "Library", "Cinema"], "Zoo")
         ]
     }
 
-    secenekler = havuz.get(ders, [("Aşağıdakilerden hangisi doğrudur?", ["Doğru Seçenek", "Yanlış 1", "Yanlış 2", "Yanlış 3"], "Doğru Seçenek")])
-    secilen = random.choice(secenekler)
+    secenekler = havuz.get(ders, [("Hangisi temel haklarımızdan biridir?", ["Eğitim hakkı", "Kendi kendine kural koyma", "Başkalarına zarar verme", "İstediği saatte uyuma"], "Eğitim hakkı")])
+    
+    # Kullanılmamış bir soru seçmeye çalış
+    kullanilabilir = [s for s in secenekler if s[0] not in onceki_sorular]
+    secilen = random.choice(kullanilabilir) if kullanilabilir else random.choice(secenekler)
+    
     siklar = secilen[1].copy()
     random.shuffle(siklar)
 
     return {
         "ders": ders, "unite": unite,
         "soru": secilen[0],
-        "gorsel_svg": None, "siklar": siklar, "dogru": secilen[2], "kaynak": "Dinamik Havuz Motoru"
+        "gorsel_svg": None, "siklar": siklar, "dogru": secilen[2], "kaynak": "Dinamik Şablon Motoru"
     }
 
 def soru_hazirla(api_key, ders, unite, onceki_sorular):
@@ -359,8 +381,7 @@ def soru_hazirla(api_key, ders, unite, onceki_sorular):
         if ai_soru and ai_soru["soru"] not in onceki_sorular:
             return ai_soru
             
-    # Eğer API başarısız olursa veya aynı soruyu üretirse yedek şablondan üret
-    return sablon_soru_uret(ders, unite)
+    return sablon_soru_uret(ders, unite, onceki_sorular)
 
 # =========================================================
 # 5. STREAMLIT ARAYÜZÜ
@@ -390,23 +411,23 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] 
     if secilen_uniteler:
         st.info(f"Soru bankasından **{len(secilen_uniteler)}** ünite seçildi. Soru başına **80 saniye** süre tanımlanacaktır.")
         if st.button("🚀 Özgün Soru Havuzunu Üret", type="primary"):
-            with st.spinner("Özgün sorular üretiliyor ve kontrol ediliyor..."):
+            with st.spinner("Özgün ve benzersiz sorular üretiliyor..."):
                 ham_sorular = []
                 uretilen_metinler = []
                 
                 for i in range(soru_sayisi):
                     h_ders, h_unite = secilen_uniteler[i % len(secilen_uniteler)]
                     
-                    # Benzersiz soru elde edene kadar max 3 kez dene
+                    # Benzersiz soru üretilene kadar dene
                     yeni_soru = None
-                    for _ in range(3):
+                    for _ in range(4):
                         s = soru_hazirla(API_KEY, h_ders, h_unite, uretilen_metinler)
                         if s["soru"] not in uretilen_metinler:
                             yeni_soru = s
                             break
                     
                     if not yeni_soru:
-                        yeni_soru = sablon_soru_uret(h_ders, h_unite)
+                        yeni_soru = sablon_soru_uret(h_ders, h_unite, uretilen_metinler)
 
                     uretilen_metinler.append(yeni_soru["soru"])
                     ham_sorular.append(yeni_soru)
@@ -424,7 +445,7 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] 
 # AŞAMA 2: TESTİ BAŞLAT EKRANI
 # ---------------------------------------------------------
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.success("✅ Tüm sorular ve şıklar özgün şekilde hazırlandı ve doğrulandı!")
+    st.success("✅ Tüm sorular özgün şekilde oluşturuldu!")
     
     toplam_sn = st.session_state["toplam_sure_sn"]
     dakika = toplam_sn // 60
