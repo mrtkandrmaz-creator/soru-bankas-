@@ -78,10 +78,10 @@ MEB_MUFREDAT = {
         "Unit 4: My Daily Routine"
     ],
     "🏆 Bilgi Yarışması": [
-        "1. Kategori: Ülke Başkentleri ve Coğrafya",
-        "2. Kategori: Dünya ve Yöresel Mutfaklar",
-        "3. Kategori: Güncel Konular ve Genel Kültür",
-        "4. Kategori: Ülkeler, Bayraklar ve Kültürler"
+        "1. Kategori: Dünya Başkentleri ve Coğrafya",
+        "2. Kategori: Türk Mutfağı ve Yöresel Lezzetler",
+        "3. Kategori: Genel Kültür ve Doğa Harikaları",
+        "4. Kategori: Tarih, Kültür ve İlginç Bilgiler"
     ]
 }
 
@@ -140,12 +140,25 @@ def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
     '''
 
 # =========================================================
-# 4. SORU ÜRETME MOTORU (TAM UYUMLU VE DOĞRULANMIŞ)
+# 4. SORU ÜRETME MOTORU (KESİN UYUMLU VE ZENGİN HAVUZ)
 # =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz"]
 NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon"]
-YEMEKLER = ["Mantı", "Çiğ Köfte", "Cağ Kebabı", "Tantuni", "Künefe", "Yağlama", "Baklava", "Kuru Fasulye", "İskender", "Lahmacun", "Pide"]
-SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep", "Konya", "Samsun", "Adana"]
+
+YEMEK_SEHIR_LISTESI = [
+    ("Künefe", "Hatay"),
+    ("Cağ Kebabı", "Erzurum"),
+    ("İskender Kebap", "Bursa"),
+    ("Mantı", "Kayseri"),
+    ("Baklava", "Gaziantep"),
+    ("Tantuni", "Mersin"),
+    ("Etli Ekmek", "Konya"),
+    ("Hamsi Tava", "Trabzon"),
+    ("Pide", "Samsun"),
+    ("Çiğ Köfte", "Şanlıurfa")
+]
+
+ALL_SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep", "Konya", "Samsun", "Adana", "Hatay", "Mersin", "Kayseri", "Şanlıurfa"]
 
 def dinamik_soru_uretici(ders, unite):
     u_low = unite.lower()
@@ -259,7 +272,6 @@ def dinamik_soru_uretici(ders, unite):
                 svg = svg_dinamik_ucgen_ciz("dik", etiketler, koseler)
             else:
                 genis_aci = 120
-                kalan = 60
                 dar1 = 30
                 dar2 = 30
                 q = f"Şekilde verilen geniş açılı {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {genis_aci}° ve m({koseler[1]}) = {dar1}° olduğuna göre <b>verilmeyen m({koseler[2]}) kaç derecedir?</b>"
@@ -374,24 +386,43 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "Get up", ["Go to bed", "Have dinner", "Do homework"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    else: # 🏆 Bilgi Yarışması
+    else: # 🏆 Bilgi Yarışması (Genişletilmiş Benzersiz Havuz)
         if "1. kategori" in u_low:
-            q = f"Fransa'nın başkenti olan Avrupa şehri hangisidir?"
-            ans, celd = "Paris", ["Londra", "Roma", "Madrid"]
+            baskentler = [
+                ("Fransa", "Paris"), ("İtalya", "Roma"), ("Japonya", "Tokyo"), 
+                ("Almanya", "Berlin"), ("İspanya", "Madrid"), ("İngiltere", "Londra"),
+                ("Yunanistan", "Atina"), ("Rusya", "Moskova"), ("Azerbaycan", "Bakü")
+            ]
+            ulke, dogru_baskent = random.choice(baskentler)
+            q = f"<b>{ulke}</b> ülkesinin başkenti olan dünya şehri aşağıdakilerden hangisidir?"
+            ans = dogru_baskent
+            celd = [b for u, b in baskentler if b != ans][:3]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+
         elif "2. kategori" in u_low:
-            sehir_yemek = random.choice(list(zip(SEHIRLER, YEMEKLER)))
-            q = f"Ülkemizin eşsiz lezzetlerinden biri olan <b>{sehir_yemek[1]}</b> hangi ilimizle özdeşleşmiştir?"
-            ans = sehir_yemek[0]
-            celd = [s for s in SEHIRLER if s != ans][:3]
+            yemek, dogru_sehir = random.choice(YEMEK_SEHIR_LISTESI)
+            q = f"Ülkemizin eşsiz lezzetlerinden biri olan <b>{yemek}</b> hangi ilimizle özdeşleşmiştir?"
+            ans = dogru_sehir
+            celd = [s for s in ALL_SEHIRLER if s != ans][:3]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+
         elif "3. kategori" in u_low:
-            q = f"Dünyanın en uzun nehirlerinden biri olarak bilinen Nil Nehri hangi kıtada yer alır?"
-            ans, celd = "Afrika", ["Asya", "Avrupa", "Amerika"]
+            genel_kultur = [
+                ("Dünyanın en uzun nehri olarak bilinen Nil Nehri hangi kıtadadır?", "Afrika", ["Asya", "Avrupa", "Amerika"]),
+                ("Dünyanın en yüksek dağı olan Everest Dağı hangi kıtada yer alır?", "Asya", ["Afrika", "Avrupa", "Antarktika"]),
+                ("Dünya üzerindeki en büyük okyanus hangisidir?", "Pasifik Okyanusu", ["Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"]),
+                ("Türkiye'nin komşularından biri olan ve doğuda yer alan devlet hangisidir?", "İran", ["Yunanistan", "Bulgaristan", "İtalya"])
+            ]
+            q, ans, celd = random.choice(genel_kultur)
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+
         else:
-            q = f"Türkiye Cumhuriyeti'nin başkenti neresidir?"
-            ans, celd = "Ankara", ["İstanbul", "İzmir", "Bursa"]
+            tarih_bilgi = [
+                ("Türkiye Cumhuriyeti'nin kurucusu ve ilk cumhurbaşkanı kimdir?", "Mustafa Kemal Atatürk", ["Fatih Sultan Mehmet", "İsmet İnönü", "Kanuni Sultan Süleyman"]),
+                ("Türkiye Cumhuriyeti'nin başkenti neresidir?", "Ankara", ["İstanbul", "İzmir", "Bursa"]),
+                ("Türk bayrağındaki ay ve yıldız hangi renklerdedir?", "Kırmızı üzerine Beyaz", ["Mavi üzerine Beyaz", "Yeşil üzerine Sarı", "Siyah üzerine Kırmızı"])
+            ]
+            q, ans, celd = random.choice(tarih_bilgi)
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
