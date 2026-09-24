@@ -5,7 +5,7 @@ import time
 import math
 import hashlib
 
-st.set_page_config(page_title="MEB 5. Sınıf Dinamik Soru Motoru", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="MEB 5. Sınıf Dinamik Soru & Bilgi Yarışması Motoru", page_icon="🎓", layout="wide")
 
 # =========================================================
 # 1. SESSION STATE BAŞLATMA
@@ -27,8 +27,14 @@ if "baslangic_zamani" not in st.session_state:
 if "toplam_sure_sn" not in st.session_state:
     st.session_state["toplam_sure_sn"] = 0
 
-# MEB MÜFREDATI
+# MÜFREDAT VE BİLGİ YARIŞMASI LİSTESİ
 MEB_MUFREDAT = {
+    "🏆 Bilgi Yarışması": [
+        "1. Kategori: Ülke Başkentleri ve Coğrafya",
+        "2. Kategori: Dünya ve Yöresel Mutfaklar",
+        "3. Kategori: Güncel Konular ve Genel Kültür",
+        "4. Kategori: Ülkeler, Bayraklar ve Kültürler"
+    ],
     "Matematik": [
         "1. Ünite: Doğal Sayılar ve Doğal Sayılarla İşlemler",
         "2. Ünite: Kesirler ve Kesirlerle İşlemler",
@@ -105,16 +111,94 @@ def svg_dinamik_ucgen_ciz(a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
     '''
 
 # =========================================================
-# 3. GELİŞMİŞ ALT KATEGORİLİ DİNAMİK SORU MOTORU
+# 3. GELİŞMİŞ BİLGİ YARIŞMASI VE DERS MOTORU
 # =========================================================
+def bilgi_yarismasi_engine(unite):
+    u_low = unite.lower()
+    
+    # 1. ALT KATEGORİ: ÜLKE BAŞKENTLERİ VE COĞRAFYA
+    if "başkent" in u_low or "coğrafya" in u_low:
+        havuz = [
+            ("Fransa", "Paris", ["Lyon", "Marsilya", "Nice"]),
+            ("Almanya", "Berlin", ["Münih", "Frankfurt", "Hamburg"]),
+            ("Japonya", "Tokyo", ["Kyoto", "Osaka", "Hiroşima"]),
+            ("İtalya", "Roma", ["Milano", "Venedik", "Napoli"]),
+            ("İspanya", "Madrid", ["Barselona", "Sevilla", "Valensiya"]),
+            ("İngiltere", "Londra", ["Manchester", "Liverpool", "Birmingham"]),
+            ("Kanada", "Ottawa", ["Toronto", "Vancouver", "Montreal"]),
+            ("Brezilya", "Brasilia", ["Rio de Janeiro", "Sao Paulo", "Salvador"]),
+            ("Güney Kore", "Seul", ["Busan", "Incheon", "Daegu"]),
+            ("Mısır", "Kahire", ["İskenderiye", "Lüksor", "Gize"]),
+            ("Avustralya", "Canberra", ["Sidney", "Melbourne", "Brisbane"]),
+            ("Arjantin", "Buenos Aires", ["Cordoba", "Rosario", "Mendoza"])
+        ]
+        secilen = random.choice(havuz)
+        soru_tipi = random.choice(["başkent_sor", "ülke_sor"])
+        
+        if soru_tipi == "başkent_sor":
+            q = f"<b>{secilen[0]}</b> ülkesinin başkenti aşağıdakilerden hangisidir?"
+            ans = secilen[1]
+            celd = secilen[2]
+        else:
+            q = f"Başkenti <b>{secilen[1]}</b> olan ülke aşağıdakilerden hangisidir?"
+            ans = secilen[0]
+            diger_ulkele = ["Portekiz", "Hollanda", "Belçika", "İsveç", "Norveç", "Yunanistan", "Polonya"]
+            celd = random.sample(diger_ulkele, 3)
+            
+        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+
+    # 2. ALT KATEGORİ: DÜNYA VE YÖRESEL MUTFAKLAR
+    elif "mutfak" in u_low:
+        havuz = [
+            ("Çiğ Köfte ve Tescilli Baklava", "Gaziantep", ["Kayseri", "Adana", "Trabzon"]),
+            ("Cağ Kebabı", "Erzurum", ["Kars", "Erzincan", "Ağrı"]),
+            ("Mantı ve Yağlama", "Kayseri", ["Konya", "Sivas", "Yozgat"]),
+            ("Tantuni", "Mersin", ["Adana", "Hatay", "Antalya"]),
+            ("Künefe ve Kağıt Kebabı", "Hatay", ["Gaziantep", "Şanlıurfa", "Mardin"]),
+            ("Pizza ve Makarna çeşitleri", "İtalya", ["Fransa", "İspanya", "Yunanistan"]),
+            ("Sushi ve Ramen", "Japonya", ["Çin", "Güney Kore", "Tayland"]),
+            ("Tako (Taco) ve Burrito", "Meksika", ["Brezilya", "Arjantin", "Şili"]),
+            ("Kruvazan ve Makaron", "Fransa", ["Belçika", "Almanya", "İsviçre"])
+        ]
+        secilen = random.choice(havuz)
+        q = f"<b>{secilen[0]}</b> lezzeti ile ünlü şehir/ülke aşağıdakilerden hangisidir?"
+        ans = secilen[1]
+        celd = secilen[2]
+        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+
+    # 3. ALT KATEGORİ: GÜNCEL KONULAR VE GENEL KÜLTÜR
+    elif "güncel" in u_low or "genel kültür" in u_low:
+        havuz = [
+            ("Dünyanın en uzun nehri hangisidir?", "Nil Nehri", ["Amazon Nehri", "Tuna Nehri", "Fırat Nehri"]),
+            ("Kendi etrafında en hızlı dönen gezegen hangisidir?", "Jüpiter", ["Mars", "Venüs", "Dünya"]),
+            ("İstiklal Marşı'mızın şairi kimdir?", "Mehmet Âkif Ersoy", ["Ziya Gökalp", "Yahya Kemal", "Namık Kemal"]),
+            ("Dünyanın en büyük okyanusu hangisidir?", "Büyük Okyanus (Pasifik)", ["Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"]),
+            ("Mona Lisa tablosunu çizen ünlü ressam kimdir?", "Leonardo da Vinci", ["Pablo Picasso", "Vincent van Gogh", "Salvador Dali"])
+        ]
+        secilen = random.choice(havuz)
+        return {"soru": secilen[0], "siklar": [secilen[1]] + secilen[2], "dogru": secilen[1], "gorsel_svg": None}
+
+    # 4. ALT KATEGORİ: ÜLKELER, BAYRAKLAR VE KÜLTÜRLER
+    else:
+        havuz = [
+            ("Japonya bayrağının kırmızı dairesi neyi temsil eder?", "Güneş", ["Ay", "Yıldız", "Okyanus"]),
+            ("Para birimi 'Yen' olan ülke hangisidir?", "Japonya", ["Çin", "Hindistan", "Tayland"]),
+            ("Para birimi 'Euro' kullanan ülke hangisidir?", "Almanya", ["İngiltere", "ABD", "Japonya"]),
+            ("Kangaroo ve Koala hayvanlarının ana vatanı olan kıta/ülke neresidir?", "Avustralya", ["Afrika", "Güney Amerika", "Asya"])
+        ]
+        secilen = random.choice(havuz)
+        return {"soru": secilen[0], "siklar": [secilen[1]] + secilen[2], "dogru": secilen[1], "gorsel_svg": None}
+
+
 def tum_dersler_alt_kategori_engine(ders, unite):
+    if ders == "🏆 Bilgi Yarışması":
+        return bilgi_yarismasi_engine(unite)
+
     isimler = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin"]
     u_low = unite.lower()
     kisi = random.choice(isimler)
     
-    # ---------------------------------------------------------
     # MATEMATİK
-    # ---------------------------------------------------------
     if ders == "Matematik":
         if "üçgen" in u_low or "açı" in u_low:
             koseler = random.choice([("A", "B", "C"), ("K", "L", "M"), ("P", "R", "S"), ("D", "E", "F")])
@@ -175,9 +259,7 @@ def tum_dersler_alt_kategori_engine(ders, unite):
             celd = [str(pay), str(payda/pay), "0.00" + str(pay)]
             return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": None}
 
-    # ---------------------------------------------------------
     # FEN BİLİMLERİ
-    # ---------------------------------------------------------
     elif ders == "Fen Bilimleri":
         if "güneş" in u_low:
             sub = random.choice(["kat_oran", "sicaklik", "hareket"])
@@ -195,9 +277,7 @@ def tum_dersler_alt_kategori_engine(ders, unite):
             ans, celd = "Miktarı değiştirilen etken", ["Sabit tutulan etken", "Ölçülen sonuç", "Gözlemlenmeyen yapı"]
         return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": None}
 
-    # ---------------------------------------------------------
     # TÜRKÇE
-    # ---------------------------------------------------------
     elif ders == "Türkçe":
         sub = random.choice(["eş_anlam", "zıt_anlam", "mecaz"])
         sözlük = [("Mektep", "Okul", "Öğrenci"), ("Muallim", "Öğretmen", "Sınıf"), ("Hediye", "Armağan", "Eşya")]
@@ -210,9 +290,7 @@ def tum_dersler_alt_kategori_engine(ders, unite):
             ans, celd = "Bana karşı çok soğuk davrandı.", ["Hava bugün çok soğuk.", "Çayını soğuk içti.", "Soğuk su hasta eder."]
         return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": None}
 
-    # ---------------------------------------------------------
-    # SOSYAL BİLGİLER / DİN KÜLTÜRÜ / İNGİLİZCE
-    # ---------------------------------------------------------
+    # SOSYAL / DİN / İNGİLİZCE
     elif ders == "Sosyal Bilgiler":
         q = f"{kisi}, {unite} konusunda hak ve sorumluluklarını öğrenmektedir. Hangisi bir sorumluluk örneğidir?"
         ans, celd = "Odasını temiz tutmak", ["Eğitim almak", "Sağlık hizmeti almak", "Oyun oynamak"]
@@ -249,17 +327,15 @@ def kesin_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
     for ders, uniteler in ders_gruplari.items():
         uretilen_ders_sorusu = 0
         deneme = 0
-        while uretilen_ders_sorusu < her_ders_icin_sayi and deneme < 400:
+        while uretilen_ders_sorusu < her_ders_icin_sayi and deneme < 500:
             deneme += 1
             secilen_u = random.choice(uniteler)
             s = tum_dersler_alt_kategori_engine(ders, secilen_u)
             s["ders"] = ders
             s["unite"] = secilen_u
             
-            # Soru Şıkları Karıştır
             random.shuffle(s["siklar"])
 
-            # SHA-256 Sıkı Hash Kontrolü
             fingerprint = hashlib.sha256((s["soru"] + s["dogru"] + "".join(s["siklar"])).encode('utf-8')).hexdigest()
             
             if fingerprint not in hash_set and len(s["siklar"]) == 4:
@@ -272,14 +348,14 @@ def kesin_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
 # =========================================================
 # 5. STREAMLIT ARAYÜZ
 # =========================================================
-st.title("🎓 MEB 5. Sınıf Dinamik Soru Bankası")
+st.title("🎓 MEB 5. Sınıf Dinamik Soru Bankası & Bilgi Yarışması")
 
-st.sidebar.header("⚙️ Müfredat ve Soru Ayarları")
+st.sidebar.header("⚙️ Müfredat ve Yarışma Ayarları")
 secilen_uniteler = []
 
 for ders_adi, uniteler in MEB_MUFREDAT.items():
-    with st.sidebar.expander(f"📚 {ders_adi}", expanded=False):
-        select_all = st.checkbox(f"Tüm {ders_adi} Üniteleri", key=f"all_{ders_adi}", disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"])
+    with st.sidebar.expander(f"{ders_adi}", expanded=False):
+        select_all = st.checkbox(f"Tümünü Seç", key=f"all_{ders_adi}", disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"])
         for idx, u in enumerate(uniteler):
             cb = st.checkbox(u, value=select_all, key=f"cb_{ders_adi}_{idx}", disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"])
             if cb:
@@ -290,16 +366,16 @@ soru_sayisi = st.sidebar.number_input("Toplam Soru Sayısı:", min_value=1, max_
 
 st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
-    if st.sidebar.button("🚀 Test Üret", type="primary", use_container_width=True):
+    if st.sidebar.button("🚀 Soru Üret / Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            with st.spinner("Sorular üretiliyor..."):
+            with st.spinner("Soru havuzu üretiliyor..."):
                 sorular = kesin_benzersiz_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
                 st.session_state["toplam_sure_sn"] = len(sorular) * 90
                 st.session_state["sorular_hazir"] = True
                 st.rerun()
         else:
-            st.sidebar.error("⚠️ Lütfen en az 1 ünite seçin!")
+            st.sidebar.error("⚠️ Lütfen en az 1 ders/kategori seçin!")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🔄 Yeniden Üret", use_container_width=True):
@@ -308,17 +384,17 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 
 # --- ARAYÜZ AKIŞI ---
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.subheader("📋 Soru Üretim Paneli")
+    st.subheader("📋 Soru & Yarışma Paneli")
     if secilen_uniteler:
-        st.info(f"Seçilen Ünite Sayısı: **{len(secilen_uniteler)}**. Sol menüden **'Test Üret'** butonuna basınız.")
+        st.info(f"Seçilen Kategori/Ünite Sayısı: **{len(secilen_uniteler)}**. Sol menüdeki **'Soru Üret / Başlat'** butonuna basınız.")
     else:
-        st.warning("⚠️ Lütfen sol menüden ders ve ünite seçiniz.")
+        st.warning("⚠️ Lütfen sol menüden ders veya Bilgi Yarışması kategorisi seçiniz.")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.success("✅ Sorular başarıyla üretildi!")
     st.markdown(f"**Toplam Soru Sayısı:** {len(st.session_state['soru_listesi'])}")
     
-    if st.button("⏱️ Testi Başlat", type="primary"):
+    if st.button("⏱️ Başlat", type="primary"):
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
         st.session_state["kullanici_cevaplari"] = {}
@@ -342,9 +418,8 @@ elif st.session_state["test_aktif"]:
     c_left.caption(f"📌 {q['ders']} - {q['unite']}")
     c_right.metric("⏳ Kalan Süre", f"{kalan_sure // 60:02d}:{kalan_sure % 60:02d}")
 
-    st.markdown(f"### **Soru {idx + 1}:**\n{q['soru']}")
+    st.markdown(f"### **Soru {idx + 1}:**\n{q['soru']}", unsafe_allow_html=True)
 
-    # Görsel Varsa Çiz
     if q.get("gorsel_svg"):
         st.components.v1.html(q["gorsel_svg"], height=145)
 
@@ -366,14 +441,14 @@ elif st.session_state["test_aktif"]:
             st.session_state["mevcut_soru_index"] += 1
             st.rerun()
     else:
-        if b2.button("🏁 Testi Bitir", type="primary"):
+        if b2.button("🏁 Bitir", type="primary"):
             st.session_state["test_aktif"] = False
             st.session_state["test_bitti"] = True
             st.rerun()
 
 elif st.session_state["test_bitti"]:
     st.balloons()
-    st.header("📊 Test Sonu Karnesi")
+    st.header("📊 Sonuç Karnesi")
     
     toplam = len(st.session_state["soru_listesi"])
     dogru = sum(1 for i, q in enumerate(st.session_state["soru_listesi"]) if st.session_state["kullanici_cevaplari"].get(i) == q["dogru"])
@@ -381,7 +456,7 @@ elif st.session_state["test_bitti"]:
     st.metric("Doğru / Toplam", f"{dogru} / {toplam}")
     st.progress(dogru / toplam if toplam > 0 else 0)
     
-    if st.button("🔄 Yeni Test Yap"):
+    if st.button("🔄 Yeni Yarışma / Test Yap"):
         st.session_state["sorular_hazir"] = False
         st.session_state["test_bitti"] = False
         st.session_state["test_aktif"] = False
