@@ -264,7 +264,7 @@ def devasa_sablon_engine(ders, unite):
         # Genel Sosyal / Din / İngilizce Kalıpları
         kisi = random.choice(isimler)
         sehir = random.choice(sehirler)
-         generic_qs = [
+        generic_qs = [
             (f"{kisi}, {sehir} gezisinde tarihi ve doğal güzellikleri fotoğraflamıştır. Hangisi doğal bir varlıktır?", "Peri Bacaları", ["Sümela Manastırı", "Topkapı Sarayı", "Galata Kulesi"]),
             ("Bilinçli bir tüketicinin alışveriş sırasında yapması gereken ilk davranış nedir?", "Ürünün son kullanma tarihini kontrol etmek", ["En pahalı ürünü almak", "Reklamı yapılanı seçmek", "Ambalajı yırtık ürünü almak"]),
             ("Allah'ın her şeyi işitmesi anlamına gelen sıfat hangisidir?", "Semi", ["İlim", "Basar", "Kudret"])
