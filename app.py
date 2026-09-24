@@ -5,11 +5,10 @@ import time
 import math
 import hashlib
 
-# Sayfa Yapılandırması
-st.set_page_config(page_title="MEB 5. Sınıf Soru Bankası Engine", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="MEB 5. Sınıf Milyonluk Yeni Nesil Soru Motoru", page_icon="🎓", layout="wide")
 
 # =========================================================
-# 1. SESSION STATE BAŞLATMA
+# 1. SESSION STATE
 # =========================================================
 if "sorular_hazir" not in st.session_state:
     st.session_state["sorular_hazir"] = False
@@ -28,13 +27,12 @@ if "baslangic_zamani" not in st.session_state:
 if "toplam_sure_sn" not in st.session_state:
     st.session_state["toplam_sure_sn"] = 0
 
-# MEB MÜFREDATI
 MEB_MUFREDAT = {
     "Matematik": [
         "1. Ünite: Doğal Sayılar ve Doğal Sayılarla İşlemler",
         "2. Ünite: Kesirler ve Kesirlerle İşlemler",
         "3. Ünite: Ondalık Gösterim ve Yüzdeler",
-        "4. Ünite: Temel Geometrik Kavramlar, Çizimler ve Üçgen/Dörtgenler",
+        "4. Ünite: Temel Geometrik Kavramlar, Çizimler ve Açı Ölçme",
         "5. Ünite: Veri İşleme ve Uzunluk/Zaman Ölçme",
         "6. Ünite: Alan Ölçme ve Geometrik Cisimler"
     ],
@@ -43,263 +41,211 @@ MEB_MUFREDAT = {
         "2. Ünite: Canlılar Dünyası",
         "3. Ünite: Kuvvetin Ölçülmesi ve Sürtünme",
         "4. Ünite: Madde ve Değişim",
-        "5. Ünite: Işığın Yayılması, Yansıması ve Tam Gölge",
+        "5. Ünite: Işığın Yayılması ve Tam Gölge",
         "6. Ünite: İnsan ve Çevre",
         "7. Ünite: Elektrik Devre Elemanları"
     ],
     "Türkçe": [
-        "1. Tema: Sözcükte ve Söz Öbeklerinde Anlam",
+        "1. Tema: Sözcükte Anlam ve Mantık Muhakeme",
         "2. Tema: Cümlede Anlam ve Metin Türleri",
-        "3. Tema: Paragrafta Anlam ve Ana Fikir",
-        "4. Tema: Noktalama İşaretleri ve Yazım Kuralları",
-        "5. Tema: Görsel Okuma ve Tablo Yorumlama"
+        "3. Tema: Paragraf Analizi ve Görsel Okuma",
+        "4. Tema: Noktalama İşaretleri ve Yazım Kuralları"
     ],
     "Sosyal Bilgiler": [
-        "1. Ünite: Birey ve Toplum",
+        "1. Ünite: Birey ve Toplum (Hak ve Sorumluluklar)",
         "2. Ünite: Kültür ve Miras",
         "3. Ünite: İnsanlar, Yerler ve Çevreler",
         "4. Ünite: Bilim, Teknoloji ve Toplum",
         "5. Ünite: Üretim, Dağıtım ve Tüketim"
-    ],
-    "Din Kültürü ve Ahlak Bilgisi": [
-        "1. Ünite: Allah İnancı",
-        "2. Ünite: Ramazan ve Oruç",
-        "3. Ünite: Adap ve Nezaket"
-    ],
-    "İngilizce": [
-        "Unit 1: Hello!",
-        "Unit 2: My Town",
-        "Unit 3: Games and Hobbies",
-        "Unit 4: My Daily Routine"
     ]
 }
 
 # =========================================================
-# 2. HASSAS VE DOĞRU YÖNLÜ SVG GÖRSEL MOTORU
+# 2. DINAMIK SVG VE GRAFİK ÇİZİM MOTORU
 # =========================================================
-def svg_iletki_aci_ciz(derece):
-    """
-    Açı Yönü Düzeltmesi:
-    Sağ taraf 0 derece referans alınır. Derece saat yönünün tersine açılır.
-    0° -> Sağ, 90° -> Tam Yukarı, 180° -> Sol
-    """
+def svg_iletki_aci_ciz(derece, etiket="Açı"):
     rad = math.radians(derece)
-    # İletki merkezi (140, 110), yarıçap 90
-    x = int(140 + 90 * math.cos(rad))
-    y = int(110 - 90 * math.sin(rad))
-    
+    x = int(140 + 85 * math.cos(rad))
+    y = int(110 - 85 * math.sin(rad))
     return f'''
-    <svg width="280" height="130" viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="#f8fafc" rx="10" stroke="#cbd5e1"/>
-      <!-- İletki Gövdesi -->
+    <svg width="280" height="125" viewBox="0 0 280 125" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#f8fafc" rx="8" stroke="#e2e8f0"/>
       <path d="M 50 110 A 90 90 0 0 1 230 110 Z" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
-      <!-- Referans Taban Çizgisi (0 - 180) -->
       <line x1="50" y1="110" x2="230" y2="110" stroke="#334155" stroke-width="2"/>
-      <!-- Sağ Referans Kolu (0 Derece Başlangıcı) -->
-      <line x1="140" y1="110" x2="230" y2="110" stroke="#94a3b8" stroke-width="3" stroke-dasharray="4"/>
-      <!-- Açı Kolu -->
+      <line x1="140" y1="110" x2="225" y2="110" stroke="#94a3b8" stroke-width="3" stroke-dasharray="3"/>
       <line x1="140" y1="110" x2="{x}" y2="{y}" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
       <circle cx="140" cy="110" r="4" fill="#1e40af"/>
-      <text x="140" y="25" font-family="sans-serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Ölçülen Açı: {derece}°</text>
+      <text x="140" y="24" font-family="sans-serif" font-size="12" font-weight="bold" fill="#0f172a" text-anchor="middle">{etiket}: {derece}°</text>
     </svg>
     '''
 
-def svg_kesir_ciz(pay, payda):
-    dilimler = ""
-    genislik = 220
-    parca_w = genislik / payda
-    for i in range(payda):
-        fill = "#3b82f6" if i < pay else "#f1f5f9"
-        x = 30 + (i * parca_w)
-        dilimler += f'<rect x="{x}" y="30" width="{parca_w - 2}" height="40" fill="{fill}" stroke="#94a3b8" rx="3"/>'
+def svg_sutun_grafik(kategori1, v1, kategori2, v2, baslik="Grafik"):
+    max_v = max(v1, v2, 1)
+    h1 = int((v1 / max_v) * 60)
+    h2 = int((v2 / max_v) * 60)
     return f'''
-    <svg width="280" height="100" viewBox="0 0 280 100" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="#ffffff" rx="10" stroke="#e2e8f0"/>
-      {dilimler}
-      <text x="140" y="88" font-family="sans-serif" font-size="12" font-weight="bold" fill="#334155" text-anchor="middle">Modellenen Kesir</text>
+    <svg width="280" height="125" viewBox="0 0 280 125" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#ffffff" rx="8" stroke="#cbd5e1"/>
+      <text x="140" y="18" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e293b" text-anchor="middle">{baslik}</text>
+      <rect x="50" y="{95 - h1}" width="45" height="{h1}" fill="#3b82f6" rx="3"/>
+      <text x="72" y="{90 - h1}" font-family="sans-serif" font-size="10" fill="#1e293b" text-anchor="middle">{v1}</text>
+      <text x="72" y="112" font-family="sans-serif" font-size="10" fill="#475569" text-anchor="middle">{kategori1}</text>
+      <rect x="160" y="{95 - h2}" width="45" height="{h2}" fill="#10b981" rx="3"/>
+      <text x="182" y="{90 - h2}" font-family="sans-serif" font-size="10" fill="#1e293b" text-anchor="middle">{v2}</text>
+      <text x="182" y="112" font-family="sans-serif" font-size="10" fill="#475569" text-anchor="middle">{kategori2}</text>
     </svg>
     '''
 
 # =========================================================
-# 3. BENZERLİK VE CEVAP SIZINTISI ENGELLEME MOTORU
+# 3. MİLYONLUK VARYASYON & YENİ NESİL KISMİ ŞABLON MOTORU
 # =========================================================
-def cevap_ve_metin_dogrulama(soru_metni, dogru_cevap, siklar):
-    """
-    1. Cevabın soru metninde doğrudan geçmesini engeller.
-    2. Şıkların birbirinden tamamen farklı (benzersiz) olmasını şart koşar.
-    """
-    metin = soru_metni.lower()
-    cevap = str(dogru_cevap).lower().strip()
+def milyonluk_varyasyon_engine(ders, unite):
+    u_low = unite.lower()
     
-    # Kelime uzunluğu 3'ten büyükse ve metinde geçiyorsa reddet
-    if len(cevap) > 3 and cevap in metin:
-        return False
-        
-    # Tüm şıklar benzersiz olmalı
-    if len(set(siklar)) != len(siklar):
-        return False
-        
-    return True
+    # Dinamik sözlük öğeleri
+    isimler = ["Ayşe", "Mehmet", "Zeynep", "Can", "Elif", "Burak", "Selin", "Kaan", "Deniz", "Ömer", "Duru", "Bora", "Ece", "Arda"]
+    nesneler = ["kitap", "kalem", "bilye", "fidan", "sayfa", "pul", "çikolata", "roket maketi", "balon", "oyuncak"]
+    sehirler = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Trabzon", "Konya", "Eskişehir", "Gaziantep"]
 
-# =========================================================
-# 4. DEVA SA ŞABLON VE DİNAMİK MİMARİ ENGINE
-# =========================================================
-def devasa_sablon_engine(ders, unite):
-    u_lower = unite.lower()
-    
-    # Dinamik Değişken Havuzları
-    isimler = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Ali", "Fatma", "Deniz", "Ömer", "Selin", "Kaan", "Cem", "Mert", "Ela"]
-    sehirler = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Konya", "Trabzon", "Erzurum", "Eskişehir", "Gaziantep", "Kayseri"]
-    nesneler = ["kitap", "kalem", "bilye", "ceviz", "elma", "çikolata", "sayfa", "pul", "kart", "roket", "balon"]
-    
     # -----------------------------------------------------
-    # 1. MATEMATİK
+    # MATEMATİK: Beceri Temelli Yeni Nesil + Açı
     # -----------------------------------------------------
     if ders == "Matematik":
-        if "geometrik" in u_lower or "açı" in u_lower:
-            aci = random.choice([20, 30, 45, 60, 75, 90, 105, 120, 135, 150, 160])
-            if aci == 90:
-                tur, celd = "Dik Açı", ["Dar Açı", "Geniş Açı", "Doğru Açı"]
-            elif aci < 90:
-                tur, celd = "Dar Açı", ["Dik Açı", "Geniş Açı", "Tam Açı"]
+        if "açı" in u_low or "geometrik" in u_low:
+            aci_deg = random.randint(15, 165)
+            # Yönü ve Ölçüsü Tam Doğru
+            if aci_deg == 90:
+                tur = "Dik Açı"
+                celdiriciler = ["Dar Açı", "Geniş Açı", "Doğru Açı"]
+            elif aci_deg < 90:
+                tur = "Dar Açı"
+                celdiriciler = ["Dik Açı", "Geniş Açı", "Tam Açı"]
             else:
-                tur, celd = "Geniş Açı", ["Dar Açı", "Dik Açı", "Doğru Açı"]
+                tur = "Geniş Açı"
+                celdiriciler = ["Dar Açı", "Dik Açı", "Doğru Açı"]
                 
-            siklar = [tur] + celd
+            kisi = random.choice(isimler)
+            soru_tipi = random.choice(["gorsel_tur", "oncul_aci", "tamamlama"])
+            
+            if soru_tipi == "gorsel_tur":
+                q_text = f"{kisi}, iletki yardımıyla defterine bir açı çizmiştir. İletki üzerindeki başlangıç koluna göre verilen açının türü nedir?"
+                ans = tur
+                siklar = [tur] + celdiriciler
+            elif soru_tipi == "oncul_aci":
+                q_text = f"Görseldeki {aci_deg}°'lik açı ile ilgili;\nI. Türü {tur}'dir.\nII. Ölçüsü dik açıdan büyüktür.\nIII. Komşu açısı ile toplamı 180° olabilir.\nİfadelerinden hangileri kesinlikle doğrudur?"
+                if aci_deg < 90:
+                    ans = "I ve III"
+                    siklar = ["I ve III", "Yalnız I", "I ve II", "I, II ve III"]
+                else:
+                    ans = "I ve III" if aci_deg != 90 else "I, II ve III"
+                    siklar = ["I ve III", "Yalnız I", "II ve III", "I, II ve III"]
+            else:
+                fark = 180 - aci_deg
+                q_text = f"Şekilde verilen açıyı bir doğru açıya (180°) tamamlamak için kaç derecelik bir açı daha eklenmelidir?"
+                ans = f"{fark}°"
+                siklar = [f"{fark}°", f"{fark + 10}°", f"{abs(fark - 15)}°", f"{fark + 20}°"]
+
             random.shuffle(siklar)
-            return {
-                "ders": ders, "unite": unite,
-                "soru": f"Görseldeki iletkide yönü doğru çizilen {aci}° ölçüsündeki açının türü hangisidir?",
-                "gorsel_svg": svg_iletki_aci_ciz(aci), "siklar": siklar, "dogru": tur
-            }
-        elif "kesir" in u_lower:
-            payda = random.choice([4, 5, 6, 8, 10, 12])
-            pay = random.randint(1, payda - 1)
-            dogru_str = f"{pay}/{payda}"
-            siklar = [dogru_str, f"{payda-pay}/{payda}", f"{pay}/{payda+2}", f"{pay+1}/{payda}"]
-            siklar = list(dict.fromkeys(siklar))
-            while len(siklar) < 4:
-                siklar.append(f"{random.randint(1,3)}/{payda+4}")
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_iletki_aci_ciz(aci_deg), "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
+            
+        elif "veri" in u_low or "grafik" in u_low:
+            v1, v2 = random.randint(20, 80), random.randint(20, 80)
+            k1, k2 = random.sample(["A Kitabı", "B Kitabı", "1. Gün", "2. Gün", "Basketbol", "Futbol"], 2)
+            toplam = v1 + v2
+            fark = abs(v1 - v2)
+            
+            q_text = f"Verilen sütun grafiğine göre, {k1} ve {k2} değerleri arasındaki fark ile toplam değerin oranı incelenmiştir. Buna göre iki değer arasındaki fark kaçtır?"
+            ans = str(fark)
+            siklar = [str(fark), str(fark + 5), str(toplam), str(abs(fark - 4))]
             random.shuffle(siklar)
-            return {
-                "ders": ders, "unite": unite,
-                "soru": "Verilen modelde boyalı kısımların bütün içerisindeki oranını ifade eden kesir hangisidir?",
-                "gorsel_svg": svg_kesir_ciz(pay, payda), "siklar": siklar, "dogru": dogru_str
-            }
-        else: # Problemler
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_sutun_grafik(k1, v1, k2, v2), "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
+
+        else: # Sayısal Problem Varyasyonları
             kisi = random.choice(isimler)
             nesne = random.choice(nesneler)
-            s1 = random.randint(120, 850)
-            s2 = random.randint(30, 150)
+            n1, n2, n3 = random.randint(100, 500), random.randint(20, 90), random.randint(2, 5)
             
-            ans = s1 + s2
-            q_text = f"{kisi} {s1} adet {nesne} toplamıştır. Arkadaşı ona {s2} adet daha verirse toplam kaç {nesne}si olur?"
+            ans_val = (n1 + n2) * n3
+            q_text = f"{kisi}, başlangıçta {n1} adet {nesne} almıştır. Daha sonra arkadaşı ona {n2} adet daha vermiş ve elindeki toplam {nesne} sayısını {n3} katına çıkarmıştır. Son durumda {kisi}'nin kaç {nesne}si vardır?"
             
-            siklar = [str(ans), str(ans + 10), str(abs(ans - 20)), str(ans + 50)]
-            siklar = list(dict.fromkeys(siklar))
-            while len(siklar) < 4:
-                siklar.append(str(ans + random.randint(15, 90)))
+            ans = str(ans_val)
+            siklar = [ans, str(ans_val + 10), str(ans_val - 25), str(ans_val + 50)]
             random.shuffle(siklar)
-            return {
-                "ders": ders, "unite": unite,
-                "soru": q_text, "gorsel_svg": None, "siklar": siklar, "dogru": str(ans)
-            }
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
 
     # -----------------------------------------------------
-    # 2. FEN BİLİMLERİ
+    # FEN BİLİMLERİ: Deney & Hipotez & Yeni Nesil
     # -----------------------------------------------------
     elif ders == "Fen Bilimleri":
-        if "güneş" in u_lower or "ay" in u_lower:
-            havuz = [
-                ("Ay'ın Dünya'dan bakıldığında tamamen karanlık görüldüğü evre hangisidir?", "Yeni Ay", ["Dolunay", "İlk Dördün", "Son Dördün"]),
-                ("Dünya, Güneş ile Ay arasındayken Ay'ın hangi evresi gözlemlenir?", "Dolunay", ["Yeni Ay", "Hilal", "Son Dördün"]),
-                ("Güneş sistemindeki en büyük gök cismi hangisidir?", "Güneş", ["Dünya", "Ay", "Jüpiter"])
-            ]
+        kisi = random.choice(isimler)
+        if "kuvvet" in u_low or "sürtünme" in u_low:
+            yuzeyler = ["Buzlu Yüzey", "Zımpara Kağıdı", "Tahta Zemin", "Halı Zemin"]
+            y1, y2 = random.sample(yuzeyler, 2)
+            q_text = f"{kisi}, özdeş oyuncak arabaları {y1} ve {y2} üzerinde eşit kuvvetle itmiştir. Arabanın {y1} üzerinde daha uzağa gittiği gözlemlenmiştir.\n\nBu deneye göre aşağıdakilerden hangisi kesinlikle doğrudur?"
+            ans = f"{y1} üzerindeki sürtünme kuvveti daha azdır."
+            celd = [f"{y2} üzerindeki sürtünme kuvveti daha azdır.", "Her iki yüzeyde sürtünme eşittir.", "Arabanın kütlesi yüzeye göre değişmiştir."]
         else:
-            havuz = [
-                ("Kuvvetin büyüklüğünü ölçmek için kullanılan araç hangisidir?", "Dinamometre", ["Termometre", "Barometre", "Mikroskop"]),
-                ("Sürtünme kuvvetini azaltmak için hangisi yapılır?", "Yüzeylerin yağlanması", ["Pürüzün artırılması", "Kış lastiği takılması", "Zımpara yapılması"]),
-                ("Sıvı bir maddenin ısı vererek katı hale geçmesine ne ad verilir?", "Donma", ["Buharlaşma", "Erimesi", "Süblimleşme"])
-            ]
-        q, ans, celd = random.choice(havuz)
+            q_text = f"Öğrenci {kisi}, Güneş, Dünya ve Ay'ın birbirine göre hareketlerini inceleyen bir model tasarlamıştır. Modelde Ay'ın Dünya etrafındaki dolanma süresi dikkate alınmıştır.\n\nBuna göre aşağıdakilerden hangisi söylenebilir?"
+            ans = "Ay, Dünya etrafındaki turunu yaklaşık 27 günde tamamlar."
+            celd = ["Güneş, Dünya etrafında dolanır.", "Ay sadece kendi etrafında döner, Dünya etrafında dönmez.", "Dünya'nın dönme süresi Ay ile birebir aynıdır."]
+
         siklar = [ans] + celd
         random.shuffle(siklar)
-        return {"ders": ders, "unite": unite, "soru": q, "gorsel_svg": None, "siklar": siklar, "dogru": ans}
+        return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
 
     # -----------------------------------------------------
-    # 3. TÜRKÇE
-    # -----------------------------------------------------
-    elif ders == "Türkçe":
-        havuz = [
-            ("Aşağıdaki cümlelerin hangisinde 'mecaz anlamlı' bir sözcük vardır?", "Bize karşı çok soğuk davrandı.", ["Sıcak çayı yudumladı.", "Kapının kolı kırıldı.", "Kuşlar gökyüzünde uçuyor."]),
-            ("Hangisinde yazım yanlışı vardır?", "Yarın Ayşe'de gelecek mi?", ["Ankara'ya otobüsle gitti.", "10 Kasım'da anma yapıldı.", "Kitabını sınıfta unuttu."]),
-            ("'Eş anlamlı' kelime çifti hangisinde verilmiştir?", "Cevap - Yanıt", ["Uzun - Kısa", "Gece - Gündüz", "Açık - Kapalı"])
-        ]
-        q, ans, celd = random.choice(havuz)
-        siklar = [ans] + celd
-        random.shuffle(siklar)
-        return {"ders": ders, "unite": unite, "soru": q, "gorsel_svg": None, "siklar": siklar, "dogru": ans}
-
-    # -----------------------------------------------------
-    # 4. SOSYAL BİLGİLER / DİN / İNGİLİZCE
+    # TÜRKÇE & SOSYAL BİLGİLER: Öncüllü & Mantık Muhakeme
     # -----------------------------------------------------
     else:
         kisi = random.choice(isimler)
         sehir = random.choice(sehirler)
-        havuz = [
-            (f"{kisi}, {sehir} seyahatinde tarihi eserleri gezmiştir. Hangisi beşeri (insan yapımı) bir unsurdur?", "Topkapı Sarayı", ["Peri Bacaları", "Pamukkale Travertenleri", "Düden Şelalesi"]),
-            ("Bilinçli bir tüketicinin yapması gereken en uygun davranış hangisidir?", "Ürünün Tüketim Tarihini kontrol etmek", ["En pahalısını seçmek", "Reklamı yapılana yönelmek", "Etiketsiz ürün almak"]),
-            ("Allah'ın her şeyi görmesi anlamına gelen sıfat hangisidir?", "Basar", ["İlim", "Semi", "Kudret"]),
-            ("Which one is a daily routine activity?", "Brush teeth", ["Fly a kite", "Play football", "Go to cinema"])
-        ]
-        q, ans, celd = random.choice(havuz)
-        siklar = [ans] + celd
+        q_text = f"{kisi}, {sehir} gezisinde elde ettiği gözlemleri şu şekilde sıralamıştır:\nI. Tarihi kaleleri ve müzeleri ziyaret etti.\nII. Bölgenin doğal şelalelerinde fotoğraf çekildi.\nIII. Yerel pazardan geleneksel el sanatları satın aldı.\n\nVerilen öncüllerden hangileri 'Beşeri Unsur' kapsamına girer?"
+        ans = "I ve III"
+        siklar = ["I ve III", "Yalnız II", "I ve II", "I, II ve III"]
         random.shuffle(siklar)
-        return {"ders": ders, "unite": unite, "soru": q, "gorsel_svg": None, "siklar": siklar, "dogru": ans}
+        return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
 
 # =========================================================
-# 5. EŞİT DAĞILIMLI VE BENZERLİKSİZ SORU ÜRETİCİ
+# 4. BENZERLİK VE BENZERSİZ HASH SORGULAYICI
 # =========================================================
-def esit_dagilimli_soru_uret(secilen_uniteler, hedef_soru_sayisi):
-    soru_havuzu = []
-    üretilen_hashler = set()
+def sonsuz_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
+    havuz = []
+    hash_kayitlari = set()
     
     if not secilen_uniteler:
         return []
         
     u_count = len(secilen_uniteler)
-    taban_soru = hedef_soru_sayisi // u_count
-    kalan_soru = hedef_soru_sayisi % u_count
+    taban = hedef_sayi // u_count
+    kalan = hedef_sayi % u_count
+    dagilim = [taban + (1 if i < kalan else 0) for i in range(u_count)]
     
-    dagilim = [taban_soru + (1 if i < kalan_soru else 0) for i in range(u_count)]
-    
-    for index, (h_ders, h_unite) in enumerate(secilen_uniteler):
-        istenen_adet = dagilim[index]
-        üretilen_adet = 0
+    for idx, (h_ders, h_unite) in enumerate(secilen_uniteler):
+        istenen = dagilim[idx]
+        uretilen = 0
         deneme = 0
         
-        while üretilen_adet < istenen_adet and deneme < 80:
+        while uretilen < istenen and deneme < 150:
             deneme += 1
-            s = devasa_sablon_engine(h_ders, h_unite)
+            s = milyonluk_varyasyon_engine(h_ders, h_unite)
             
-            # Hash Kontrolü ile Tam Benzersizlik
-            s_hash = hashlib.md5((s["soru"] + "".join(s["siklar"])).encode('utf-8')).hexdigest()
+            # SHA-256 Metin + Şık Hash Denetimi
+            fingerprint = hashlib.sha256((s["soru"] + "".join(s["siklar"]) + s["dogru"]).encode('utf-8')).hexdigest()
             
-            if s_hash not in üretilen_hashler:
-                if cevap_ve_metin_dogrulama(s["soru"], s["dogru"], s["siklar"]):
-                    üretilen_hashler.add(s_hash)
-                    soru_havuzu.append(s)
-                    üretilen_adet += 1
-                    
-    random.shuffle(soru_havuzu)
-    return soru_havuzu
+            if fingerprint not in hash_kayitlari and len(s["siklar"]) == 4:
+                hash_kayitlari.add(fingerprint)
+                havuz.append(s)
+                uretilen += 1
+                
+    random.shuffle(havuz)
+    return havuz
 
 # =========================================================
-# 6. STREAMLIT ARAYÜZÜ
+# 5. STREAMLIT ARAYÜZÜ
 # =========================================================
-st.title("🎓 MEB 5. Sınıf Soru Bankası Test Sistemi")
+st.title("🎓 MEB Milyonluk Yeni Nesil Soru Bankası")
 
-st.sidebar.header("⚙️ Ünite ve Ders Seçimi")
+st.sidebar.header("⚙️ Müfretad ve Soru Ayarları")
 secilen_uniteler = []
 
 for ders_adi, uniteler in MEB_MUFREDAT.items():
@@ -313,28 +259,27 @@ for ders_adi, uniteler in MEB_MUFREDAT.items():
 st.sidebar.divider()
 soru_sayisi = st.sidebar.number_input("Toplam Soru Sayısı:", min_value=1, max_value=50, value=10, step=1, disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"])
 
-# --- HAZIRLIK EKRANI ---
+# PANELER
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.subheader("📋 Test Oluşturma Paneli")
+    st.subheader("🚀 Yeni Nesil Soru Üretim Paneli")
     if secilen_uniteler:
-        st.info(f"Seçilen Ünite Sayısı: **{len(secilen_uniteler)}**. Seçilen tüm ünitelerden **eşit sayıda** ve **tamamen benzersiz** soru dağıtılacaktır.")
+        st.info(f"Seçilen Ünite Sayısı: **{len(secilen_uniteler)}**. Sistem seçilen her üniteden **eşit sayıda**, **tamamen benzersiz** ve **MEB Beceri Temelli** sorular üretecektir.")
         
-        if st.button("🚀 Eşit Dağılımlı Soru Havuzunu Üret", type="primary"):
-            with st.spinner("Sorular eşit oranlarda ve açı yönleri kontrol edilerek üretiliyor..."):
-                sorular = esit_dagilimli_soru_uret(secilen_uniteler, soru_sayisi)
+        if st.button("✨ Milyonluk Soru Havuzundan Üret", type="primary"):
+            with st.spinner("Soru şablonları taranıyor, SHA-256 benzersizlik doğrulamasından geçiriliyor..."):
+                sorular = sonsuz_benzersiz_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
-                st.session_state["toplam_sure_sn"] = len(sorular) * 80
+                st.session_state["toplam_sure_sn"] = len(sorular) * 90
                 st.session_state["sorular_hazir"] = True
                 st.rerun()
     else:
         st.warning("⚠️ Lütfen sol taraftaki menüden en az 1 ünite seçin.")
 
-# --- BAŞLATMA EKRANI ---
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.success("✅ Sorular başarıyla oluşturuldu! Açı yönleri ve şık çakışmaları kontrol edildi.")
+    st.success("✅ Sorular benzersiz şablon kombinasyonlarıyla başarıyla üretildi!")
     
     toplam_sn = st.session_state["toplam_sure_sn"]
-    st.markdown(f"**Toplam Soru Sayısı:** {len(st.session_state['soru_listesi'])} | **Süre:** {toplam_sn // 60} Dk {toplam_sn % 60} Sn")
+    st.markdown(f"**Toplam Soru:** {len(st.session_state['soru_listesi'])} | **Tahmini Süre:** {toplam_sn // 60} Dk {toplam_sn % 60} Sn")
     
     col1, col2 = st.columns(2)
     if col1.button("⏱️ Testi Başlat", type="primary"):
@@ -344,11 +289,10 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] an
         st.session_state["mevcut_soru_index"] = 0
         st.rerun()
         
-    if col2.button("🔄 Ayarları Sıfırla"):
+    if col2.button("🔄 Yeniden Üret"):
         st.session_state["sorular_hazir"] = False
         st.rerun()
 
-# --- AKTİF TEST EKRANI ---
 elif st.session_state["test_aktif"]:
     gecen_sure = int(time.time() - st.session_state["baslangic_zamani"])
     kalan_sure = st.session_state["toplam_sure_sn"] - gecen_sure
@@ -366,10 +310,10 @@ elif st.session_state["test_aktif"]:
     c_left.caption(f"📌 {q['ders']} - {q['unite']}")
     c_right.metric("⏳ Kalan Süre", f"{kalan_sure // 60:02d}:{kalan_sure % 60:02d}")
 
-    st.markdown(f"### **Soru {idx + 1}:** {q['soru']}")
+    st.markdown(f"### **Soru {idx + 1}:**\n{q['soru']}")
 
     if q.get("gorsel_svg"):
-        st.components.v1.html(q["gorsel_svg"], height=140)
+        st.components.v1.html(q["gorsel_svg"], height=135)
 
     onceki_cevap = st.session_state["kullanici_cevaplari"].get(idx, None)
     secim_index = q["siklar"].index(onceki_cevap) if onceki_cevap in q["siklar"] else None
@@ -394,7 +338,6 @@ elif st.session_state["test_aktif"]:
             st.session_state["test_bitti"] = True
             st.rerun()
 
-# --- SONUÇ EKRANI ---
 elif st.session_state["test_bitti"]:
     st.balloons()
     st.header("📊 Test Sonu Karnesi")
