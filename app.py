@@ -3,7 +3,7 @@ import random
 import json
 
 # Sayfa Yapılandırması
-st.set_page_config(page_title="5. Sınıf Ortak Soru Üretici", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="5. Sınıf Akıllı Test Platformu", page_icon="🎓", layout="wide")
 
 # Oturum Durumu (Session State) Başlatma
 if "skor" not in st.session_state:
@@ -16,6 +16,9 @@ if "mevcut_soru" not in st.session_state:
     st.session_state["mevcut_soru"] = None
 if "cevaplandi" not in st.session_state:
     st.session_state["cevaplandi"] = False
+
+# Streamlit Secrets'tan API Anahtarını Güvenli Şekilde Alma
+API_KEY = st.secrets.get("GEMINI_API_KEY", None)
 
 # Skor Tahtası Bileşeni
 def skor_tahtasi():
@@ -99,7 +102,7 @@ def gemini_soru_uret(api_key, ders, konu):
 
 # 3. Ortak (Hibrit) Soru Üretici Mantığı
 def hibrit_soru_uret(api_key, ders, konu):
-    # %50 İhtimalle veya API anahtarı yoksa Şablon Bankasını kullan
+    # %50 İhtimalle veya Secrets içinden geçerli anahtar okunamadıysa Şablon Bankasını kullan
     secim = random.choice(["sablon", "gemini"])
     
     if secim == "gemini" and api_key:
@@ -107,16 +110,13 @@ def hibrit_soru_uret(api_key, ders, konu):
         if ai_soru:
             return ai_soru
             
-    # Yapay zeka seçilemediyse veya hata verdiyse yedek olarak şablona dön
     return sablon_soru_uret(ders, konu)
 
 # --- ARAYÜZ (UI) BAŞLANGICI ---
-st.title("🎓 5. Sınıf Akıllı Test Platformu (Ortak Mod)")
+st.title("🎓 5. Sınıf Akıllı Test Platformu")
 
 # Yan Menü (Sidebar)
-st.sidebar.header("⚙️ Ayarlar & Menü")
-api_key = st.sidebar.text_input("Gemini API Key (Opsiyonel):", type="password", help="Girmeseniz de şablon soruları çalışmaya devam eder.")
-st.sidebar.caption("[Ücretsiz API Key Alın](https://aistudio.google.com/app/apikey)")
+st.sidebar.header("⚙️ Menü & Ders Seçimi")
 
 ders = st.sidebar.selectbox("Ders Seçin", ["Matematik", "Fen Bilimleri", "Türkçe"])
 
@@ -127,6 +127,12 @@ konu_liste = {
 }
 konu = st.sidebar.selectbox("Konu Seçin", konu_liste[ders])
 
+# API Key Durum Bildirimi
+if API_KEY:
+    st.sidebar.success("🔑 Gemini API Bağlantısı Aktif")
+else:
+    st.sidebar.warning("⚠️ API Key tanımlanmadı (Sadece şablon sorular çalışır)")
+
 # Ana Ekran Düzeni
 skor_tahtasi()
 st.divider()
@@ -134,7 +140,7 @@ st.divider()
 if st.button("🎲 Yeni Soru Getir", type="primary"):
     st.session_state["cevaplandi"] = False
     with st.spinner("Soru hazırlanıyor..."):
-        st.session_state["mevcut_soru"] = hibrit_soru_uret(api_key, ders, konu)
+        st.session_state["mevcut_soru"] = hibrit_soru_uret(API_KEY, ders, konu)
 
 # Soru Gösterim Alanı
 if st.session_state["mevcut_soru"]:
