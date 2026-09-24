@@ -223,6 +223,17 @@ BASKENT_LISTESI = [
     ("Madagaskar", "Antananaviro"), ("Kazakistan", "Astana"), ("Türkmenistan", "Aşkabat"), ("Cook Adaları", "Avarua"),
     ("Mali", "Bamako"), ("Gambiya", "Banjul"), ("Sırbıstan", "Belgrad"), ("İsviçre", "Bern"),
     ("Lübnan", "Beyrut"), ("Kırgızistan", "Bişkek"), ("Kolombiya", "Bogota"), ("Slovakya", "Bratislava"),
+    ("Macaristan", "Budapeşte"), ("Arjantin", "Buenos Aires"), ("Belçika", "Brüksel"), ("Romanya", "Bükreş"),
+    ("Endonezya", "Cakarta"), ("Güney Afrika", "Cape Town"), ("Murat", "Aden"), ("Venezuela", "Caracas"),
+    ("Saint Lucia ", "Castries"), ("Sri Lanka", "Colombo"), ("Benin", "Cotonou"), ("Senegal", "Dakar"),
+    ("Bangledaş", "Dakka"), ("Katar", "Doha"), ("İrlanda", "Dublin"), ("Man Adası", "Douglas"),
+    ("Tacikistan", "Duşanbe"), ("Çad", "Encemine"), ("Ermenistan", "Erivan"), ("Sierra Leone", "Freetown"),
+    ("Tuvalu", "Funafuti"), ("Cayman Adaları", "George Town"), ("Burundi", "Gitega"), ("Vietnam", "Hanoi"),
+    ("Sudan", "Hartum"), ("Küba", "Havana"), ("Finlandiya", "Helsinki"), ("Solomon Adaları", "Honiara"),
+    ("Pakistan", "İslamabad"), ("Afganistan", "Kabil"), ("Nepal", "Katmandu"), ("Danimarka", "Kopenhag"),
+    ("Malezya", "Kuala Lumpur"), ("Kıbrıs Cumhuriyeti", "Lefkoşa"), ("Peru", "Lima"), ("Portekiz", "Lizbon"),
+    ("Slovenya", "Ljublijana"), ("Angola", "Luanda"), ("Zambiya", "Lusaka"), ("Belarus", "Minsk"),
+    ("Hırvatistan", "Zagreb"), ("İran", "Tahran"), ("İsrail", "Tel Aviv"), ("Gürcistan", "Tiflis"),
 ]
 YEMEK_SEHIR_LISTESI = [
     ("Künefe", "Hatay"), ("Cağ Kebabı", "Erzurum"), ("İskender Kebap", "Bursa"),
