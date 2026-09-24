@@ -138,35 +138,65 @@ def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
     '''
 
 # =========================================================
-# 4. HİBRİT %75 YAPAY ZEKA / ALGORİTMİK + %25 HAVUZ MOTORU
+# 4. GENİŞLETİLMİŞ VERİ TABANI VE HİBRİT ÜRETİCİ
 # =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz"]
 NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon"]
+
+BASKENT_LISTESI = [
+    ("Fransa", "Paris"), ("İtalya", "Roma"), ("Japonya", "Tokyo"), ("Almanya", "Berlin"), 
+    ("İspanya", "Madrid"), ("İngiltere", "Londra"), ("Yunanistan", "Atina"), ("Rusya", "Moskova"), 
+    ("Azerbaycan", "Bakü"), ("Mısır", "Kahire"), ("İran", "Tahran"), ("Irak", "Bağdat"),
+    ("Çin", "Pekin"), ("Hindistan", "Yeni Delhi"), ("Güney Kore", "Seul"), ("Kanada", "Ottawa")
+]
 
 YEMEK_SEHIR_LISTESI = [
     ("Künefe", "Hatay"), ("Cağ Kebabı", "Erzurum"), ("İskender Kebap", "Bursa"),
     ("Mantı", "Kayseri"), ("Baklava", "Gaziantep"), ("Tantuni", "Mersin"),
     ("Etli Ekmek", "Konya"), ("Hamsi Tava", "Trabzon"), ("Pide", "Samsun"),
-    ("Çiğ Köfte", "Şanlıurfa"), ("Testi Kebabı", "Yozgat"), ("Keşkek", "Aydın")
+    ("Çiğ Köfte", "Şanlıurfa"), ("Testi Kebabı", "Yozgat"), ("Keşkek", "Aydın"),
+    ("İnegöl Köfte", "Bursa"), ("Oltu Kebabı", "Erzurum"), ("Kepse Pilavı", "Mersin")
 ]
-ALL_SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep", "Konya", "Samsun", "Adana", "Hatay", "Mersin", "Kayseri", "Şanlıurfa", "Yozgat", "Aydın"]
+ALL_SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep", "Konya", "Samsun", "Adana", "Hatay", "Mersin", "Kayseri", "Şanlıurfa", "Yozgat", "Aydın", "İzmit", "Eskişehir", "Sivas", "Van"]
 
 DNY_MUTFAK_LISTESI = [
     ("Sushi", "Japonya"), ("Pizza", "İtalya"), ("Taco", "Meksika"),
     ("Kruvasan", "Fransa"), ("Hamburger", "Amerika Birleşik Devletleri"),
     ("Paella", "İspanya"), ("Makarna", "İtalya"), ("Çin Mantısı (Dim Sum)", "Çin"),
-    ("Pad Thai", "Tayland"), ("Pho", "Vietnam"), ("Fish and Chips", "İngiltere")
+    ("Pad Thai", "Tayland"), ("Pho", "Vietnam"), ("Fish and Chips", "İngiltere"),
+    ("Gulaş", "Macaristan"), ("Falafel", "Lübnan"), ("Borsç", "Rusya")
 ]
-ALL_ULKELER = ["Japonya", "İtalya", "Meksika", "Fransa", "Amerika Birleşik Devletleri", "İspanya", "Çin", "Almanya", "İngiltere", "Brezilya", "Yunanistan", "Tayland", "Vietnam"]
+ALL_ULKELER = ["Japonya", "İtalya", "Meksika", "Fransa", "Amerika Birleşik Devletleri", "İspanya", "Çin", "Almanya", "İngiltere", "Brezilya", "Yunanistan", "Tayland", "Vietnam", "Macaristan", "Lübnan", "Rusya", "Arjantin"]
+
+HARITA_HAVUZU = [
+    ("Haritalarda yön bulmamıza yardımcı olan ve genellikle kuzeyi gösteren işaret nedir?", "Kuzey oku (Pusula gülü)", ["Ölçek", "Lejant", "Eş yükselti"]),
+    ("Fiziki haritalarda suları ve denizleri göstermek için hangi renk kullanılır?", "Mavi", ["Yeşil", "Kahverengi", "Sarı"]),
+    ("Fiziki haritalarda dağları ve yüksek yerleri göstermek için hangi renk tonları kullanılır?", "Kahverengi ve tonları", ["Mavi ve tonları", "Koyu yeşil", "Parlak sarı"]),
+    ("Ülkemizin kuzeyinde yer alan deniz hangisidir?", "Karadeniz", ["Akdeniz", "Ege Denizi", "Kızıldeniz"]),
+    ("Haritalarda yer alan sembollerin ne anlama geldiğini gösteren tabloya ne denir?", "Lejant (Harita anahtarı)", ["Ölçek", "Pusula gülü", "Kuzey oku"])
+]
+
+ICAT_HAVUZU = [
+    ("Telefonu icat ederek ilk sesli iletişim kuran mucit kimdir?", "Alexander Graham Bell", ["Thomas Edison", "Nikola Tesla", "Isaac Newton"]),
+    ("Ampulü icat ederek elektriğin aydınlatmada kullanılmasını sağlayan kimdir?", "Thomas Edison", ["Alexander Graham Bell", "Albert Einstein", "Wright Kardeşler"]),
+    ("Matbaayı geliştirerek kitapların çoğaltılmasını hızlandıran kişi kimdir?", "Johannes Gutenberg", ["Galileo Galilei", "Leonardo da Vinci", "Blaise Pascal"]),
+    ("İlk motorlu uçağı icat ederek havacılık tarihini başlatanlar kimlerdir?", "Wright Kardeşler", ["Marie Curie", "Thomas Edison", "Alexander Graham Bell"]),
+    ("Pusulayı ilk defa yön bulmak amacıyla denizcilikte kullanan medeniyetler kimlerdir?", "Uzak Doğu (Çinliler)", ["Romalılar", "Yunanlılar", "Mayalar"])
+]
+
+GENEL_KULTUR_HAVUZU = [
+    ("Dünyanın en uzun nehri olarak bilinen Nil Nehri hangi kıtadadır?", "Afrika", ["Asya", "Avrupa", "Amerika"]),
+    ("Dünyanın en yüksek dağı olan Everest Dağı hangi kıtada yer alır?", "Asya", ["Afrika", "Avrupa", "Antarktika"]),
+    ("Türkiye Cumhuriyeti'nin kurucusu ve ilk cumhurbaşkanı kimdir?", "Mustafa Kemal Atatürk", ["Fatih Sultan Mehmet", "İsmet İnönü", "Kanuni Sultan Süleyman"]),
+    ("Türkiye Cumhuriyeti'nin başkenti neresidir?", "Ankara", ["İstanbul", "İzmir", "Bursa"]),
+    ("Dünyanın yüzölçümünün büyük kısmını kaplayan ve 'Mavi Gezegen' olarak bilinen gezegen hangisidir?", "Dünya", ["Mars", "Venüs", "Jüpiter"])
+]
 
 def dinamik_soru_uretici(ders, unite):
     u_low = unite.lower()
     kisi = random.choice(ISIMLER)
     nesne = random.choice(NESNELER)
     kisi2 = random.choice([i for i in ISIMLER if i != kisi])
-
-    # %75 Olasılıkla Algoritmik/Yapay Üretim, %25 Havuzdan Çekim
-    motor_modu = random.random()
 
     if ders == "Matematik":
         if "1. ünite" in u_low:
@@ -247,47 +277,43 @@ def dinamik_soru_uretici(ders, unite):
         ans, celd = "Turn left", ["Turn right", "Go straight", "Stop"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    else: # 🏆 Bilgi Yarışması (Milyarlarca Benzersiz Soru Kombinasyonu)
+    else: # 🏆 Bilgi Yarışması (Milyarlarca Benzersiz Kombinasyon ve Sıfır Tekrar Motoru)
         if "1. kategori" in u_low:
-            baskentler = [("Fransa", "Paris"), ("İtalya", "Roma"), ("Japonya", "Tokyo"), ("Almanya", "Berlin"), ("İspanya", "Madrid"), ("İngiltere", "Londra"), ("Yunanistan", "Atina")]
-            ulke, dogru_baskent = random.choice(baskentler)
+            ulke, dogru_baskent = random.choice(BASKENT_LISTESI)
             q = f"<b>{ulke}</b> ülkesinin başkenti olan dünya şehri aşağıdakilerden hangisidir?"
             ans = dogru_baskent
-            celd = [b for u, b in baskentler if b != ans][:3]
+            celd = [b for u, b in BASKENT_LISTESI if b != ans]
+            random.shuffle(celd)
+            celd = celd[:3]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "2. kategori" in u_low:
             yemek, dogru_sehir = random.choice(YEMEK_SEHIR_LISTESI)
             q = f"Ülkemizin eşsiz lezzetlerinden biri olan <b>{yemek}</b> hangi ilimizle özdeşleşmiştir?"
             ans = dogru_sehir
-            celd = [s for s in ALL_SEHIRLER if s != ans][:3]
+            celd = [s for s in ALL_SEHIRLER if s != ans]
+            random.shuffle(celd)
+            celd = celd[:3]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "3. kategori" in u_low:
             mutfak, dogru_ulke = random.choice(DNY_MUTFAK_LISTESI)
             q = f"Dünya mutfağında çok popüler olan ve özel bir lezzet olan <b>{mutfak}</b> hangi ülke ile özdeşleşmiştir?"
             ans = dogru_ulke
-            celd = [u for u in ALL_ULKELER if u != ans][:3]
+            celd = [u for u in ALL_ULKELER if u != ans]
+            random.shuffle(celd)
+            celd = celd[:3]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "4. kategori" in u_low:
-            sorular_h = [
-                ("Haritalarda yön bulmamıza yardımcı olan ve genellikle kuzeyi gösteren işaret nedir?", "Kuzey oku (Pusula gülü)", ["Ölçek", "Lejant", "Eş yükselti"]),
-                ("Fiziki haritalarda suları ve denizleri göstermek için hangi renk kullanılır?", "Mavi", ["Yeşil", "Kahverengi", "Sarı"])
-            ]
-            q, ans, celd = random.choice(sorular_h)
+            q, ans, celd = random.choice(HARITA_HAVUZU)
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "5. kategori" in u_low:
-            sorular_i = [
-                ("Telefonu icat ederek ilk sesli iletişim kuran mucit kimdir?", "Alexander Graham Bell", ["Thomas Edison", "Nikola Tesla", "Isaac Newton"]),
-                ("Ampulü icat ederek elektriğin aydınlatmada kullanılmasını sağlayan kimdir?", "Thomas Edison", ["Alexander Graham Bell", "Albert Einstein", "Wright Kardeşler"])
-            ]
-            q, ans, celd = random.choice(sorular_i)
+            q, ans, celd = random.choice(ICAT_HAVUZU)
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         else:
-            q = f"Dünyanın en uzun nehri olan Nil Nehri hangi kıtadadır?"
-            ans, celd = "Afrika", ["Asya", "Avrupa", "Amerika"]
+            q, ans, celd = random.choice(GENEL_KULTUR_HAVUZU)
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
-# 5. SORU LİSTESİ OLUŞTURUCU
+# 5. SORU LİSTESİ OLUŞTURUCU (MÜKERRERLİK ENGELLEYİCİ)
 # =========================================================
 def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -311,7 +337,7 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
         
         uretilen_sayi = 0
         deneme = 0
-        while uretilen_sayi < dersin_hedef_sayisi and deneme < 1000:
+        while uretilen_sayi < dersin_hedef_sayisi and deneme < 2000:
             deneme += 1
             secilen_u = random.choice(uniteler)
             s = dinamik_soru_uretici(ders, secilen_u)
@@ -320,7 +346,8 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
             
             random.shuffle(s["siklar"])
 
-            fingerprint = hashlib.sha256((s["soru"] + s["dogru"] + "".join(s["siklar"])).encode('utf-8')).hexdigest()
+            # Sadece soru metnini baz alarak aynı sorunun kopya olarak düşmesini tamamen engelle
+            fingerprint = hashlib.sha256(s["soru"].encode('utf-8')).hexdigest()
             if fingerprint not in hash_set:
                 hash_set.add(fingerprint)
                 tam_soru_listesi.append(s)
@@ -386,7 +413,7 @@ st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🚀 Hazırla ve Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            with st.spinner("Yapay zeka ve havuz motoru ile benzersiz sorular üretiliyor..."):
+            with st.spinner("Benzersiz ve tekrarsız sorular üretiliyor..."):
                 sorular = ders_sirali_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
                 st.session_state["toplam_sure_sn"] = len(sorular) * 90
