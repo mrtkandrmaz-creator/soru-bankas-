@@ -140,7 +140,7 @@ def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
     '''
 
 # =========================================================
-# 4. SORU ÜRETME MOTORU (KESİN ÜNİTE SADAKATLİ & NET)
+# 4. SORU ÜRETME MOTORU (TAM UYUMLU VE DOĞRULANMIŞ)
 # =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz"]
 NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon"]
@@ -170,7 +170,7 @@ def dinamik_soru_uretici(ders, unite):
                 n1, n2 = random.randint(1200, 9800), random.randint(1100, 8900)
                 ans = str(n1 + n2)
                 q = f"{kisi}'in {n1} adet {nesne}si vardı. {kisi2} ona {n2} adet daha {nesne} verirse toplam kaç {nesne}si olur?"
-                celd = [str(n1 + n2 + random.randint(10, 150)), str(abs(n1 + n2 - random.randint(20, 200))), str(n1 + n2 + random.randint(200, 500))]
+                celd = [str(n1 + n2 + 120), str(abs(n1 + n2 - 150)), str(n1 + n2 + 300)]
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
             elif alt_tip == "carpma_bolme":
                 n1, n2 = random.randint(15, 95), random.randint(12, 50)
@@ -182,7 +182,7 @@ def dinamik_soru_uretici(ders, unite):
                 sayi = random.randint(110, 990)
                 ans = str(round(sayi, -1))
                 q = f"<b>{sayi}</b> sayısı en yakın onluğa yuvarlandığında {kisi} hangi sonucu bulmalıdır?"
-                celd = [str(int(ans) + 10), str(int(ans) - 10), str(sayi + random.choice([1, 2, 3]))]
+                celd = [str(int(ans) + 10), str(int(ans) - 10), str(sayi + 5)]
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
             else:
                 baslangic = random.randint(5, 20)
@@ -202,7 +202,7 @@ def dinamik_soru_uretici(ders, unite):
                 b_pay = tam * payda + pay
                 q = f"<b>{tam} tam {pay}/{payda}</b> tam sayılı kesrinin bileşik kesre dönüştürülmüş hali hangisidir?"
                 ans = f"{b_pay}/{payda}"
-                celd = [f"{b_pay + random.randint(1, 3)}/{payda}", f"{b_pay - 1}/{payda}", f"{tam * pay}/{payda}"]
+                celd = [f"{b_pay + 2}/{payda}", f"{b_pay - 1}/{payda}", f"{tam * pay}/{payda}"]
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
             else:
                 payda = random.choice([8, 10, 12, 16])
@@ -214,16 +214,16 @@ def dinamik_soru_uretici(ders, unite):
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "3. ünite" in u_low:
-            p = random.choice([5, 10, 15, 20, 25, 30, 40, 50, 75])
-            fiyat = random.randint(120, 950)
+            p = random.choice([10, 20, 25, 50])
+            fiyat = random.randint(200, 800)
             indirim = (fiyat * p) // 100
             ans = str(fiyat - indirim)
             q = f"{kisi} fiyatı {fiyat} TL olan ürünü <b>%{p}</b> indirimle aldığında kaç TL öder?"
-            celd = [str(indirim), str(fiyat + indirim), str(fiyat - indirim + random.randint(5, 25))]
+            celd = [str(indirim), str(fiyat + indirim), str(fiyat - indirim + 20)]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "4. ünite" in u_low:
-            aci1 = random.choice([25, 35, 40, 45, 50, 55, 65])
+            aci1 = random.choice([30, 40, 45, 50, 60])
             tip = random.choice(["tümler", "butunler"])
             if tip == "tümler":
                 toplam = 90
@@ -239,91 +239,76 @@ def dinamik_soru_uretici(ders, unite):
             koseler = random.choice([("A", "B", "C"), ("K", "L", "M"), ("P", "R", "S"), ("D", "E", "F")])
             ucgen_tipi = random.choice(["eskenar", "ikizkenar", "dik", "genis"])
             if ucgen_tipi == "eskenar":
-                gizlenen = random.choice(["a", "b", "c"])
-                if gizlenen == "a":
-                    q = f"Şekilde verilen eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde <b>verilmeyen m({koseler[0]}) kaç derecedir?</b>"
-                    ans, etiketler = "60°", ["?", "60°", "60°"]
-                elif gizlenen == "b":
-                    q = f"Şekilde verilen eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde <b>verilmeyen m({koseler[1]}) kaç derecedir?</b>"
-                    ans, etiketler = "60°", ["60°", "?", "60°"]
-                else:
-                    q = f"Şekilde verilen eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde <b>verilmeyen m({koseler[2]}) kaç derecedir?</b>"
-                    ans, etiketler = "60°", ["60°", "60°", "?"]
+                q = f"Şekilde verilen eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde <b>verilmeyen m({koseler[0]}) kaç derecedir?</b>"
+                ans, etiketler = "60°", ["?", "60°", "60°"]
                 celd = ["90°", "45°", "30°"]
                 svg = svg_dinamik_ucgen_ciz("eskenar", etiketler, koseler)
             elif ucgen_tipi == "ikizkenar":
-                taban_aci = random.choice([40, 50, 65, 70, 75])
+                taban_aci = random.choice([50, 65, 70])
                 tepe_aci = 180 - (2 * taban_aci)
-                gizlenen = random.choice(["tepe", "taban"])
-                if gizlenen == "tepe":
-                    q = f"Şekilde verilen ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde taban açılar eşit olduğuna göre <b>verilmeyen tepe açısı m({koseler[0]}) kaç derecedir?</b>"
-                    ans, etiketler = f"{tepe_aci}°", ["?", f"{taban_aci}°", f"{taban_aci}°"]
-                else:
-                    q = f"Şekilde verilen ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde tepe açısı verildiğine göre <b>verilmeyen taban açısı m({koseler[1]}) kaç derecedir?</b>"
-                    ans, etiketler = f"{taban_aci}°", [f"{tepe_aci}°", "?", f"{taban_aci}°"]
-                celd = [f"{tepe_aci + 10}°", f"{abs(taban_aci - 15)}°", "90°"]
+                q = f"Şekilde verilen ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde taban açılar eşit olduğuna göre <b>verilmeyen tepe açısı m({koseler[0]}) kaç derecedir?</b>"
+                ans, etiketler = f"{tepe_aci}°", ["?", f"{taban_aci}°", f"{taban_aci}°"]
+                celd = [f"{tepe_aci + 15}°", f"{abs(taban_aci - 10)}°", "90°"]
                 svg = svg_dinamik_ucgen_ciz("ikizkenar", etiketler, koseler)
             elif ucgen_tipi == "dik":
-                d_aci = random.choice([30, 40, 45, 50, 60])
-                diger = 90 - d_aci
-                q = f"Şekilde verilen dik {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[1]}) = 90° olduğuna göre <b>verilmeyen m({koseler[0]}) kaç derecedir?</b>"
+                d_aci = 30
+                diger = 60
+                q = f"Şekilde verilen dik {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[1]}) = 90° ve m({koseler[2]}) = {d_aci}° olduğuna göre <b>verilmeyen m({koseler[0]}) kaç derecedir?</b>"
                 ans, etiketler = f"{diger}°", ["?", "90°", f"{d_aci}°"]
-                celd = [f"{diger + 10}°", f"{abs(diger - 15)}°", "90°"]
+                celd = ["45°", "30°", "75°"]
                 svg = svg_dinamik_ucgen_ciz("dik", etiketler, koseler)
             else:
-                genis_aci = random.choice([100, 110, 120, 130])
-                kalan = 180 - genis_aci
-                dar1 = random.randint(20, kalan - 10)
-                dar2 = kalan - dar1
-                q = f"Şekilde verilen geniş açılı {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {genis_aci}° olduğuna göre <b>verilmeyen m({koseler[2]}) kaç derecedir?</b>"
+                genis_aci = 120
+                kalan = 60
+                dar1 = 30
+                dar2 = 30
+                q = f"Şekilde verilen geniş açılı {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {genis_aci}° ve m({koseler[1]}) = {dar1}° olduğuna göre <b>verilmeyen m({koseler[2]}) kaç derecedir?</b>"
                 ans, etiketler = f"{dar2}°", [f"{genis_aci}°", f"{dar1}°", "?"]
-                celd = [f"{dar2 + 15}°", f"{abs(dar2 - 10)}°", f"{genis_aci - 30}°"]
+                celd = ["45°", "60°", "15°"]
                 svg = svg_dinamik_ucgen_ciz("genis", etiketler, koseler)
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": svg}
 
         else:
-            saat = random.randint(2, 8)
-            dakika = random.choice([15, 30, 45, 0])
-            toplam_dakika = saat * 60 + dakika
-            q = f"{kisi} sinemada <b>{saat} saat {dakika} dakika</b> süren film izlemiştir. Toplam kaç dakikadır?" if dakika > 0 else f"{kisi} sinemada <b>{saat} saat</b> süren film izlemiştir. Süre kaç dakikadır?"
+            saat = random.randint(2, 6)
+            toplam_dakika = saat * 60
+            q = f"{kisi} sinemada <b>{saat} saat</b> süren film izlemiştir. Film toplam kaç dakikadır?"
             ans = str(toplam_dakika)
-            celd = [str(toplam_dakika + 30), str(toplam_dakika - 15), str(saat * 100)]
+            celd = [str(toplam_dakika + 30), str(toplam_dakika - 30), str(saat * 100)]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Fen Bilimleri":
         if "1. ünite" in u_low:
             sub = random.choice(["gunes", "dunya", "ay"])
             if sub == "gunes":
-                q = f"Güneş'in şekli küre şeklindedir ve katmanlardan oluşur. Güneş'in yüzey sıcaklığı yaklaşık kaç °C'dir?"
+                q = f"Güneş'in şekli küre şeklindedir. Güneş'in yüzey sıcaklığı yaklaşık kaç °C'dir?"
                 ans, celd = "6000 °C", ["100 °C", "15 Milyon °C", "500 °C"]
             elif sub == "dunya":
-                q = f"Dünya'mızın kendi ekseni etrafında dönme hareketi sonucunda ne oluşur?"
+                q = f"Dünya'mızın kendi ekseni etrafında bir tam tur dönmesi sonucunda ne oluşur?"
                 ans, celd = "Gece ve gündüz", ["Yıllık mevsimler", "Ay'ın ana evreleri", "Güneş tutulması"]
             else:
                 q = f"Ay'ın ana evrelerinden biri olan ve Dünya'dan bakıldığında karanlık göründüğü evre hangisidir?"
                 ans, celd = "Yeni Ay", ["Dolunay", "İlk Dördün", "Son Dördün"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "2. ünite" in u_low:
-            q = f"Sütten yoğurt yapılmasını sağlayan mikroskobik canlı grubu hangisidir?"
+            q = f"Sütten yoğurt yapılmasını sağlayan mikroskobik canlı türü hangisidir?"
             ans, celd = "Yararlı Bakteriler", ["Virüsler", "Zararlı Mantarlar", "Amip"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "3. ünite" in u_low:
-            a1 = random.randint(10, 90)
-            q = f"Kuvveti ölçmek için kullanılan araç nedir ve {a1} N değerindeki cisim asıldığında yaydaki gösterge kaç N'yi gösterir?"
-            ans, celd = f"Dinamometre ({a1} N)", [f"Termometre ({a1} N)", f"Dinamometre ({a1*2} N)", f"Barometre ({a1} N)"]
+            q = f"Kuvvetin büyüklüğünü ölçmek ve ifade etmek için hangi araç kullanılır?"
+            ans, celd = "Dinamometre", ["Termometre", "Barometre", "Metre"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "4. ünite" in u_low:
             q = f"Saf bir katı maddenin ısı alarak sıvı hale geçmesi olayına ne denir?"
             ans, celd = "Erime", ["Donma", "Buharlaşma", "Yoğuşma"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         else:
-            q = f"Aşağıdaki maddelerden hangisi ışığı kesinlikle geçirmeyen <b>opak maddedir</b>?"
+            q = f"Aşağıdaki maddelerden hangisi ışığı hiç geçirmeyen <b>opak maddedir</b>?"
             ans, celd = "Tahta Parçası", ["Pencere Camı", "Şeffaf Poşet", "Temiz Su"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Türkçe":
         if "1. tema" in u_low:
-            q = f"Paragrafta geçen 'Mektep' sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?"
+            q = f"Paragrafta geçen 'Mektep' sözcüğünün Türkçe eş anlamlısı aşağıdakilerden hangisidir?"
             ans, celd = "Okul", ["Öğretmen", "Kitap", "Sınıf"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "2. tema" in u_low:
@@ -332,7 +317,7 @@ def dinamik_soru_uretici(ders, unite):
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "3. tema" in u_low:
             q = f"Bir metnin ana düşüncesi (ana fikri) aşağıdakilerden hangisini ifade eder?"
-            ans, celd = "Yazarın okuyucuya vermek istediği temel mesajı", ["Metnin kaç kelimeden oluştuğunu", "Kullanılan noktalama işaretlerini", "Hikayedeki karakterlerin yaşını"]
+            ans, celd = "Yazarın okuyucuya vermek istediği temel mesajı", ["Metnin kelime sayısını", "Kullanılan noktalama işaretlerini", "Hikayedeki mekan adını"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         else:
             q = f"Aşağıdaki sözcüklerden hangisinin yazımı <b>yanlıştır</b>?"
@@ -341,33 +326,33 @@ def dinamik_soru_uretici(ders, unite):
 
     elif ders == "Sosyal Bilgiler":
         if "1. ünite" in u_low:
-            q = f"{kisi} gün içinde evde üzerine düşen görevleri yapmaktadır. Hangisi {kisi}'in evdeki bir <b>sorumluluğudur</b>?"
+            q = f"{kisi} evde üzerine düşen görevleri yapmaktadır. Hangisi {kisi}'in evdeki bir <b>sorumluluğudur</b>?"
             ans, celd = "Kendi odasını düzenli tutmak", ["Televizyon kumandasını saklamak", "Sürekli dışarıda oynamak", "Oda kapısını kilitlemek"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "2. ünite" in u_low:
             q = f"Milli kültürümüzü yansıtan geleneksel el sanatlarımızdan biri hangisidir?"
-            ans, celd = "Ebru Sanatı", ["Futbol oynamak", "Tenis", "Bilgisayar kodlamak"]
+            ans, celd = "Ebru Sanatı", ["Futbol oynamak", "Tenis oynamak", "Bilgisayar kodlamak"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "3. ünite" in u_low:
             q = f"Aşağıdakilerden hangisi ülkemiz sınırları içinde yer alan <b>doğal varlıklarımızdandır</b>?"
             ans, celd = "Pamukkale Travertenleri", ["Topkapı Sarayı", "Sultanahmet Camii", "Anıtkabir"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         else:
-            q = f"Teknolojik ürünleri bilinçli ve güvenli kullanmak için aşağıdakilerden hangisi yapılmalıdır?"
-            ans, celd = "Kişisel bilgileri internette kimseyle paylaşmamak", ["Şifreyi herkese söylemek", "Sabaha kadar oyun oynamak", "Tanımayanlarla buluşmak"]
+            q = f"Teknolojik ürünleri bilinçli kullanmak için aşağıdakilerden hangisi yapılmalıdır?"
+            ans, celd = "Kişisel bilgileri internette paylaşmamak", ["Şifreyi herkese söylemek", "Sabaha kadar oyun oynamak", "Tanımayanlarla buluşmak"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Din Kültürü ve Ahlak Bilgisi":
         if "1. ünite" in u_low:
-            q = f"Evrendeki düzen, intizam ve uyum hangi yüce yaratıcının varlığını ve birliğini kanıtlar?"
+            q = f"Evrendeki kusursuz düzen ve uyum hangi yüce yaratıcının varlığını kanıtlar?"
             ans, celd = "Allah (c.c.)", ["Doğa olayları", "Rastlantılar", "Gezegenler"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "2. ünite" in u_low:
-            q = f"Ramazan ayında tutulan ve farz olan ibadetin adı nedir?"
+            q = f"Ramazan ayında imsak ile akşam ezanı arasında tutulan farz ibadet nedir?"
             ans, celd = "Oruç", ["Zekat", "Hac", "Kurban"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         else:
-            q = f"Büyüklere saygı göstermek ve küçükleri sevmek hangi ahlaki kavramla ifade edilir?"
+            q = f"Büyüklere saygı göstermek ve insanlara nazik davranmak hangi ahlaki kavramla ifade edilir?"
             ans, celd = "Adap ve Nezaket", ["İnatçılık", "Bencillik", "Kıskançlık"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
@@ -377,26 +362,26 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "Where are you from?", ["How old are you?", "What is your name?", "How are you?"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "unit 2" in u_low:
-            q = f"İngilizcede 'Sola dön' komutunun karşılığı hangisidir?"
+            q = f"İngilizcede yön tarif ederken 'Sola dön' demek için hangi kalıp kullanılır?"
             ans, celd = "Turn left", ["Turn right", "Go straight", "Stop"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "unit 3" in u_low:
-            q = f"I like playing chess and painting cümlesinde hangi etkinlikten <b>bahsedilmemiştir</b>?"
-            ans, celd = "Yüzmek (Swimming)", ["Satranç oynamak", "Resim yapmak", "İkisi de"]
+            q = f"İngilizcede hobilerden bahsederken 'I like playing football' cümlesinin Türkçe anlamı nedir?"
+            ans, celd = "Futbol oynamayı severim", ["Basketbol oynamayı severim", "Yüzmeyi severim", "Kitap okumayı severim"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         else:
             q = f"Sabah uyanma eylemini ifade eden İngilizce kalıp hangisidir?"
             ans, celd = "Get up", ["Go to bed", "Have dinner", "Do homework"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    else: # Bilgi Yarışması
+    else: # 🏆 Bilgi Yarışması
         if "1. kategori" in u_low:
-            q = f"Fransa'nın başkenti olan dünya şehri hangisidir?"
+            q = f"Fransa'nın başkenti olan Avrupa şehri hangisidir?"
             ans, celd = "Paris", ["Londra", "Roma", "Madrid"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
         elif "2. kategori" in u_low:
             sehir_yemek = random.choice(list(zip(SEHIRLER, YEMEKLER)))
-            q = f"Ülkemizin eşsiz lezzetlerinden biri olan <b>{sehir_yemek[1]}</b> hangi yöremiz/ilimizle özdeşleşmiştir?"
+            q = f"Ülkemizin eşsiz lezzetlerinden biri olan <b>{sehir_yemek[1]}</b> hangi ilimizle özdeşleşmiştir?"
             ans = sehir_yemek[0]
             celd = [s for s in SEHIRLER if s != ans][:3]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
@@ -410,7 +395,7 @@ def dinamik_soru_uretici(ders, unite):
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
-# 5. SIKİ SEÇİM SADAKATLİ SORU ÜRETME MOTORU
+# 5. SIKI SEÇİM SADAKATLİ SORU ÜRETME MOTORU
 # =========================================================
 def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -452,7 +437,7 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     return tam_soru_listesi[:hedef_sayi]
 
 # =========================================================
-# 6. STREAMLIT ARAYÜZÜ (HİÇBİR ŞEY ÖNCEDEN SEÇİLİ DEĞİL)
+# 6. STREAMLIT ARAYÜZÜ
 # =========================================================
 st.title("🎓 MEB 5. Sınıf Soru Bankası & Deneme Sınavı Motoru")
 
@@ -535,7 +520,6 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.success("✅ Seçtiğiniz Kriterlere Uygun Sorular Hazırlandı!")
     
-    # BÜYÜK PUNTOLARLA ÜNİTE / HAFTA BAZLI SORU DAĞILIMI
     st.markdown("### 📊 Ünite / Hafta Bazlı Üretilen Soru Dağılımı")
     ders_sayilari = {}
     for s in st.session_state['soru_listesi']:
