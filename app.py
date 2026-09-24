@@ -1,31 +1,31 @@
 import streamlit as st
 import random
 import json
+import time
 
 # Sayfa Yapılandırması
 st.set_page_config(page_title="5. Sınıf Akıllı Test Platformu", page_icon="🎓", layout="wide")
 
-# Oturum Durumu (Session State) Başlatma
-if "skor" not in st.session_state:
-    st.session_state["skor"] = 0
+# Streamlit Secrets'tan API Anahtarını Güvenli Şekilde Alma
+API_KEY = st.secrets.get("GEMINI_API_KEY", None)
+
+# Session State Başlatma
+if "test_aktif" not in st.session_state:
+    st.session_state["test_aktif"] = False
+if "soru_listesi" not in st.session_state:
+    st.session_state["soru_listesi"] = []
+if "mevcut_soru_index" not in st.session_state:
+    st.session_state["mevcut_soru_index"] = 0
+if "baslangic_zamani" not in st.session_state:
+    st.session_state["baslangic_zamani"] = 0
+if "toplam_sure" not in st.session_state:
+    st.session_state["toplam_sure"] = 0
 if "dogru" not in st.session_state:
     st.session_state["dogru"] = 0
 if "yanlis" not in st.session_state:
     st.session_state["yanlis"] = 0
-if "mevcut_soru" not in st.session_state:
-    st.session_state["mevcut_soru"] = None
 if "cevaplandi" not in st.session_state:
     st.session_state["cevaplandi"] = False
-
-# Streamlit Secrets'tan API Anahtarını Güvenli Şekilde Alma
-API_KEY = st.secrets.get("GEMINI_API_KEY", None)
-
-# Skor Tahtası Bileşeni
-def skor_tahtasi():
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Toplam Puan", st.session_state["skor"])
-    col2.metric("Doğru", st.session_state["dogru"])
-    col3.metric("Yanlış", st.session_state["yanlis"])
 
 # 1. Şablon Tabanlı Soru Üretici
 def sablon_soru_uret(ders, konu):
@@ -97,71 +97,116 @@ def gemini_soru_uret(api_key, ders, konu):
         veri = json.loads(clean_json)
         veri["kaynak"] = "Yapay Zekâ (Gemini)"
         return veri
-    except Exception as e:
+    except Exception:
         return None
 
-# 3. Ortak (Hibrit) Soru Üretici Mantığı
-def hibrit_soru_uret(api_key, ders, konu):
-    # %50 İhtimalle veya Secrets içinden geçerli anahtar okunamadıysa Şablon Bankasını kullan
-    secim = random.choice(["sablon", "gemini"])
-    
-    if secim == "gemini" and api_key:
+# Hibrit Soru Hazırlayıcı
+def soru_hazirla(api_key, ders, konu):
+    if random.choice([True, False]) and api_key:
         ai_soru = gemini_soru_uret(api_key, ders, konu)
         if ai_soru:
             return ai_soru
-            
     return sablon_soru_uret(ders, konu)
 
-# --- ARAYÜZ (UI) BAŞLANGICI ---
-st.title("🎓 5. Sınıf Akıllı Test Platformu")
 
-# Yan Menü (Sidebar)
-st.sidebar.header("⚙️ Menü & Ders Seçimi")
+# --- ARAYÜZ (UI) ---
+st.title("🎓 5. Sınıf Zaman Ayarlı Test Platformu")
 
-ders = st.sidebar.selectbox("Ders Seçin", ["Matematik", "Fen Bilimleri", "Türkçe"])
+# Yan Menü (Ayarlar)
+st.sidebar.header("⚙️ Test Ayarları")
+
+ders = st.sidebar.selectbox("Ders Seçin", ["Matematik", "Fen Bilimleri", "Türkçe"], disabled=st.session_state["test_aktif"])
 
 konu_liste = {
     "Matematik": ["Doğal Sayılarla Çarpma", "Kesirlerde Toplama"],
     "Fen Bilimleri": ["Güneş, Dünya ve Ay"],
     "Türkçe": ["Sözcükte Anlam"]
 }
-konu = st.sidebar.selectbox("Konu Seçin", konu_liste[ders])
+konu = st.sidebar.selectbox("Konu Seçin", konu_liste[ders], disabled=st.session_state["test_aktif"])
 
-# API Key Durum Bildirimi
+soru_sayisi = st.sidebar.number_input("Soru Sayısı Girin:", min_value=1, max_value=20, value=5, step=1, disabled=st.session_state["test_aktif"])
+
 if API_KEY:
-    st.sidebar.success("🔑 Gemini API Bağlantısı Aktif")
+    st.sidebar.success("🔑 Gemini API Aktif")
 else:
-    st.sidebar.warning("⚠️ API Key tanımlanmadı (Sadece şablon sorular çalışır)")
+    st.sidebar.warning("⚠️ API Key Tanımsız (Şablon Modu)")
 
-# Ana Ekran Düzeni
-skor_tahtasi()
-st.divider()
 
-if st.button("🎲 Yeni Soru Getir", type="primary"):
-    st.session_state["cevaplandi"] = False
-    with st.spinner("Soru hazırlanıyor..."):
-        st.session_state["mevcut_soru"] = hibrit_soru_uret(API_KEY, ders, konu)
+# TESTİ BAŞLATMA
+if not st.session_state["test_aktif"]:
+    st.info(f"Seçilen: **{ders} | {konu}** — Toplam **{soru_sayisi}** soru hazırlanacak. Her soru için 80 saniye (Toplam: **{soru_sayisi * 80}** saniye) süreniz olacak.")
+    
+    if st.button("🚀 Testi Başlat", type="primary"):
+        with st.spinner("Sorular hazırlanıyor..."):
+            st.session_state["soru_listesi"] = [soru_hazirla(API_KEY, ders, konu) for _ in range(soru_sayisi)]
+            st.session_state["mevcut_soru_index"] = 0
+            st.session_state["dogru"] = 0
+            st.session_state["yanlis"] = 0
+            st.session_state["cevaplandi"] = False
+            st.session_state["toplam_sure"] = soru_sayisi * 80
+            st.session_state["baslangic_zamani"] = time.time()
+            st.session_state["test_aktif"] = True
+            st.rerun()
 
-# Soru Gösterim Alanı
-if st.session_state["mevcut_soru"]:
-    q = st.session_state["mevcut_soru"]
+# TEST EKRANI
+else:
+    # Süre Hesaplama
+    gecen_sure = int(time.time() - st.session_state["baslangic_zamani"])
+    kalan_sure = st.session_state["toplam_sure"] - gecen_sure
+
+    # Süre Bitti Kontrolü
+    if kalan_sure <= 0:
+        st.error("⏰ Süreniz doldu! Test sonlandırılıyor...")
+        st.session_state["test_aktif"] = False
+        st.rerun()
+
+    # Sayaç ve İlerleme Çubuğu
+    dakika = kalan_sure // 60
+    saniye = kalan_sure % 60
     
-    col_ders, col_kaynak = st.columns([3, 1])
-    col_ders.subheader(f"📌 {ders} | {konu}")
-    col_kaynak.caption(f"🤖 Soru Kaynağı: **{q['kaynak']}**")
+    col_sure, col_skor = st.columns([2, 1])
+    col_sure.metric("⌛ Kalan Süre", f"{dakika:02d}:{saniye:02d}")
+    col_skor.write(f"📊 **Soru:** {st.session_state['mevcut_soru_index'] + 1} / {len(st.session_state['soru_listesi'])}")
+    col_skor.write(f"✅ Doğru: {st.session_state['dogru']} | ❌ Yanlış: {st.session_state['yanlis']}")
     
-    st.markdown(f"### **Soru:** {q['soru']}")
-    
-    secim = st.radio("Cevabınızı seçin:", q["siklar"], key="soru_secim")
-    
-    if st.button("Cevabı Kontrol Et") and not st.session_state["cevaplandi"]:
+    st.progress((st.session_state["mevcut_soru_index"] + 1) / len(st.session_state["soru_listesi"]))
+    st.divider()
+
+    # Mevcut Soru
+    idx = st.session_state["mevcut_soru_index"]
+    q = st.session_state["soru_listesi"][idx]
+
+    st.caption(f"🤖 Soru Kaynağı: **{q['kaynak']}**")
+    st.markdown(f"### **Soru {idx + 1}:** {q['soru']}")
+
+    secim = st.radio("Cevabınızı seçin:", q["siklar"], key=f"soru_{idx}")
+
+    if st.button("Cevabı Onayla") and not st.session_state["cevaplandi"]:
         st.session_state["cevaplandi"] = True
         if secim == q["dogru"]:
-            st.success("🎉 Tebrikler! Doğru Cevap. (+10 Puan)")
-            st.session_state["skor"] += 10
+            st.success("🎉 Doğru Cevap!")
             st.session_state["dogru"] += 1
         else:
             st.error(f"❌ Yanlış Cevap. Doğru Yanıt: **{q['dogru']}**")
             st.session_state["yanlis"] += 1
-            
-        st.rerun()
+
+    # Sonraki Soruya Geçiş
+    if st.session_state["cevaplandi"]:
+        if idx + 1 < len(st.session_state["soru_listesi"]):
+            if st.button("Sonraki Soru ➡️"):
+                st.session_state["mevcut_soru_index"] += 1
+                st.session_state["cevaplandi"] = False
+                st.rerun()
+        else:
+            if st.button("🏁 Testi Bitir"):
+                st.session_state["test_aktif"] = False
+                st.rerun()
+
+    # Test Bitiş Özeti
+    if not st.session_state["test_aktif"] and st.session_state["mevcut_soru_index"] > 0:
+        st.balloons()
+        st.success("🎉 Test Tamamlandı!")
+        toplam = len(st.session_state["soru_listesi"])
+        d = st.session_state["dogru"]
+        y = st.session_state["yanlis"]
+        st.write(f"**Sonuç:** {toplam} Soruda {d} Doğru, {y} Yanlış. Puan: **{int((d/toplam)*100)}**")
