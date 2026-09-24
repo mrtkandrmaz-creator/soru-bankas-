@@ -110,7 +110,7 @@ MEB_MUFREDAT = {
 }
 
 # =========================================================
-# GELİŞMİŞ ŞABLON TABANLI SORU ÜRETİCİ (MAX VARYASYON)
+# GELİŞMİŞ ŞABLON TABANLI SORU ÜRETİCİ
 # =========================================================
 def sablon_soru_uret(ders, konu):
     if ders == "Matematik":
@@ -167,7 +167,7 @@ def sablon_soru_uret(ders, konu):
     return secilen
 
 # =========================================================
-# YAPAY ZEKÂ (GEMINI) SORU ÜRETİCİ (DÜZELTİLMİŞ STRING MANTIGI)
+# DİNAMİK VE YOĞUNLUK KONTROLLÜ SORU ÜRETİCİ
 # =========================================================
 def gemini_soru_uret(api_key, ders, konu):
     if not api_key or not api_key.startswith("AIzaSy"):
@@ -185,21 +185,26 @@ def gemini_soru_uret(api_key, ders, konu):
             '  "dogru": "Doğru şık metni"\n'
             "}"
         )
+        
+        t0 = time.time()
         response = client.models.generate_content(
             model="gemini-2.5-flash",
             contents=prompt
         )
-        clean_json = response.text.strip()
-        clean_json = clean_json.replace("```json", "").replace("```", "").strip()
+        # Yanıt süresi 1.8 saniyeyi geçerse sunucu yoğun kabul edilir ve şablona düşülür
+        if time.time() - t0 > 1.8:
+            return None
+
+        clean_json = response.text.strip().replace("```json", "").replace("```", "").strip()
         veri = json.loads(clean_json)
         veri["kaynak"] = "Yapay Zekâ (Gemini)"
         return veri
     except Exception:
         return None
 
-# Hibrit Soru Hazırlayıcı
 def soru_hazirla(api_key, ders, konu):
-    if api_key and api_key.startswith("AIzaSy") and random.choice([True, False]):
+    # Sunucu yük dengesi ve çeşitlilik için yapay zeka ile şablon birlikte çalışır
+    if api_key and api_key.startswith("AIzaSy") and random.random() < 0.6:
         ai_soru = gemini_soru_uret(api_key, ders, konu)
         if ai_soru:
             return ai_soru
@@ -224,7 +229,7 @@ if st.sidebar.button("🎲 Şablon Soru Üret", use_container_width=True, disabl
 st.sidebar.divider()
 
 if API_KEY and API_KEY.startswith("AIzaSy"):
-    st.sidebar.success("🔑 Gemini API Aktif (Yapay Zekâ + Şablon Modu)")
+    st.sidebar.success("🔑 Gemini API + Şablon Hibrit Mod Aktif")
 else:
     st.sidebar.warning("⚠️ API Key Tanımsız / Şablon Modu Aktif")
 
@@ -233,7 +238,7 @@ if not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.info(f"📋 **Sınav Bilgileri:**\n- Ders: **{ders}**\n- Konu: **{konu}**\n- Soru Sayısı: **{soru_sayisi}**\n- Toplam Süre: **{soru_sayisi * 80} saniye**\n\n*Hazırsanız aşağıdaki butona basarak sınavı başlatabilirsiniz.*")
     
     if st.button("🚀 Sınavı Başlat", type="primary"):
-        with st.spinner("MEB Müfredatına uygun sorular hazırlanıyor..."):
+        with st.spinner("Sorular hazırlanıyor (AI + Şablon Hibrit Motor)..."):
             st.session_state["soru_listesi"] = [soru_hazirla(API_KEY, ders, konu) for _ in range(soru_sayisi)]
             st.session_state["kullanici_cevaplari"] = {}
             st.session_state["mevcut_soru_index"] = 0
@@ -257,11 +262,14 @@ elif st.session_state["test_aktif"]:
 
     st.markdown(f"### **Soru {idx + 1}:** {q['soru']}")
 
+    # Kullanıcı daha önce seçim yapmadıysa varsayılan olarak ŞIKLAR SEÇİLİ GELMEZ (index=None)
     onceki_cevap = st.session_state["kullanici_cevaplari"].get(idx, None)
-    secim_index = q["siklar"].index(onceki_cevap) if onceki_cevap in q["siklar"] else 0
+    secim_index = q["siklar"].index(onceki_cevap) if onceki_cevap in q["siklar"] else None
 
     secim = st.radio("Cevabınızı seçin:", q["siklar"], index=secim_index, key=f"radio_soru_{idx}")
-    st.session_state["kullanici_cevaplari"][idx] = secim
+    
+    if secim is not None:
+        st.session_state["kullanici_cevaplari"][idx] = secim
 
     st.divider()
     col_prev, col_next = st.columns([1, 1])
