@@ -77,42 +77,59 @@ MEB_MUFREDAT = {
 }
 
 # =========================================================
-# DİNAMİK SVG GÖRSEL ÜRETİCİLERİ
+# DİNAMİK VE PARAMETRİK SVG GÖRSEL MOTORU (HER SEFERİNDE FARKLI)
 # =========================================================
-def svg_aci_ciz(aci_derece):
+def svg_iletki_aci_ciz(derece):
+    import math
+    rad = math.radians(180 - derece)
+    x = int(120 + 80 * math.cos(rad))
+    y = int(110 - 80 * math.sin(rad))
+    renkler = ["#e63946", "#2a9d8f", "#f4a261", "#457b9d", "#7209b7"]
+    secilen_renk = random.choice(renkler)
+    
     return f'''
-    <svg width="220" height="140" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="#f8f9fa" rx="8"/>
-      <path d="M 20 110 L 180 110" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
-      <line x1="100" y1="110" x2="{100 + 70 * round(random.uniform(0.1, 0.8), 2)}" y2="{110 - 70 * round(random.uniform(0.5, 0.9), 2)}" stroke="#e63946" stroke-width="3"/>
-      <circle cx="100" cy="110" r="4" fill="#1d3557"/>
-      <text x="105" y="90" font-size="16" font-weight="bold" fill="#e63946">?°</text>
-      <text x="95" y="130" font-size="12" fill="#666">Açı Ölçüsü</text>
+    <svg width="260" height="150" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#f8f9fa" rx="10"/>
+      <path d="M 30 110 A 90 90 0 0 1 210 110 Z" fill="#e9ecef" stroke="#6c757d" stroke-width="2"/>
+      <line x1="30" y1="110" x2="210" y2="110" stroke="#333" stroke-width="3"/>
+      <line x1="120" y1="110" x2="{x}" y2="{y}" stroke="{secilen_renk}" stroke-width="4"/>
+      <circle cx="120" cy="110" r="5" fill="#333"/>
+      <text x="110" y="135" font-size="13" font-weight="bold" fill="#333">Açı: ?°</text>
     </svg>
     '''
 
 def svg_dikdortgen_ciz(a, b):
+    renkler = ["#a8dadc", "#cdb4db", "#ffc8dd", "#bde0fe", "#d8f3dc"]
+    bg_renk = random.choice(renkler)
     return f'''
-    <svg width="240" height="140" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="#f8f9fa" rx="8"/>
-      <rect x="40" y="30" width="160" height="80" fill="#a8dadc" stroke="#1d3557" stroke-width="3" rx="4"/>
-      <text x="110" y="22" font-size="14" font-weight="bold" fill="#1d3557">{a} cm</text>
-      <text x="10" y="75" font-size="14" font-weight="bold" fill="#1d3557">{b} cm</text>
+    <svg width="260" height="150" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#ffffff" rx="10"/>
+      <rect x="45" y="30" width="170" height="85" fill="{bg_renk}" stroke="#1d3557" stroke-width="3" rx="6"/>
+      <text x="120" y="22" text-anchor="middle" font-size="15" font-weight="bold" fill="#1d3557">{a} cm</text>
+      <text x="20" y="77" font-size="15" font-weight="bold" fill="#1d3557">{b} cm</text>
     </svg>
     '''
 
 def svg_ay_evresi_ciz(evre_adi):
+    # Evre adına göre farklı çizim maskeleri
+    maskeler = {
+        "Yeni Ay": '<circle cx="80" cy="70" r="45" fill="#151515"/>',
+        "İlk Dördün": '<circle cx="80" cy="70" r="45" fill="#e0e0e0"/><path d="M 80 25 A 45 45 0 0 0 80 115 Z" fill="#151515"/>',
+        "Dolunay": '<circle cx="80" cy="70" r="45" fill="#fefae0" stroke="#ffb703" stroke-width="2"/>',
+        "Son Dördün": '<circle cx="80" cy="70" r="45" fill="#151515"/><path d="M 80 25 A 45 45 0 0 0 80 115 Z" fill="#e0e0e0"/>'
+    }
+    cizim = maskeler.get(evre_adi, maskeler["Dolunay"])
+    
     return f'''
-    <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="#111" rx="8"/>
-      <circle cx="80" cy="80" r="50" fill="#e0e0e0" stroke="#fff" stroke-width="2"/>
-      <path d="M 80 30 A 50 50 0 0 0 80 130 Z" fill="#222"/>
-      <text x="80" y="150" text-anchor="middle" font-size="12" fill="#fff">{evre_adi}</text>
+    <svg width="180" height="150" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#0b0f19" rx="10"/>
+      {cizim}
+      <text x="90" y="135" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">{evre_adi}</text>
     </svg>
     '''
 
 # =========================================================
-# GÖRSEL DESTEKLİ ŞABLON SORU ÜRETİCİ
+# GÖRSEL DESTEKLİ ŞABLON SORU ÜRETİCİ (HER DEFASINDA DİNAMİK)
 # =========================================================
 def sablon_soru_uret(ders, konu):
     if ders == "Matematik":
@@ -120,39 +137,47 @@ def sablon_soru_uret(ders, konu):
             aci = random.choice([30, 45, 60, 90, 120, 135, 150])
             tur = "Dar Açı" if aci < 90 else ("Dik Açı" if aci == 90 else "Geniş Açı")
             siklar = ["Dar Açı", "Dik Açı", "Geniş Açı", "Doğru Açı"]
+            random.shuffle(siklar)
             return {
-                "soru": f"Yukarıdaki görselde gösterilen Açı çeşidi aşağıdakilerden hangisidir?",
-                "gorsel_svg": svg_aci_ciz(aci),
+                "soru": f"Yukarıdaki iletki görselinde gösterilen {aci}°'lik açı çeşidi aşağıdakilerden hangisidir?",
+                "gorsel_svg": svg_iletki_aci_ciz(aci),
                 "siklar": siklar,
                 "dogru": tur,
-                "kaynak": "Görsel Şablon Bankası"
+                "kaynak": "Dinamik Şablon Motoru"
             }
         elif "Alan" in konu:
-            a, b = random.randint(6, 12), random.randint(3, 5)
+            a, b = random.randint(5, 18), random.randint(3, 10)
             alan = a * b
-            siklar = [f"{alan} cm²", f"{2*(a+b)} cm²", f"{alan + 10} cm²", f"{alan - 5} cm²"]
+            siklar = [f"{alan} cm²", f"{2*(a+b)} cm²", f"{alan + random.randint(4,12)} cm²", f"{max(1, alan - 8)} cm²"]
+            siklar = list(set(siklar))
+            while len(siklar) < 4:
+                siklar.append(f"{alan + random.randint(15, 30)} cm²")
             random.shuffle(siklar)
             return {
                 "soru": "Görselde kenar uzunlukları verilen dikdörtgenin alanı kaç cm²'dir?",
                 "gorsel_svg": svg_dikdortgen_ciz(a, b),
                 "siklar": siklar,
                 "dogru": f"{alan} cm²",
-                "kaynak": "Görsel Şablon Bankası"
+                "kaynak": "Dinamik Şablon Motoru"
             }
 
     elif ders == "Fen Bilimleri":
         if "Ay" in konu:
+            evreler = ["Yeni Ay", "İlk Dördün", "Dolunay", "Son Dördün"]
+            secilen_evre = random.choice(evreler)
+            siklar = evreler.copy()
+            random.shuffle(siklar)
             return {
                 "soru": "Görselde Ay'ın ana evrelerinden biri verilmiştir. Bu evrenin adı nedir?",
-                "gorsel_svg": svg_ay_evresi_ciz("İlk Dördün"),
-                "siklar": ["İlk Dördün", "Son Dördün", "Yeni Ay", "Dolunay"],
-                "dogru": "İlk Dördün",
-                "kaynak": "Görsel Şablon Bankası"
+                "gorsel_svg": svg_ay_evresi_ciz(secilen_evre),
+                "siklar": siklar,
+                "dogru": secilen_evre,
+                "kaynak": "Dinamik Şablon Motoru"
             }
 
     # Varsayılan Soru
     return {
-        "soru": f"5. sınıf {ders} dersi '{konu}' konusu ile ilgili görsel değerlendirme sorusu aşağıdakilerden hangisidir?",
+        "soru": f"5. sınıf {ders} dersi '{konu}' konusu ile ilgili değerlendirme sorusu aşağıdakilerden hangisidir?",
         "gorsel_svg": None,
         "siklar": ["Seçenek A", "Seçenek B", "Seçenek C", "Seçenek D"],
         "dogru": "Seçenek A",
@@ -160,7 +185,7 @@ def sablon_soru_uret(ders, konu):
     }
 
 # =========================================================
-# GEMINI YAPAY ZEKÂ SORU ÜRETİCİ (GÖRSEL TASVİR DESTEKLİ)
+# GEMINI YAPAY ZEKÂ SORU ÜRETİCİ (BENZERSSİZ TASVİR DESTEKLİ)
 # =========================================================
 def gemini_soru_uret(api_key, ders, konu):
     if not api_key or not api_key.startswith("AIzaSy"):
@@ -170,12 +195,12 @@ def gemini_soru_uret(api_key, ders, konu):
         client = genai.Client(api_key=api_key)
         
         prompt = (
-            f"MEB 5. sınıf {ders} dersi '{konu}' konusu ile ilgili 4 şıklı 1 adet test sorusu hazırla.\n"
-            "Eğer konu uygunsa soruya görsel bir unsur ekle (örneğin bir şekil, grafik veya diyagram metin tasviri).\n"
+            f"MEB 5. sınıf {ders} dersi '{konu}' konusu ile ilgili 4 şıklı 1 adet benzersiz test sorusu hazırla.\n"
+            "Soruya özgün bir görsel unsuru (tasvir, tablo veya diyagram) ekle.\n"
             "Yanıtı YALNIZCA geçerli bir JSON formatında ver:\n"
             "{\n"
             '  "soru": "Soru metni",\n'
-            '  "gorsel_tasvir": "Görsel açıklaması veya tasviri (varsa, yoksa null)",\n'
+            '  "gorsel_tasvir": "Görsel açıklaması/tablosu (varsa, yoksa null)",\n'
             '  "siklar": ["A Şıkkı", "B Şıkkı", "C Şıkkı", "D Şıkkı"],\n'
             '  "dogru": "Doğru şık metni"\n'
             "}"
@@ -227,7 +252,7 @@ if not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.info(f"📋 **Sınav Bilgileri:**\n- Ders: **{ders}**\n- Konu: **{konu}**\n- Soru Sayısı: **{soru_sayisi}**\n- Toplam Süre: **{soru_sayisi * 80} saniye**\n\n*Hazırsanız aşağıdaki butona basarak sınavı başlatabilirsiniz.*")
     
     if st.button("🚀 Sınavı Başlat", type="primary"):
-        with st.spinner("Resim içerikli ve müfredata uygun sorular hazırlanıyor..."):
+        with st.spinner("Farklı ve dinamik görsellere sahip sorular hazırlanıyor..."):
             st.session_state["soru_listesi"] = [soru_hazirla(API_KEY, ders, konu) for _ in range(soru_sayisi)]
             st.session_state["kullanici_cevaplari"] = {}
             st.session_state["mevcut_soru_index"] = 0
