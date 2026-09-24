@@ -93,106 +93,265 @@ def svg_sutun_grafik(kategori1, v1, kategori2, v2, baslik="Grafik"):
 def milyonluk_varyasyon_engine(ders, unite):
     u_low = unite.lower()
     
-    isimler = ["Ayşe", "Mehmet", "Zeynep", "Can", "Elif", "Burak", "Selin", "Kaan", "Deniz", "Ömer", "Duru", "Bora", "Ece", "Arda"]
-    nesneler = ["kitap", "kalem", "bilye", "fidan", "sayfa", "pul", "çikolata", "roket maketi", "balon", "oyuncak"]
-    sehirler = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Trabzon", "Konya", "Eskişehir", "Gaziantep"]
+    isimler = ["Ayşe", "Mehmet", "Zeynep", "Can", "Elif", "Burak", "Selin", "Kaan", "Deniz", "Ömer", "Duru", "Bora", "Ece", "Arda", "Eren", "Yara", "Kuzey", "Defne", "Mert", "Asya"]
+    nesneler = ["kitap", "kalem", "bilye", "fidan", "sayfa", "pul", "çikolata", "roket maketi", "balon", "oyuncak", "etiket", "fındık", "ceviz", "kartPOSTAL"]
+    sehirler = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Trabzon", "Konya", "Eskişehir", "Gaziantep", "Kars", "Erzurum", "Muğla", "Nevşehir", "Sivas"]
+    kurum_kulup = ["Çevre Kulübü", "TEMA Derneği", "Satranç Kulübü", "TÜBİTAK Proje Ekibi", "Okul Meclisi", "Sıfır Atık Timi", "Robotik Takımı"]
 
     # -----------------------------------------------------
     # MATEMATİK ENGINE
     # -----------------------------------------------------
     if ders == "Matematik":
-        if "açı" in u_low or "geometrik" in u_low:
-            aci_deg = random.randint(15, 165)
-            if aci_deg == 90:
-                tur = "Dik Açı"
-                celdiriciler = ["Dar Açı", "Geniş Açı", "Doğru Açı"]
-            elif aci_deg < 90:
-                tur = "Dar Açı"
-                celdiriciler = ["Dik Açı", "Geniş Açı", "Tam Açı"]
-            else:
-                tur = "Geniş Açı"
-                celdiriciler = ["Dar Açı", "Dik Açı", "Doğru Açı"]
-                
-            kisi = random.choice(isimler)
-            soru_tipi = random.choice(["gorsel_tur", "oncul_aci", "tamamlama"])
+        sub_type = random.choice([
+            "dogal_sayi_okuma", "basamak_degeri", "islemler_problem", "bolme_kalan", 
+            "kesir_sadelestirme", "kesir_toplama", "ondalik_cozumleme", "yuzde_hesap",
+            "aci_turu", "geometri_alan", "grafik_okuma", "uzunluk_donusum"
+        ])
+        
+        if sub_type == "dogal_sayi_okuma":
+            boluk1 = random.randint(100, 999)
+            boluk2 = random.randint(100, 999)
+            boluk3 = random.randint(10, 999)
+            sayi_str = f"{boluk3}{boluk2:03d}{boluk1:03d}"
             
-            if soru_tipi == "gorsel_tur":
-                q_text = f"{kisi}, iletki yardımıyla defterine bir açı çizmiştir. İletki üzerindeki başlangıç koluna göre verilen açının türü nedir?"
-                ans = tur
-                siklar = [tur] + celdiriciler
-            elif soru_tipi == "oncul_aci":
-                q_text = f"Görseldeki {aci_deg}°'lik açı ile ilgili;\nI. Türü {tur}'dir.\nII. Ölçüsü dik açıdan büyüktür.\nIII. Komşu açısı ile toplamı 180° olabilir.\nİfadelerinden hangileri kesinlikle doğrudur?"
-                ans = "I ve III"
-                siklar = ["I ve III", "Yalnız I", "I ve II", "I, II ve III"]
-            else:
-                fark = 180 - aci_deg
-                q_text = f"Şekilde verilen açıyı bir doğru açıya (180°) tamamlamak için kaç derecelik bir açı daha eklenmelidir?"
-                ans = f"{fark}°"
-                siklar = [f"{fark}°", f"{fark + 10}°", f"{abs(fark - 15)}°", f"{fark + 20}°"]
-
+            soru_p = random.choice([
+                f"Aşağıdaki sayılardan hangisinin milyonlar bölüğündeki rakamların toplamı {sum(int(x) for x in str(boluk3))} sayısıdır?",
+                f"Bir fidan dikme kampanyasında toplam {sayi_str} adet fidan dikilmiştir. Bu sayının binler bölüğünde hangi sayı yer almaktadır?",
+                f"Rakamları birbirinden farklı dokuz basamaklı bir kurguda, binler basamağı {str(boluk2)[1]} olan sayı aşağıdakilerden hangisi olabilir?"
+            ])
+            dogru = f"{boluk2:03d}" if "binler bölüğü" in soru_p else str(sayi_str)
+            celdiriciler = [f"{boluk1:03d}", f"{boluk3:03d}", f"{boluk2 + 15:03d}", f"{boluk1 + 25:03d}"]
+            if dogru in celdiriciler: celdiriciler.remove(dogru)
+            
+            siklar = [dogru] + celdiriciler[:3]
             random.shuffle(siklar)
-            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_iletki_aci_ciz(aci_deg), "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
+            return {"ders": ders, "unite": unite, "soru": soru_p, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+        elif sub_type == "kesir_sadelestirme":
+            pay = random.randint(2, 12)
+            çarpan = random.randint(3, 9)
+            payda = (pay + random.randint(1, 5)) * çarpan
+            pay_gen = pay * çarpan
             
-        elif "veri" in u_low or "grafik" in u_low:
-            v1, v2 = random.randint(20, 80), random.randint(20, 80)
-            k1, k2 = random.sample(["A Kitabı", "B Kitabı", "1. Gün", "2. Gün", "Basketbol", "Futbol"], 2)
-            toplam = v1 + v2
+            kisi = random.choice(isimler)
+            q_text = f"{kisi}, bir tarlanın {pay_gen}/{payda} 'lik kısmına buğday ekmiştir. Bu kesrin en sade gösterimi aşağıdakilerden hangisidir?"
+            
+            # En sadeleştirme basitleştirmesi
+            ebob = math.gcd(pay_gen, payda)
+            dogru_sade = f"{pay_gen//ebob}/{payda//ebob}"
+            celd = [f"{pay_gen//ebob + 1}/{payda//ebob}", f"{pay_gen//ebob}/{payda//ebob + 2}", f"{(pay_gen//ebob)*2}/{(payda//ebob)*2 + 1}"]
+            siklar = [dogru_sade] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru_sade, "kategori": sub_type}
+
+        elif sub_type == "ondalik_cozumleme" or "ondalık" in u_low:
+            tam = random.randint(10, 99)
+            onda = random.randint(1, 9)
+            yüzde = random.randint(1, 9)
+            ondalik_val = f"{tam}.{onda}{yüzde}"
+            
+            q_text = f"Ondalık gösterimi {ondalik_val} olan sayı için verilen basamak çözümlemelerinden hangisi doğrudur?"
+            dogru = f"({tam//10} x 10) + ({tam%10} x 1) + ({onda} x 0,1) + ({yüzde} x 0,01)"
+            celd = [
+                f"({tam//10} x 10) + ({tam%10} x 1) + ({onda} x 0,01) + ({yüzde} x 0,001)",
+                f"({tam} x 1) + ({onda} x 0,1) + ({yüzde} x 0,1)",
+                f"({tam//10} x 100) + ({tam%10} x 10) + ({onda} x 0,1)"
+            ]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+        elif sub_type == "aci_turu" or "açı" in u_low:
+            aci_deg = random.choice([r for r in range(15, 175) if r != 90])
+            tur = "Dar Açı" if aci_deg < 90 else "Geniş Açı"
+            kisi = random.choice(isimler)
+            
+            q_text = f"{kisi}, iletki ile bir deftere {aci_deg}° ölçüsünde bir açı çiziyor. Bu açı hakkında aşağıdakilerden hangisi söylenebilir?"
+            dogru = f"Bu açı bir {tur}dır."
+            celd = [
+                f"Bu açı bir Dik Açıdır.",
+                f"Bu açı bir Doğru Açıdır.",
+                f"Bu açı bir {'Geniş Açı' if tur == 'Dar Açı' else 'Dar Açı'}dır."
+            ]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_iletki_aci_ciz(aci_deg), "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+        elif sub_type == "grafik_okuma" or "veri" in u_low:
+            v1, v2 = random.randint(15, 95), random.randint(15, 95)
+            k1, k2 = random.sample(["Geri Dönüşüm", "Kompost Atık", "Plastik", "Mavi Kapak", "Kağıt Atık"], 2)
             fark = abs(v1 - v2)
             
-            q_text = f"Verilen sütun grafiğine göre, {k1} ve {k2} değerleri arasındaki fark hesaplanacaktır. İki değer arasındaki fark kaçtır?"
-            ans = str(fark)
-            siklar = [str(fark), str(fark + 5), str(toplam), str(abs(fark - 4))]
+            q_text = f"Grafikte {k1} ve {k2} toplama miktarları (kg) gösterilmiştir. İki miktar arasındaki fark kaç kg'dır?"
+            dogru = f"{fark} kg"
+            celd = [f"{fark + 10} kg", f"{v1 + v2} kg", f"{abs(fark - 5)} kg"]
+            siklar = [dogru] + celd
             random.shuffle(siklar)
-            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_sutun_grafik(k1, v1, k2, v2), "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_sutun_grafik(k1, v1, k2, v2), "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
 
         else:
             kisi = random.choice(isimler)
-            nesne = random.choice(nesneler)
-            n1, n2, n3 = random.randint(100, 500), random.randint(20, 90), random.randint(2, 5)
-            
+            n1, n2, n3 = random.randint(120, 450), random.randint(15, 80), random.randint(3, 8)
             ans_val = (n1 + n2) * n3
-            q_text = f"{kisi}, başlangıçta {n1} adet {nesne} almıştır. Daha sonra arkadaşı ona {n2} adet daha vermiş ve elindeki toplam {nesne} sayısını {n3} katına çıkarmıştır. Son durumda {kisi}'nin kaç {nesne}si vardır?"
             
-            ans = str(ans_val)
-            siklar = [ans, str(ans_val + 10), str(ans_val - 25), str(ans_val + 50)]
+            q_text = f"{kisi}, her birinde {n1} sayfa bulunan kitap serisinden satın alıyor. Daha sonra {n2} sayfa daha ek fasikül çözüp kalan tüm çalışmasını {n3} katına çıkartıyor. Toplam kaç sayfa soru çözülmüştür?"
+            dogru = str(ans_val)
+            celd = [str(ans_val + 20), str(ans_val - 45), str((n1 * n3) + n2)]
+            siklar = [dogru] + celd
             random.shuffle(siklar)
-            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
 
     # -----------------------------------------------------
     # FEN BİLİMLERİ ENGINE
     # -----------------------------------------------------
     elif ders == "Fen Bilimleri":
+        sub_type = random.choice(["gunes_dunya_ay", "canlilar", "surtunme", "madde_hal", "isik_golge", "devre"])
         kisi = random.choice(isimler)
-        if "kuvvet" in u_low or "sürtünme" in u_low:
-            yuzeyler = ["Buzlu Yüzey", "Zımpara Kağıdı", "Tahta Zemin", "Halı Zemin"]
-            y1, y2 = random.sample(yuzeyler, 2)
-            q_text = f"{kisi}, özdeş oyuncak arabaları {y1} ve {y2} üzerinde eşit kuvvetle itmiştir. Arabanın {y1} üzerinde daha uzağa gittiği gözlemlenmiştir.\n\nBu deneye göre aşağıdakilerden hangisi kesinlikle doğrudur?"
-            ans = f"{y1} üzerindeki sürtünme kuvveti daha azdır."
-            celd = [f"{y2} üzerindeki sürtünme kuvveti daha azdır.", "Her iki yüzeyde sürtünme eşittir.", "Arabanın kütlesi yüzeye göre değişmiştir."]
-        else:
-            q_text = f"Öğrenci {kisi}, Güneş, Dünya ve Ay'ın birbirine göre hareketlerini inceleyen bir model tasarlamıştır. Modelde Ay'ın Dünya etrafındaki dolanma süresi dikkate alınmıştır.\n\nBuna göre aşağıdakilerden hangisi söylenebilir?"
-            ans = "Ay, Dünya etrafındaki turunu yaklaşık 27 günde tamamlar."
-            celd = ["Güneş, Dünya etrafında dolanır.", "Ay sadece kendi etrafında döner, Dünya etrafında dönmez.", "Dünya'nın dönme süresi Ay ile birebir aynıdır."]
+        
+        if sub_type == "gunes_dunya_ay" or "güneş" in u_low:
+            oran = random.choice(["Güneş > Dünya > Ay", "Dünya > Ay", "Güneş en büyüktür"])
+            q_text = f"{kisi}, Fen dersi projesi için Güneş, Dünya ve Ay'ın hacimsel büyüklüklerini kıyaslayan meyve modelleri hazırlamıştır.\n\nBuna göre doğru sıralama aşağıdakilerden hangisidir?"
+            dogru = "Güneş > Dünya > Ay"
+            celd = ["Dünya > Güneş > Ay", "Ay > Dünya > Güneş", "Güneş > Ay > Dünya"]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
 
-        siklar = [ans] + celd
-        random.shuffle(siklar)
-        return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
+        elif sub_type == "surtunme" or "sürtünme" in u_low:
+            z1, z2 = random.sample(["Zımpara Kağıdı", "Buz Pisti", "Halı Zemin", "Cilalı Parke"], 2)
+            q_text = f"Öğrenci {kisi}, dinamometreye bağladığı tahta takozu sırasıyla {z1} ve {z2} üzerinde çekmiştir. {z1} üzerindeki dinamometre değerinin daha yüksek olduğu görülmüştür.\n\nBu gözleme göre çıkarılabilecek KESİN sonuç hangisidir?"
+            dogru = f"{z1} yüzeyindeki sürtünme kuvveti {z2} yüzeyinden daha fazladır."
+            celd = [
+                f"{z2} yüzeyindeki sürtünme kuvveti daha fazladır.",
+                "Tahta takozun kütlesi zemin değiştikçe artmıştır.",
+                "Dinamometre sadece buz üzerinde doğru ölçüm yapar."
+            ]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+        elif sub_type == "isik_golge" or "ışık" in u_low:
+            mesafe = random.randint(10, 50)
+            q_text = f"Saydam olmayan bir cisim, ışık kaynağına {mesafe} cm yaklaştırıldığında perdedeki tam gölgenin boyunda nasıl bir değişim gözlenir?"
+            dogru = "Tam gölge boyu büyür."
+            celd = ["Tam gölge boyu küçülür.", "Tam gölge boyu değişmez.", "Gölge tamamen kaybolur ve saydamlaşır."]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+        else:
+            canli = random.choice(["Şapkalı Mantar", "Amip", "Eğrelti Otu", "Bakteri", "Yosun"])
+            q_text = f"Sınıf panosunda resimleri verilen '{canli}' canlı türü hangi canlı grubu altında incelenmektedir?"
+            
+            grup_dict = {"Şapkalı Mantar": "Mantarlar", "Amip": "Mikroskobik Canlılar", "Eğrelti Otu": "Bitkiler", "Bakteri": "Mikroskobik Canlılar", "Yosun": "Bitkiler"}
+            dogru = grup_dict.get(canli, "Mikroskobik Canlılar")
+            celd = [g for g in ["Hayvanlar", "Bitkiler", "Mantarlar", "Mikroskobik Canlılar"] if g != dogru]
+            siklar = [dogru] + celd[:3]
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
 
     # -----------------------------------------------------
-    # TÜRKÇE & SOSYAL BİLGİLER ENGINE
+    # TÜRKÇE ENGINE
+    # -----------------------------------------------------
+    elif ders == "Türkçe":
+        sub_type = random.choice(["sozcuk_anlam", "noktalama", "yazim_kurallari", "paragraf_anafikir", "deyimler"])
+        kisi = random.choice(isimler)
+        
+        if sub_type == "deyimler":
+            deyim_list = [
+                ("Gözden düşmek", "Değerini ve sevgisini kaybetmek"),
+                ("Kulak kabartmak", "Çaktırmadan, belli etmeden dinlemek"),
+                ("İğne ile kuyu kazmak", "Çok yetersiz araçlarla büyük sabır gerektiren bir işe girişmek"),
+                ("Etekleri zil çalmak", "Çok sevinmek ve coşgulu olmak")
+            ]
+            d_ad, d_anlam = random.choice(deyim_list)
+            q_text = f"'{d_ad}' deyiminin cümle içerisinde doğru kullanımı aşağıdakilerden hangisidir?"
+            dogru = f"{kisi}, sınav sonucunun çok iyi geldiğini öğrenince adeta etekleri zil çaldı / {d_anlam.lower()} durumunu yaşadı."
+            celd = [
+                f"{kisi}, arkadaşının gizli konuşmalarına kulak kabartıp ortamdan uzaklaştı.",
+                f"{kisi}, ödevini yapmadığı için hemen {d_ad.lower()} durumuna ulaştı.",
+                f"Yavaş yürüyen kaplumbağayı görünce hepsi gülmekten katıldı."
+            ]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+        elif sub_type == "noktalama" or "noktalama" in u_low:
+            q_text = f"Aşağıdaki cümlelerin hangisinde tırnak işareti ( \" \" ) veya kesme işareti ( ' ) yanlış kullanılmıştır?"
+            dogru = f"Ankara'dan gelen otobüs saat 14.30'da otogara vardımı?"
+            celd = [
+                f"{kisi} \"Yarın kütüphanede buluşalım.\" dedi.",
+                f"MEB'in yayımladığı Beceri Temelli Sorular çok faydalı.",
+                f"Türkiye'nin başkenti Ankara, tarihi zenginliğiyle bilinir."
+            ]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+        else:
+            q_text = f"\"Doğadaki tüm canlılar birbiriyle uyum içerisindedir. Bir halkanın kopması tüm zinciri etkiler.\" \n\nYukarıdaki paragrafa göre çıkarılabilecek ANA FİKİR aşağıdakilerden hangisidir?"
+            dogru = "Doğadaki ekolojik denge ve canlılar arası dayanışma hayati önem taşır."
+            celd = [
+                "İnsanlar doğayı istedikleri gibi şekillendirebilir.",
+                "Sadece büyük hayvanlar ekosistem için önemlidir.",
+                "Çevre kirliliği sadece şehirleri ilgilendiren bir sorundur."
+            ]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+    # -----------------------------------------------------
+    # SOSYAL BİLGİLER ENGINE
     # -----------------------------------------------------
     else:
+        sub_type = random.choice(["hak_sorumluluk", "kultur_miras", "cografi_unsur", "uretim_tuketim", "bilim_teknoloji"])
         kisi = random.choice(isimler)
         sehir = random.choice(sehirler)
-        q_text = f"{kisi}, {sehir} gezisinde elde ettiği gözlemleri şu şekilde sıralamıştır:\nI. Tarihi kaleleri ve müzeleri ziyaret etti.\nII. Bölgenin doğal şelalelerinde fotoğraf çekildi.\nIII. Yerel pazardan geleneksel el sanatları satın aldı.\n\nVerilen öncüllerden hangileri 'Beşeri Unsur' kapsamına girer?"
-        ans = "I ve III"
-        siklar = ["I ve III", "Yalnız II", "I ve II", "I, II ve III"]
-        random.shuffle(siklar)
-        return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
+        
+        if sub_type == "hak_sorumluluk":
+            q_text = f"5. sınıf öğrencisi {kisi}'nin katıldığı {random.choice(kurum_kulup)} kapsamında üstlenebileceği 'SORUMLULUK' örneği aşağıdakilerden hangisidir?"
+            dogru = "Toplantı saatlerine zamanında uymak ve verilen görevleri eksiksiz tamamlamak"
+            celd = [
+                "Düşüncelerini özgürce ifade etme hakkını kullanmak",
+                "Okul kütüphanesinden dilediği kitabı ödünç almak",
+                "Sağlıklı bir çevrede yaşama hakkını talep etmek"
+            ]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+        elif sub_type == "kultur_miras":
+            eserler = ["Peri Bacaları", "Çatalhöyük", "Göbeklitepe", "Pamukkale Travertenleri", "Sümela Manastırı"]
+            secilen_eser = random.choice(eserler)
+            is_dogal = secilen_eser in ["Peri Bacaları", "Pamukkale Travertenleri"]
+            
+            q_text = f"{kisi}, ailesiyle gittiği {sehir} gezisinde '{secilen_eser}' yapısını incelemiştir. Bu varlık hakkında aşağıdakilerden hangisi söylenebilir?"
+            dogru = f"Bu varlık bir {'Doğal Varlık' if is_dogal else 'Tarihi Eser / Beşeri Yapı'} örneğidir."
+            celd = [
+                f"Bu varlık bir {'Beşeri Yapı' if is_dogal else 'Doğal Unsur'} örneğidir.",
+                "İnsan eli değmeden günümüz teknolojisiyle yapılmıştır.",
+                "Sadece sanayi alanında kullanılan bir üretim tesisidir."
+            ]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
+
+        else:
+            q_text = f"{sehir} bölgesinde yetiştirilen tarımsal ürünlerin fabrikalarda işlenip market raflarına gelmesi sürecinde hangi ekonomik faaliyet aşamaları sırasıyla uygulanmıştır?"
+            dogru = "Üretim ➔ Dağıtım ➔ Tüketim"
+            celd = [
+                "Tüketim ➔ Üretim ➔ Dağıtım",
+                "Dağıtım ➔ Tüketim ➔ Üretim",
+                "İthalat ➔ İhracat ➔ Tüketim"
+            ]
+            siklar = [dogru] + celd
+            random.shuffle(siklar)
+            return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": dogru, "kategori": sub_type}
 
 def sonsuz_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
     havuz = []
     hash_kayitlari = set()
+    kategori_kayitlari = set()
     
     if not secilen_uniteler:
         return []
@@ -207,14 +366,18 @@ def sonsuz_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
         uretilen = 0
         deneme = 0
         
-        while uretilen < istenen and deneme < 150:
+        while uretilen < istenen and deneme < 300:
             deneme += 1
             s = milyonluk_varyasyon_engine(h_ders, h_unite)
             
+            # Benzersizlik doğrulama parmak izi
             fingerprint = hashlib.sha256((s["soru"] + "".join(s["siklar"]) + s["dogru"]).encode('utf-8')).hexdigest()
+            kat_key = f"{h_ders}_{s.get('kategori', '')}_{s['dogru']}"
             
-            if fingerprint not in hash_kayitlari and len(s["siklar"]) == 4:
+            # Hem soru kalıbı hem de şık cevabı benzersizliği kontrolü
+            if fingerprint not in hash_kayitlari and kat_key not in kategori_kayitlari and len(s["siklar"]) == 4:
                 hash_kayitlari.add(fingerprint)
+                kategori_kayitlari.add(kat_key)
                 havuz.append(s)
                 uretilen += 1
                 
