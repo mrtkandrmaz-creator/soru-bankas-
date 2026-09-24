@@ -26,7 +26,7 @@ if "toplam_sure_sn" not in st.session_state:
     st.session_state["toplam_sure_sn"] = 0
 
 # =========================================================
-# 2. DERS ÖNCELİK SIRASI & MÜFREDAT YAPISI
+# 2. DERSLER VE MÜFREDAT YAPISI
 # =========================================================
 DERS_ONCELIK_SIRASI = [
     "Türkçe",
@@ -85,7 +85,6 @@ MEB_MUFREDAT = {
     ]
 }
 
-# 40 Haftalık MEB Müfredat Haritası
 MEB_HAFTALIK_MAPI = {}
 for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h] = []
@@ -108,7 +107,7 @@ for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
 # =========================================================
-# 3. DİNAMİK SVG GEOMETRİ & GİZLİ SONUÇLU ÜÇGEN MOTORU
+# 3. GEOMETRİK VE AÇI GÖRSEL ÜRETİCİ (SVG)
 # =========================================================
 def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
     if t_tip == "eskenar":
@@ -127,9 +126,7 @@ def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
         p_top, p_left, p_right = "130, 20", "40, 110", "220, 110"
         dik_sembol = ""
 
-    lbl0 = gorunen_etiketler[0]
-    lbl1 = gorunen_etiketler[1]
-    lbl2 = gorunen_etiketler[2]
+    lbl0, lbl1, lbl2 = gorunen_etiketler
 
     return f'''
     <svg width="280" height="135" viewBox="0 0 280 135" xmlns="http://www.w3.org/2000/svg">
@@ -153,7 +150,7 @@ def svg_aci_ciz(gorunen_deger):
     '''
 
 # =========================================================
-# 4. BAĞIMSIZ ALT KATEGORİ & ÇEŞİTLİ SORU ÜRETİCİ
+# 4. SORU ÜRETME MOTORU (TÜM DERSLER & ÜÇGEN ÇEŞİTLİLİĞİ)
 # =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz"]
 NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon"]
@@ -244,13 +241,13 @@ def dinamik_soru_uretici(ders, unite):
                 if ucgen_tipi == "eskenar":
                     gizlenen = random.choice(["a", "b", "c"])
                     if gizlenen == "a":
-                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde verilmeyen m({koseler[0]}) kaç derecedir?"
+                        q = f"Şekilde verilen eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde verilmeyen m({koseler[0]}) kaç derecedir?"
                         ans, etiketler = "60°", ["?", "60°", "60°"]
                     elif gizlenen == "b":
-                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde verilmeyen m({koseler[1]}) kaç derecedir?"
+                        q = f"Şekilde verilen eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde verilmeyen m({koseler[1]}) kaç derecedir?"
                         ans, etiketler = "60°", ["60°", "?", "60°"]
                     else:
-                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde verilmeyen m({koseler[2]}) kaç derecedir?"
+                        q = f"Şekilde verilen eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde verilmeyen m({koseler[2]}) kaç derecedir?"
                         ans, etiketler = "60°", ["60°", "60°", "?"]
                     celd = ["90°", "45°", "30°"]
                     svg = svg_dinamik_ucgen_ciz("eskenar", etiketler, koseler)
@@ -259,17 +256,17 @@ def dinamik_soru_uretici(ders, unite):
                     tepe_aci = 180 - (2 * taban_aci)
                     gizlenen = random.choice(["tepe", "taban"])
                     if gizlenen == "tepe":
-                        q = f"Şekildeki ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde taban açılar eşit ve {taban_aci}° olduğuna göre tepe açısı m({koseler[0]}) kaç derecedir?"
+                        q = f"Şekilde verilen ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde taban açılar eşit olduğuna göre tepe açısı m({koseler[0]}) kaç derecedir?"
                         ans, etiketler = f"{tepe_aci}°", ["?", f"{taban_aci}°", f"{taban_aci}°"]
                     else:
-                        q = f"Şekildeki ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde tepe açısı {tepe_aci}° olduğuna göre taban açısı m({koseler[1]}) kaç derecedir?"
+                        q = f"Şekilde verilen ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde tepe açısı verildiğine göre taban açısı m({koseler[1]}) kaç derecedir?"
                         ans, etiketler = f"{taban_aci}°", [f"{tepe_aci}°", "?", f"{taban_aci}°"]
                     celd = [f"{tepe_aci + 10}°", f"{abs(taban_aci - 15)}°", "90°"]
                     svg = svg_dinamik_ucgen_ciz("ikizkenar", etiketler, koseler)
                 elif ucgen_tipi == "dik":
                     d_aci = random.choice([30, 40, 45, 50, 60])
                     diger = 90 - d_aci
-                    q = f"Şekildeki dik {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[1]}) = 90° ve m({koseler[2]}) = {d_aci}° olduğuna göre m({koseler[0]}) kaç derecedir?"
+                    q = f"Şekilde verilen dik {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[1]}) = 90° olduğuna göre m({koseler[0]}) kaç derecedir?"
                     ans, etiketler = f"{diger}°", ["?", "90°", f"{d_aci}°"]
                     celd = [f"{diger + 10}°", f"{abs(diger - 15)}°", "90°"]
                     svg = svg_dinamik_ucgen_ciz("dik", etiketler, koseler)
@@ -278,7 +275,7 @@ def dinamik_soru_uretici(ders, unite):
                     kalan = 180 - genis_aci
                     dar1 = random.randint(20, kalan - 10)
                     dar2 = kalan - dar1
-                    q = f"Şekildeki geniş açılı {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {genis_aci}° ve m({koseler[1]}) = {dar1}° olduğuna göre m({koseler[2]}) kaç derecedir?"
+                    q = f"Şekilde verilen geniş açılı {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {genis_aci}° olduğuna göre m({koseler[2]}) kaç derecedir?"
                     ans, etiketler = f"{dar2}°", [f"{genis_aci}°", f"{dar1}°", "?"]
                     celd = [f"{dar2 + 15}°", f"{abs(dar2 - 10)}°", f"{genis_aci - 30}°"]
                     svg = svg_dinamik_ucgen_ciz("genis", etiketler, koseler)
@@ -376,7 +373,7 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "Yüzmek (Swimming)", ["Satranç oynamak", "Resim yapmak", "İkisi de"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    else:
+    else: # Bilgi Yarışması
         alt_tip = random.choice(["yemek", "baskent", "genel"])
         if alt_tip == "yemek":
             sehir_yemek = random.choice(list(zip(SEHIRLER, YEMEKLER)))
@@ -392,7 +389,7 @@ def dinamik_soru_uretici(ders, unite):
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
-# 5. DERS DERS SIRALI DÜZENDE SORU ÜRETME MOTORU
+# 5. SIKİ SEÇİM SADAKATLİ SORU ÜRETME MOTORU
 # =========================================================
 def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -442,9 +439,11 @@ st.sidebar.header("⚙️ Müfredat ve Sınav Ayarları")
 
 is_disabled = st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
 
+# Çalışma Modu Seçiniz Alanı
 with st.sidebar.expander("📌 Çalışma Modu Seçiniz", expanded=True):
     mod_deneme = st.checkbox("📅 40 Haftalık MEB Deneme Sınavları", value=False, disabled=is_disabled, key="mod_deneme_cb")
     mod_serbest = st.checkbox("📚 Serbest Konu / Ünite Seçimi", value=False, disabled=is_disabled, key="mod_serbest_cb")
+    mod_bilgi = st.checkbox("🏆 Bilgi Yarışması Modu", value=False, disabled=is_disabled, key="mod_bilgi_cb")
 
 secilen_uniteler = []
 
@@ -462,7 +461,7 @@ if mod_deneme:
 
 if mod_serbest:
     st.sidebar.subheader("📚 Ünite Seçimi")
-    for ders_adi in DERS_ONCELIK_SIRASI:
+    for ders_adi in DERS_ONCELIK_SIRASI[:-1]: # Bilgi yarışmasını ayrı tuttuk
         uniteler = MEB_MUFREDAT[ders_adi]
         with st.sidebar.expander(f"{ders_adi}", expanded=False):
             select_all = st.checkbox(f"Tümünü Seç", value=False, key=f"all_{ders_adi}", disabled=is_disabled)
@@ -470,6 +469,14 @@ if mod_serbest:
                 cb = st.checkbox(u, value=select_all, key=f"cb_{ders_adi}_{idx}", disabled=is_disabled)
                 if cb:
                     secilen_uniteler.append((ders_adi, u))
+
+if mod_bilgi:
+    with st.sidebar.expander("🏆 Bilgi Yarışması Kategorileri", expanded=True):
+        select_all_bilgi = st.checkbox("Tüm Bilgi Yarışması Kategorilerini Seç", value=False, key="all_Bilgi_Yarismasi", disabled=is_disabled)
+        for idx, u in enumerate(MEB_MUFREDAT["🏆 Bilgi Yarışması"]):
+            cb = st.checkbox(u, value=select_all_bilgi, key=f"cb_Bilgi_Yarismasi_{idx}", disabled=is_disabled)
+            if cb:
+                secilen_uniteler.append(("🏆 Bilgi Yarışması", u))
 
 st.sidebar.divider()
 
@@ -493,7 +500,7 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
                 st.session_state["sorular_hazir"] = True
                 st.rerun()
         else:
-            st.sidebar.error("⚠️ Lütfen en az bir deneme veya ünite seçimi yapın!")
+            st.sidebar.error("⚠️ Lütfen sol menüden en az bir mod ve ünite seçimi yapın!")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🔄 Yeniden Hazırla", use_container_width=True):
@@ -503,10 +510,10 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 # --- EKRAN AKIŞI ---
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.subheader("📋 Sınav Başlatma Alanı")
-    st.info("Sol paneldeki **'Çalışma Modu Seçiniz'** alanından dilediğiniz haftayı veya üniteleri seçip **'Hazırla ve Başlat'** butonuna tıklayın.")
+    st.info("Sol paneldeki **'Çalışma Modu Seçiniz'** alanından dilediğiniz modu seçip üniteleri işaretledikten sonra **'Hazırla ve Başlat'** butonuna tıklayın.")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.success("✅ Benzersiz ve Çeşitli Sorular Hazırlandı!")
+    st.success("✅ Seçtiğiniz Kriterlere Uygun Sorular Hazırlandı!")
     st.markdown(f"**Toplam Soru Sayısı:** {len(st.session_state['soru_listesi'])}")
     
     ders_sayilari = {}
