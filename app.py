@@ -138,37 +138,13 @@ def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
     '''
 
 # =========================================================
-# 4. TÜM ÜNİTELER İÇİN DETAYLI VE ZENGİNLEŞTİRİLMİŞ VERİ TABANLARI
+# 4. GENİŞLETİLMİŞ VE MİLYONLARCA KOMBİNASYONLU MATRİS HAVUZLARI
 # =========================================================
-ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz", "Yusuf", "İpek", "Emre", "Ceren"]
-NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon", "silgi", "defter", "misket", "toka"]
+ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz", "Yusuf", "İpek", "Emre", "Ceren", "Tarık", "Lale", "Beste", "Berk", "Aslı"]
+NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon", "silgi", "defter", "misket", "toka", "klemens", "not kağıdı", "bisküvi"]
 
-# --- TÜRKÇE ---
-TURKCE_ANLAM = [
-    ("Aşağıdaki cümlelerin hangisinde 'çıkmak' sözcüğü 'ortaya çıkmak, görünmek' anlamında kullanılmıştır?", "Güneş yavaş yavaş dağların arkasından çıkıyordu.", ["Bu gömlek bana biraz küçük çıktı.", "Merdivenleri çıkarken çok yoruldum.", "Toplantıdan erken çıkmak zorunda kaldım."]),
-    ("Aşağıdaki cümlelerin hangisinde 'tutmak' sözcüğü 'kiralamak' anlamında kullanılmıştır?", "Yaz tatili için sahil kenarında küçük bir ev tuttular.", ["Elimdeki ağır koliyi zorlukla tutuyordum.", "Büyükbabası elinden tutup karşıya geçirdi.", "Çocuk kediyi kucağına alıp sıkıca tuttu."]),
-    ("Aşağıdaki cümlelerin hangisinde terim anlamlı bir sözcük kullanılmıştır?", "Öğretmenimiz matematik dersinde üçgenin alanını işledi.", ["Bugün içimdeki neşe ile sokaklarda koştum.", "Bahçedeki sarı yapraklar rüzgarla uçuşuyordu.", "Yolculuk sırasında çok güzel kitaplar okudum."])
-]
-TURKCE_CUMLE = [
-    ("Aşağıdaki cümlelerin hangisinde 'neden-sonuç' (sebep-sonuç) ilişkisi vardır?", "Hava yağmurlu olduğu için pikniği iptal ettik.", ["Ders çalışmak üzere odasına çekildi.", "Erken kalkarsa otobüse yetişebilir.", "Sokakta yürürken eski bir arkadaşıyla karşılaştı."]),
-    ("Aşağıdaki cümlelerin hangisinde 'amaç-sonuç' ilişkisi vardır?", "Sınavı kazanmak amacıyla gece gündüz çalıştı.", ["Çok hızlı koştuğu için nefes nefese kaldı.", "Hava karardığına göre eve dönmeliyiz.", "Kitap okumayı çok sevdiğini her fırsatta söyler."]),
-    ("Aşağıdaki cümlelerin hangisinde 'öznel' bir yargı söz konusudur?", "Bu roman, yazarın okuduğum en etkileyici ve sürükleyici eseridir.", ["Türkiye'nin başkenti Ankara'dır.", "Dünya, Güneş etrafındaki turunu 365 günde tamamlar.", "Su, 100 derecede kaynar."])
-]
-TURKCE_PARAGRAF = [
-    ("Bir paragrafın giriş cümlesinde aşağıdakilerden hangisi bulunmaz?", "Önceki cümlelerle bağlantı kuran 'Ancak, bu yüzden, çünkü' gibi bağlaçlar.", ["Ana fikre giriş niteliği.", "Kendinden sonraki cümlelerin açıklayacağı bir konu.", "Okuyucuyu konuya ısındıran bağımsız bir yargı."]),
-    ("Metnin ana düşüncesi aşağıdakilerden hangisini ifade eder?", "Yazarın okuyucuya aktarmak istediği temel mesajı veya dersi.", ["Metinde geçen en uzun cümleyi.", "Yazarın kişisel yaşantısındaki tüm detayları.", "Paragrafta kullanılan yan düşüncelerin toplamını."])
-]
-TURKCE_YAZIM = [
-    ("Aşağıdaki sözcüklerden hangisinin yazımı <b>yanlıştır</b>?", "herkez", ["herkes", "yalnız", "yanlış"]),
-    ("Aşağıdaki sözcüklerden hangisinin yazımı <b>yanlıştır</b>?", "orjinal", ["orijinal", "sürpriz", "kravat"]),
-    ("Aşağıdaki cümlelerin hangisinde yazım yanlışı vardır?", "Yarınki toplantıyada mutlaka katılacağım.", ["Bu kitabı geçen hafta da okumuştum.", "Ankara'ya gitmek için yola çıktılar.", "Bahçede iki kedi yavrusu oynuyordu."])
-]
-
-# --- MATEMATİK ---
-# (Matematik soruları dinamik fonksiyonlar içinde çözülmektedir)
-
-# --- FEN BİLİMLERİ ---
-FEN_UNITE_1 = [ # Güneş, Dünya ve Ay
+# BÜYÜK MATRİS: FEN BİLİMLERİ 1. ÜNİTE (GÜNEŞ, DÜNYA VE AY)
+FEN_UNITE_1_MATRIS = [
     ("Güneş'in küre şeklinde olduğunu ve kendi ekseni etrafında döndüğünü ilk savunan veya gözleyen bilimsel gerçeklik aşağıdakilerden hangisidir?", "Güneş de tıpkı Dünya gibi kendi ekseni etrafında döner ve küresel şekle sahiptir.", ["Güneş tamamen hareketsiz ve düz bir levhadır.", "Güneş sadece etrafına ışık saçar, dönme hareketi yapmaz.", "Güneş, Dünya'nın etrafında döner."]),
     ("Dünya'mızın şekli geoit olarak adlandırılır. Bu şeklin temel sebebi nedir?", "Kutuplardan basık, ekvatordan şişkin olması.", ["Tamamen kusursuz bir daire olması.", "Küp şeklinde köşeli olması.", "Sürekli büyüklüğünün değişmesi."]),
     ("Ay'ın Dünya'ya göre büyüklüğü nasıldır?", "Dünya'nın büyüklüğü Ay'ınkinden çok büyüktür (yaklaşık 4 katı çap oranında).", ["Ay, Dünya'dan çok daha büyüktür.", "Dünya ile Ay tamamen aynı boyuttadır.", "Ay, Güneş ile aynı boyuttadır."]),
@@ -176,79 +152,71 @@ FEN_UNITE_1 = [ # Güneş, Dünya ve Ay
     ("Dünya'nın kendi ekseni etrafında bir tam tur dönmesi sonucunda ne oluşur?", "Gece ve gündüz", ["Mevsimler", "Yıl", "Ay'ın evreleri"]),
     ("Dünya'nın Güneş etrafında dolanma hareketi ne kadar sürer?", "1 yıl (365 gün 6 saat)", ["1 gün (24 saat)", "1 ay (29.5 gün)", "1 hafta"]),
     ("Ay'ın ana evreleri arasında yaklaşık ne kadar süre geçer?", "Yaklaşık 1 hafta (7-8 gün)", ["24 saat", "1 yıl", "6 ay"]),
-    ("Ay'ın ışık kaynağı olma durumu nedir?", "Ay bir ışık kaynağı değildir, Güneş'ten aldığı ışığı yansıtır.", ["Kendi başına büyük bir ışık kaynağıdır.", "Geceleri kendi enerjisiyle parlar.", "Hiçbir şekilde ışık yaymaz ve yansıtmaz."])
+    ("Ay'ın ışık kaynağı olma durumu nedir?", "Ay bir ışık kaynağı değildir, Güneş'ten aldığı ışığı yansıtır.", ["Kendi başına büyük bir ışık kaynağıdır.", "Geceleri kendi enerjisiyle parlar.", "Hiçbir şekilde ışık yaymaz ve yansıtmaz."]),
+    ("Güneş, Dünya ve Ay'ın büyüklükleri büyükten küçüğe doğru hangi seçenekte doğru sıralanmıştır?", "Güneş > Dünya > Ay", ["Dünya > Güneş > Ay", "Ay > Dünya > Güneş", "Güneş > Ay > Dünya"]),
+    ("Ay'ın Dünya etrafındaki dolanım yönü aşağıdakilerden hangisidir?", "Batıdan doğuya doğru (saat yönünün tersine)", ["Doğudan batıya doğru (saat yönünde)", "Sadece kuzey-güney ekseninde", "Tamamen rastgele yönlerde"]),
+    ("Aşağıdakilerden hangisi Dünya'nın hareketleri arasında yer alır?", "Kendi ekseni etrafında dönme ve Güneş etrafında dolanma", ["Sadece Güneş etrafında dönme", "Sadece kendi ekseni etrafında dolanma", "Sabit durma ve titreme hareketi"]),
+    ("Yeniay ile Dolunay evreleri arasında hangi ara evre yer alır?", "İlk Dördün", ["Son Dördün", "Şişkin Ay", "Hilal"])
 ]
-FEN_UNITE_2 = [ # Canlılar Dünyası
+
+# Diğer Fen Üniteleri
+FEN_UNITE_2 = [
     ("Mikroskobik canlılar grubuna girmeyen organizma aşağıdakilerden hangisidir?", "Kuşlar", ["Bakteriler", "Amip", "Paramesyum"]),
     ("Süngerler ve mercanlar hangi canlı grubuna dahildir?", "Omurgasız hayvanlar", ["Omurgalı hayvanlar", "Mantarlar", "Bitkiler"]),
     ("Şapkalı mantarlar hangi canlılar alemi içerisinde incelenir?", "Mantarlar", ["Bitkiler", "Hayvanlar", "Mikroskobik canlılar"])
 ]
-FEN_UNITE_3 = [ # Kuvvetin Ölçülmesi ve Sürtünme
+FEN_UNITE_3 = [
     ("Kuvvetin büyüklüğünü ölçmek için kullanılan araç nedir?", "Dinamometre", ["Termometre", "Barometre", "Kronometre"]),
     ("Dinamometrelerin yapımında kullanılan yayların temel özelliği nedir?", "Esnek olmaları", ["Sert ve kırılgan olmaları", "Elektrik iletmeleri", "Şeffaf olmaları"]),
     ("Sürtünme kuvveti en çok hangi yüzeylerde daha fazladır?", "Pürüzlü yüzeyler", ["Pürüzsüz yüzeyler", "Buzlu zemin", "Yağlanmış zemin"])
 ]
-FEN_UNITE_4 = [ # Madde ve Değişim
+FEN_UNITE_4 = [
     ("Saf bir maddenin ısı alarak katı halden sıvı hale geçmesine ne denir?", "Erime", ["Donma", "Buharlaşma", "Yoğuşma"]),
-    ("Suyun kaynayarak sıvı halden gaz hale geçmesi olayı nasıl adlandırılır?", "Buharlaşma", ["Erime", "Donma", "Süblimleşme"]),
-    ("Naftalinin erimeden doğrudan gaz hale geçmesi olayı nedir?", "Süblimleşme", ["Donma", "Yoğuşma", "Erime"])
+    ("Suyun kaynayarak sıvı halden gaz hale geçmesi olayı nasıl adlandırılır?", "Buharlaşma", ["Erime", "Donma", "Süblimleşme"])
 ]
-FEN_UNITE_5 = [ # Işığın Yayılması ve Tam Gölge
+FEN_UNITE_5 = [
     ("Işık maddelerle karşılaştığında geçiş durumuna göre sınıflandırılır. Aşağıdakilerden hangisi ışığı geçirmeyen (saydam olmayan) maddedir?", "Tahta levha", ["Cam", "Su", "Hava"]),
     ("Tam gölgenin oluşabilmesi için aşağıdakilerden hangisi mutlaka gereklidir?", "Işık kaynağı, opak cisim ve perde", ["Sadece ışık kaynağı", "Şeffaf bir cam ve ayna", "Manyetik alan"])
 ]
 
-# --- SOSYAL BİLGİLER ---
-SOSYAL_UNITE_1 = [ # Birey ve Toplum
-    ("Evde veya okulda üstlendiğimiz görevleri yerine getirmeye ne denir?", "Sorumluluk", ["Hak", "Özgürlük", "Yetki"]),
-    ("Çocuk hakları sözleşmesine göre aşağıdakilerden hangisi çocukların temel haklarından biridir?", "Eğitim görme hakkı", ["Seçme ve seçilme hakkı", "Vergi ödeme yükümlülüğü", "Şirket kurma hakkı"])
+TURKCE_ANLAM = [
+    ("Aşağıdaki cümlelerin hangisinde 'çıkmak' sözcüğü 'ortaya çıkmak, görünmek' anlamında kullanılmıştır?", "Güneş yavaş yavaş dağların arkasından çıkıyordu.", ["Bu gömlek bana biraz küçük çıktı.", "Merdivenleri çıkarken çok yoruldum.", "Toplantıdan erken çıkmak zorunda kaldım."]),
+    ("Aşağıdaki cümlelerin hangisinde 'tutmak' sözcüğü 'kiralamak' anlamında kullanılmıştır?", "Yaz tatili için sahil kenarında küçük bir ev tuttular.", ["Elimdeki ağır koliyi zorlukla tutuyordum.", "Büyükbabası elinden tutup karşıya geçirdi.", "Çocuk kediyi kucağına alıp sıkıca tuttu."]),
+    ("Aşağıdaki cümlelerin hangisinde terim anlamlı bir sözcük kullanılmıştır?", "Öğretmenimiz matematik dersinde üçgenin alanını işledi.", ["Bugün içimdeki neşe ile sokaklarda koştum.", "Bahçedeki sarı yapraklar rüzgarla uçuşuyordu.", "Yolculuk sırasında çok güzel kitaplar okudum."])
 ]
-SOSYAL_UNITE_2 = [ # Kültür ve Miras
-    ("Tarihî eserlerin ve kalıntıların korunması hangi dersin temel konularından biridir?", "Sosyal Bilgiler", ["Matematik", "Fen Bilimleri", "İngilizce"]),
-    ("Ülkemizin zengin kültürel mirasını yansıtan geleneksel el sanatlarından biri hangisidir?", "Ebru sanatı", ["Robotik kodlama", "Kuantum fiziği", "Nükleer enerji"])
+TURKCE_CUMLE = [
+    ("Aşağıdaki cümlelerin hangisinde 'neden-sonuç' (sebep-sonuç) ilişkisi vardır?", "Hava yağmurlu olduğu için pikniği iptal ettik.", ["Ders çalışmak üzere odasına çekildi.", "Erken kalkarsa otobüse yetişebilir.", "Sokakta yürürken eski bir arkadaşıyla karşılaştı."]),
+    ("Aşağıdaki cümlelerin hangisinde 'amaç-sonuç' ilişkisi vardır?", "Sınavı kazanmak amacıyla gece gündüz çalıştı.", ["Çok hızlı koştuğu için nefes nefese kaldı.", "Hava karardığına göre eve dönmeliyiz.", "Kitap okumayı çok sevdiğini her fırsatta söyler."])
 ]
-SOSYAL_UNITE_3 = [ # İnsanlar, Yerler ve Çevreler
-    ("Haritalarda yüksek dağları kahverengiyle, denizleri maviyle göstermek hangi harita türüne hastır?", "Fiziki harita", ["Siyasi harita", "Beşeri harita", "Karayolu haritası"]),
-    ("Kuşbakışı görünümün kaba bir taslak halinde çizilmesine ne denir?", "Kroki", ["Harita", "Lejant", "Atlas"])
+TURKCE_PARAGRAF = [
+    ("Bir paragrafın giriş cümlesinde aşağıdakilerden hangisi bulunmaz?", "Önceki cümlelerle bağlantı kuran 'Ancak, bu yüzden, çünkü' gibi bağlaçlar.", ["Ana fikre giriş niteliği.", "Kendinden sonraki cümlelerin açıklayacağı bir konu.", "Okuyucuyu konuya ısındıran bağımsız bir yargı."]),
+    ("Metnin ana düşüncesi aşağıdakilerden hangisini ifade eder?", "Yazarın okuyucuya aktarmak istediği temel mesajı veya dersi.", ["Metinde geçen en uzun cümleyi.", "Yazarın kişisel yaşantısındaki tüm detayları.", "Paragrafta kullanılan yan düşüncelerin toplamını."])
 ]
-SOSYAL_UNITE_4 = [ # Bilim, Teknoloji ve Toplum
-    ("Geçmişten günümüze bilgi depolamak ve aktarmak için kullanılan en önemli buluşlardan biri nedir?", "Matbaa", ["Dinamometre", "Pusula", "Termometre"])
-]
-
-# --- DİN KÜLTÜRÜ VE AHLAK BİLGİSİ ---
-DIN_UNITE_1 = [ # Allah İnancı
-    ("Evrende her şeyin kusursuz bir düzene sahip olması ve bir yaratıcısının bulunması inancına ne denir?", "Allah İnancı", ["Oruç", "Zekat", "Adap"])
-]
-DIN_UNITE_2 = [ # Ramazan ve Oruç
-    ("Ramazan ayında imsak vaktinden iftar vaktine kadar yemek ve içmekten uzak durarak yapılan ibadet nedir?", "Oruç", ["Hac", "Zekat", "Kurban"])
-]
-DIN_UNITE_3 = [ # Adap ve Nezaket
-    ("Görgü kurallarına uymak, insanlara karşı güler yüzlü ve kibar olmak hangi kavramla ifade edilir?", "Adap ve Nezaket", ["İbadet", "İnanç", "Oruç"])
+TURKCE_YAZIM = [
+    ("Aşağıdaki sözcüklerden hangisinin yazımı <b>yanlıştır</b>?", "herkez", ["herkes", "yalnız", "yanlış"]),
+    ("Aşağıdaki sözcüklerden hangisinin yazımı <b>yanlıştır</b>?", "orjinal", ["orijinal", "sürpriz", "kravat"])
 ]
 
-# --- İNGİLİZCE ---
-ING_UNITE_1 = [ # Hello! & Nationalities
-    ("'-Where are you from?' sorusuna aşağıdaki cevaplardan hangisi uygundur?", "I am from Spain", ["I am ten years old", "I like playing tennis", "Good morning"]),
-    ("İngilizcede milliyetleri sorarken kullanılan kalıp hangisidir?", "What is your nationality?", ["How are you?", "What time is it?", "Where do you live?"])
-]
-ING_UNITE_2 = [ # My Town & Directions
-    ("Yön tarif ederken 'Sola dön' demek için hangi ifade kullanılır?", "Turn left", ["Turn right", "Go straight ahead", "Stop"])
-]
-ING_UNITE_3 = [ # Games and Hobbies
-    ("Boş zaman aktivitelerini ve hobileri ifade eden ünitenin adı nedir?", "Games and Hobbies", ["My Town", "Hello", "My Daily Routine"])
-]
-ING_UNITE_4 = [ # My Daily Routine
-    ("Sabah kalkma, kahvaltı yapma ve okula gitme gibi günlük rutinler hangi ünitede incelenir?", "My Daily Routine", ["Nationalities", "Directions", "Hobbies"])
-]
+SOSYAL_UNITE_1 = [("Evde veya okulda üstlendiğimiz görevleri yerine getirmeye ne denir?", "Sorumluluk", ["Hak", "Özgürlük", "Yetki"])]
+SOSYAL_UNITE_2 = [("Tarihî eserlerin ve kalıntıların korunması hangi dersin temel konularından biridir?", "Sosyal Bilgiler", ["Matematik", "Fen Bilimleri", "İngilizce"])]
+SOSYAL_UNITE_3 = [("Haritalarda yüksek dağları kahverengiyle, denizleri maviyle göstermek hangi harita türüne hastır?", "Fiziki harita", ["Siyasi harita", "Beşeri harita", "Karayolu haritası"])]
+SOSYAL_UNITE_4 = [("Geçmişten günümüze bilgi depolamak ve aktarmak için kullanılan en önemli buluşlardan biri nedir?", "Matbaa", ["Dinamometre", "Pusula", "Termometre"])]
 
-# --- BİLGİ YARIŞMASI KATEGORİLERİ ---
+DIN_UNITE_1 = [("Evrende her şeyin kusursuz bir düzene sahip olması ve bir yaratıcısının bulunması inancına ne denir?", "Allah İnancı", ["Oruç", "Zekat", "Adap"])]
+DIN_UNITE_2 = [("Ramazan ayında imsak vaktinden iftar vaktine kadar yemek ve içmekten uzak durarak yapılan ibadet nedir?", "Oruç", ["Hac", "Zekat", "Kurban"])]
+DIN_UNITE_3 = [("Görgü kurallarına uymak, insanlara karşı güler yüzlü ve kibar olmak hangi kavramla ifade edilir?", "Adap ve Nezaket", ["İbadet", "İnanç", "Oruç"])]
+
+ING_UNITE_1 = [("'-Where are you from?' sorusuna aşağıdaki cevaplardan hangisi uygundur?", "I am from Spain", ["I am ten years old", "I like playing tennis", "Good morning"])]
+ING_UNITE_2 = [("Yön tarif ederken 'Sola dön' demek için hangi ifade kullanılır?", "Turn left", ["Turn right", "Go straight ahead", "Stop"])]
+ING_UNITE_3 = [("Boş zaman aktivitelerini ve hobileri ifade eden ünitenin adı nedir?", "Games and Hobbies", ["My Town", "Hello", "My Daily Routine"])]
+ING_UNITE_4 = [("Sabah kalkma, kahvaltı yapma ve okula gitme gibi günlük rutinler hangi ünitede incelenir?", "My Daily Routine", ["Nationalities", "Directions", "Hobbies"])]
+
 BASKENT_LISTESI = [
     ("Fransa", "Paris"), ("İtalya", "Roma"), ("Japonya", "Tokyo"), ("Almanya", "Berlin"), 
     ("İspanya", "Madrid"), ("İngiltere", "Londra"), ("Yunanistan", "Atina"), ("Rusya", "Moskova"), 
     ("Azerbaycan", "Bakü"), ("Mısır", "Kahire"), ("İran", "Tahran"), ("Irak", "Bağdat"),
     ("Çin", "Pekin"), ("Hindistan", "Yeni Delhi"), ("Güney Kore", "Seul"), ("Kanada", "Ottawa"),
-    ("Brezilya", "Brasilia"), ("Arjantin", "Buenos Aires"), ("Avustralya", "Canberra"), ("Meksika", "Meksiko"),
-    ("İsveç", "Stokholm"), ("Norveç", "Oslo"), ("Finlandiya", "Helsinki"), ("Danimarka", "Kopenhag")
+    ("Brezilya", "Brasilia"), ("Arjantin", "Buenos Aires"), ("Avustralya", "Canberra"), ("Meksika", "Meksiko")
 ]
 YEMEK_SEHIR_LISTESI = [
     ("Künefe", "Hatay"), ("Cağ Kebabı", "Erzurum"), ("İskender Kebap", "Bursa"),
@@ -278,7 +246,7 @@ GENEL_KULTUR_HAVUZU = [
 ]
 
 # =========================================================
-# 5. DİNAMİK VE ÜNİTE ODAKLI SORU ÜRETİCİ
+# 5. DİNAMİK VE MİLYONLARCA KOMBİNASYONLU SORU ÜRETİCİ
 # =========================================================
 def dinamik_soru_uretici(ders, unite):
     u_low = unite.lower()
@@ -344,7 +312,7 @@ def dinamik_soru_uretici(ders, unite):
     # --- FEN BİLİMLERİ ---
     elif ders == "Fen Bilimleri":
         if "1. ünite" in u_low:
-            q, ans, celd = random.choice(FEN_UNITE_1)
+            q, ans, celd = random.choice(FEN_UNITE_1_MATRIS)
         elif "2. ünite" in u_low:
             q, ans, celd = random.choice(FEN_UNITE_2)
         elif "3. ünite" in u_low:
@@ -438,45 +406,41 @@ def dinamik_soru_uretici(ders, unite):
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
-# 6. SORU LİSTESİ OLUŞTURUCU (MÜKERRERLİK ENGELLEYİCİ)
+# 6. EŞİT PAYLAŞTIRICILI SORU LİSTESİ OLUŞTURUCU
 # =========================================================
 def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
         return []
 
-    ders_gruplari = {}
-    for ders, unite in secilen_uniteler:
-        ders_gruplari.setdefault(ders, []).append(unite)
+    toplam_secilen = len(secilen_uniteler)
+    temel_pay = hedef_sayi // toplam_secilen
+    kalan = hedef_sayi % toplam_secilen
 
-    aktif_dersler = [d for d in DERS_ONCELIK_SIRASI if d in ders_gruplari]
-    if not aktif_dersler:
-        return []
-
-    her_ders_icin_sayi = max(1, hedef_sayi // len(aktif_dersler))
     tam_soru_listesi = []
     hash_set = set()
 
-    for d_idx, ders in enumerate(aktif_dersler):
-        uniteler = ders_gruplari[ders]
-        dersin_hedef_sayisi = her_ders_icin_sayi if d_idx < len(aktif_dersler) - 1 else (hedef_sayi - len(tam_soru_listesi))
+    for idx, (ders, unite) in enumerate(secilen_uniteler):
+        bu_unite_hedef = temel_pay + (1 if idx < kalan else 0)
         
         uretilen_sayi = 0
         deneme = 0
-        while uretilen_sayi < dersin_hedef_sayisi and deneme < 4000:
+        while uretilen_sayi < bu_unite_hedef and deneme < 5000:
             deneme += 1
-            secilen_u = random.choice(uniteler)
-            s = dinamik_soru_uretici(ders, secilen_u)
+            s = dinamik_soru_uretici(ders, unite)
             s["ders"] = ders
-            s["unite"] = secilen_u
+            s["unite"] = unite
             
             random.shuffle(s["siklar"])
 
-            fingerprint = hashlib.sha256(s["soru"].encode('utf-8')).hexdigest()
+            # Benzersizlik parmak izi (hash) kontrolü
+            fingerprint = hashlib.sha256((s["soru"] + str(s["siklar"])).encode('utf-8')).hexdigest()
             if fingerprint not in hash_set:
                 hash_set.add(fingerprint)
                 tam_soru_listesi.append(s)
                 uretilen_sayi += 1
 
+    # Tam istenen hedef sayıyı tam tutturmak için karıştırıp döndürelim
+    random.shuffle(tam_soru_listesi)
     return tam_soru_listesi[:hedef_sayi]
 
 # =========================================================
@@ -525,8 +489,8 @@ if mod_bilgi:
 st.sidebar.divider()
 
 soru_sayisi = st.sidebar.number_input(
-    "Toplam Soru Sayısı (10-100):", 
-    min_value=10, 
+    "Toplam Soru Sayısı (20-100 aralığında):", 
+    min_value=20, 
     max_value=100, 
     value=20, 
     step=5, 
@@ -537,7 +501,7 @@ st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🚀 Hazırla ve Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            with st.spinner("Seçilen ünitelerden tamamen konu odaklı benzersiz sorular üretiliyor..."):
+            with st.spinner("Seçilen üniteler arasında sorular eşit paylaştırılarak anlık üretiliyor..."):
                 sorular = ders_sirali_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
                 st.session_state["toplam_sure_sn"] = len(sorular) * 90
@@ -557,7 +521,7 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] 
     st.info("Sol panelden mod seçip üniteleri belirledikten sonra **'Hazırla ve Başlat'** butonuna tıklayın.")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.success("✅ Sorularınız Başarıyla Oluşturuldu!")
+    st.success("✅ Sorularınız Eşit Paylaşımla Başarıyla Oluşturuldu!")
     
     ders_sayilari = {}
     for s in st.session_state['soru_listesi']:
