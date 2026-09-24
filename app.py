@@ -85,7 +85,7 @@ MEB_MUFREDAT = {
         "5. Kategori: Bilim Tarihi ve İcatlar",
         "6. Kategori: Genel Kültür ve Doğa Harikaları",
         "7. Kategori: Popüler Kültür",
-        "7. Kategori: Spor ve Müzik"
+        "8. Kategori: Spor ve Müzik"
     ]
 }
 
