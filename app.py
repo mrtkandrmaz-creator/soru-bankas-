@@ -219,6 +219,10 @@ BASKENT_LISTESI = [
     ("Azerbaycan", "Bakü"), ("Mısır", "Kahire"), ("İran", "Tahran"), ("Irak", "Bağdat"),
     ("Çin", "Pekin"), ("Hindistan", "Yeni Delhi"), ("Güney Kore", "Seul"), ("Kanada", "Ottawa"),
     ("Brezilya", "Brasilia"), ("Arjantin", "Buenos Aires"), ("Avustralya", "Canberra"), ("Meksika", "Meksiko")
+    ("Birleşik Arap Emirlikleri", "Abu Dabi"), ("Nijerya", "Abuja"), ("Ürdün", "Amman"), ("Hollanda", "Amsterdam"),
+    ("Madagaskar", "Antananaviro"), ("Kazakistan", "Astana"), ("Türkmenistan", "Aşkabat"), ("Cook Adaları", "Avarua"),
+    ("Mali", "Bamako"), ("Gambiya", "Banjul"), ("Sırbıstan", "Belgrad"), ("İsviçre", "Bern"),
+    ("Lübnan", "Beyrut"), ("Kırgızistan", "Bişkek"), ("Kolombiya", "Bogota"), ("Slovakya", "Bratislava"),
 ]
 YEMEK_SEHIR_LISTESI = [
     ("Künefe", "Hatay"), ("Cağ Kebabı", "Erzurum"), ("İskender Kebap", "Bursa"),
