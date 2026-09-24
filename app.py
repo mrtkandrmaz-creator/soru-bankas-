@@ -5,11 +5,8 @@ import time
 import math
 import hashlib
 
-st.set_page_config(page_title="MEB 5. Sınıf Milyonluk Yeni Nesil Soru Motoru", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="MEB 5. Sınıf Milyonluk Soru Bankası", page_icon="🎓", layout="wide")
 
-# =========================================================
-# 1. SESSION STATE
-# =========================================================
 if "sorular_hazir" not in st.session_state:
     st.session_state["sorular_hazir"] = False
 if "test_aktif" not in st.session_state:
@@ -60,9 +57,6 @@ MEB_MUFREDAT = {
     ]
 }
 
-# =========================================================
-# 2. DINAMIK SVG VE GRAFİK ÇİZİM MOTORU
-# =========================================================
 def svg_iletki_aci_ciz(derece, etiket="Açı"):
     rad = math.radians(derece)
     x = int(140 + 85 * math.cos(rad))
@@ -96,24 +90,19 @@ def svg_sutun_grafik(kategori1, v1, kategori2, v2, baslik="Grafik"):
     </svg>
     '''
 
-# =========================================================
-# 3. MİLYONLUK VARYASYON & YENİ NESİL KISMİ ŞABLON MOTORU
-# =========================================================
 def milyonluk_varyasyon_engine(ders, unite):
     u_low = unite.lower()
     
-    # Dinamik sözlük öğeleri
     isimler = ["Ayşe", "Mehmet", "Zeynep", "Can", "Elif", "Burak", "Selin", "Kaan", "Deniz", "Ömer", "Duru", "Bora", "Ece", "Arda"]
     nesneler = ["kitap", "kalem", "bilye", "fidan", "sayfa", "pul", "çikolata", "roket maketi", "balon", "oyuncak"]
     sehirler = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Trabzon", "Konya", "Eskişehir", "Gaziantep"]
 
     # -----------------------------------------------------
-    # MATEMATİK: Beceri Temelli Yeni Nesil + Açı
+    # MATEMATİK ENGINE
     # -----------------------------------------------------
     if ders == "Matematik":
         if "açı" in u_low or "geometrik" in u_low:
             aci_deg = random.randint(15, 165)
-            # Yönü ve Ölçüsü Tam Doğru
             if aci_deg == 90:
                 tur = "Dik Açı"
                 celdiriciler = ["Dar Açı", "Geniş Açı", "Doğru Açı"]
@@ -133,12 +122,8 @@ def milyonluk_varyasyon_engine(ders, unite):
                 siklar = [tur] + celdiriciler
             elif soru_tipi == "oncul_aci":
                 q_text = f"Görseldeki {aci_deg}°'lik açı ile ilgili;\nI. Türü {tur}'dir.\nII. Ölçüsü dik açıdan büyüktür.\nIII. Komşu açısı ile toplamı 180° olabilir.\nİfadelerinden hangileri kesinlikle doğrudur?"
-                if aci_deg < 90:
-                    ans = "I ve III"
-                    siklar = ["I ve III", "Yalnız I", "I ve II", "I, II ve III"]
-                else:
-                    ans = "I ve III" if aci_deg != 90 else "I, II ve III"
-                    siklar = ["I ve III", "Yalnız I", "II ve III", "I, II ve III"]
+                ans = "I ve III"
+                siklar = ["I ve III", "Yalnız I", "I ve II", "I, II ve III"]
             else:
                 fark = 180 - aci_deg
                 q_text = f"Şekilde verilen açıyı bir doğru açıya (180°) tamamlamak için kaç derecelik bir açı daha eklenmelidir?"
@@ -154,13 +139,13 @@ def milyonluk_varyasyon_engine(ders, unite):
             toplam = v1 + v2
             fark = abs(v1 - v2)
             
-            q_text = f"Verilen sütun grafiğine göre, {k1} ve {k2} değerleri arasındaki fark ile toplam değerin oranı incelenmiştir. Buna göre iki değer arasındaki fark kaçtır?"
+            q_text = f"Verilen sütun grafiğine göre, {k1} ve {k2} değerleri arasındaki fark hesaplanacaktır. İki değer arasındaki fark kaçtır?"
             ans = str(fark)
             siklar = [str(fark), str(fark + 5), str(toplam), str(abs(fark - 4))]
             random.shuffle(siklar)
             return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": svg_sutun_grafik(k1, v1, k2, v2), "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
 
-        else: # Sayısal Problem Varyasyonları
+        else:
             kisi = random.choice(isimler)
             nesne = random.choice(nesneler)
             n1, n2, n3 = random.randint(100, 500), random.randint(20, 90), random.randint(2, 5)
@@ -174,7 +159,7 @@ def milyonluk_varyasyon_engine(ders, unite):
             return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
 
     # -----------------------------------------------------
-    # FEN BİLİMLERİ: Deney & Hipotez & Yeni Nesil
+    # FEN BİLİMLERİ ENGINE
     # -----------------------------------------------------
     elif ders == "Fen Bilimleri":
         kisi = random.choice(isimler)
@@ -194,7 +179,7 @@ def milyonluk_varyasyon_engine(ders, unite):
         return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
 
     # -----------------------------------------------------
-    # TÜRKÇE & SOSYAL BİLGİLER: Öncüllü & Mantık Muhakeme
+    # TÜRKÇE & SOSYAL BİLGİLER ENGINE
     # -----------------------------------------------------
     else:
         kisi = random.choice(isimler)
@@ -205,9 +190,6 @@ def milyonluk_varyasyon_engine(ders, unite):
         random.shuffle(siklar)
         return {"ders": ders, "unite": unite, "soru": q_text, "gorsel_svg": None, "siklar": list(dict.fromkeys(siklar)), "dogru": ans}
 
-# =========================================================
-# 4. BENZERLİK VE BENZERSİZ HASH SORGULAYICI
-# =========================================================
 def sonsuz_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
     havuz = []
     hash_kayitlari = set()
@@ -229,7 +211,6 @@ def sonsuz_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
             deneme += 1
             s = milyonluk_varyasyon_engine(h_ders, h_unite)
             
-            # SHA-256 Metin + Şık Hash Denetimi
             fingerprint = hashlib.sha256((s["soru"] + "".join(s["siklar"]) + s["dogru"]).encode('utf-8')).hexdigest()
             
             if fingerprint not in hash_kayitlari and len(s["siklar"]) == 4:
@@ -240,9 +221,6 @@ def sonsuz_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
     random.shuffle(havuz)
     return havuz
 
-# =========================================================
-# 5. STREAMLIT ARAYÜZÜ
-# =========================================================
 st.title("🎓 MEB Milyonluk Yeni Nesil Soru Bankası")
 
 st.sidebar.header("⚙️ Müfretad ve Soru Ayarları")
@@ -259,7 +237,6 @@ for ders_adi, uniteler in MEB_MUFREDAT.items():
 st.sidebar.divider()
 soru_sayisi = st.sidebar.number_input("Toplam Soru Sayısı:", min_value=1, max_value=50, value=10, step=1, disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"])
 
-# PANELER
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.subheader("🚀 Yeni Nesil Soru Üretim Paneli")
     if secilen_uniteler:
