@@ -1,11 +1,9 @@
 import streamlit as st
 import random
-import json
 import time
-import math
 import hashlib
 
-st.set_page_config(page_title="MEB 5. Sınıf Dinamik Soru & Bilgi Yarışması Motoru", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="MEB 5. Sınıf Soru & Bilgi Yarışması Motoru", page_icon="🎓", layout="wide")
 
 # =========================================================
 # 1. SESSION STATE BAŞLATMA
@@ -27,7 +25,9 @@ if "baslangic_zamani" not in st.session_state:
 if "toplam_sure_sn" not in st.session_state:
     st.session_state["toplam_sure_sn"] = 0
 
-# MÜFREDAT VE BİLGİ YARIŞMASI LİSTESİ
+# =========================================================
+# MÜFREDAT VE DETAYLI ALT KATEGORİ YAPISI
+# =========================================================
 MEB_MUFREDAT = {
     "🏆 Bilgi Yarışması": [
         "1. Kategori: Ülke Başkentleri ve Coğrafya",
@@ -36,22 +36,19 @@ MEB_MUFREDAT = {
         "4. Kategori: Ülkeler, Bayraklar ve Kültürler"
     ],
     "Matematik": [
-        "1. Ünite: Doğal Sayılar ve Doğal Sayılarla İşlemler",
+        "1. Ünite: Doğal Sayılar ve İşlemler",
         "2. Ünite: Kesirler ve Kesirlerle İşlemler",
         "3. Ünite: Ondalık Gösterim ve Yüzdeler",
-        "4. Ünite: Temel Geometrik Kavramlar, Çizimler ve Açı Ölçme",
+        "4. Ünite: Temel Geometrik Kavramlar ve Açı Ölçme",
         "5. Ünite: Üçgende Açılar ve Üçgen Çeşitleri",
-        "6. Ünite: Veri İşleme ve Uzunluk/Zaman Ölçme",
-        "7. Ünite: Alan Ölçme ve Geometrik Cisimler"
+        "6. Ünite: Veri İşleme ve Ölçme"
     ],
     "Fen Bilimleri": [
         "1. Ünite: Güneş, Dünya ve Ay",
         "2. Ünite: Canlılar Dünyası",
         "3. Ünite: Kuvvetin Ölçülmesi ve Sürtünme",
         "4. Ünite: Madde ve Değişim",
-        "5. Ünite: Işığın Yayılması ve Tam Gölge",
-        "6. Ünite: İnsan ve Çevre",
-        "7. Ünite: Elektrik Devre Elemanları"
+        "5. Ünite: Işığın Yayılması ve Tam Gölge"
     ],
     "Türkçe": [
         "1. Tema: Sözcükte Anlam ve Mantık Muhakeme",
@@ -63,8 +60,7 @@ MEB_MUFREDAT = {
         "1. Ünite: Birey ve Toplum (Hak ve Sorumluluklar)",
         "2. Ünite: Kültür ve Miras",
         "3. Ünite: İnsanlar, Yerler ve Çevreler",
-        "4. Ünite: Bilim, Teknoloji ve Toplum",
-        "5. Ünite: Üretim, Dağıtım ve Tüketim"
+        "4. Ünite: Bilim, Teknoloji ve Toplum"
     ],
     "Din Kültürü ve Ahlak Bilgisi": [
         "1. Ünite: Allah İnancı",
@@ -72,19 +68,18 @@ MEB_MUFREDAT = {
         "3. Ünite: Adap ve Nezaket"
     ],
     "İngilizce": [
-        "Unit 1: Hello!",
-        "Unit 2: My Town",
+        "Unit 1: Hello! & Nationalities",
+        "Unit 2: My Town & Directions",
         "Unit 3: Games and Hobbies",
         "Unit 4: My Daily Routine"
     ]
 }
 
 # =========================================================
-# 2. DINAMIK SVG ÇİZİM MOTORU (Görsel Gerektiren Sorular İçin)
+# DINAMIK SVG ÇİZİM MOTORU (Görsel Sorular İçin)
 # =========================================================
 def svg_dinamik_ucgen_ciz(a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
     max_aci = max(a_aci, b_aci, c_aci)
-    
     if max_aci == 90:
         p_top, p_left, p_right = "50, 20", "50, 110", "220, 110"
         dik_sembol = '<path d="M 50 95 L 65 95 L 65 110" fill="none" stroke="#ef4444" stroke-width="2"/>'
@@ -111,205 +106,166 @@ def svg_dinamik_ucgen_ciz(a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
     '''
 
 # =========================================================
-# 3. GELİŞMİŞ BİLGİ YARIŞMASI VE DERS MOTORU
+# TRİLYONLARCA SORU ÜRETEN DİNAMİK SORU MOTORU
 # =========================================================
-def bilgi_yarismasi_engine(unite):
+ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz"]
+
+def dinamik_soru_uretici(ders, unite):
     u_low = unite.lower()
+    kisi = random.choice(ISIMLER)
     
-    # 1. ALT KATEGORİ: ÜLKE BAŞKENTLERİ VE COĞRAFYA
-    if "başkent" in u_low or "coğrafya" in u_low:
-        havuz = [
-            ("Fransa", "Paris", ["Lyon", "Marsilya", "Nice"]),
-            ("Almanya", "Berlin", ["Münih", "Frankfurt", "Hamburg"]),
-            ("Japonya", "Tokyo", ["Kyoto", "Osaka", "Hiroşima"]),
-            ("İtalya", "Roma", ["Milano", "Venedik", "Napoli"]),
-            ("İspanya", "Madrid", ["Barselona", "Sevilla", "Valensiya"]),
-            ("İngiltere", "Londra", ["Manchester", "Liverpool", "Birmingham"]),
-            ("Kanada", "Ottawa", ["Toronto", "Vancouver", "Montreal"]),
-            ("Brezilya", "Brasilia", ["Rio de Janeiro", "Sao Paulo", "Salvador"]),
-            ("Güney Kore", "Seul", ["Busan", "Incheon", "Daegu"]),
-            ("Mısır", "Kahire", ["İskenderiye", "Lüksor", "Gize"]),
-            ("Avustralya", "Canberra", ["Sidney", "Melbourne", "Brisbane"]),
-            ("Arjantin", "Buenos Aires", ["Cordoba", "Rosario", "Mendoza"])
-        ]
-        secilen = random.choice(havuz)
-        soru_tipi = random.choice(["başkent_sor", "ülke_sor"])
-        
-        if soru_tipi == "başkent_sor":
-            q = f"<b>{secilen[0]}</b> ülkesinin başkenti aşağıdakilerden hangisidir?"
-            ans = secilen[1]
-            celd = secilen[2]
-        else:
-            q = f"Başkenti <b>{secilen[1]}</b> olan ülke aşağıdakilerden hangisidir?"
-            ans = secilen[0]
-            diger_ulkele = ["Portekiz", "Hollanda", "Belçika", "İsveç", "Norveç", "Yunanistan", "Polonya"]
-            celd = random.sample(diger_ulkele, 3)
-            
-        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
-
-    # 2. ALT KATEGORİ: DÜNYA VE YÖRESEL MUTFAKLAR
-    elif "mutfak" in u_low:
-        havuz = [
-            ("Çiğ Köfte ve Tescilli Baklava", "Gaziantep", ["Kayseri", "Adana", "Trabzon"]),
-            ("Cağ Kebabı", "Erzurum", ["Kars", "Erzincan", "Ağrı"]),
-            ("Mantı ve Yağlama", "Kayseri", ["Konya", "Sivas", "Yozgat"]),
-            ("Tantuni", "Mersin", ["Adana", "Hatay", "Antalya"]),
-            ("Künefe ve Kağıt Kebabı", "Hatay", ["Gaziantep", "Şanlıurfa", "Mardin"]),
-            ("Pizza ve Makarna çeşitleri", "İtalya", ["Fransa", "İspanya", "Yunanistan"]),
-            ("Sushi ve Ramen", "Japonya", ["Çin", "Güney Kore", "Tayland"]),
-            ("Tako (Taco) ve Burrito", "Meksika", ["Brezilya", "Arjantin", "Şili"]),
-            ("Kruvazan ve Makaron", "Fransa", ["Belçika", "Almanya", "İsviçre"])
-        ]
-        secilen = random.choice(havuz)
-        q = f"<b>{secilen[0]}</b> lezzeti ile ünlü şehir/ülke aşağıdakilerden hangisidir?"
-        ans = secilen[1]
-        celd = secilen[2]
-        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
-
-    # 3. ALT KATEGORİ: GÜNCEL KONULAR VE GENEL KÜLTÜR
-    elif "güncel" in u_low or "genel kültür" in u_low:
-        havuz = [
-            ("Dünyanın en uzun nehri hangisidir?", "Nil Nehri", ["Amazon Nehri", "Tuna Nehri", "Fırat Nehri"]),
-            ("Kendi etrafında en hızlı dönen gezegen hangisidir?", "Jüpiter", ["Mars", "Venüs", "Dünya"]),
-            ("İstiklal Marşı'mızın şairi kimdir?", "Mehmet Âkif Ersoy", ["Ziya Gökalp", "Yahya Kemal", "Namık Kemal"]),
-            ("Dünyanın en büyük okyanusu hangisidir?", "Büyük Okyanus (Pasifik)", ["Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"]),
-            ("Mona Lisa tablosunu çizen ünlü ressam kimdir?", "Leonardo da Vinci", ["Pablo Picasso", "Vincent van Gogh", "Salvador Dali"])
-        ]
-        secilen = random.choice(havuz)
-        return {"soru": secilen[0], "siklar": [secilen[1]] + secilen[2], "dogru": secilen[1], "gorsel_svg": None}
-
-    # 4. ALT KATEGORİ: ÜLKELER, BAYRAKLAR VE KÜLTÜRLER
-    else:
-        havuz = [
-            ("Japonya bayrağının kırmızı dairesi neyi temsil eder?", "Güneş", ["Ay", "Yıldız", "Okyanus"]),
-            ("Para birimi 'Yen' olan ülke hangisidir?", "Japonya", ["Çin", "Hindistan", "Tayland"]),
-            ("Para birimi 'Euro' kullanan ülke hangisidir?", "Almanya", ["İngiltere", "ABD", "Japonya"]),
-            ("Kangaroo ve Koala hayvanlarının ana vatanı olan kıta/ülke neresidir?", "Avustralya", ["Afrika", "Güney Amerika", "Asya"])
-        ]
-        secilen = random.choice(havuz)
-        return {"soru": secilen[0], "siklar": [secilen[1]] + secilen[2], "dogru": secilen[1], "gorsel_svg": None}
-
-
-def tum_dersler_alt_kategori_engine(ders, unite):
+    # 🏆 1. BİLGİ YARIŞMASI
     if ders == "🏆 Bilgi Yarışması":
-        return bilgi_yarismasi_engine(unite)
+        if "başkent" in u_low or "coğrafya" in u_low:
+            havuz = [
+                ("Fransa", "Paris", ["Lyon", "Marsilya", "Nice"]),
+                ("Almanya", "Berlin", ["Münih", "Frankfurt", "Hamburg"]),
+                ("Japonya", "Tokyo", ["Kyoto", "Osaka", "Hiroşima"]),
+                ("İtalya", "Roma", ["Milano", "Venedik", "Napoli"]),
+                ("İspanya", "Madrid", ["Barselona", "Sevilla", "Valensiya"]),
+                ("İngiltere", "Londra", ["Manchester", "Liverpool", "Birmingham"]),
+                ("Kanada", "Ottawa", ["Toronto", "Vancouver", "Montreal"]),
+                ("Brezilya", "Brasilia", ["Rio de Janeiro", "Sao Paulo", "Salvador"]),
+                ("Güney Kore", "Seul", ["Busan", "Incheon", "Daegu"]),
+                ("Mısır", "Kahire", ["İskenderiye", "Lüksor", "Gize"])
+            ]
+            secilen = random.choice(havuz)
+            if random.choice([True, False]):
+                q = f"<b>{secilen[0]}</b> ülkesinin başkenti aşağıdakilerden hangisidir?"
+                ans, celd = secilen[1], secilen[2]
+            else:
+                q = f"Başkenti <b>{secilen[1]}</b> olan ülke aşağıdakilerden hangisidir?"
+                ans, celd = secilen[0], random.sample(["Hollanda", "Belçika", "İsveç", "Norveç", "Portekiz", "Yunanistan"], 3)
+            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    isimler = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin"]
-    u_low = unite.lower()
-    kisi = random.choice(isimler)
-    
-    # MATEMATİK
-    if ders == "Matematik":
+        elif "mutfak" in u_low:
+            havuz = [
+                ("Çiğ Köfte ve Baklava", "Gaziantep", ["Kayseri", "Adana", "Trabzon"]),
+                ("Cağ Kebabı", "Erzurum", ["Kars", "Erzincan", "Ağrı"]),
+                ("Mantı ve Yağlama", "Kayseri", ["Konya", "Sivas", "Yozgat"]),
+                ("Tantuni", "Mersin", ["Adana", "Hatay", "Antalya"]),
+                ("Künefe", "Hatay", ["Gaziantep", "Şanlıurfa", "Mardin"]),
+                ("Pizza ve Pasta", "İtalya", ["Fransa", "İspanya", "Yunanistan"]),
+                ("Sushi ve Ramen", "Japonya", ["Çin", "Güney Kore", "Tayland"]),
+                ("Taco ve Burrito", "Meksika", ["Brezilya", "Arjantin", "Şili"])
+            ]
+            secilen = random.choice(havuz)
+            q = f"<b>{secilen[0]}</b> lezzeti ile tescillenmiş şehir/ülke aşağıdakilerden hangisidir?"
+            return {"soru": q, "siklar": [secilen[1]] + secilen[2], "dogru": secilen[1], "gorsel_svg": None}
+
+        elif "güncel" in u_low:
+            havuz = [
+                ("Dünyanın en uzun nehri hangisidir?", "Nil Nehri", ["Amazon Nehri", "Tuna Nehri", "Fırat Nehri"]),
+                ("Güneş sistemindeki en büyük gezegen hangisidir?", "Jüpiter", ["Satürn", "Mars", "Neptün"]),
+                ("İstiklal Marşı'mızın şairi kimdir?", "Mehmet Âkif Ersoy", ["Ziya Gökalp", "Yahya Kemal", "Namık Kemal"]),
+                ("Dünyanın en büyük okyanusu hangisidir?", "Büyük Okyanus (Pasifik)", ["Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"])
+            ]
+            sec = random.choice(havuz)
+            return {"soru": sec[0], "siklar": [sec[1]] + sec[2], "dogru": sec[1], "gorsel_svg": None}
+
+        else:
+            havuz = [
+                ("Para birimi 'Yen' olan ülke hangisidir?", "Japonya", ["Çin", "Hindistan", "Tayland"]),
+                ("Para birimi 'Euro' kullanan Avrupa ülkesi hangisidir?", "Almanya", ["İngiltere", "ABD", "Kanada"]),
+                ("Kanguru ve Koala hayvanlarının ana vatanı neresidir?", "Avustralya", ["Afrika", "Güney Amerika", "Asya"])
+            ]
+            sec = random.choice(havuz)
+            return {"soru": sec[0], "siklar": [sec[1]] + sec[2], "dogru": sec[1], "gorsel_svg": None}
+
+    # 📐 2. MATEMATİK
+    elif ders == "Matematik":
         if "üçgen" in u_low or "açı" in u_low:
             koseler = random.choice([("A", "B", "C"), ("K", "L", "M"), ("P", "R", "S"), ("D", "E", "F")])
-            sub_cat = random.choice(["verilmeyen_aci", "ikizkenar", "eskenar", "aci_cesitleri"])
-            
-            if sub_cat == "verilmeyen_aci":
-                a, b = random.randint(30, 90), random.randint(20, 70)
-                c = 180 - (a + b)
-                q = f"Şekildeki {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {a}° ve m({koseler[1]}) = {b}° olduğuna göre verilmeyen m({koseler[2]}) kaç derecedir?"
-                ans, celd = f"{c}°", [f"{c+10}°", f"{abs(c-15)}°", f"{c+20}°"]
-                svg = svg_dinamik_ucgen_ciz(a, b, 0, koseler)
-            elif sub_cat == "ikizkenar":
-                tepe = random.choice([40, 50, 70, 80, 100])
-                taban = (180 - tepe) // 2
-                q = f"{koseler[0]}{koseler[1]}{koseler[2]} ikizkenar üçgeninde tepe açısı m({koseler[0]}) = {tepe}°'dir. Taban açılarından m({koseler[1]}) kaç derecedir?"
-                ans, celd = f"{taban}°", [f"{taban+10}°", f"{taban-10}°", f"{180-tepe}°"]
-                svg = svg_dinamik_ucgen_ciz(tepe, taban, taban, koseler)
-            elif sub_cat == "eskenar":
-                q = f"Bütün kenar uzunlukları eşit olan bir {koseler[0]}{koseler[1]}{koseler[2]} eşkenar üçgeninin bir iç açısının ölçüsü kaç derecedir?"
-                ans, celd = "60°", ["90°", "45°", "180°"]
-                svg = svg_dinamik_ucgen_ciz(60, 60, 60, koseler)
-            else:
-                a = random.choice([30, 90, 110])
-                tur = "Dik Açılı Üçgen" if a == 90 else ("Geniş Açılı Üçgen" if a > 90 else "Dar Açılı Üçgen")
-                b = 30 if a > 90 else (40 if a == 90 else 50)
-                c = 180 - (a + b)
-                q = f"Açıları {a}°, {b}° ve {c}° olan üçgen açı türüne göre hangisidir?"
-                ans = tur
-                celd = list({"Dar Açılı Üçgen", "Dik Açılı Üçgen", "Geniş Açılı Üçgen"} - {tur}) + ["Doğru Açı"]
-                svg = svg_dinamik_ucgen_ciz(a, b, c, koseler)
-            return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": svg}
+            a, b = random.randint(30, 85), random.randint(25, 65)
+            c = 180 - (a + b)
+            q = f"Şekildeki {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {a}° ve m({koseler[1]}) = {b}° olduğuna göre verilmeyen m({koseler[2]}) kaç derecedir?"
+            ans = f"{c}°"
+            celd = [f"{c+10}°", f"{abs(c-15)}°", f"{c+20}°"]
+            svg = svg_dinamik_ucgen_ciz(a, b, 0, koseler)
+            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": svg}
             
         elif "doğal sayılar" in u_low:
-            sub = random.choice(["basamak", "toplama", "yuvarlama"])
-            if sub == "basamak":
-                sayi = random.randint(10000, 999999)
-                q = f"{sayi} sayısının binler basamağındaki rakamın basamak değeri kaçtır?"
-                b_deger = (sayi // 1000) % 10 * 1000
-                ans = str(b_deger)
-                celd = [str(b_deger // 10), str(b_deger * 10), str((sayi // 1000) % 10)]
-            elif sub == "toplama":
-                n1, n2 = random.randint(1500, 8500), random.randint(1000, 5000)
-                q = f"{kisi} {n1} TL parasına {n2} TL daha eklerse toplam kaç TL'si olur?"
+            sub = random.choice(["toplama", "basamak", "yuvarlama"])
+            if sub == "toplama":
+                n1, n2 = random.randint(1200, 9900), random.randint(1100, 8800)
+                q = f"{kisi} biriktirdiği {n1} TL paraya {n2} TL daha eklerse toplam kaç TL'si olur?"
                 ans = str(n1 + n2)
-                celd = [str(n1+n2+100), str(n1+n2-50), str(n1+n2+500)]
+                celd = [str(n1 + n2 + 100), str(n1 + n2 - 50), str(n1 + n2 + 500)]
+            elif sub == "basamak":
+                sayi = random.randint(10000, 999999)
+                b_deg = ((sayi // 1000) % 10) * 1000
+                q = f"{sayi} sayısındaki binler basamağının basamak değeri kaçtır?"
+                ans = str(b_deg)
+                celd = [str(b_deg * 10), str(b_deg // 10), str((sayi // 1000) % 10)]
             else:
-                sayi = random.randint(100, 999)
+                sayi = random.randint(105, 995)
                 ans = str(round(sayi, -1))
                 q = f"{sayi} sayısı en yakın onluğa yuvarlandığında hangi sayı elde edilir?"
-                celd = [str(int(ans)+10), str(int(ans)-10), str(sayi)]
-            return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": None}
-            
-        else: # Kesirler / Ondalık
-            pay = random.randint(1, 5)
-            payda = random.choice([10, 100])
-            ans = str(pay / payda)
-            q = f"{pay}/{payda} kesrinin ondalık gösterimi aşağıdakilerden hangisidir?"
-            celd = [str(pay), str(payda/pay), "0.00" + str(pay)]
-            return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": None}
+                celd = [str(int(ans) + 10), str(int(ans) - 10), str(sayi)]
+            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    # FEN BİLİMLERİ
+        else: # Kesir / Ondalık
+            p1, p2 = random.randint(1, 9), random.choice([10, 100])
+            ans = str(round(p1 / p2, 2))
+            q = f"{p1}/{p2} kesrinin ondalık gösterimi aşağıdakilerden hangisidir?"
+            celd = [str(p1), str(round(p2 / p1, 2)), f"0.0{p1}"]
+            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+
+    # 🔬 3. FEN BİLİMLERİ
     elif ders == "Fen Bilimleri":
         if "güneş" in u_low:
-            sub = random.choice(["kat_oran", "sicaklik", "hareket"])
-            if sub == "kat_oran":
-                q = f"{kisi}'nin araştırmasına göre Güneş'in çapı Dünya'nın çapının yaklaşık kaç katıdır?"
+            sub = random.choice(["cap", "sicaklik", "dönme"])
+            if sub == "cap":
+                q = f"{kisi}'nin fen laboratuvarında öğrendiğine göre Güneş'in çapı Dünya'nın çapının yaklaşık kaç katıdır?"
                 ans, celd = "109 katı", ["10 katı", "500 katı", "1000 katı"]
             elif sub == "sicaklik":
-                q = f"Güneş'in yüzey sıcaklığı yaklaşık kaç °C'dir?"
+                q = f"Güneş'in yüzey sıcaklığı yaklaşık kaç °C olarak bilinmektedir?"
                 ans, celd = "6000 °C", ["15 milyon °C", "1000 °C", "100 °C"]
             else:
-                q = f"Dünya'nın kendi ekseni etrafındaki dönüş süresi ve sonucu hangisidir?"
-                ans, celd = "24 saat - Gece/Gündüz", ["365 gün - Mevsimler", "27 gün - Ay Evreleri", "12 saat - Yıl"]
+                q = f"Dünya'nın kendi ekseni etrafında dönme süresi ne kadardır?"
+                ans, celd = "24 Saat", ["365 Gün", "27 Gün", "12 Saat"]
         else:
-            q = f"{kisi}, {unite} ile ilgili deneyinde hangi değişkeni bağımsız değişken olarak seçmelidir?"
-            ans, celd = "Miktarı değiştirilen etken", ["Sabit tutulan etken", "Ölçülen sonuç", "Gözlemlenmeyen yapı"]
-        return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": None}
+            q = f"{kisi}, {unite} ile ilgili yaptığı deneyde araştırma sonucunu etkileyen tek değişkeni incelemektedir. Bu değişkene ne ad verilir?"
+            ans, celd = "Bağımsız Değişken", ["Bağımlı Değişken", "Sabit Değişken", "Kontrol Değişkeni"]
+        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    # TÜRKÇE
+    # 📚 4. TÜRKÇE
     elif ders == "Türkçe":
-        sub = random.choice(["eş_anlam", "zıt_anlam", "mecaz"])
-        sözlük = [("Mektep", "Okul", "Öğrenci"), ("Muallim", "Öğretmen", "Sınıf"), ("Hediye", "Armağan", "Eşya")]
-        secilen = random.choice(sözlük)
-        if sub == "eş_anlam":
-            q = f"'{secilen[0]}' sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?"
-            ans, celd = secilen[1], [secilen[2], "Kitap", "Kalem"]
+        sub = random.choice(["es_anlam", "mecaz", "yazım"])
+        if sub == "es_anlam":
+            kelimeler = [("Mektep", "Okul"), ("Muallim", "Öğretmen"), ("Hediye", "Armağan"), ("Cevap", "Yanıt")]
+            k = random.choice(kelimeler)
+            q = f"'{k[0]}' sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?"
+            ans, celd = k[1], ["Sınıf", "Öğrenci", "Kitap"]
+        elif sub == "mecaz":
+            q = f"Aşağıdaki cümlelerin hangisinde {kisi} koyu renkli sözcüğü <b>mecaz anlamda</b> kullanmıştır?"
+            ans, celd = "Bana karşı çok <b>soğuk</b> davrandı.", ["Hava bugün çok <b>soğuk</b>.", "Çayını <b>soğuk</b> içti.", "Buzdolabı çok <b>soğuk</b>."]
         else:
-            q = f"Cümlede koyu yazılmış kelime mecaz anlamda kullanılmıştır. {kisi} hangi cümleyi kurmuştur?"
-            ans, celd = "Bana karşı çok soğuk davrandı.", ["Hava bugün çok soğuk.", "Çayını soğuk içti.", "Soğuk su hasta eder."]
-        return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": None}
+            q = f"Aşağıdaki cümlelerin hangisinde bir yazım hatası yapılmıştır?"
+            ans, celd = "15 haziran günü geleceğim.", ["15 Haziran günü geleceğim.", "Ankara'ya gitti.", "Her şey yolunda."]
+        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    # SOSYAL / DİN / İNGİLİZCE
+    # 🌍 5. SOSYAL / DİN / İNGİLİZCE
     elif ders == "Sosyal Bilgiler":
-        q = f"{kisi}, {unite} konusunda hak ve sorumluluklarını öğrenmektedir. Hangisi bir sorumluluk örneğidir?"
-        ans, celd = "Odasını temiz tutmak", ["Eğitim almak", "Sağlık hizmeti almak", "Oyun oynamak"]
-        return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": None}
+        q = f"{kisi}, {unite} kapsamında evdeki sorumluluklarını sıralamaktadır. Hangisi bir sorumluluk örneğidir?"
+        ans, celd = "Odasını düzenli tutmak", ["Eğitim hakkından yararlanmak", "Oyun oynamak", "Dengeli beslenmek"]
+        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Din Kültürü ve Ahlak Bilgisi":
-        q = f"{unite} konusunda öğretmenin sorduğu soruya {kisi} doğru cevap vermiştir. Doğru cevap hangisidir?"
-        ans, celd = "Güzel ahlak ve nezaket", ["Bencillik", "Kibir", "İsraf"]
-        return {"soru": q, "siklar": [ans]+celd, "dogru": ans, "gorsel_svg": None}
+        q = f"{unite} konusunda öğretmenin sorduğu soruya {kisi} doğru cevap vermiştir. Doğru olan tutum hangisidir?"
+        ans, celd = "Güzel ahlak ve nezaket", ["Kibir ve gurur", "İsraf etmek", "Bencillik"]
+        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     else: # İngilizce
-        q = random.choice([
-            ("How old are you?", "I am 10 years old.", ["My name is Can.", "Fine, thanks.", "In the morning."]),
-            ("Where are you from?", "I am from Turkey.", ["Yes, I am.", "At 8 o'clock.", "It is a pencil."])
-        ])
-        return {"soru": q[0], "siklar": [q[1]]+q[2], "dogru": q[1], "gorsel_svg": None}
+        sorular = [
+            ("Where are you from?", "I am from Turkey.", ["My name is " + kisi + ".", "Fine, thanks.", "At 8 o'clock."]),
+            ("How old are you?", "I am 10 years old.", ["I like music.", "Yes, it is.", "In the school."])
+        ]
+        s = random.choice(sorular)
+        return {"soru": f"Choose the correct response: <b>'{s[0]}'</b>", "siklar": [s[1]] + s[2], "dogru": s[1], "gorsel_svg": None}
 
 # =========================================================
-# 4. BENZERLİK ENGELLEYİCİ VE SIKI FİLTRELEME MOTORU
+# KESİN BENZERSİZ HASH VE BENZERSİZ FİLTRELEME
 # =========================================================
 def kesin_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
     havuz = []
@@ -327,15 +283,16 @@ def kesin_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
     for ders, uniteler in ders_gruplari.items():
         uretilen_ders_sorusu = 0
         deneme = 0
-        while uretilen_ders_sorusu < her_ders_icin_sayi and deneme < 500:
+        while uretilen_ders_sorusu < her_ders_icin_sayi and deneme < 1000 and len(havuz) < hedef_sayi:
             deneme += 1
             secilen_u = random.choice(uniteler)
-            s = tum_dersler_alt_kategori_engine(ders, secilen_u)
+            s = dinamik_soru_uretici(ders, secilen_u)
             s["ders"] = ders
             s["unite"] = secilen_u
             
             random.shuffle(s["siklar"])
 
+            # Hash ile parmak izi alma (Mükemmel benzersizlik)
             fingerprint = hashlib.sha256((s["soru"] + s["dogru"] + "".join(s["siklar"])).encode('utf-8')).hexdigest()
             
             if fingerprint not in hash_set and len(s["siklar"]) == 4:
@@ -343,10 +300,10 @@ def kesin_benzersiz_soru_uret(secilen_uniteler, hedef_sayi):
                 havuz.append(s)
                 uretilen_ders_sorusu += 1
 
-    return havuz
+    return havuz[:hedef_sayi]
 
 # =========================================================
-# 5. STREAMLIT ARAYÜZ
+# STREAMLIT ARAYÜZ SÜRÜCÜSÜ
 # =========================================================
 st.title("🎓 MEB 5. Sınıf Dinamik Soru Bankası & Bilgi Yarışması")
 
@@ -362,13 +319,22 @@ for ders_adi, uniteler in MEB_MUFREDAT.items():
                 secilen_uniteler.append((ders_adi, u))
 
 st.sidebar.divider()
-soru_sayisi = st.sidebar.number_input("Toplam Soru Sayısı:", min_value=1, max_value=50, value=10, step=1, disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"])
+
+# Soru sayısı 10 ile 100 arasında sınırlandırıldı
+soru_sayisi = st.sidebar.number_input(
+    "Toplam Soru Sayısı (10-100):", 
+    min_value=10, 
+    max_value=100, 
+    value=10, 
+    step=5, 
+    disabled=st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
+)
 
 st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🚀 Soru Üret / Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            with st.spinner("Soru havuzu üretiliyor..."):
+            with st.spinner("Benzersiz sorular üretiliyor..."):
                 sorular = kesin_benzersiz_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
                 st.session_state["toplam_sure_sn"] = len(sorular) * 90
