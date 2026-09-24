@@ -80,8 +80,10 @@ MEB_MUFREDAT = {
     "🏆 Bilgi Yarışması": [
         "1. Kategori: Dünya Başkentleri ve Coğrafya",
         "2. Kategori: Türk Mutfağı ve Yöresel Lezzetler",
-        "3. Kategori: Genel Kültür ve Doğa Harikaları",
-        "4. Kategori: Tarih, Kültür ve İlginç Bilgiler"
+        "3. Kategori: Dünya Mutfakları ve Lezzetler",
+        "4. Kategori: Harita Bilgisi ve Yönler",
+        "5. Kategori: Bilim Tarihi ve İcatlar",
+        "6. Kategori: Genel Kültür ve Doğa Harikaları"
     ]
 }
 
@@ -140,7 +142,7 @@ def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
     '''
 
 # =========================================================
-# 4. SORU ÜRETME MOTORU (KESİN UYUMLU VE ZENGİN HAVUZ)
+# 4. SORU ÜRETME MOTORU (KUSURSUZ DOĞRULUK VE ZENGİN HAVUZ)
 # =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz"]
 NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon"]
@@ -159,6 +161,33 @@ YEMEK_SEHIR_LISTESI = [
 ]
 
 ALL_SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep", "Konya", "Samsun", "Adana", "Hatay", "Mersin", "Kayseri", "Şanlıurfa"]
+
+DNY_MUTFAK_LISTESI = [
+    ("Sushi", "Japonya"),
+    ("Pizza", "İtalya"),
+    ("Taco", "Meksika"),
+    ("Kruvasan", "Fransa"),
+    ("Hamburger", "Amerika Birleşik Devletleri"),
+    ("Paella", "İspanya"),
+    ("Makarna", "İtalya"),
+    ("Çin Mantısı (Dim Sum)", "Çin")
+]
+
+ALL_ULKELER = ["Japonya", "İtalya", "Meksika", "Fransa", "Amerika Birleşik Devletleri", "İspanya", "Çin", "Almanya", "İngiltere", "Brezilya", "Yunanistan"]
+
+HARITA_SORULARI_HAVUZU = [
+    ("Haritalarda yön bulmamıza yardımcı olan ve genellikle kuzeyi gösteren işaret nedir?", "Kuzey oku (Pusula gülü)", ["Ölçek", "Lejant (Harita anahtarı)", "Eş yükselti eğrisi"]),
+    ("Fiziki haritalarda suları, denizleri ve gölleri göstermek için genellikle hangi renk kullanılır?", "Mavi", ["Yeşil", "Kahverengi", "Sarı"]),
+    ("Fiziki haritalarda dağları ve yüksek yerleri göstermek için genellikle hangi renk tonları kullanılır?", "Kahverengi ve tonları", ["Mavi ve tonları", "Koyu yeşil", "Parlak sarı"]),
+    ("Ülkemizin kuzeyinde yer alan ve kıyımız olan deniz hangisidir?", "Karadeniz", ["Akdeniz", "Ege Denizi", "Kızıldeniz"])
+]
+
+ICAT_SORULARI_HAVUZU = [
+    ("Telefonu icat ederek ilk sesli iletişim kuran mucit kimdir?", "Alexander Graham Bell", ["Thomas Edison", "Nikola Tesla", "Isaac Newton"]),
+    ("Ampulü icat ederek elektriğin aydınlatmada kullanılmasını sağlayan bilim insanı kimdir?", "Thomas Edison", ["Alexander Graham Bell", "Albert Einstein", "Wright Kardeşler"]),
+    ("Matematik ve fen bilimlerinde bilinen matbaayı geliştirerek kitapların çoğaltılmasını hızlandıran kişi kimdir?", "Johannes Gutenberg", ["Galileo Galilei", "Leonardo da Vinci", "Blaise Pascal"]),
+    ("Uçuş denemeleri yaparak ilk motorlu uçağı icat edenler kimlerdir?", "Wright Kardeşler", ["Marie Curie", "Thomas Edison", "Alexander Graham Bell"])
+]
 
 def dinamik_soru_uretici(ders, unite):
     u_low = unite.lower()
@@ -386,7 +415,7 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "Get up", ["Go to bed", "Have dinner", "Do homework"]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    else: # 🏆 Bilgi Yarışması (Genişletilmiş Benzersiz Havuz)
+    else: # 🏆 Bilgi Yarışması (Genişletilmiş Benzersiz ve Uyumlu Havuz)
         if "1. kategori" in u_low:
             baskentler = [
                 ("Fransa", "Paris"), ("İtalya", "Roma"), ("Japonya", "Tokyo"), 
@@ -407,22 +436,28 @@ def dinamik_soru_uretici(ders, unite):
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "3. kategori" in u_low:
-            genel_kultur = [
-                ("Dünyanın en uzun nehri olarak bilinen Nil Nehri hangi kıtadadır?", "Afrika", ["Asya", "Avrupa", "Amerika"]),
-                ("Dünyanın en yüksek dağı olan Everest Dağı hangi kıtada yer alır?", "Asya", ["Afrika", "Avrupa", "Antarktika"]),
-                ("Dünya üzerindeki en büyük okyanus hangisidir?", "Pasifik Okyanusu", ["Atlas Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"]),
-                ("Türkiye'nin komşularından biri olan ve doğuda yer alan devlet hangisidir?", "İran", ["Yunanistan", "Bulgaristan", "İtalya"])
-            ]
-            q, ans, celd = random.choice(genel_kultur)
+            mutfak, dogru_ulke = random.choice(DNY_MUTFAK_LISTESI)
+            q = f"Dünya mutfağında çok popüler olan ve özel bir lezzet olan <b>{mutfak}</b> hangi ülke ile özdeşleşmiştir?"
+            ans = dogru_ulke
+            celd = [u for u in ALL_ULKELER if u != ans][:3]
+            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+
+        elif "4. kategori" in u_low:
+            q, ans, celd = random.choice(HARITA_SORULARI_HAVUZU)
+            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+
+        elif "5. kategori" in u_low:
+            q, ans, celd = random.choice(ICAT_SORULARI_HAVUZU)
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         else:
-            tarih_bilgi = [
+            genel_kultur = [
+                ("Dünyanın en uzun nehri olarak bilinen Nil Nehri hangi kıtadadır?", "Afrika", ["Asya", "Avrupa", "Amerika"]),
+                ("Dünyanın en yüksek dağı olan Everest Dağı hangi kıtada yer alır?", "Asya", ["Afrika", "Avrupa", "Antarktika"]),
                 ("Türkiye Cumhuriyeti'nin kurucusu ve ilk cumhurbaşkanı kimdir?", "Mustafa Kemal Atatürk", ["Fatih Sultan Mehmet", "İsmet İnönü", "Kanuni Sultan Süleyman"]),
-                ("Türkiye Cumhuriyeti'nin başkenti neresidir?", "Ankara", ["İstanbul", "İzmir", "Bursa"]),
-                ("Türk bayrağındaki ay ve yıldız hangi renklerdedir?", "Kırmızı üzerine Beyaz", ["Mavi üzerine Beyaz", "Yeşil üzerine Sarı", "Siyah üzerine Kırmızı"])
+                ("Türkiye Cumhuriyeti'nin başkenti neresidir?", "Ankara", ["İstanbul", "İzmir", "Bursa"])
             ]
-            q, ans, celd = random.choice(tarih_bilgi)
+            q, ans, celd = random.choice(genel_kultur)
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
@@ -500,7 +535,7 @@ if mod_serbest:
     for ders_adi in DERS_ONCELIK_SIRASI[:-1]:
         uniteler = MEB_MUFREDAT[ders_adi]
         with st.sidebar.expander(f"{ders_adi}", expanded=False):
-            select_all = st.checkbox(f"Tümünü Seç", value=False, key=f"all_{ders_adi}", disabled=is_disabled)
+            select_all = st.checkbox(f"Tümünü Seç ({ders_adi})", value=False, key=f"all_{ders_adi}", disabled=is_disabled)
             for idx, u in enumerate(uniteler):
                 cb = st.checkbox(u, value=select_all, key=f"cb_{ders_adi}_{idx}", disabled=is_disabled)
                 if cb:
