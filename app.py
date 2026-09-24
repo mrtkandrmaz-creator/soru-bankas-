@@ -108,9 +108,9 @@ for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
 # =========================================================
-# 3. DİNAMİK SVG GEOMETRİ & ÜÇGEN ÇEŞİTLİLİK MOTORU
+# 3. DİNAMİK SVG GEOMETRİ & GİZLİ SONUÇLU ÜÇGEN MOTORU
 # =========================================================
-def svg_dinamik_ucgen_ciz(t_tip, a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
+def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
     if t_tip == "eskenar":
         p_top, p_left, p_right = "140, 15", "40, 115", "240, 115"
         dik_sembol = ""
@@ -127,28 +127,28 @@ def svg_dinamik_ucgen_ciz(t_tip, a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
         p_top, p_left, p_right = "130, 20", "40, 110", "220, 110"
         dik_sembol = ""
 
-    a_lbl = "?" if a_aci == 0 else f"{a_aci}°"
-    b_lbl = "?" if b_aci == 0 else f"{b_aci}°"
-    c_lbl = "?" if c_aci == 0 else f"{c_aci}°"
+    lbl0 = gorunen_etiketler[0]
+    lbl1 = gorunen_etiketler[1]
+    lbl2 = gorunen_etiketler[2]
 
     return f'''
     <svg width="280" height="135" viewBox="0 0 280 135" xmlns="http://www.w3.org/2000/svg">
       <rect width="100%" height="100%" fill="#ffffff" rx="8" stroke="#cbd5e1"/>
       <polygon points="{p_top} {p_left} {p_right}" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
       {dik_sembol}
-      <text x="140" y="16" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[0]} ({a_lbl})</text>
-      <text x="35" y="125" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[1]} ({b_lbl})</text>
-      <text x="235" y="125" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[2]} ({c_lbl})</text>
+      <text x="140" y="16" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[0]} ({lbl0})</text>
+      <text x="35" y="125" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[1]} ({lbl1})</text>
+      <text x="235" y="125" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[2]} ({lbl2})</text>
     </svg>
     '''
 
-def svg_aci_ciz(aci_degeri):
+def svg_aci_ciz(gorunen_deger):
     return f'''
     <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
       <rect width="100%" height="100%" fill="#f8fafc" rx="8" stroke="#cbd5e1"/>
       <path d="M 50 100 L 150 100" stroke="#334155" stroke-width="3"/>
       <path d="M 50 100 L {50 + int(80 * 0.8)} {100 - int(80 * 0.6)}" stroke="#2563eb" stroke-width="3"/>
-      <text x="100" y="50" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2563eb">{aci_degeri}°</text>
+      <text x="100" y="50" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2563eb">{gorunen_deger}</text>
     </svg>
     '''
 
@@ -244,51 +244,51 @@ def dinamik_soru_uretici(ders, unite):
                 if ucgen_tipi == "eskenar":
                     gizlenen = random.choice(["a", "b", "c"])
                     if gizlenen == "a":
-                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) kaç derecedir?"
-                        ans, a_val, b_val, c_val = "60°", 0, 60, 60
+                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde verilmeyen m({koseler[0]}) kaç derecedir?"
+                        ans, etiketler = "60°", ["?", "60°", "60°"]
                     elif gizlenen == "b":
-                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[1]}) kaç derecedir?"
-                        ans, a_val, b_val, c_val = "60°", 60, 0, 60
+                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde verilmeyen m({koseler[1]}) kaç derecedir?"
+                        ans, etiketler = "60°", ["60°", "?", "60°"]
                     else:
-                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[2]}) kaç derecedir?"
-                        ans, a_val, b_val, c_val = "60°", 60, 60, 0
+                        q = f"Şekildeki eşkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde verilmeyen m({koseler[2]}) kaç derecedir?"
+                        ans, etiketler = "60°", ["60°", "60°", "?"]
                     celd = ["90°", "45°", "30°"]
-                    svg = svg_dinamik_ucgen_ciz("eskenar", a_val, b_val, c_val, koseler)
+                    svg = svg_dinamik_ucgen_ciz("eskenar", etiketler, koseler)
                 elif ucgen_tipi == "ikizkenar":
                     taban_aci = random.choice([40, 50, 65, 70, 75])
                     tepe_aci = 180 - (2 * taban_aci)
                     gizlenen = random.choice(["tepe", "taban"])
                     if gizlenen == "tepe":
-                        q = f"Şekildeki ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde taban açılar {taban_aci}° ise tepe açısı m({koseler[0]}) kaç derecedir?"
-                        ans, a_val, b_val, c_val = f"{tepe_aci}°", 0, taban_aci, taban_aci
+                        q = f"Şekildeki ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde taban açılar eşit ve {taban_aci}° olduğuna göre tepe açısı m({koseler[0]}) kaç derecedir?"
+                        ans, etiketler = f"{tepe_aci}°", ["?", f"{taban_aci}°", f"{taban_aci}°"]
                     else:
-                        q = f"Şekildeki ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde tepe açısı {tepe_aci}° ise taban açısı m({koseler[1]}) kaç derecedir?"
-                        ans, a_val, b_val, c_val = f"{taban_aci}°", tepe_aci, 0, taban_aci
+                        q = f"Şekildeki ikizkenar {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde tepe açısı {tepe_aci}° olduğuna göre taban açısı m({koseler[1]}) kaç derecedir?"
+                        ans, etiketler = f"{taban_aci}°", [f"{tepe_aci}°", "?", f"{taban_aci}°"]
                     celd = [f"{tepe_aci + 10}°", f"{abs(taban_aci - 15)}°", "90°"]
-                    svg = svg_dinamik_ucgen_ciz("ikizkenar", a_val, b_val, c_val, koseler)
+                    svg = svg_dinamik_ucgen_ciz("ikizkenar", etiketler, koseler)
                 elif ucgen_tipi == "dik":
                     d_aci = random.choice([30, 40, 45, 50, 60])
                     diger = 90 - d_aci
-                    q = f"Şekildeki dik {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[1]}) = 90° ve m({koseler[2]}) = {d_aci}° ise m({koseler[0]}) kaç derecedir?"
-                    ans = f"{diger}°"
+                    q = f"Şekildeki dik {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[1]}) = 90° ve m({koseler[2]}) = {d_aci}° olduğuna göre m({koseler[0]}) kaç derecedir?"
+                    ans, etiketler = f"{diger}°", ["?", "90°", f"{d_aci}°"]
                     celd = [f"{diger + 10}°", f"{abs(diger - 15)}°", "90°"]
-                    svg = svg_dinamik_ucgen_ciz("dik", 0, 90, d_aci, koseler)
+                    svg = svg_dinamik_ucgen_ciz("dik", etiketler, koseler)
                 else:
                     genis_aci = random.choice([100, 110, 120, 130])
                     kalan = 180 - genis_aci
                     dar1 = random.randint(20, kalan - 10)
                     dar2 = kalan - dar1
-                    q = f"Şekildeki geniş açılı {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {genis_aci}° ve m({koseler[1]}) = {dar1}° ise m({koseler[2]}) kaç derecedir?"
-                    ans = f"{dar2}°"
+                    q = f"Şekildeki geniş açılı {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {genis_aci}° ve m({koseler[1]}) = {dar1}° olduğuna göre m({koseler[2]}) kaç derecedir?"
+                    ans, etiketler = f"{dar2}°", [f"{genis_aci}°", f"{dar1}°", "?"]
                     celd = [f"{dar2 + 15}°", f"{abs(dar2 - 10)}°", f"{genis_aci - 30}°"]
-                    svg = svg_dinamik_ucgen_ciz("genis", genis_aci, dar1, 0, koseler)
+                    svg = svg_dinamik_ucgen_ciz("genis", etiketler, koseler)
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": svg}
             else:
                 aci = random.choice([35, 45, 60, 90, 120, 135, 150])
                 q = f"Şekilde verilen açı ölçüsü kaç derecedir?"
-                ans = f"{aci}°"
+                ans, gorunen = f"{aci}°", "?"
                 celd = [f"{aci + 15}°", f"{max(15, aci - 15)}°", f"{180 - aci}°"]
-                svg = svg_aci_ciz(aci)
+                svg = svg_aci_ciz(gorunen)
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": svg}
 
         else:
