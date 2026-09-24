@@ -85,7 +85,7 @@ MEB_MUFREDAT = {
     ]
 }
 
-# 40 Haftalık MEB Müfredat İlerleme Haritası
+# 40 Haftalık MEB Müfredat Haritası
 MEB_HAFTALIK_MAPI = {}
 for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h] = []
@@ -108,7 +108,7 @@ for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
 # =========================================================
-# 3. DİNAMİK SVG GEOMETRİ MOTORU
+# 3. DİNAMİK SVG GEOMETRİ & ŞEKİL MOTORU
 # =========================================================
 def svg_dinamik_ucgen_ciz(a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
     max_aci = max(a_aci, b_aci, c_aci)
@@ -137,8 +137,18 @@ def svg_dinamik_ucgen_ciz(a_aci, b_aci, c_aci, koseler=("A", "B", "C")):
     </svg>
     '''
 
+def svg_aci_ciz(aci_degeri):
+    return f'''
+    <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#f8fafc" rx="8" stroke="#cbd5e1"/>
+      <path d="M 50 100 L 150 100" stroke="#334155" stroke-width="3"/>
+      <path d="M 50 100 L {50 + int(80 * random.choice([0.7, 0.8, 0.9]))} {100 - int(80 * random.choice([0.5, 0.7, 0.8]))}" stroke="#2563eb" stroke-width="3"/>
+      <text x="100" y="50" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2563eb">{aci_degeri}°</text>
+    </svg>
+    '''
+
 # =========================================================
-# 4. TRİLYONLARCA KOMBİNASYON ÜRETEN BAĞIMSIZ MATRİS MOTORU
+# 4. TRİLYONLARCA KOMBİNASYON ÜRETEN BAĞIMSIZ ALT KATEGORİ MOTORU
 # =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Yara", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz", "Kerim"]
 NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon", "kalemtıraş", "silgi", "defter"]
@@ -151,9 +161,10 @@ def dinamik_soru_uretici(ders, unite):
     nesne = random.choice(NESNELER)
     kisi2 = random.choice([i for i in ISIMLER if i != kisi])
 
+    # --- MATEMATİK ALT KATEGORİLERİ ---
     if ders == "Matematik":
         if "1. ünite" in u_low:
-            alt_tip = random.choice(["okuma", "toplama_cikarma", "carpma_bolme", "yuvarlama", "fark_bulma"])
+            alt_tip = random.choice(["okuma", "toplama_cikarma", "carpma_bolme", "yuvarlama", "oruntu"])
             if alt_tip == "okuma":
                 sayi = random.randint(100000, 9999999)
                 b_isimleri = ["yüz binler", "on binler", "binler", "yüzler", "onlar"]
@@ -176,21 +187,40 @@ def dinamik_soru_uretici(ders, unite):
                 q = f"{kisi} her birinde {n1} adet {nesne} bulunan {n2} koli satın almıştır. Toplam kaç adet {nesne} vardır?"
                 celd = [str(n1 * n2 + n1), str(n1 * n2 - n2), str((n1 + 5) * n2)]
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
-            else:
+            elif alt_tip == "yuvarlama":
                 sayi = random.randint(110, 990)
                 ans = str(round(sayi, -1))
                 q = f"<b>{sayi}</b> sayısı en yakın onluğa yuvarlandığında {kisi} hangi sonucu bulmalıdır?"
                 celd = [str(int(ans) + 10), str(int(ans) - 10), str(sayi + random.choice([1, 2, 3]))]
                 return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+            else:
+                baslangic = random.randint(5, 20)
+                artis = random.randint(3, 9)
+                dizi = [baslangic + i * artis for i in range(4)]
+                cevap = dizi[-1] + artis
+                q = f"{kisi} sayı örüntüsü oluşturmuştur: **{dizi[0]}, {dizi[1]}, {dizi[2]}, {dizi[3]}, ?** Soru işaretli yere gelmesi gereken sayı kaçtır?"
+                ans = str(cevap)
+                celd = [str(cevap + artis), str(cevap - 2), str(cevap + 4)]
+                return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "2. ünite" in u_low:
-            tam, payda = random.randint(1, 8), random.randint(4, 12)
-            pay = random.randint(1, payda - 1)
-            b_pay = tam * payda + pay
-            q = f"<b>{tam} tam {pay}/{payda}</b> tam sayılı kesrinin bileşik kesre dönüştürülmüş hali hangisidir?"
-            ans = f"{b_pay}/{payda}"
-            celd = [f"{b_pay + random.randint(1, 3)}/{payda}", f"{b_pay - 1}/{payda}", f"{tam * pay}/{payda}"]
-            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+            alt_tip = random.choice(["bilesik", "toplama_kesir", "cikarma_kesir"])
+            if alt_tip == "bilesik":
+                tam, payda = random.randint(1, 8), random.randint(4, 12)
+                pay = random.randint(1, payda - 1)
+                b_pay = tam * payda + pay
+                q = f"<b>{tam} tam {pay}/{payda}</b> tam sayılı kesrinin bileşik kesre dönüştürülmüş hali hangisidir?"
+                ans = f"{b_pay}/{payda}"
+                celd = [f"{b_pay + random.randint(1, 3)}/{payda}", f"{b_pay - 1}/{payda}", f"{tam * pay}/{payda}"]
+                return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+            else:
+                payda = random.choice([8, 10, 12, 16])
+                p1, p2 = random.randint(1, payda // 2), random.randint(1, payda // 2)
+                top = p1 + p2
+                q = f"{kisi} pastanın {p1}/{payda}'sini, {kisi2} ise aynı pastanın {p2}/{payda}'sini yemiştir. İkisi toplam pastanın ne kadarını yemiştir?"
+                ans = f"{top}/{payda}"
+                celd = [f"{top + 1}/{payda}", f"{max(1, top - 1)}/{payda}", f"{top}/{payda + 2}"]
+                return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "3. ünite" in u_low:
             p = random.choice([5, 10, 15, 20, 25, 30, 40, 50, 75])
@@ -202,14 +232,23 @@ def dinamik_soru_uretici(ders, unite):
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
         elif "4. ünite" in u_low or "5. ünite" in u_low:
-            koseler = random.choice([("A", "B", "C"), ("K", "L", "M"), ("P", "R", "S"), ("D", "E", "F"), ("X", "Y", "Z")])
-            a, b = random.randint(30, 85), random.randint(25, 75)
-            c = 180 - (a + b)
-            q = f"Şekildeki {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {a}° ve m({koseler[1]}) = {b}° ise m({koseler[2]}) kaç derecedir?"
-            ans = f"{c}°"
-            celd = [f"{c + random.randint(5, 15)}°", f"{abs(c - random.randint(5, 15))}°", f"{c + 30}°"]
-            svg = svg_dinamik_ucgen_ciz(a, b, 0, koseler)
-            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": svg}
+            sec_geometri = random.choice(["ucgen", "aci_olcum"])
+            if sec_geometri == "ucgen":
+                koseler = random.choice([("A", "B", "C"), ("K", "L", "M"), ("P", "R", "S"), ("D", "E", "F"), ("X", "Y", "Z")])
+                a, b = random.randint(30, 85), random.randint(25, 75)
+                c = 180 - (a + b)
+                q = f"Şekildeki {koseler[0]}{koseler[1]}{koseler[2]} üçgeninde m({koseler[0]}) = {a}° ve m({koseler[1]}) = {b}° ise m({koseler[2]}) kaç derecedir?"
+                ans = f"{c}°"
+                celd = [f"{c + random.randint(5, 15)}°", f"{abs(c - random.randint(5, 15))}°", f"{c + 30}°"]
+                svg = svg_dinamik_ucgen_ciz(a, b, 0, koseler)
+                return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": svg}
+            else:
+                aci = random.choice([35, 45, 60, 90, 120, 135, 150])
+                q = f"Şekilde verilen açı ölçüsü kaç derecedir?"
+                ans = f"{aci}°"
+                celd = [f"{aci + 15}°", f"{max(15, aci - 15)}°", f"{180 - aci}°"]
+                svg = svg_aci_ciz(aci)
+                return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": svg}
 
         else:
             saat = random.randint(2, 8)
@@ -220,6 +259,7 @@ def dinamik_soru_uretici(ders, unite):
             celd = [str(toplam_dakika + 30), str(toplam_dakika - 15), str(saat * 100)]
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
+    # --- FEN BİLİMLERİ ALT KATEGORİLERİ ---
     elif ders == "Fen Bilimleri":
         alt_tip = random.choice(["sicaklik", "canli", "dinamometre", "hal", "isik"])
         if alt_tip == "sicaklik":
@@ -240,33 +280,80 @@ def dinamik_soru_uretici(ders, unite):
             ans, celd = "Tahta Parçası", ["Pencere Camı", "Şeffaf Naylon", "Temiz Su"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
+    # --- TÜRKÇE ALT KATEGORİLERİ ---
     elif ders == "Türkçe":
-        kelime_havuzu = [("Mektep", "Okul"), ("Muallim", "Öğretmen"), ("Hediye", "Armağan"), ("Fakir", "Yoksul"), ("Yaşlı", "İhtiyar"), ("Kırmızı", "Al")]
-        sec_kelime = random.choice(kelime_havuzu)
-        q = f"Paragrafta geçen '{sec_kelime[0]}' sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?"
-        ans, celd = sec_kelime[1], [i[1] for i in kelime_havuzu if i[1] != sec_kelime[1]][:3]
-        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+        alt_tip = random.choice(["es_anlam", "noktalama", "yim_kurali"])
+        if alt_tip == "es_anlam":
+            kelime_havuzu = [("Mektep", "Okul"), ("Muallim", "Öğretmen"), ("Hediye", "Armağan"), ("Fakir", "Yoksul"), ("Yaşlı", "İhtiyar"), ("Kırmızı", "Al")]
+            sec_kelime = random.choice(kelime_havuzu)
+            q = f"Paragrafta geçen '{sec_kelime[0]}' sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?"
+            ans, celd = sec_kelime[1], [i[1] for i in kelime_havuzu if i[1] != sec_kelime[1]][:3]
+            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+        elif alt_tip == "noktalama":
+            q = f"Aşağıdaki cümlelerin hangisinde <b>nokta (.)</b> yanlış yerde veya yanlış amaçla kullanılmıştır?"
+            ans, celd = "Saat 14.30'da buluşacağız.", ["Tam 3. sırada o oturuyordu.", "Prof. Dr. Ahmet Bey geldi.", "Kitabın 1. cildini okuyorum."]
+            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+        else:
+            q = f"Aşağıdaki sözcüklerden hangisinin yazımı <b>yanlıştır</b>?"
+            ans, celd = "herkez", ["herkes", "yalnız", "itiraf"]
+            return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
+    # --- SOSYAL BİLGİLER ALT KATEGORİLERİ ---
     elif ders == "Sosyal Bilgiler":
-        q = f"{kisi} gün içinde evde üzerine düşen görevleri yapmaktadır. Aşağıdakilerden hangisi {kisi}'in evdeki bir <b>sorumluluğudur</b>?"
-        ans, celd = "Kendi odasını düzenli tutmak", ["Televizyon kumandasını saklamak", "Sürekli dışarıda oynamak", "Oda kapısını kilitlemek"]
+        alt_tip = random.choice(["sorumluluk", "kultur", "dogal_varlik"])
+        if alt_tip == "sorumluluk":
+            q = f"{kisi} gün içinde evde üzerine düşen görevleri yapmaktadır. Hangisi {kisi}'in evdeki bir <b>sorumluluğudur</b>?"
+            ans, celd = "Kendi odasını düzenli tutmak", ["Televizyon kumandasını saklamak", "Sürekli dışarıda oynamak", "Oda kapısını kilitlemek"]
+        elif alt_tip == "kultur":
+            q = f"Milli kültürümüzü yansıtan geleneksel el sanatlarımızdan biri hangisidir?"
+            ans, celd = "Ebru Sanatı", ["Futbol oynamak", "Tenis", "Bilgisayar kodlamak"]
+        else:
+            q = f"Aşağıdakilerden hangisi ülkemiz sınırları içinde yer alan <b>doğal varlıklarımızdandır</b>?"
+            ans, celd = "Pamukkale Travertenleri", ["Topkapı Sarayı", "Sultanahmet Camii", "Anıtkabir"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
+    # --- DİN KÜLTÜRÜ ALT KATEGORİLERİ ---
     elif ders == "Din Kültürü ve Ahlak Bilgisi":
-        q = f"İslam'da yardımlaşma ve dayanışmayı esas alan, malın belirli bir miktarının ihtiyaç sahiplerine verilmesi ibadeti nedir?"
-        ans, celd = "Zekat", ["Oruç", "Hac", "Namaz kılmak"]
+        alt_tip = random.choice(["zekat", "ibadet", "adap"])
+        if alt_tip == "zekat":
+            q = f"İslam'da yardımlaşma ve dayanışmayı esas alan, malın belirli miktarının ihtiyaç sahiplerine verilmesi ibadeti nedir?"
+            ans, celd = "Zekat", ["Oruç", "Hac", "Namaz kılmak"]
+        elif alt_tip == "ibadet":
+            q = f"Ramazan ayında tutulan ve farz olan ibadetin adı nedir?"
+            ans, celd = "Oruç", ["Zekat", "Hac", "Kurban"]
+        else:
+            q = f"Büyüklere saygı göstermek ve küçükleri sevmek hangi ahlaki kavramla ifade edilir?"
+            ans, celd = "Adap ve Nezaket", ["İnatçılık", "Bencillik", "Kıskançlık"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
+    # --- İNGİLİZCE ALT KATEGORİLERİ ---
     elif ders == "İngilizce":
-        q = f"{kisi} tanıştığı arkadaşına ülkesini sormak için hangi cümleyi kurmalıdır?"
-        ans, celd = "Where are you from?", ["How old are you?", "What is your name?", "How are you?"]
+        alt_tip = random.choice(["tanisma", "yon", "hobi"])
+        if alt_tip == "tanisma":
+            q = f"{kisi} tanıştığı arkadaşına ülkesini sormak için hangi cümleyi kurmalıdır?"
+            ans, celd = "Where are you from?", ["How old are you?", "What is your name?", "How are you?"]
+        elif alt_tip == "yon":
+            q = f"İngilizcede 'Sola dön' komutunun karşılığı hangisidir?"
+            ans, celd = "Turn left", ["Turn right", "Go straight", "Stop"]
+        else:
+            q = f"I like playing chess and painting cümlesinde hangi etkinlikten <b>bahsedilmemiştir</b>?"
+            ans, celd = "Yüzmek (Swimming)", ["Satranç oynamak", "Resim yapmak", "İkisi de"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
+    # --- BİLGİ YARIŞMASI ALT KATEGORİLERİ ---
     else:
-        sehir_yemek = random.choice(list(zip(SEHIRLER, YEMEKLER)))
-        q = f"Ülkemizin eşsiz lezzetlerinden biri olan <b>{sehir_yemek[1]}</b> hangi yöremiz/ilimizle özdeşleşmiştir?"
-        ans = sehir_yemek[0]
-        celd = [s for s in SEHIRLER if s != ans][:3]
+        alt_tip = random.choice(["yemek", "baskent", "genel"])
+        if alt_tip == "yemek":
+            sehir_yemek = random.choice(list(zip(SEHIRLER, YEMEKLER)))
+            q = f"Ülkemizin eşsiz lezzetlerinden biri olan <b>{sehir_yemek[1]}</b> hangi yöremiz/ilimizle özdeşleşmiştir?"
+            ans = sehir_yemek[0]
+            celd = [s for s in SEHIRLER if s != ans][:3]
+        elif alt_tip == "baskent":
+            q = f"Fransa'nın başkenti olan dünya şehri hangisidir?"
+            ans, celd = "Paris", ["Londra", "Roma", "Madrid"]
+        else:
+            q = f"Dünyanın en uzun nehirlerinden biri olarak bilinen Nil Nehri hangi kıtada yer alır?"
+            ans, celd = "Afrika", ["Asya", "Avrupa", "Amerika"]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
@@ -364,7 +451,7 @@ st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🚀 Hazırla ve Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            with st.spinner("Trilyonlarca kombinasyon arasından benzersiz sorular üretiliyor..."):
+            with st.spinner("Tüm ders ve kategorilerden bağımsız benzersiz sorular üretiliyor..."):
                 sorular = ders_sirali_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
                 st.session_state["toplam_sure_sn"] = len(sorular) * 90
@@ -384,7 +471,7 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] 
     st.info("Sol paneldeki **'Çalışma Modu Seçiniz'** alanından haftanızı veya ünitenizi seçip **'Hazırla ve Başlat'** butonuna tıklayın.")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.success("✅ Benzersiz Sorular Hazırlandı!")
+    st.success("✅ Alt Kategorilere Göre Bağımsız Sorular Hazırlandı!")
     st.markdown(f"**Toplam Soru Sayısı:** {len(st.session_state['soru_listesi'])}")
     
     ders_sayilari = {}
