@@ -45,129 +45,122 @@ if "toplam_sure" not in st.session_state:
 # =========================================================
 MEB_MUFREDAT = {
     "Matematik": [
-        "Doğal Sayılar (Okuma, Yazma, Bölükler)",
-        "Doğal Sayılarla İşlemler (Toplama, Çıkarma, Çarpma, Bölme)",
-        "Kesirler (Bileşik, Tam Sayılı, Sıralama)",
-        "Kesirlerle İşlemler (Toplama ve Çıkarma)",
-        "Ondalık Gösterim (Okuma, Yazma, Basamak Değerleri)",
-        "Yüzdeler (Yüzde Hesabı, Karşılaştırma)",
         "Temel Geometrik Kavramlar ve Çizimler (Doğru, Işın, Açı)",
         "Üçgen ve Dörtgenler (Açı ve Kenar Özellikleri)",
-        "Veri Toplama ve Değerlendirme (Sıklık Tablosu, Sütun Grafiği)",
-        "Uzunluk ve Zaman Ölçme",
         "Alan Ölçme (Kare ve Dikdörtgen)",
-        "Geometrik Cisimler (Prizmalar ve Yüzey Alanı)"
-    ],
-    "Türkçe": [
-        "Sözcükte Anlam (Gerçek, Mecaz, Terim, Zıt, Eş Anlam)",
-        "Cümlede Anlam (Öznel, Nesnel, Neden-Sonuç, Amaç-Sonuç)",
-        "Paragrafta Anlam (Ana Fikir, Yardımcı Fikir, Başlık)",
-        "Yazım Kuralları (Büyük Harfler, de/ki/mi Yazımı)",
-        "Noktalama İşaretleri (Nokta, Virgül, İki Nokta, Üç Nokta)",
-        "Metin Türleri (Hikaye, Masal, Fabl, Anı, Mektup)",
-        "Söz Sanatları (Benzetme, Kişileştirme)",
-        "Fiiller ve Kök-Ek Bilgisi"
+        "Kesirler (Bileşik, Tam Sayılı, Sıralama)",
+        "Doğal Sayılarla İşlemler (Toplama, Çıkarma, Çarpma, Bölme)"
     ],
     "Fen Bilimleri": [
         "Güneş, Dünya ve Ay (Boyut, Yapı ve Hareketler)",
         "Ay'ın Evreleri (Ana ve Ara Evreler)",
-        "Canlılar Dünyası (Mantar, Bitki, Hayvan, Mikroskobik Canlılar)",
-        "Kuvvetin Ölçülmesi ve Sürtünme (Dinamometre, Sürtünme Kuvveti)",
-        "Maddenin Değişimi (Hal Değişimi, Genleşme, Büzüşme)",
-        "Işığın Yayılması ve Yansıma (Düzgün ve Dağınık Yansıma)",
-        "Tam Gölge ve Gölge Boyunu Etkileyen Faktörler",
-        "İnsan ve Çevre (Çevre Kirliliği, Biyoçeşitlilik)",
-        "Elektrik Devre Elemanları (Ampul Parlaklığını Etkileyen Değişkenler)"
+        "Elektrik Devre Elemanları (Ampul Parlaklığını Etkileyen Değişkenler)",
+        "Kuvvetin Ölçülmesi ve Sürtünme (Dinamometre)"
+    ],
+    "Türkçe": [
+        "Sözcükte Anlam (Gerçek, Mecaz, Terim, Zıt, Eş Anlam)",
+        "Noktalama İşaretleri (Nokta, Virgül, İki Nokta)",
+        "Paragrafta Anlam ve Görsel Okuma"
     ],
     "Sosyal Bilgiler": [
-        "Birey ve Toplum (Haklar, Sorumluluklar, Gruplar)",
-        "Kültür ve Miras (Tarihi Mekanlar, Doğal Varlıklar, Birliktelik)",
-        "İnsanlar, Yerler ve Çevreler (Harita, Yer Şekilleri, İklim)",
-        "Bilim, Teknoloji ve Toplum (Teknolojinin Etkileri, Doğru Bilgi)",
-        "Üretim, Dağıtım ve Tüketim (Ekonomik Faaliyetler, Meslekler)",
-        "Etkin Vatandaşlık (Yönetim Birimleri, Egemenlik ve Bağımsızlık)",
-        "Küresel Bağlantılar (Uluslararası İlişkiler ve Ticaret)"
+        "İnsanlar, Yerler ve Çevreler (Harita, Yer Şekilleri)",
+        "Kültür ve Miras (Tarihi Mekanlar ve Semboller)"
     ],
     "İngilizce": [
-        "Unit 1: Hello! (Countries, Nationalities, School Subjects)",
         "Unit 2: My Town (Directions, Places in Town)",
-        "Unit 3: Games and Hobbies (Free Time Activities, Abilities)",
-        "Unit 4: My Daily Routine (Telling the Time, Daily Activities)",
-        "Unit 5: Health (Illnesses, Suggestions - Should/Shouldn't)",
-        "Unit 6: Movies (Types of Movies, Expressing Opinions)",
-        "Unit 7: Party Time (Months, Ordinal Numbers, Permission)",
-        "Unit 8: Fitness (Sports, Making Suggestions)",
-        "Unit 9: Animal Shelter (Present Continuous, Farm Animals)",
-        "Unit 10: Festivals (Holidays, Numbers 100-1000)"
+        "Unit 5: Health (Illnesses, Suggestions)"
     ],
     "Din Kültürü ve Ahlak Bilgisi": [
-        "Allah İnancı (Allah'ın Sıfatları, İhlas Suresi)",
-        "Ramazan ve Oruç (Oruç, İftar, Sahur, Teravih)",
-        "Adap ve Nezaket (Nezaket Kuralları, Selamlaşma)",
-        "Hz. Muhammed ve Aile Hayatı (Peygamberimizin Ailesi)",
-        "Çevremizde Dinin İzleri (Mimaride, Musikide, Edebiyatta Din)"
+        "Çevremizde Dinin İzleri (Mimaride Din)",
+        "Adap ve Nezaket"
     ]
 }
 
 # =========================================================
-# GELİŞMİŞ ŞABLON TABANLI SORU ÜRETİCİ
+# DİNAMİK SVG GÖRSEL ÜRETİCİLERİ
+# =========================================================
+def svg_aci_ciz(aci_derece):
+    return f'''
+    <svg width="220" height="140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#f8f9fa" rx="8"/>
+      <path d="M 20 110 L 180 110" stroke="#333" stroke-width="3" marker-end="url(#arrow)"/>
+      <line x1="100" y1="110" x2="{100 + 70 * round(random.uniform(0.1, 0.8), 2)}" y2="{110 - 70 * round(random.uniform(0.5, 0.9), 2)}" stroke="#e63946" stroke-width="3"/>
+      <circle cx="100" cy="110" r="4" fill="#1d3557"/>
+      <text x="105" y="90" font-size="16" font-weight="bold" fill="#e63946">?°</text>
+      <text x="95" y="130" font-size="12" fill="#666">Açı Ölçüsü</text>
+    </svg>
+    '''
+
+def svg_dikdortgen_ciz(a, b):
+    return f'''
+    <svg width="240" height="140" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#f8f9fa" rx="8"/>
+      <rect x="40" y="30" width="160" height="80" fill="#a8dadc" stroke="#1d3557" stroke-width="3" rx="4"/>
+      <text x="110" y="22" font-size="14" font-weight="bold" fill="#1d3557">{a} cm</text>
+      <text x="10" y="75" font-size="14" font-weight="bold" fill="#1d3557">{b} cm</text>
+    </svg>
+    '''
+
+def svg_ay_evresi_ciz(evre_adi):
+    return f'''
+    <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#111" rx="8"/>
+      <circle cx="80" cy="80" r="50" fill="#e0e0e0" stroke="#fff" stroke-width="2"/>
+      <path d="M 80 30 A 50 50 0 0 0 80 130 Z" fill="#222"/>
+      <text x="80" y="150" text-anchor="middle" font-size="12" fill="#fff">{evre_adi}</text>
+    </svg>
+    '''
+
+# =========================================================
+# GÖRSEL DESTEKLİ ŞABLON SORU ÜRETİCİ
 # =========================================================
 def sablon_soru_uret(ders, konu):
     if ders == "Matematik":
-        if "Doğal Sayılarla İşlemler" in konu:
-            s1, s2 = random.randint(120, 989), random.randint(12, 85)
-            d_cevap = s1 * s2
-            siklar = list(set([d_cevap, d_cevap + 10, max(1, d_cevap - 25), d_cevap + 100]))
-            while len(siklar) < 4:
-                siklar.append(d_cevap + random.randint(2, 50))
+        if "Açı" in konu:
+            aci = random.choice([30, 45, 60, 90, 120, 135, 150])
+            tur = "Dar Açı" if aci < 90 else ("Dik Açı" if aci == 90 else "Geniş Açı")
+            siklar = ["Dar Açı", "Dik Açı", "Geniş Açı", "Doğru Açı"]
+            return {
+                "soru": f"Yukarıdaki görselde gösterilen Açı çeşidi aşağıdakilerden hangisidir?",
+                "gorsel_svg": svg_aci_ciz(aci),
+                "siklar": siklar,
+                "dogru": tur,
+                "kaynak": "Görsel Şablon Bankası"
+            }
+        elif "Alan" in konu:
+            a, b = random.randint(6, 12), random.randint(3, 5)
+            alan = a * b
+            siklar = [f"{alan} cm²", f"{2*(a+b)} cm²", f"{alan + 10} cm²", f"{alan - 5} cm²"]
             random.shuffle(siklar)
-            return {"soru": f"{s1} × {s2} işleminin sonucu kaçtır?", "siklar": [str(x) for x in siklar], "dogru": str(d_cevap), "kaynak": "Şablon Bankası"}
-        
-        elif "Kesir" in konu:
-            p1, p2 = random.randint(1, 5), random.randint(1, 5)
-            payda = random.randint(6, 15)
-            d_cevap = f"{p1 + p2}/{payda}"
-            siklar = [d_cevap, f"{p1 + p2}/{payda + 2}", f"{p1}/{payda}", f"{p2 + 1}/{payda + 1}"]
-            random.shuffle(siklar)
-            return {"soru": f"({p1}/{payda}) + ({p2}/{payda}) işleminin sonucu kaçtır?", "siklar": list(set(siklar)), "dogru": d_cevap, "kaynak": "Şablon Bankası"}
-
-        elif "Alan Ölçme" in konu or "Geometrik" in konu:
-            kenar1, kenar2 = random.randint(4, 15), random.randint(3, 12)
-            d_cevap = kenar1 * kenar2
-            siklar = [d_cevap, (kenar1 + kenar2) * 2, d_cevap + 6, max(2, d_cevap - 4)]
-            random.shuffle(siklar)
-            return {"soru": f"Kısa kenarı {kenar2} cm, uzun kenarı {kenar1} cm olan bir dikdörtgenin alanı kaç cm²'dir?", "siklar": [str(x) for x in siklar], "dogru": str(d_cevap), "kaynak": "Şablon Bankası"}
-
-    elif ders == "Türkçe":
-        if "Sözcükte Anlam" in konu:
-            kelimeler = [("Siyah", "Beyaz"), ("Uzun", "Kısa"), ("Zengin", "Fakir"), ("Açık", "Kapalı"), ("Taze", "Bayat")]
-            k1, k2 = random.choice(kelimeler)
-            return {"soru": f"'{k1}' kelimesinin zıt (karşıt) anlamlısı hangisidir?", "siklar": [k2, "Mavi", "Geniş", "Pahalı"], "dogru": k2, "kaynak": "Şablon Bankası"}
-        
-        elif "Noktalama" in konu:
-            return {"soru": "Tamamlanmış cümlelerin sonuna hangi noktalama işareti konur?", "siklar": ["Nokta (.)", "Virgül (,)", "Soru İşareti (?)", "Ünlem (!)"], "dogru": "Nokta (.)", "kaynak": "Şablon Bankası"}
+            return {
+                "soru": "Görselde kenar uzunlukları verilen dikdörtgenin alanı kaç cm²'dir?",
+                "gorsel_svg": svg_dikdortgen_ciz(a, b),
+                "siklar": siklar,
+                "dogru": f"{alan} cm²",
+                "kaynak": "Görsel Şablon Bankası"
+            }
 
     elif ders == "Fen Bilimleri":
-        if "Güneş" in konu or "Ay" in konu:
-            sorular = [
-                {"soru": "Güneş'e en yakın gezegen hangisidir?", "siklar": ["Merkür", "Venüs", "Dünya", "Mars"], "dogru": "Merkür"},
-                {"soru": "Ay'ın Dünya ile Güneş arasına girdiği evre hangisidir?", "siklar": ["Yeni Ay", "Dolunay", "İlk Dördün", "Son Dördün"], "dogru": "Yeni Ay"},
-                {"soru": "Dünya'nın kendi etrafındaki dönüş süresi ne kadardır?", "siklar": ["24 Saat", "365 Gün", "30 Gün", "12 Saat"], "dogru": "24 Saat"}
-            ]
-            sec = random.choice(sorular)
-            sec["kaynak"] = "Şablon Bankası"
-            return sec
+        if "Ay" in konu:
+            return {
+                "soru": "Görselde Ay'ın ana evrelerinden biri verilmiştir. Bu evrenin adı nedir?",
+                "gorsel_svg": svg_ay_evresi_ciz("İlk Dördün"),
+                "siklar": ["İlk Dördün", "Son Dördün", "Yeni Ay", "Dolunay"],
+                "dogru": "İlk Dördün",
+                "kaynak": "Görsel Şablon Bankası"
+            }
 
-    soru_havuzu = [
-        {"soru": f"5. sınıf {ders} dersi '{konu}' konusu ile ilgili temel değerlendirme sorusu aşağıdakilerden hangisidir?", "siklar": ["Seçenek A", "Seçenek B", "Seçenek C", "Seçenek D"], "dogru": "Seçenek A"},
-        {"soru": f"'{konu}' öğrenme alanında kazanımı doğrulamak için hangi ifade doğru kabul edilir?", "siklar": ["Doğru Kavram", "Yanlış Tanım", "Eksik Bilgi", "Çelişkili İfade"], "dogru": "Doğru Kavram"}
-    ]
-    secilen = random.choice(soru_havuzu)
-    secilen["kaynak"] = "Şablon Bankası"
-    return secilen
+    # Varsayılan Soru
+    return {
+        "soru": f"5. sınıf {ders} dersi '{konu}' konusu ile ilgili görsel değerlendirme sorusu aşağıdakilerden hangisidir?",
+        "gorsel_svg": None,
+        "siklar": ["Seçenek A", "Seçenek B", "Seçenek C", "Seçenek D"],
+        "dogru": "Seçenek A",
+        "kaynak": "Şablon Bankası"
+    }
 
 # =========================================================
-# DİNAMİK VE YOĞUNLUK KONTROLLÜ SORU ÜRETİCİ
+# GEMINI YAPAY ZEKÂ SORU ÜRETİCİ (GÖRSEL TASVİR DESTEKLİ)
 # =========================================================
 def gemini_soru_uret(api_key, ders, konu):
     if not api_key or not api_key.startswith("AIzaSy"):
@@ -177,10 +170,12 @@ def gemini_soru_uret(api_key, ders, konu):
         client = genai.Client(api_key=api_key)
         
         prompt = (
-            f"MEB 5. sınıf {ders} dersi '{konu}' konusu ile ilgili MEB kazanımlarına uygun 4 şıklı 1 adet test sorusu hazırla.\n"
+            f"MEB 5. sınıf {ders} dersi '{konu}' konusu ile ilgili 4 şıklı 1 adet test sorusu hazırla.\n"
+            "Eğer konu uygunsa soruya görsel bir unsur ekle (örneğin bir şekil, grafik veya diyagram metin tasviri).\n"
             "Yanıtı YALNIZCA geçerli bir JSON formatında ver:\n"
             "{\n"
             '  "soru": "Soru metni",\n'
+            '  "gorsel_tasvir": "Görsel açıklaması veya tasviri (varsa, yoksa null)",\n'
             '  "siklar": ["A Şıkkı", "B Şıkkı", "C Şıkkı", "D Şıkkı"],\n'
             '  "dogru": "Doğru şık metni"\n'
             "}"
@@ -191,8 +186,7 @@ def gemini_soru_uret(api_key, ders, konu):
             model="gemini-2.5-flash",
             contents=prompt
         )
-        # Yanıt süresi 1.8 saniyeyi geçerse sunucu yoğun kabul edilir ve şablona düşülür
-        if time.time() - t0 > 1.8:
+        if time.time() - t0 > 2.0:
             return None
 
         clean_json = response.text.strip().replace("```json", "").replace("```", "").strip()
@@ -203,7 +197,6 @@ def gemini_soru_uret(api_key, ders, konu):
         return None
 
 def soru_hazirla(api_key, ders, konu):
-    # Sunucu yük dengesi ve çeşitlilik için yapay zeka ile şablon birlikte çalışır
     if api_key and api_key.startswith("AIzaSy") and random.random() < 0.6:
         ai_soru = gemini_soru_uret(api_key, ders, konu)
         if ai_soru:
@@ -213,7 +206,7 @@ def soru_hazirla(api_key, ders, konu):
 # =========================================================
 # ARAYÜZ (STREAMLIT UI)
 # =========================================================
-st.title("🎓 MEB 5. Sınıf Canlı Zamanlı Sınav Platformu")
+st.title("🎓 MEB 5. Sınıf Resimli & Görsel Destekli Sınav Platformu")
 
 st.sidebar.header("⚙️ Sınav Ayarları")
 
@@ -222,23 +215,19 @@ konu = st.sidebar.selectbox("Konu Seçin", MEB_MUFREDAT[ders], disabled=st.sessi
 
 soru_sayisi = st.sidebar.number_input("Soru Sayısı Girin:", min_value=1, max_value=50, value=10, step=1, disabled=st.session_state["test_aktif"])
 
-if st.sidebar.button("🎲 Şablon Soru Üret", use_container_width=True, disabled=st.session_state["test_aktif"]):
-    yeni_soru = sablon_soru_uret(ders, konu)
-    st.sidebar.success(f"✅ Soru Üretildi!\n\n**Soru:** {yeni_soru['soru']}")
-
 st.sidebar.divider()
 
 if API_KEY and API_KEY.startswith("AIzaSy"):
-    st.sidebar.success("🔑 Gemini API + Şablon Hibrit Mod Aktif")
+    st.sidebar.success("🔑 Gemini API + Görsel Motor Aktif")
 else:
-    st.sidebar.warning("⚠️ API Key Tanımsız / Şablon Modu Aktif")
+    st.sidebar.warning("⚠️ API Key Tanımsız / Görsel Şablon Modu Aktif")
 
 # DURUM 1: TEST HENÜZ BAŞLAMADI
 if not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.info(f"📋 **Sınav Bilgileri:**\n- Ders: **{ders}**\n- Konu: **{konu}**\n- Soru Sayısı: **{soru_sayisi}**\n- Toplam Süre: **{soru_sayisi * 80} saniye**\n\n*Hazırsanız aşağıdaki butona basarak sınavı başlatabilirsiniz.*")
     
     if st.button("🚀 Sınavı Başlat", type="primary"):
-        with st.spinner("Sorular hazırlanıyor (AI + Şablon Hibrit Motor)..."):
+        with st.spinner("Resim içerikli ve müfredata uygun sorular hazırlanıyor..."):
             st.session_state["soru_listesi"] = [soru_hazirla(API_KEY, ders, konu) for _ in range(soru_sayisi)]
             st.session_state["kullanici_cevaplari"] = {}
             st.session_state["mevcut_soru_index"] = 0
@@ -262,7 +251,12 @@ elif st.session_state["test_aktif"]:
 
     st.markdown(f"### **Soru {idx + 1}:** {q['soru']}")
 
-    # Kullanıcı daha önce seçim yapmadıysa varsayılan olarak ŞIKLAR SEÇİLİ GELMEZ (index=None)
+    # GÖRSEL RENDER MANTIGI (SVG VEYA TASVİR)
+    if q.get("gorsel_svg"):
+        st.components.v1.html(q["gorsel_svg"], height=160)
+    elif q.get("gorsel_tasvir"):
+        st.info(f"🖼️ **Soru Görseli / Tasviri:**\n{q['gorsel_tasvir']}")
+
     onceki_cevap = st.session_state["kullanici_cevaplari"].get(idx, None)
     secim_index = q["siklar"].index(onceki_cevap) if onceki_cevap in q["siklar"] else None
 
@@ -344,6 +338,10 @@ elif st.session_state["test_bitti"]:
         
         with st.expander(f"Soru {i+1}: {'✅ Doğru' if k_cevabi == d_cevabi else '❌ Yanlış'}"):
             st.write(f"**Soru:** {q['soru']}")
+            if q.get("gorsel_svg"):
+                st.components.v1.html(q["gorsel_svg"], height=160)
+            elif q.get("gorsel_tasvir"):
+                st.info(f"🖼️ Görsel Tasvir: {q['gorsel_tasvir']}")
             st.write(f"👉 **Sizin Cevabınız:** {k_cevabi}")
             st.write(f"✅ **Doğru Cevap:** {d_cevabi}")
             st.caption(f"Kaynak: {q['kaynak']}")
