@@ -460,17 +460,16 @@ st.sidebar.header("⚙️ Müfredat ve Sınav Ayarları")
 
 is_disabled = st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
 
-# Çalışma Modu Seçiniz Alanı (Bilgi Yarışması hemen altında)
 with st.sidebar.expander("📌 Çalışma Modu Seçiniz", expanded=True):
     mod_deneme = st.checkbox("📅 40 Haftalık MEB Deneme Sınavları", value=False, disabled=is_disabled, key="mod_deneme_cb")
     mod_serbest = st.checkbox("📚 Serbest Konu / Ünite Seçimi", value=False, disabled=is_disabled, key="mod_serbest_cb")
     mod_bilgi = st.checkbox("🏆 Bilgi Yarışması Modu", value=False, disabled=is_disabled, key="mod_bilgi_cb")
 
 secilen_uniteler = []
+deneme_secimleri = []
 
 if mod_deneme:
     with st.sidebar.expander("📅 40 Haftalık MEB Deneme Sınavları", expanded=True):
-        deneme_secimleri = []
         for h in range(1, 41):
             cb_hafta = st.checkbox(f"{h}. Hafta Deneme Sınavı", value=False, disabled=is_disabled, key=f"deneme_cb_{h}")
             if cb_hafta:
@@ -482,7 +481,7 @@ if mod_deneme:
 
 if mod_serbest:
     st.sidebar.subheader("📚 Ünite Seçimi")
-    for ders_adi in DERS_ONCELIK_SIRASI[:-1]: # Bilgi yarışmasını ayrı tuttuk
+    for ders_adi in DERS_ONCELIK_SIRASI[:-1]:
         uniteler = MEB_MUFREDAT[ders_adi]
         with st.sidebar.expander(f"{ders_adi}", expanded=False):
             select_all = st.checkbox(f"Tümünü Seç", value=False, key=f"all_{ders_adi}", disabled=is_disabled)
@@ -535,18 +534,25 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] 
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.success("✅ Seçtiğiniz Kriterlere Uygun Sorular Hazırlandı!")
-    st.markdown(f"**Toplam Soru Sayısı:** {len(st.session_state['soru_listesi'])}")
     
+    # BÜYÜK PUNTOLARLA ÜNİTE / HAFTA BAZLI SORU DAĞILIMI
+    st.markdown("### 📊 Ünite / Hafta Bazlı Üretilen Soru Dağılımı")
     ders_sayilari = {}
     for s in st.session_state['soru_listesi']:
         ders_sayilari[s['ders']] = ders_sayilari.get(s['ders'], 0) + 1
     
-    st.markdown("##### 📌 Sınav Ders Dağılımı:")
     cols = st.columns(len(ders_sayilari))
     for i, (d_isimlendirme, d_adet) in enumerate(ders_sayilari.items()):
-        cols[i].metric(d_isimlendirme, f"{d_adet} Soru")
+        cols[i].markdown(f"""
+        <div style="background-color: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #e2e8f0; text-align: center;">
+            <h4 style="color: #1e293b; margin: 0; font-size: 16px;">{d_isimlendirme}</h4>
+            <h1 style="color: #2563eb; margin: 5px 0 0 0; font-size: 36px;">{d_adet}</h1>
+            <p style="color: #64748b; margin: 0; font-size: 12px;">Adet Soru</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-    if st.button("⏱️ Sınavı Başlat", type="primary"):
+    st.write("")
+    if st.button("⏱️ Sınavı Başlat", type="primary", use_container_width=True):
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
         st.session_state["kullanici_cevaplari"] = {}
