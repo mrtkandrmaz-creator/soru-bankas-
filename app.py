@@ -3,7 +3,7 @@ import random
 import time
 import hashlib
 
-st.set_page_config(page_title="MEB 5. Sınıf Soru & Deneme Sınavı Motoru", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="MEB 5. Sınıf Soru Bankası & Deneme Sınavı Motoru", page_icon="🎓", layout="wide")
 
 # =========================================================
 # 1. SESSION STATE BAŞLATMA
@@ -138,16 +138,73 @@ def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
     '''
 
 # =========================================================
-# 4. GENİŞLETİLMİŞ VERİ TABANI VE HİBRİT ÜRETİCİ
+# 4. TÜM DERSLER İÇİN GENİŞLETİLMİŞ DEV VERİ TABANLARI
 # =========================================================
-ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz"]
-NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon"]
+ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz", "Yusuf", "İpek", "Emre", "Ceren"]
+NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon", "silgi", "defter", "misket", "toka"]
 
+# Türkçe Veri Havuzu
+TURKCE_YAZIM_YANLISLARI = [
+    ("herkes", "herkez"), ("yalnız", "yanlış"), ("orijinal", "orjinal"), 
+    ("sürpriz", "süpriz"), ("kiprik", "kirpik"), ("değer", "değil"),
+    ("askeri", "askery"), ("akaryakıt", "akar yakıt"), ("herhangi", "her hangi"),
+    ("birkaç", "bir kaç"), ("birçok", "bir çok"), ("ardından", "ardan")
+]
+TURKCE_DEYIMLER = [
+    ("Ağzı kulaklarına varmak", "Çok sevinmek"), ("Etekleri zil çalmak", "Heyecanlanmak ve sevinmek"),
+    ("İğne atsan yere düşmez", "Çok kalabalık"), ("Küp bineği olmak", "Çok sinirlenmek"),
+    ("Burnunun dikine gitmek", "Kimseyi dinlememek"), ("Gözden düşmek", "Değerini yitirmek"),
+    ("Balık hafızalı olmak", "Çok çabuk unutmak"), ("Etekleri tutuşmak", "Çok telaşlanmak")
+]
+
+# Fen Bilimleri Veri Havuzu
+FEN_HAL_DEGISIMLERI = [
+    ("Katı halden sıvı hale geçme", "Erime", ["Donma", "Buharlaşma", "Yoğuşma"]),
+    ("Sıvı halden gaz hale geçme", "Buharlaşma", ["Erime", "Yoğuşma", "Süblimleşme"]),
+    ("Gaz halden sıvı hale geçme", "Yoğuşma", ["Buharlaşma", "Erime", "Donma"]),
+    ("Sıvı halden katı hale geçme", "Donma", ["Erime", "Buharlaşma", "Kaynama"]),
+    ("Katı halden doğrudan gaz hale geçme", "Süblimleşme", ["Erime", "Yoğuşma", "Donma"])
+]
+FEN_KUVVET_OLCUM = [
+    ("Kuvvetin büyüklüğünü ölçmek için kullanılan araç nedir?", "Dinamometre", ["Termometre", "Barometre", "Kronometre"]),
+    ("Dinamometrelerin yapımında esnekliği nedeniyle ne tür maddeler kullanılır?", "Yay (Esnek cisim)", ["Taş", "Demir çubuk", "Plastik boru"]),
+    ("Sürtünme kuvveti en çok hangi yüzeylerde daha az hissedilir?", "Pürüzsüz (Kaygan) yüzeyler", ["Pürüzlü yüzeyler", "Toprak zemin", "Hal1"]),
+    ("Dünya'nın kendi ekseni etrafında bir tam tur dönmesi ne kadar sürer?", "1 gün (24 saat)", ["1 yıl", "1 ay", "1 hafta"])
+]
+
+# Sosyal Bilgiler Veri Havuzu
+SOSYAL_HAKLAR = [
+    ("Çocukların yaşama, barınma, beslenme ve sağlık gibi hakları nasıl adlandırılır?", "Temel yaşama ve çocuk hakları", ["Siyasi haklar", "Ticari haklar", "Seçme hakkı"]),
+    ("Evde veya okulda üstlendiğimiz görevleri yerine getirmeye ne denir?", "Sorumluluk", ["Yetki", "Özgürlük", "Hak"]),
+    ("Tarihî eserlerin korunması ve gelecek nesillere aktarılması hangi alana girer?", "Kültür ve Miras", ["Bilim ve Teknoloji", "Doğa Olayları", "Ekonomi"]),
+    ("Atatürk'ün milli egemenliği millete armağan ettiği ve çocuklara bayram olarak atfettiği gün hangisidir?", "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", ["19 Mayıs", "29 Ekim", "30 Ağustos"])
+]
+
+# Din Kültürü Veri Havuzu
+DIN_HAVUZU = [
+    ("Evrende her şeyin bir yaratıcısı olduğunu, evreni Allah'ın yarattığını ve yönettiğini kabul etmeye ne denir?", "Allah İnancı", ["Oruç", "Zekat", "Hac"]),
+    ("İslam'ın beş şartından biri olan ve Ramazan ayında tutulan ibadetin adı nedir?", "Oruç", ["Namaz", "Kelime-i Şehadet", "Kurban"]),
+    ("İnsanlara karşı nazik davranmak, başkalarını rahatsız etmemek ve görgü kurallarına uymak hangi ünite konusudur?", "Adap ve Nezaket", ["Allah İnancı", "Ramazan ve Oruç", "Hac İbadeti"])
+]
+
+# İngilizce Veri Havuzu
+INGILIZCE_HAVUZU = [
+    ("'Where are you from?' sorusuna yanıt verirken hangisi kullanılır?", "I am from Turkey", ["I am ten years old", "I like playing football", "Good morning"]),
+    ("Harita üzerinde bir yere giderken 'Go straight ahead' ne anlama gelir?", "Düz git", ["Sola dön", "Sağa dön", "Dur"]),
+    ("Boş zamanlarda yapılan eğlenceli aktiviteleri ifade eden ünite başlığı hangisidir?", "Games and Hobbies", ["My Town", "Hello", "My Daily Routine"]),
+    ("Sabah uyanma, el yüz yıkama ve okula gitme gibi günlük yapılan işler hangi ünitede işlenir?", "My Daily Routine", ["Nationalities", "Directions", "Games"])
+]
+
+# Bilgi Yarışması Veri Havuzu
 BASKENT_LISTESI = [
     ("Fransa", "Paris"), ("İtalya", "Roma"), ("Japonya", "Tokyo"), ("Almanya", "Berlin"), 
     ("İspanya", "Madrid"), ("İngiltere", "Londra"), ("Yunanistan", "Atina"), ("Rusya", "Moskova"), 
     ("Azerbaycan", "Bakü"), ("Mısır", "Kahire"), ("İran", "Tahran"), ("Irak", "Bağdat"),
-    ("Çin", "Pekin"), ("Hindistan", "Yeni Delhi"), ("Güney Kore", "Seul"), ("Kanada", "Ottawa")
+    ("Çin", "Pekin"), ("Hindistan", "Yeni Delhi"), ("Güney Kore", "Seul"), ("Kanada", "Ottawa"),
+    ("Brezilya", "Brasilia"), ("Arjantin", "Buenos Aires"), ("Avustralya", "Canberra"), ("Meksika", "Meksiko"),
+    ("İsveç", "Stokholm"), ("Norveç", "Oslo"), ("Finlandiya", "Helsinki"), ("Danimarka", "Kopenhag"),
+    ("Portekiz", "Lizbon"), ("Hollanda", "Amsterdam"), ("Belçika", "Brüksel"), ("İsviçre", "Bern"),
+    ("Avusturya", "Viyana"), ("Polonya", "Varşova"), ("Ukrayna", "Kiev"), ("Suudi Arabistan", "Riyad")
 ]
 
 YEMEK_SEHIR_LISTESI = [
@@ -155,25 +212,37 @@ YEMEK_SEHIR_LISTESI = [
     ("Mantı", "Kayseri"), ("Baklava", "Gaziantep"), ("Tantuni", "Mersin"),
     ("Etli Ekmek", "Konya"), ("Hamsi Tava", "Trabzon"), ("Pide", "Samsun"),
     ("Çiğ Köfte", "Şanlıurfa"), ("Testi Kebabı", "Yozgat"), ("Keşkek", "Aydın"),
-    ("İnegöl Köfte", "Bursa"), ("Oltu Kebabı", "Erzurum"), ("Kepse Pilavı", "Mersin")
+    ("İnegöl Köfte", "Bursa"), ("Oltu Kebabı", "Erzurum"), ("Kepse Pilavı", "Mersin"),
+    ("Testi Kebabı", "Nevşehir"), ("Ciğer Şiş", "Edirne"), ("Kete", "Kars"),
+    ("Ezogelin Çorbası", "Gaziantep"), ("Zağdan Böreği", "Trabzon"), ("Tirit", "Konya"),
+    ("Bafra Pidesi", "Samsun"), ("Aydın İnciri", "Aydın"), ("Kumpir", "İstanbul")
 ]
-ALL_SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep", "Konya", "Samsun", "Adana", "Hatay", "Mersin", "Kayseri", "Şanlıurfa", "Yozgat", "Aydın", "İzmit", "Eskişehir", "Sivas", "Van"]
+ALL_SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep", "Konya", "Samsun", "Adana", "Hatay", "Mersin", "Kayseri", "Şanlıurfa", "Yozgat", "Aydın", "İzmit", "Eskişehir", "Sivas", "Van", "Edirne", "Kars", "Nevşehir", "Muğla"]
 
 DNY_MUTFAK_LISTESI = [
     ("Sushi", "Japonya"), ("Pizza", "İtalya"), ("Taco", "Meksika"),
     ("Kruvasan", "Fransa"), ("Hamburger", "Amerika Birleşik Devletleri"),
     ("Paella", "İspanya"), ("Makarna", "İtalya"), ("Çin Mantısı (Dim Sum)", "Çin"),
     ("Pad Thai", "Tayland"), ("Pho", "Vietnam"), ("Fish and Chips", "İngiltere"),
-    ("Gulaş", "Macaristan"), ("Falafel", "Lübnan"), ("Borsç", "Rusya")
+    ("Gulaş", "Macaristan"), ("Falafel", "Lübnan"), ("Borsç", "Rusya"),
+    ("Ramen", "Japonya"), ("Tortilla", "Meksika"), ("Fondü", "İsviçre"),
+    ("Baklava", "Türkiye"), ("Kebab", "Türkiye"), ("Waffle", "Belçika")
 ]
-ALL_ULKELER = ["Japonya", "İtalya", "Meksika", "Fransa", "Amerika Birleşik Devletleri", "İspanya", "Çin", "Almanya", "İngiltere", "Brezilya", "Yunanistan", "Tayland", "Vietnam", "Macaristan", "Lübnan", "Rusya", "Arjantin"]
+ALL_ULKELER = ["Japonya", "İtalya", "Meksika", "Fransa", "Amerika Birleşik Devletleri", "İspanya", "Çin", "Almanya", "İngiltere", "Brezilya", "Yunanistan", "Tayland", "Vietnam", "Macaristan", "Lübnan", "Rusya", "Arjantin", "Türkiye", "İsviçre", "Belçika", "Kanada"]
 
 HARITA_HAVUZU = [
     ("Haritalarda yön bulmamıza yardımcı olan ve genellikle kuzeyi gösteren işaret nedir?", "Kuzey oku (Pusula gülü)", ["Ölçek", "Lejant", "Eş yükselti"]),
     ("Fiziki haritalarda suları ve denizleri göstermek için hangi renk kullanılır?", "Mavi", ["Yeşil", "Kahverengi", "Sarı"]),
     ("Fiziki haritalarda dağları ve yüksek yerleri göstermek için hangi renk tonları kullanılır?", "Kahverengi ve tonları", ["Mavi ve tonları", "Koyu yeşil", "Parlak sarı"]),
     ("Ülkemizin kuzeyinde yer alan deniz hangisidir?", "Karadeniz", ["Akdeniz", "Ege Denizi", "Kızıldeniz"]),
-    ("Haritalarda yer alan sembollerin ne anlama geldiğini gösteren tabloya ne denir?", "Lejant (Harita anahtarı)", ["Ölçek", "Pusula gülü", "Kuzey oku"])
+    ("Haritalarda yer alan sembollerin ne anlama geldiğini gösteren tabloya ne denir?", "Lejant (Harita anahtarı)", ["Ölçek", "Pusula gülü", "Kuzey oku"]),
+    ("Ülkemizin batısında yer alan ve turizmiyle ünlü denizimiz hangisidir?", "Ege Denizi", ["Karadeniz", "Akdeniz", "Marmara Denizi"]),
+    ("Dünya üzerindeki herhangi bir yerin kuşbakışı görünümünün belli bir oranda küçültülerek kağıda aktarılmasına ne denir?", "Harita", ["Kroki", "Plan", "Atlas"]),
+    ("Kuşbakışı görünümün kaba bir taslak halinde kağıda çizilmesine ne ad verilir?", "Kroki", ["Harita", "Lejant", "Ölçek"]),
+    ("Bir haritada uzunlukların gerçeğe oranla kaç kez küçültüldüğünü gösteren değere ne denir?", "Ölçek", ["Lejant", "Kuzey oku", "Yön bulucu"]),
+    ("Türkiye'nin en yüksek dağı olan Ağrı Dağı hangi coğrafi bölgemizde yer alır?", "Doğu Anadolu Bölgesi", ["Karadeniz Bölgesi", "İç Anadolu Bölgesi", "Marmara Bölgesi"]),
+    ("Ülkemizin başkenti olan Ankara hangi coğrafi bölgemizdedir?", "İç Anadolu Bölgesi", ["Marmara Bölgesi", "Ege Bölgesi", "Akdeniz Bölgesi"]),
+    ("Fiziki haritalarda ovaları ve alçak düzlükleri göstermek için genellikle hangi renk kullanılır?", "Yeşil", ["Mavi", "Kahverengi", "Kırmızı"])
 ]
 
 ICAT_HAVUZU = [
@@ -181,7 +250,10 @@ ICAT_HAVUZU = [
     ("Ampulü icat ederek elektriğin aydınlatmada kullanılmasını sağlayan kimdir?", "Thomas Edison", ["Alexander Graham Bell", "Albert Einstein", "Wright Kardeşler"]),
     ("Matbaayı geliştirerek kitapların çoğaltılmasını hızlandıran kişi kimdir?", "Johannes Gutenberg", ["Galileo Galilei", "Leonardo da Vinci", "Blaise Pascal"]),
     ("İlk motorlu uçağı icat ederek havacılık tarihini başlatanlar kimlerdir?", "Wright Kardeşler", ["Marie Curie", "Thomas Edison", "Alexander Graham Bell"]),
-    ("Pusulayı ilk defa yön bulmak amacıyla denizcilikte kullanan medeniyetler kimlerdir?", "Uzak Doğu (Çinliler)", ["Romalılar", "Yunanlılar", "Mayalar"])
+    ("Matematik ve fizik alanında büyük çalışmalar yapan, sıfır rakamını ve cebiri geliştiren İslam bilgini kimdir?", "Harezmi", ["İbni Sina", "Farabi", "Biruni"]),
+    ("Tıp alanında yazdığı 'El-Kânûn fit-Tıb' kitabı yüzyıllarca Avrupa'da okutulan Türk-İslam bilginidir.", "İbni Sina", ["Harezmi", "Mimar Sinan", "Cahide Sonku"]),
+    ("Yerçekimi kanununu bulan ve elmanın ağaçtan düşüşüyle ilham alan ünlü fizikçi kimdir?", "Isaac Newton", ["Albert Einstein", "Galileo Galilei", "Thomas Edison"]),
+    ("Radyüvyum ve polonyum elementlerini keşfeden, Nobel ödülü kazanan ilk kadın bilim insanı kimdir?", "Marie Curie", ["Rosalind Franklin", "Ada Lovelace", "Jane Goodall"])
 ]
 
 GENEL_KULTUR_HAVUZU = [
@@ -189,9 +261,15 @@ GENEL_KULTUR_HAVUZU = [
     ("Dünyanın en yüksek dağı olan Everest Dağı hangi kıtada yer alır?", "Asya", ["Afrika", "Avrupa", "Antarktika"]),
     ("Türkiye Cumhuriyeti'nin kurucusu ve ilk cumhurbaşkanı kimdir?", "Mustafa Kemal Atatürk", ["Fatih Sultan Mehmet", "İsmet İnönü", "Kanuni Sultan Süleyman"]),
     ("Türkiye Cumhuriyeti'nin başkenti neresidir?", "Ankara", ["İstanbul", "İzmir", "Bursa"]),
-    ("Dünyanın yüzölçümünün büyük kısmını kaplayan ve 'Mavi Gezegen' olarak bilinen gezegen hangisidir?", "Dünya", ["Mars", "Venüs", "Jüpiter"])
+    ("Dünyanın yüzölçümünün büyük kısmını kaplayan ve 'Mavi Gezegen' olarak bilinen gezegen hangisidir?", "Dünya", ["Mars", "Venüs", "Jüpiter"]),
+    ("Dünyamızın tek doğal uydusu olan gök cismi hangisidir?", "Ay", ["Mars", "Titan", "Europa"]),
+    ("Türkiye'nin en büyük gölü olan Van Gölü hangi coğrafi bölgededir?", "Doğu Anadolu Bölgesi", ["İç Anadolu", "Marmara", "Akdeniz"]),
+    ("Çanakkale Savaşı hangi yılda gerçekleşmiştir?", "1915", ["1919", "1923", "1938"])
 ]
 
+# =========================================================
+# 5. DİNAMİK SORU ÜRETİCİ (TÜM DERSLER İÇİN GENİŞLETİLMİŞ)
+# =========================================================
 def dinamik_soru_uretici(ders, unite):
     u_low = unite.lower()
     kisi = random.choice(ISIMLER)
@@ -253,31 +331,37 @@ def dinamik_soru_uretici(ders, unite):
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Fen Bilimleri":
-        q = f"{kisi} fen laboratuvarında gözlem yapmaktadır. Saf bir maddenin ısı alarak sıvı hale geçmesi olayına ne denir?"
-        ans, celd = "Erime", ["Donma", "Buharlaşma", "Yoğuşma"]
-        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+        secim_fen = random.choice(FEN_HAL_DEGISIMLERI + FEN_KUVVET_OLCUM)
+        q, ans, celd = secim_fen[0], secim_fen[1], secim_fen[2]
+        return {"soru": f"{kisi} soruyor: {q}", "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Türkçe":
-        q = f"Aşağıdaki sözcüklerden hangisinin yazımı <b>yanlıştır</b>?"
-        ans, celd = "herkez", ["herkes", "yalnız", "itiraf"]
+        tur = random.choice(["yazim", "deyim"])
+        if tur == "yazim":
+            dogru_kelime, yanlis_kelime = random.choice(TURKCE_YAZIM_YANLISLARI)
+            q = f"Aşağıdaki sözcüklerden hangisinin yazımı <b>yanlıştır</b>?"
+            ans = yanlis_kelime
+            celd = [dogru_kelime, "itiraf", "geliyor"]
+        else:
+            deyim, anlami = random.choice(TURKCE_DEYIMLER)
+            q = f"{kisi} cümlesinde geçen <b>'{deyim}'</b> deyiminin anlamı aşağıdakilerden hangisidir?"
+            ans = anlami
+            celd = [d[1] for d in TURKCE_DEYIMLER if d[1] != anlami][:3]
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Sosyal Bilgiler":
-        q = f"{kisi}'in evde odasını toplu tutması onun hangi özelliğini gösterir?"
-        ans, celd = "Sorumluluk sahibi olduğunu", ["Haklarını bildiğini", "Çocuk olduğunu", "Kuralları bozduğunu"]
-        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+        q, ans, celd = random.choice(SOSYAL_HAKLAR)
+        return {"soru": f"{kisi} sosyal bilgiler dersinde inceleme yapıyor: {q}", "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "Din Kültürü ve Ahlak Bilgisi":
-        q = f"Ramazan ayında imsak ile akşam ezanı arasında tutulan farz ibadet nedir?"
-        ans, celd = "Oruç", ["Zekat", "Hac", "Kurban"]
+        q, ans, celd = random.choice(DIN_HAVUZU)
         return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
     elif ders == "İngilizce":
-        q = f"İngilizcede yön tarif ederken 'Sola dön' demek için hangi kalıp kullanılır?"
-        ans, celd = "Turn left", ["Turn right", "Go straight", "Stop"]
-        return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+        q, ans, celd = random.choice(INGILIZCE_HAVUZU)
+        return {"soru": f"Teacher asks {kisi}: {q}", "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
-    else: # 🏆 Bilgi Yarışması (Milyarlarca Benzersiz Kombinasyon ve Sıfır Tekrar Motoru)
+    else: # 🏆 Bilgi Yarışması
         if "1. kategori" in u_low:
             ulke, dogru_baskent = random.choice(BASKENT_LISTESI)
             q = f"<b>{ulke}</b> ülkesinin başkenti olan dünya şehri aşağıdakilerden hangisidir?"
@@ -313,7 +397,7 @@ def dinamik_soru_uretici(ders, unite):
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
-# 5. SORU LİSTESİ OLUŞTURUCU (MÜKERRERLİK ENGELLEYİCİ)
+# 6. SORU LİSTESİ OLUŞTURUCU (MÜKERRERLİK ENGELLEYİCİ)
 # =========================================================
 def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -337,7 +421,7 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
         
         uretilen_sayi = 0
         deneme = 0
-        while uretilen_sayi < dersin_hedef_sayisi and deneme < 2000:
+        while uretilen_sayi < dersin_hedef_sayisi and deneme < 4000:
             deneme += 1
             secilen_u = random.choice(uniteler)
             s = dinamik_soru_uretici(ders, secilen_u)
@@ -346,7 +430,6 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
             
             random.shuffle(s["siklar"])
 
-            # Sadece soru metnini baz alarak aynı sorunun kopya olarak düşmesini tamamen engelle
             fingerprint = hashlib.sha256(s["soru"].encode('utf-8')).hexdigest()
             if fingerprint not in hash_set:
                 hash_set.add(fingerprint)
@@ -356,7 +439,7 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     return tam_soru_listesi[:hedef_sayi]
 
 # =========================================================
-# 6. STREAMLIT ARAYÜZÜ
+# 7. STREAMLIT ARAYÜZÜ
 # =========================================================
 st.title("🎓 MEB 5. Sınıf Soru Bankası & Deneme Sınavı Motoru")
 
@@ -413,7 +496,7 @@ st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🚀 Hazırla ve Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            with st.spinner("Benzersiz ve tekrarsız sorular üretiliyor..."):
+            with st.spinner("Tüm dersler için binlerce kombinasyondan benzersiz sorular üretiliyor..."):
                 sorular = ders_sirali_soru_uret(secilen_uniteler, soru_sayisi)
                 st.session_state["soru_listesi"] = sorular
                 st.session_state["toplam_sure_sn"] = len(sorular) * 90
