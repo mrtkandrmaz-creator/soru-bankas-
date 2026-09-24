@@ -5,7 +5,7 @@ import time
 import math
 
 # Sayfa Yapılandırması
-st.set_page_config(page_title="MEB 5. Sınıf Çoklu Ders ve Ünite Sınav Platformu", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="MEB 5. Sınıf Soru Bankası", page_icon="🎓", layout="wide")
 
 # =========================================================
 # 1. API KEY OKUMA MOTORU
@@ -177,7 +177,7 @@ def svg_ay_evresi_ciz_modern(evre_adi):
     '''
 
 # =========================================================
-# 3. DİNAMİK ŞABLON VE AI MOTORU
+# 3. DİNAMİK ŞABLON VE AI MOTORU (GÜVENLİ ŞIK DÜZELTME)
 # =========================================================
 def sablon_soru_uret(ders, unite):
     u_lower = unite.lower()
@@ -195,7 +195,8 @@ def sablon_soru_uret(ders, unite):
         elif "kesir" in u_lower:
             payda = random.choice([4, 5, 6, 8])
             pay = random.randint(1, payda - 1)
-            siklar = [f"{pay}/{payda}", f"{payda-pay}/{payda}", f"{pay}/{payda+1}", f"{pay+1}/{payda}"]
+            dogru_cevap = f"{pay}/{payda}"
+            siklar = [dogru_cevap, f"{payda-pay}/{payda}", f"{pay}/{payda+1}", f"{pay+1}/{payda}"]
             siklar = list(set(siklar))
             while len(siklar) < 4:
                 siklar.append(f"{random.randint(1,3)}/{payda}")
@@ -203,7 +204,7 @@ def sablon_soru_uret(ders, unite):
             return {
                 "ders": ders, "unite": unite,
                 "soru": "Yukarıda modellenen kesrin değeri aşağıdakilerden hangisidir?",
-                "gorsel_svg": svg_kesir_ciz_modern(pay, payda), "siklar": siklar, "dogru": f"{pay}/{payda}", "kaynak": "Şablon Motoru"
+                "gorsel_svg": svg_kesir_ciz_modern(pay, payda), "siklar": siklar, "dogru": dogru_cevap, "kaynak": "Şablon Motoru"
             }
 
     elif ders == "Fen Bilimleri":
@@ -221,8 +222,10 @@ def sablon_soru_uret(ders, unite):
     return {
         "ders": ders, "unite": unite,
         "soru": f"[{ders} - {unite}] konusuna ait temel kavram aşağıdakilerden hangisidir?",
-        "gorsel_svg": None, "siklar": ["Doğru Seçenek A", "Yanlış Seçenek B", "Yanlış Seçenek C", "Yanlış Seçenek D"],
-        "dogru": "Doğru Seçenek A", "kaynak": "Müfredat Şablonu"
+        "gorsel_svg": None, 
+        "siklar": ["Seçenek A", "Seçenek B", "Seçenek C", "Seçenek D"],
+        "dogru": "Seçenek A", 
+        "kaynak": "Müfredat Şablonu"
     }
 
 def gemini_soru_uret(api_key, ders, unite):
@@ -234,32 +237,62 @@ def gemini_soru_uret(api_key, ders, unite):
         prompt = (
             f"DERS: {ders}\nÜNİTE: {unite}\n"
             f"Görevin: '{unite}' ünitesine tam uygun 1 adet 4 şıklı test sorusu üretmektir.\n"
+            "ÖNEMLİ: 'dogru' değeri, 'siklar' listesindeki elemanlardan BİRİYLE BİREBİR AYNI METNE SAHİP OLMALIDIR.\n"
+            "Örnek: {\"soru\": \"...\", \"siklar\": [\"A şıkkı\", \"B şıkkı\", \"C şıkkı\", \"D şıkkı\"], \"dogru\": \"A şıkkı\"}\n"
             "Yanıtını YALNIZCA JSON formatında ver:\n"
             '{"soru": "Soru metni", "gorsel_tasvir": null, "siklar": ["A", "B", "C", "D"], "dogru": "Doğru şık metni"}'
         )
         response = client.models.generate_content(model="gemini-3.6-flash", contents=prompt)
         clean_json = response.text.strip().replace("```json", "").replace("```", "").strip()
         veri = json.loads(clean_json)
-        veri["ders"] = ders
-        veri["unite"] = unite
-        veri["kaynak"] = "Yapay Zekâ (Gemini)"
-        return veri
+        
+        # --- ŞIK VE DOĞRU CEVAP DOĞRULAMA MEKANİZMASI ---
+        siklar = [str(s).strip() for s in veri.get("siklar", [])]
+        dogru = str(veri.get("dogru", "")).strip()
+
+        # Doğru cevap listede yoksa eşleştirme yap veya ilk seçeneği yap
+        if dogru not in siklar:
+            # Harf olarak verildiyse (örn: "A" veya "A)")
+            if len(dogru) == 1 and dogru.upper() in ["A", "B", "C", "D"]:
+                idx = ["A", "B", "C", "D"].index(dogru.upper())
+                if idx < len(siklar):
+                    dogru = siklar[idx]
+            else:
+                # Kısmi eşleşme kontrolü
+                eslesme = [s for s in siklar if dogru in s or s in dogru]
+                if eslesme:
+                    dogru = eslesme[0]
+                elif siklar:
+                    dogru = siklar[0]
+
+        # Şıkları karıştır ve doğru cevabın korunduğundan emin ol
+        random.shuffle(siklar)
+
+        return {
+            "ders": ders,
+            "unite": unite,
+            "soru": veri.get("soru", ""),
+            "gorsel_tasvir": veri.get("gorsel_tasvir"),
+            "siklar": siklar,
+            "dogru": dogru,
+            "kaynak": "Yapay Zekâ (Gemini)"
+        }
     except Exception:
         return None
 
 def soru_hazirla(api_key, ders, unite):
     if api_key and random.random() < 0.85:
         ai_soru = gemini_soru_uret(api_key, ders, unite)
-        if ai_soru:
+        if ai_soru and len(ai_soru["siklar"]) == 4:
             return ai_soru
     return sablon_soru_uret(ders, unite)
 
 # =========================================================
 # 4. STREAMLIT ARAYÜZ
 # =========================================================
-st.title("🎓 MEB 5. Sınıf Sınav Platformu")
+st.title("📚 MEB 5. Sınıf Soru Bankası")
 
-st.sidebar.header("⚙️ Ders ve Ünite Seçimi")
+st.sidebar.header("⚙️ Soru Bankası Filtreleri")
 secilen_uniteler = []
 
 for ders_adi, uniteler in MEB_MUFREDAT.items():
@@ -278,17 +311,16 @@ soru_sayisi = st.sidebar.number_input("Toplam Soru Sayısı:", min_value=1, max_
 # AŞAMA 1: SORULARI ÜRETME VE HAZIRLAMA
 # ---------------------------------------------------------
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.subheader("📋 Sınav Kapsamı")
+    st.subheader("📋 Soru Bankası Yapılandırması")
     if secilen_uniteler:
-        st.info(f"Toplam **{len(secilen_uniteler)}** ünite seçildi. Soru başına **80 saniye** süre verilecektir.")
+        st.info(f"Soru bankasından **{len(secilen_uniteler)}** ünite seçildi. Soru başına **80 saniye** süre tanımlanacaktır.")
         if st.button("🚀 Soru Havuzunu Üret", type="primary"):
-            with st.spinner("Sorular üretiliyor ve ders sırasına göre diziliyor..."):
+            with st.spinner("Soru bankası hazırlanıyor ve kontrol ediliyor..."):
                 ham_sorular = []
                 for i in range(soru_sayisi):
                     h_ders, h_unite = secilen_uniteler[i % len(secilen_uniteler)]
                     ham_sorular.append(soru_hazirla(API_KEY, h_ders, h_unite))
                 
-                # Derslere göre sırala (Bir ders bitince diğerine geçsin)
                 ham_sorular.sort(key=lambda x: list(MEB_MUFREDAT.keys()).index(x["ders"]))
                 
                 st.session_state["soru_listesi"] = ham_sorular
@@ -299,24 +331,24 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] 
         st.warning("⚠️ Lütfen sol menüden en az 1 ünite işaretleyin.")
 
 # ---------------------------------------------------------
-# AŞAMA 2: SORULAR HAZIR -> BAŞLAT BUTONU EKRANI
+# AŞAMA 2: TESTİ BAŞLAT EKRANI
 # ---------------------------------------------------------
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.success("✅ Sorular başarıyla üretildi ve hazırlandı!")
+    st.success("✅ Sorular doğrulandı ve başarıyla yüklendi!")
     
     toplam_sn = st.session_state["toplam_sure_sn"]
     dakika = toplam_sn // 60
     saniye = toplam_sn % 60
     
     st.markdown(f"""
-    ### ⏱️ Sınav Bilgileri:
+    ### ⏱️ Test Bilgileri:
     - **Toplam Soru Sayısı:** {len(st.session_state['soru_listesi'])}
     - **Soru Başına Süre:** 80 Saniye
-    - **Toplam Sınav Süresi:** {dakika} Dakika {saniye} Saniye
+    - **Toplam Test Süresi:** {dakika} Dakika {saniye} Saniye
     """)
     
     c1, c2 = st.columns([1, 2])
-    if c1.button("⏱️ Sınavı Başlat", type="primary"):
+    if c1.button("⏱️ Testi Başlat", type="primary"):
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
         st.session_state["kullanici_cevaplari"] = {}
@@ -328,22 +360,19 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] an
         st.rerun()
 
 # ---------------------------------------------------------
-# AŞAMA 3: AKTİF TEST EKRANI VE SAYAÇ
+# AŞAMA 3: AKTİF TEST EKRANI
 # ---------------------------------------------------------
 elif st.session_state["test_aktif"]:
-    # Süre Hesaplama
     gecen_sure = int(time.time() - st.session_state["baslangic_zamani"])
     kalan_sure = st.session_state["toplam_sure_sn"] - gecen_sure
 
-    # Süre Dolduysa Otomatik Bitir
     if kalan_sure <= 0:
-        st.warning("⏰ Süreniz doldu! Sınav otomatik olarak sonlandırılıyor...")
+        st.warning("⏰ Süreniz doldu! Test otomatik olarak sonlandırılıyor...")
         time.sleep(2)
         st.session_state["test_aktif"] = False
         st.session_state["test_bitti"] = True
         st.rerun()
 
-    # Üst Bilgi Barları ve Canlı Sayaç
     k_dakika = kalan_sure // 60
     k_saniye = kalan_sure % 60
 
@@ -356,7 +385,7 @@ elif st.session_state["test_aktif"]:
     with col_timer:
         st.metric("⏳ Kalan Süre", f"{k_dakika:02d}:{k_saniye:02d}")
     with col_stop:
-        if st.button("🛑 Sınavı Sonlandır", type="secondary"):
+        if st.button("🛑 Testi Sonlandır", type="secondary"):
             st.session_state["test_aktif"] = False
             st.session_state["test_bitti"] = True
             st.rerun()
@@ -391,7 +420,7 @@ elif st.session_state["test_aktif"]:
             st.session_state["mevcut_soru_index"] += 1
             st.rerun()
     else:
-        if col_next.button("🏁 Sınavı Tamamla", type="primary"):
+        if col_next.button("🏁 Testi Tamamla", type="primary"):
             st.session_state["test_aktif"] = False
             st.session_state["test_bitti"] = True
             st.rerun()
@@ -401,7 +430,7 @@ elif st.session_state["test_aktif"]:
 # ---------------------------------------------------------
 elif st.session_state["test_bitti"]:
     st.balloons()
-    st.header("📊 Sınav Sonuç Karnesi")
+    st.header("📊 Test Karnesi")
 
     toplam_soru = len(st.session_state["soru_listesi"])
     dogru_sayisi = sum(1 for i, q in enumerate(st.session_state["soru_listesi"]) if st.session_state["kullanici_cevaplari"].get(i) == q["dogru"])
@@ -424,7 +453,7 @@ elif st.session_state["test_bitti"]:
             st.write(f"✅ **Doğru Cevap:** {d_cevabi}")
             st.caption(f"Kaynak: {q.get('kaynak', 'Sistem')}")
 
-    if st.button("🔄 Yeni Sınav Hazırla"):
+    if st.button("🔄 Yeni Test Hazırla"):
         st.session_state["sorular_hazir"] = False
         st.session_state["test_bitti"] = False
         st.session_state["test_aktif"] = False
