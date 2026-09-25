@@ -113,39 +113,40 @@ for h in range(1, 41):
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 # =========================================================
-# 3. PROFESYONEL MEB UYUMLU SVG ÜÇGEN ÇİZİM MOTORU (GİDERİLDİ)
+# 3. PROFESYONEL MEB UYUMLU SVG ÜÇGEN ÇİZİM MOTORU (GÜNCELLENDİ)
 # =========================================================
-def svg_ucgen_ciz(tip, aci1_val, aci2_val, aci3_val, ek_detay=""):
-    """MEB soru kitapçıklarına birebir uyumlu, kusursuz konumlandırılmış SVG üçgen şeması üretir."""
+def svg_ucgen_ciz(tip, tepe_aci, sol_aci, sag_aci):
+    """MEB soru kitapçıklarına birebir uyumlu, harflendirmesi tepeden başlayan SVG üçgen şeması üretir."""
     def fmt(v):
         return f"{v}°" if v != "?" else "?"
 
-    if tip == "cesitkenar":
+    # Tüm üçgen tiplerinde harflendirme tepeden (index 0) başlar: (Tepe, Sol Alt, Sağ Alt)
+    if tip in ["cesitkenar", "cesitkenar_aci", "genis_aci"]:
         p1, p2, p3 = "60,160", "270,160", "160,35"
-        labels = ("K", "L", "M")
-        pos_list = ("x='35' y='175'", "x='280' y='175'", "x='150' y='25'")
-        val_list = ("x='80' y='145'", "x='225' y='145'", "x='145' y='65'")
+        labels = ("K", "L", "M") # K: Tepe, L: Sol Alt, M: Sağ Alt
+        pos_list = ("x='150' y='25'", "x='35' y='175'", "x='280' y='175'")
+        val_list = ("x='145' y='65'", "x='80' y='145'", "x='225' y='145'")
         semboller = ""
     elif tip == "dik":
         p1, p2, p3 = "60,160", "260,160", "60,45"
-        labels = ("D", "E", "F")
-        pos_list = ("x='35' y='178'", "x='270' y='178'", "x='45' y='35'")
-        val_list = ("x='90' y='145'", "x='210' y='145'", "x='75' y='75'")
+        labels = ("D", "E", "F") # D: Tepe, E: Sol Alt, F: Sağ Alt
+        pos_list = ("x='45' y='35'", "x='35' y='178'", "x='270' y='178'")
+        val_list = ("x='75' y='75'", "x='90' y='145'", "x='210' y='145'")
         semboller = '<rect x="60" y="140" width="20" height="20" fill="none" stroke="#2c3e50" stroke-width="2"/>'
     elif tip == "ikizkenar":
         p1, p2, p3 = "60,160", "260,160", "160,40"
-        labels = ("P", "R", "S")
-        pos_list = ("x='35' y='175'", "x='275' y='175'", "x='150' y='30'")
-        val_list = ("x='80' y='145'", "x='220' y='145'", "x='145' y='70'")
+        labels = ("P", "R", "S") # P: Tepe, R: Sol Alt, S: Sağ Alt
+        pos_list = ("x='150' y='30'", "x='35' y='175'", "x='275' y='175'")
+        val_list = ("x='145' y='70'", "x='80' y='145'", "x='220' y='145'")
         semboller = '<line x1="103" y1="95" x2="115" y2="105" stroke="#e74c3c" stroke-width="3"/><line x1="207" y1="95" x2="217" y2="105" stroke="#e74c3c" stroke-width="3"/>'
     else:  # eskenar
         p1, p2, p3 = "60,160", "260,160", "160,26"
-        labels = ("A", "B", "C")
-        pos_list = ("x='35' y='175'", "x='275' y='175'", "x='150' y='18'")
-        val_list = ("x='85' y='145'", "x='220' y='145'", "x='145' y='65'")
+        labels = ("A", "B", "C") # A: Tepe, B: Sol Alt, C: Sağ Alt
+        pos_list = ("x='150' y='18'", "x='35' y='175'", "x='275' y='175'")
+        val_list = ("x='145' y='65'", "x='85' y='145'", "x='220' y='145'")
         semboller = '<line x1="105" y1="95" x2="115" y2="105" stroke="#27ae60" stroke-width="3"/><line x1="205" y1="95" x2="215" y2="105" stroke="#27ae60" stroke-width="3"/><line x1="153" y1="168" x2="167" y2="168" stroke="#27ae60" stroke-width="3"/>'
 
-    v_vals = (fmt(aci1_val), fmt(aci2_val), fmt(aci3_val))
+    v_vals = (fmt(tepe_aci), fmt(sol_aci), fmt(sag_aci))
 
     svg_code = f"""
     <div style="display: flex; justify-content: center; background-color: #ffffff; padding: 15px; border-radius: 12px; border: 2px solid #dcdde1; box-shadow: 0 4px 6px rgba(0,0,0,0.03);">
@@ -235,7 +236,7 @@ def uniteye_ozel_soru_uret(ders, unite):
                 soru = (
                     f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - Eşkenar Üçgen Analizi]</b><br>"
                     f"{svg_gorsel}<br>"
-                    "Yukarıdaki vektörel şemada tüm kenar uzunlukları ve iç açıları birbirine eşit olan bir <b>ABC eşkenar üçgeni</b> verilmiştir. Bu üçgenin bir iç açısının ölçüsü kaç derecedir?"
+                    "Yukarıdaki vektörel şemada tüm kenar uzunlukları ve iç açıları birbirine eşit olan bir <b>ABC eşkenar üçgeni</b> verilmiştir. Tepe noktası A olan bu üçgenin bir iç açısının ölçüsü kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
@@ -244,11 +245,11 @@ def uniteye_ozel_soru_uret(ders, unite):
                 dogru_val = 90 - aci1
                 dogru = f"{dogru_val}°"
                 yanlislar = [f"{dogru_val + 10}°", f"{dogru_val - 10}°", f"{dogru_val + 15}°"]
-                svg_gorsel = svg_ucgen_ciz("dik", 90, aci1, "?")
+                svg_gorsel = svg_ucgen_ciz("dik", "?", 90, aci1)
                 soru = (
                     f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - Dik Üçgen Soru Tipi]</b><br>"
                     f"{svg_gorsel}<br>"
-                    f"Yukarıdaki şemada D köşesi 90° dik açı ve E köşesi <b>{aci1}°</b> olan bir <b>DEF dik üçgeni</b> gösterilmiştir. Buna göre verilmeyen F köşesindeki dar açının ölçüsü kaç derecedir?"
+                    f"Yukarıdaki şemada E köşesi 90° dik açı ve F köşesi <b>{aci1}°</b> olan bir <b>DEF dik üçgeni</b> gösterilmiştir. Buna göre tepedeki D köşesinde yer alan dar açının ölçüsü kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
@@ -261,7 +262,7 @@ def uniteye_ozel_soru_uret(ders, unite):
                 soru = (
                     f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - İkizkenar Üçgen Özelliği]</b><br>"
                     f"{svg_gorsel}<br>"
-                    f"Yukarıdaki şemada |PS| = |RS| olan PRS ikizkenar üçgeninin tepe açısı (S) <b>{tepe_aci}°</b> verilmiştir. Buna göre tabandaki R açısının ölçüsü kaç derecedir?"
+                    f"Yukarıdaki şemada |PR| = |PS| olan PRS ikizkenar üçgeninin tepedeki P açısı <b>{tepe_aci}°</b> verilmiştir. Buna göre tabandaki R açısının ölçüsü kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
@@ -272,11 +273,11 @@ def uniteye_ozel_soru_uret(ders, unite):
                 dar2 = kalan - dar1
                 dogru = f"{genis_aci}°"
                 yanlislar = [f"{genis_aci - 15}°", f"90°", f"{genis_aci + 10}°"]
-                svg_gorsel = svg_ucgen_ciz("cesitkenar", dar1, dar2, "?")
+                svg_gorsel = svg_ucgen_ciz("cesitkenar", genis_aci, dar1, dar2)
                 soru = (
                     f"{kaynak_turu}<br><br><b>[MEB Soru Bankası - Geniş Açılı Üçgen]</b><br>"
                     f"{svg_gorsel}<br>"
-                    f"Yukarıdaki çeşitkenar üçgen şemasında iki iç açı <b>{dar1}°</b> ve <b>{dar2}°</b> olarak ölçülmüştür. Bu üçgenin en büyük açısı (Geniş Açı) kaç derecedir?"
+                    f"Yukarıdaki çeşitkenar üçgen şemasında sol alt açı <b>{dar1}°</b> ve sağ alt açı <b>{dar2}°</b> olarak ölçülmüştür. Buna göre tepedeki K açısı kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
@@ -286,11 +287,11 @@ def uniteye_ozel_soru_uret(ders, unite):
                 c_aci = 180 - (a_aci + b_aci)
                 dogru = f"{c_aci}°"
                 yanlislar = [f"{c_aci + 10}°", f"{c_aci - 15}°", f"{c_aci + 20}°"]
-                svg_gorsel = svg_ucgen_ciz("cesitkenar", a_aci, b_aci, "?")
+                svg_gorsel = svg_ucgen_ciz("cesitkenar", "?", a_aci, b_aci)
                 soru = (
                     f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - Üçgende İç Açılar Toplamı]</b><br>"
                     f"{svg_gorsel}<br>"
-                    f"Yukarıdaki vektörel şemada verilen KLM çeşitkenar üçgeninin K açısı <b>{a_aci}°</b> ve L açısı <b>{b_aci}°</b>'dir. Buna göre verilmeyen üçüncü iç açı (M) kaç derecedir?"
+                    f"Yukarıdaki vektörel şemada verilen KLM çeşitkenar üçgeninin sol alt L açısı <b>{a_aci}°</b> ve sağ alt M açısı <b>{b_aci}°</b>'dir. Buna göre tepedeki K açısı kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
         else:
