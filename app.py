@@ -113,6 +113,77 @@ for h in range(1, 41):
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 # =========================================================
+# DÜNYA ÜLKELERİ VE BAŞKENTLERİ SÖZLÜĞÜ
+# =========================================================
+DUNYA_ULKELERI = {
+    "Türkiye": "Ankara",
+    "Almanya": "Berlin",
+    "Fransa": "Paris",
+    "İtalya": "Roma",
+    "İspanya": "Madrid",
+    "Birleşik Krallık": "Londra",
+    "Rusya": "Moskova",
+    "Çin": "Pekin",
+    "Japonya": "Tokyo",
+    "Hindistan": "Yeni Delhi",
+    "Amerika Birleşik Devletleri": "Washington",
+    "Kanada": "Ottawa",
+    "Brezilya": "Brasilia",
+    "Arjantin": "Buenos Aires",
+    "Avustralya": "Canberra",
+    "Güney Kore": "Seul",
+    "Mısır": "Kahire",
+    "Yunanistan": "Atina",
+    "Hollanda": "Amsterdam",
+    "İsveç": "Stockholm",
+    "Norveç": "Oslo",
+    "Danimarka": "Kopenhag",
+    "Finlandiya": "Helsinki",
+    "Polonya": "Varşova",
+    "Ukrayna": "Kiev",
+    "Suudi Arabistan": "Riyad",
+    "İran": "Tahran",
+    "Irak": "Bağdat",
+    "Pakistan": "İslamabad",
+    "Endonezya": "Cakarta",
+    "Meksika": "Meksika",
+    "Güney Afrika": "Pretoria",
+    "Portekiz": "Lizbon",
+    "İsviçre": "Bern",
+    "Avusturya": "Viyana",
+    "Belçika": "Brüksel",
+    "Macaristan": "Budapeşte",
+    "Çekya": "Prag",
+    "İrlanda": "Dublin",
+    "Yeni Zelanda": "Wellington",
+    "Azerbaycan": "Bakü",
+    "Gürcistan": "Tiflis",
+    "Bulgaristan": "Sofya",
+    "Romanya": "Bükreş",
+    "Sırbistan": "Belgrad",
+    "Hırvatistan": "Zagreb",
+    "Bosna-Hersek": "Saraybosna",
+    "Arnavutluk": "Tiran",
+    "Macaristan": "Budapeşte",
+    "Katar": "Doha",
+    "Birleşik Arap Emirlikleri": "Abu Dabi",
+    "Jordan": "Amman",
+    "Suriye": "Şam",
+    "Lübnan": "Beyrut",
+    "İsrail": "Kudüs",
+    "Tayland": "Bangkok",
+    "Vietnam": "Hanoi",
+    "Malezya": "Kuala Lumpur",
+    "Singapur": "Singapur",
+    "Filipinler": "Manila",
+    "Şili": "Santiago",
+    "Kolombiya": "Bogota",
+    "Peru": "Lima",
+    "Venezuela": "Karakas",
+    "Küba": "Havana"
+}
+
+# =========================================================
 # 3. SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
 # =========================================================
 def svg_ucgen_ciz(tip, tepe_aci, sol_aci, sag_aci):
@@ -266,7 +337,7 @@ def uniteye_ozel_soru_uret(ders, unite):
             soru = f"{kaynak_turu}<br><br><b>[Veri İşleme ve Ölçme]</b> Veri işleme ve grafik yorumlama ile ilgili hangisi doğrudur?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
 
-    # --- FEN BİLİMLERİ (GÜNEŞ, DÜNYA VE AY İÇİN ZENGİN ALT KATEGORİLER) ---
+    # --- FEN BİLİMLERİ ---
     elif ders == "Fen Bilimleri":
         if "Güneş, Dünya ve Ay" in unite:
             alt_tip = random.choice([1, 2, 3, 4, 5])
@@ -383,12 +454,23 @@ def uniteye_ozel_soru_uret(ders, unite):
             soru = f"{kaynak_turu}<br><br><b>[Daily Routine]</b> Günlük rutini belirten ifade hangisidir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
 
-    # --- BİLGİ YARIŞMASI ---
+    # --- BİLGİ YARIŞMASI (DÜNYA BAŞKENTLERİ ENTEGRASYONU) ---
     else:
-        dogru = "Ankara"
-        yanlislar = ["İstanbul", "İzmir", "Bursa"]
-        soru = f"{kaynak_turu}<br><br>🏆 <b>[Bilgi Yarışması]</b> Türkiye Cumhuriyeti'nin başkenti neresidir?"
-        return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
+        if "Başkentleri ve Coğrafya" in unite:
+            # Sözlükten rastgele bir ülke ve başkenti seçilir
+            ulke, dogru = random.choice(list(DUNYA_ULKELERI.items()))
+            # Doğru dışındaki başkentlerden rastgele 3 yanlış şık üretilir
+            tum_baskentler = list(DUNYA_ULKELERI.values())
+            yanlis_havuzu = [b for b in tum_baskentler if b != dogru]
+            yanlislar = random.sample(yanlis_havuzu, 3)
+            soru = f"{kaynak_turu}<br><br>🏆 <b>[Bilgi Yarışması - Dünya Başkentleri]</b> <b>{ulke}</b> ülkesinin başkenti neresidir?"
+            return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
+        else:
+            # Diğer bilgi yarışması kategorileri için standart akış
+            dogru = "Ankara"
+            yanlislar = ["İstanbul", "İzmir", "Bursa"]
+            soru = f"{kaynak_turu}<br><br>🏆 <b>[Bilgi Yarışması]</b> Türkiye Cumhuriyeti'nin başkenti neresidir?"
+            return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
 
 def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -521,7 +603,6 @@ if st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and 
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
         st.rerun()
-
 if st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     top_col1, top_col2 = st.columns([4, 1])
     with top_col1:
