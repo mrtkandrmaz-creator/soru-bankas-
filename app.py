@@ -674,7 +674,7 @@ def uniteye_ozel_soru_uret(ders, unite):
             soru = f"{kaynak_turu}<br><br>🌍 <b>[Bilgi Yarışması - Dünya Mutfakları]</b><br><i>'{ipucu}'</i><br><br>Yukarıda yapım özellikleri verilen meşhur lezzet hangi ülkenin mutfağına aittir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
 
-        elif "Genel Kültür ve Eğlenceli Bilgiler" in unite:
+        elif "Genel Kültür " in unite:
             secilen = random.choice(GENEL_KULTUR_SORULARI)
             dogru = secilen["dogru"]
             tum_siklar = secilen["siklar"]
