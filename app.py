@@ -111,7 +111,7 @@ for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
 # =========================================================
-# 3. ZENGİN VE MANTISAL SORU HAVUZU
+# 3. ZENGİN VE GERÇEKÇİ SORU HAVUZU
 # =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
@@ -129,47 +129,47 @@ TURKCE_ANLAM = [
 ]
 
 # =========================================================
-# 4. MANTISAL VE TUTARLI %50 AI - %50 HAVUZ ÜRETİCİ
+# 4. TAMAMEN UYUMLU %50 AI - %50 HAVUZ ÜRETİCİ
 # =========================================================
 def yapay_zekadan_soru_uret(ders, unite):
     kisi = random.choice(ISIMLER)
     
     if ders == "Matematik":
-        sayi1 = random.randint(100, 900)
-        sayi2 = random.randint(10, 90)
+        sayi1 = random.randint(150, 850)
+        sayi2 = random.randint(15, 85)
         toplam = sayi1 + sayi2
-        yanlis1 = toplam + random.choice([1, 10, -5])
-        yanlis2 = toplam + random.choice([2, 20, -10])
-        yanlis3 = toplam + random.choice([5, 15, -2])
+        yanlis1 = toplam + random.choice([3, 10, -5])
+        yanlis2 = toplam + random.choice([7, 20, -12])
+        yanlis3 = toplam + random.choice([4, 15, -8])
         siklar = [str(toplam), str(yanlis1), str(yanlis2), str(yanlis3)]
         return {
-            "soru": f"🤖 [AI] {kisi}, marketten aldığı <b>{sayi1}</b> TL'lik ürün ile <b>{sayi2}</b> TL'lik ürüne toplam kaç TL ödemelidir?",
+            "soru": f"🤖 [AI] {kisi}, kırtasiyeden aldığı <b>{sayi1}</b> TL'lik hikaye kitabı ile <b>{sayi2}</b> TL'lik boya kalemine toplam kaç TL ödemelidir?",
             "siklar": siklar,
             "dogru": str(toplam)
         }
         
     elif ders == "Fen Bilimleri":
-        dogru = "Kendi ekseni etrafında dönme hareketi yapar."
+        dogru = "Kendi ekseni etrafında batıdan doğuya doğru döner."
         yanlislar = [
-            "Sadece etrafına ısı yayar, dönmez.",
-            "Dünya'nın etrafında dolanma hareketi yapar.",
-            "Tamamen sabit ve hareketsiz durur."
+            "Dünya etrafında dolanma hareketi yapmaz, tamamen sabittir.",
+            "Sadece çevresine ısı yayar, kendi etrafında dönmez.",
+            "Şekli kübik olup hiç hareket etmeyen bir gök cismidir."
         ]
         return {
-            "soru": f"🤖 [AI] {kisi}, fen bilimleri dersinde Güneş'in özellikleri hakkında araştırma yapmaktadır. Buna göre Güneş için aşağıdakilerden hangisi söylenebilir?",
+            "soru": f"🤖 [AI] {kisi}, fen bilimleri projesinde Güneş'in temel özelliklerini incelemektedir. Buna göre Güneş için aşağıdakilerden hangisi doğrudur?",
             "siklar": [dogru] + yanlislar,
             "dogru": dogru
         }
         
     elif ders == "Türkçe":
-        dogru = "Hava soğuk olduğu için kalın giysiler giydik."
+        dogru = "Hava yağmurlu olduğu için yarışma ertelendi."
         yanlislar = [
-            "Kitap okumak için kütüphaneye gitti.",
-            "Sabah erkenden uyanıp kahvaltı yaptı.",
-            "Yarın akşam sinemaya gideceğiz."
+            "Sabah erkenden kalkıp kahvaltısını yaptı.",
+            "Kitap okumak üzere odasına geçip oturdu.",
+            "Yarın akşam ailece sinemaya gideceğiz."
         ]
         return {
-            "soru": f"🤖 [AI] {kisi} Türkçe dersinde 'Gerekçe (Neden-Sonuç) Cümleleri' konusunu işlemektedir. Buna göre aşağıdakilerden hangisi bir neden-sonuç cümlesidir?",
+            "soru": f"🤖 [AI] {kisi} Türkçe dersinde neden-sonuç (gerekçe) cümleleri üzerine çalışmaktadır. Aşağıdakilerden hangisi bir neden-sonuç cümlesidir?",
             "siklar": [dogru] + yanlislar,
             "dogru": dogru
         }
@@ -177,25 +177,25 @@ def yapay_zekadan_soru_uret(ders, unite):
     elif ders == "Sosyal Bilgiler":
         dogru = "Aile bütçesine katkı sağlamak ve ev işlerinde yardımlaşmak"
         yanlislar = [
-            "Sadece kendi odasında oyun oynamak",
-            "Evdeki kuralları tamamen değiştirmek",
-            "Hiçbir sorumluluk almadan vakit geçirmek"
+            "Evdeki tüm kuralları tek başına değiştirmek",
+            "Gün boyunca sadece kendi odasında vakit geçirmek",
+            "Hiçbir sorumluluk almadan dışarıda oynamak"
         ]
         return {
-            "soru": f"🤖 [AI] {kisi}, evdeki sorumlulukları üzerine bir proje hazırlamaktadır. Buna göre bir çocuğun aile içerisindeki temel sorumluluklarından biri aşağıdakilerden hangisidir?",
+            "soru": f"🤖 [AI] {kisi}, 'Birey ve Toplum' ünitesinde sorumluluklar konusunu işlemektedir. Buna göre bir çocuğun ev içi temel sorumluluklarından biri hangisidir?",
             "siklar": [dogru] + yanlislar,
             "dogru": dogru
         }
         
     elif ders == "Din Kültürü ve Ahlak Bilgisi":
-        dogru = "Evrendeki her şeyin bir düzen ve ahenk içinde yaratılmış olması"
+        dogru = "Evrendeki kusursuz düzen, uyum ve planlı yaratılış"
         yanlislar = [
-            "Evrenin tamamen tesadüflerle oluştuğu",
-            "Doğadaki varlıkların hiçbir amacının olmadığı",
-            "Mevsimlerin sadece rastgele değiştiği"
+            "Evrenin tamamen tesadüfi olaylarla var olması",
+            "Doğadaki varlıkların hiçbir amaca hizmet etmemesi",
+            "Mevsim döngülerinin tamamen düzensiz gerçekleşmesi"
         ]
         return {
-            "soru": f"🤖 [AI] {kisi}, 'Allah İnancı' ünitesinde evrendeki nizamı incelemektedir. Aşağıdakilerden hangisi Yaratıcı'nın varlığına ve birliğine kanıt olarak gösterilebilir?",
+            "soru": f"🤖 [AI] {kisi}, 'Allah İnancı' ünitesinde evrendeki nizamı araştırmaktadır. Aşağıdakilerden hangisi Yaratıcı'nın varlığına delil gösterilebilir?",
             "siklar": [dogru] + yanlislar,
             "dogru": dogru
         }
@@ -208,7 +208,7 @@ def yapay_zekadan_soru_uret(ders, unite):
             "I get up early in the morning."
         ]
         return {
-            "soru": f"🤖 [AI] {kisi} İngilizce dersinde kendini tanıtmaktadır. Ülkesini ve milliyetini söyleyen ifade hangisidir?",
+            "soru": f"🤖 [AI] {kisi} İngilizce dersinde kendisini tanıtmaktadır. Hangi ifade {kisi}'nin ülkesini ve milliyetini belirtir?",
             "siklar": [dogru] + yanlislar,
             "dogru": dogru
         }
@@ -217,7 +217,7 @@ def yapay_zekadan_soru_uret(ders, unite):
         dogru = "Ankara"
         yanlislar = ["İstanbul", "İzmir", "Bursa"]
         return {
-            "soru": f"🏆 [Bilgi Yarışması] Türkiye'nin başkenti neresidir?",
+            "soru": f"🏆 [Bilgi Yarışması] Türkiye Cumhuriyeti'nin başkenti hangi şehirdir?",
             "siklar": [dogru] + yanlislar,
             "dogru": dogru
         }
@@ -230,14 +230,13 @@ def havuzdan_soru_uret(ders, unite):
         q, ans, celd = random.choice(TURKCE_ANLAM)
         return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans}
     else:
-        # Alternatif mantıksal havuz içeriği
-        dogru = "Doğru ve mantıksal kazanım yanıtı"
+        dogru = f"{unite} kazanımına ait temel bilimsel/sözel doğru yanıt"
         yanlislar = [
-            "Konuyla ilgisi olmayan farklı bir tanım",
-            "Eksik veya yanıltıcı ifade",
-            "Ters mantık içeren çeldirici"
+            f"{unite} ile ilgili çelişkili veya yanıltıcı ifade",
+            "Konu dışı farklı bir tanım veya kural",
+            "Eksik bırakılmış kavram açıklaması"
         ]
-        return {"soru": f"📚 [Havuz] <b>{unite}</b> ünitesine ait temel kavram sorusu...", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        return {"soru": f"📚 [Havuz] <b>{unite}</b> ünitesine ait temel kazanım sorusu...", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
 def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -361,13 +360,13 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
             
             for sn in range(3, 0, -1):
                 progress_bar.progress(int((4 - sn) * 25))
-                status_box.info(f"🔄 Mantıksal çeldiricilerle %50 AI - %50 Havuz soruları harmanlanıyor... ({sn}s)")
+                status_box.info(f"🔄 Kaliteli ve uyumlu çeldiricilerle sorular harmanlanıyor... ({sn}s)")
                 time.sleep(0.5)
             
             sorular = ders_sirali_ve_dengeli_uret(secilen_uniteler, soru_sayisi)
             
             progress_bar.progress(100)
-            status_box.success("✅ Sorular MEB sıralamasına ve mantık ilkelerine göre hazırlandı!")
+            status_box.success("✅ Sorular başarıyla hazırlandı!")
             time.sleep(0.5)
             
             st.session_state["soru_listesi"] = sorular
@@ -388,13 +387,23 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 # 6. TEST EKRANI
 # =========================================================
 if st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet soru** Türkçe $\rightarrow$ Matematik $\rightarrow$ Fen... sırasıyla hazır!")
+    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet soru** sırayla hazır!")
     if st.button("🏁 Sınavı Şimdi Başlat", type="primary", use_container_width=True):
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
         st.rerun()
 
 if st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
+    # Sınavın her anında bitirilebilmesi için üst kısma buton yerleştirildi
+    top_col1, top_col2 = st.columns([4, 1])
+    with top_col1:
+        st.info("💡 İstediğin an testi sonlandırıp sonuçlarını görebilirsin.")
+    with top_col2:
+        if st.button("🏁 Sınavı Bitir", type="secondary", use_container_width=True):
+            st.session_state["test_aktif"] = False
+            st.session_state["test_bitti"] = True
+            st.rerun()
+
     soru_listesi = st.session_state["soru_listesi"]
     idx = st.session_state["mevcut_soru_index"]
     
@@ -407,7 +416,7 @@ if st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
         onceki_cevap = st.session_state["kullanici_cevaplari"].get(idx)
         secim_index = s["siklar"].index(onceki_cevap) if onceki_cevap in s["siklar"] else None
             
-        # index=None ile hazır/seçili gelme sorunu tamamen engellenmiştir
+        # index=None ile hazır/seçili gelme sorunu engellendi
         secim = st.radio(
             "Seçenekleriniz:", 
             s["siklar"], 
