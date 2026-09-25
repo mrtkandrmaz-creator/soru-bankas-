@@ -183,78 +183,255 @@ DUNYA_ULKELERI = {
     "Küba": "Havana"
 }
 # =========================================================
-# TÜRK MUTFAĞI VE YÖRESEL LEZZETLER SÖZLÜĞÜ
+# TÜRK MUTFAĞI VE YÖRESEL LEZZETLER SÖZLÜĞÜ (Genişletilmiş)
 # =========================================================
 TURK_MUTFAGI_YORESEL = {
-    "Gaziantep": "Lahmacun / Baklava",
-    "Adana": "Adana Kebap",
-    "Trabzon": "Kuymak / Mısır Ekmeği",
-    "Hatay": "Künefe / Antakya Tepsi Kebabı",
-    "Kayseri": "Mantı / Pastırma",
-    "Erzurum": "Cağ Kebabı",
-    "Sivas": "Sivas Köftesi",
-    "Bursa": "İskender Kebap",
-    "İzmir": "Boyoz / Kumru",
-    "Afyonkarahisar": "Kaymak / Sucuk",
-    "Konya": "Etliekmek",
-    "Mardin": "İncibey / Kaburga Dolması",
-    "Şanlıurfa": "Çiğ Köfte / Urfa Kebap",
-    "Rize": "Rize Simidi / Muhlama",
-    "Eskişehir": "Çibörek",
-    "Mersin": "Tantuni",
-    "Kars": "Kars Kazı / Gravyer Peyniri",
-    "Malatya": "Kayısı",
-    "Çorum": "Çorum Leblebisi",
-    "İstanbul": "Balık Ekmek" ,
-    "Edirne": "Çiğer Tava / Badem Ezmesi",
-    "Kırklareli": "Papaz Yahnisi",
-    "Balıkesir": "Höşmerim",
-    "Çanakkale": "Peynir Helvası",
-    "Osmaniye": "Yer Fıstığı",
-    "Bilecik": "Büzme tatlısı / keklik kebabı",
-    "Sakarya ": "Islama Köfte ",
-    "Düzce": "Çerkez Tavuğu / Akçakoca Melengücü Tatlısı",
-    "Aydın": "Çine köftesi / Keşkek",
-    "Kütahya": "Cimcik / Sıkıcık Çorbası",
-    "Antalya": "Piyaz / Hibeş",
-    "Isparta": "Kabune Pilavı",
-    "Kırşehir": "Çullama",
+    "Gaziantep": {
+        "yemek": "Lahmacun / Baklava", 
+        "ipucu": "İnce açılmış hamur üzerine zırh kıyması, domates, sarımsak ve özel baharatlar sürülerek taş fırında pişirilir."
+    },
+    "Adana": {
+        "yemek": "Adana Kebap", 
+        "ipucu": "Zırhla çekilmiş kuzu eti, kuyruk yağı, kırmızı pul biber ve tuzun harmanlanıp şişe basılmasıyla yapılır."
+    },
+    "Trabzon": {
+        "yemek": "Kuymak / Mısır Ekmeği", 
+        "ipucu": "Mısır unu, tereyağı ve özel yöresel telli peynirin (kolot peyniri) tavada kavrulup pişirilmesiyle hazırlanır."
+    },
+    "Hatay": {
+        "yemek": "Künefe", 
+        "ipucu": "Özel tel kadayıf arasına tuzsuz Antakya peyniri konularak tepside kızartılır ve sıcak şerbetle servis edilir."
+    },
+    "Kayseri": {
+        "yemek": "Mantı", 
+        "ipucu": "Küçük hamur parçalarının içine kıymalı harç koyulup kapatıldıktan sonra suda haşlanır, sarımsaklı yoğurt ve kızarmış sosla yenir."
+    },
+    "Erzurum": {
+        "yemek": "Cağ Kebabı", 
+        "ipucu": "Kuzu etinin soğan, karabiber ve tuzla terbiye edilip yatay şişe takılarak odun ateşinde döner şeklinde pişirilmesidir."
+    },
+    "Bursa": {
+        "yemek": "İskender Kebap", 
+        "ipucu": "Özel tırnak pidesi üzerine dizilen yaprak döner, domates sosu, kızgın tereyağı ve yanında yoğurtla servis edilir."
+    },
+    "İzmir": {
+        "yemek": "Boyoz", 
+        "ipucu": "Un, sıvı yağ ve tahin kullanılarak kat kat açılan, içi boş veya peynirli/ıspanaklı yapılabilen mayasız hamur işidir."
+    },
+    "Konya": {
+        "yemek": "Etliekmek", 
+        "ipucu": "Çok ince açılmış uzun hamurun üzerine bıçak kıyması (kuşbaşı değil, zırh kıyması) ve domates-biber harcı yayılarak fırınlanır."
+    },
+    "Eskişehir": {
+        "yemek": "Çibörek", 
+        "ipucu": "İnce açılmış daire biçimindeki çiğ kıymalı harcın yarım ay şeklinde kapatılıp kızgın yağda kızartılmasıyla yapılır."
+    },
+    "Mersin": {
+        "yemek": "Tantuni", 
+        "ipucu": "Kuşbaşı doğranmış yağlı dana etinin pamuk yağı ve toz kırmızı biberle saç tavada hızlıca kavrulup lavaşa dürüm yapılmasıdır."
+    },
+    "Şanlıurfa": {
+        "yemek": "Çiğ Köfte", 
+        "ipucu": "Bulgur, isot, kıymasız veya kıymalı et, salça ve baharatların yoğrulma tahtasında (leğende) hiç pişirilmeden yoğrulmasıdır."
+    },
+    "Sivas": {
+        "yemek": "Sivas Köftesi", 
+        "ipucu": "Sadece doğal tuz ve mera sığırı etiyle yapılan, içine ekmek içi veya baharat katılmayan özgün bir köfte çeşididir."
+    },
+    "Afyonkarahisar": {
+        "yemek": "Afyon Kaymağı ve Sucuğu", 
+        "ipucu": "Mandaların sütünden elde edilen yoğun kaymağın yanında, özel baharatlarla harmanlanmış geleneksel sucuğuyla ünlüdür."
+    },
+    "Mardin": {
+        "yemek": "Kaburga Dolması", 
+        "ipucu": "Kuzu kaburgasının içi bademli, kuş üzümlü ve baharatlı iç pilavla doldurulduktan sonra tencerede uzun süre pişirilmesidir."
+    },
+    "Rize": {
+        "yemek": "Muhlama (Laz Böreği / Hamsili Pilav)", 
+        "ipucu": "Taze hamsi, pirinç, soğan, kuş üzümü ve fıstıkla harmanlanıp mısır unu ile fırınlanan özel pilav türüdür."
+    },
+    "Kars": {
+        "yemek": "Kars Kazı ve Gravyer Peyniri", 
+        "ipucu": "Kars'ın yüksek dağlarında beslenen kazların kar yağdıktan sonra tuzlanıp kurutulması ve fırında bulgurla sunulmasıdır."
+    },
+    "Malatya": {
+        "yemek": "Kâğıt Kebabı", 
+        "ipucu": "Kuzu eti, kuyruk yağı, sarımsak ve biberin yağlı kâğıda sarılarak taş fırında sebzelerle birlikte pişirilmesidir."
+    },
+    "Çorum": {
+        "yemek": "Çorum Leblebisi", 
+        "ipucu": "Nohudun özel fırınlarda kavrulup dinlendirilmesiyle elde edilen, sarı ve çıtır yapısıyla bilinen atıştırmalıktır."
+    },
+    "İsparta": {
+        "yemek": "Fırın Kebabı (Kuyu Kebabı)", 
+        "ipucu": "Kuzu etinin derin kuyulardaki meşe odunu ateşinde, hiçbir baharat eklenmeden kendi suyunda saatlerce pişmesidir."
+    },
+    "Van": {
+        "yemek": "Van Otlu Peyniri", 
+        "ipucu": "İçerisine sirmo, mendil ve yabani sarımsak gibi dağ otları katılarak toprak küplere basılıp salamura edilen peynirdir."
+    },
+    "Tokat": {
+        "yemek": "Tokat Kebabı", 
+        "ipucu": "Kuzu eti, patlıcan, domates, biber, patates ve sarımsağın özel demir şişlere dizilerek yatay fırında odun ateşinde pişmesidir."
+    },
+    "Aydın": {
+        "yemek": "Çökertme Kebabı", 
+        "ipucu": "İnce ince doğranmış çıtır patates kızartmalarının üzerine bonfile et, sarımsaklı yoğurt ve domates sosu dökülerek servis edilir."
+    },
+    "Erzincan": {
+        "yemek": "Erzincan Tulum Peyniri", 
+        "ipucu": "Koyun sütünden yapılan telemeninin keçi derisinden yapılan tulumlara basılarak aylarca olgunlaştırılmasıyla elde edilir."
+    },
+    "Nevşehir": {
+        "yemek": "Testi Kebabı", 
+        "ipucu": "Kuşbaşı et, sebze ve tereyağının toprak bir testinin içine doldurulup ağzının hamurla kapatılarak tandır ateşinde pişirilmesidir."
+    },
+    "Bolu": {
+        "yemek": "Bolu Mangal Eti ve Orman Kebabı", 
+        "ipucu": "Kuşbaşı kuzu eti, arpacık soğan ve bezelyenin güveçte tereyağı ile harmanlanıp fırınlanmasıyla yapılır."
+    },
+    "Çanakkale": {
+        "yemek": "Peynir Helvası", 
+        "ipucu": "Tuzsuz taze peynir, un, şeker ve irmik kullanılarak ocakta kavrulan, sıcak veya fırınlanmış olarak sunulan tatlıdır."
+    },
+    "Giresun": {
+        "yemek": "Fındıklı Bademli Çorba", 
+        "ipucu": "Bölgede yetişen taze taze kavrulmuş fındık parçacıklarının süt ve unla harmanlanmasıyla yapılan özel çorbadır."
+    },
+    "Ordu": {
+        "yemek": "Pancar (Karalahana) Çorbası", 
+        "ipucu": "İnce kıyılmış karalahana, mısır yarması, barbunya fasulye ve acı biberin birlikte kaynatılmasıyla yapılır."
+    },
+    "Diyarbakır": {
+        "yemek": "Ciğer Kebabı ve Meftune", 
+        "ipucu": "Kuzu ciğerinin küp doğranıp şişlere dizilerek mangalda pişirildikten sonra sumaklı soğanla servis edilmesidir."
+    }
 }
+
 # =========================================================
-# DÜNYA MUTFAKLARI VE LEZZETLER SÖZLÜĞÜ
+# DÜNYA MUTFAKLARI VE LEZZETLER SÖZLÜĞÜ (Genişletilmiş)
 # =========================================================
 DUNYA_MUTFAGI_LEZZETLER = {
-    "İtalya": "Pizza / Makarna",
-    "Japonya": "Suşi / Ramen",
-    "Meksika": "Taco / Burrito",
-    "Çin": "Çin Mantısı / Noodle",
-    "Fransa": "Kroasan / Baget Ekmek",
-    "Hindistan": "Köri Soslu Tavuk / Naan Ekmeği",
-    "Amerika Birleşik Devletleri": "Hamburger / Hot Dog",
-    "Yunanistan": "Musakka / Souvlaki",
-    "İspanya": "Paella / Tapas",
-    "Lübnan": "Falafel / Humus",
-    "Brezilya": "Feijoada",
-    "Güney Kore": "Kimchi",
-    "Almanya": "Sosis / Prezel",
-    "Tayland": "Pad Thai",
-    "Arjantin": "Empanada",
-    "Bangkok": "Pad Thai",
-    "Hindistan": "Biryani",
-    "Endonezya": "Nasi Goreng",
-    "Kazakistan": "Gözleme / Mantı",
-    "Gürcistan": "Khachapuri",
-    "Malezya": "Satay",
-    "Macaristan": "Langoş /Gulaş",
-    "İngiltere": "Fish and Chips",
-    "Belçika": "Waffle",
-    "İsviçre": "Föndü",
-    "Portekiz": "Pastel de Nata",
-    "Polonya": "Pirogi",
-    "Güney Kore": "Kimçi / Bibimbap",
-    "Tayvan": "Bubble Tea / Gua Bao",
-    "Moğolistan": "Buuz / Khorkhog"
-    
+    "İtalya": {
+        "yemek": "Pizza", 
+        "ipucu": "Mayalı hamurun ince açılıp üzerine domates sosu, mozzarella peyniri ve çeşitli malzemeler dizilerek fırınlanmasıyla yapılır."
+    },
+    "Japonya": {
+        "yemek": "Suşi", 
+        "ipucu": "Özel sirke ile tatlandırılmış haşlanmış pirincin deniz yosunu (nori) ve çiğ balık, sebze gibi malzemelerle sarılmasıdır."
+    },
+    "Meksika": {
+        "yemek": "Taco", 
+        "ipucu": "Mısır unundan yapılan sert ya da yumuşak küçük tortilla ekmeklerinin içine et, fasulye ve avokado sosu doldurularak yenir."
+    },
+    "Çin": {
+        "yemek": "Noodle", 
+        "ipucu": "Buğday veya pirinç unundan yapılan uzun ince şerit halindeki eriştelerin sebze ve etle wok tavada sotelemesidir."
+    },
+    "Fransa": {
+        "yemek": "Kroasan", 
+        "ipucu": "Un, maya ve bolca tereyağının kat kat açılarak hilal şeklinde fırınlanmasıyla elde edilen gevrek hamur işidir."
+    },
+    "Hindistan": {
+        "yemek": "Köri Soslu Tavuk", 
+        "ipucu": "Tavuk parçalarının zerdeçal, kimyon, kişniş ve acı baharatlardan oluşan yoğun sarı renkli sosla pişirilmesidir."
+    },
+    "Amerika Birleşik Devletleri": {
+        "yemek": "Hamburger", 
+        "ipucu": "Yuvarlak sandviç ekmeğinin arasına dana etinden yapılan köfte, marul, domates ve soslar konularak hazırlanır."
+    },
+    "Yunanistan": {
+        "yemek": "Musakka", 
+        "ipucu": "Patlıcan dilimleri ve kıymalı domates sosunun kat kat dizilerek üzerine bechamel sos dökülüp fırınlanmasıyla yapılır."
+    },
+    "İspanya": {
+        "yemek": "Paella", 
+        "ipucu": "Pirinç, safran, zeytinyağı ve deniz ürünleriyle geniş tabakalı tavada pişirilen geleneksel yemektir."
+    },
+    "Almanya": {
+        "yemek": "Prezel", 
+        "ipucu": "Düğümlenmiş şekle sahip, üzeri iri tuz taneleriyle kaplı, dışı çıtır içi yumuşak bir unlu mamüldür."
+    },
+    "Tayland": {
+        "yemek": "Pad Thai", 
+        "ipucu": "Pirinç eriştelerinin yumurta, tofu, fıstık, balık sosu ve karidesle wok tavada harmanlanıp pişirilmesidir."
+    },
+    "Güney Kore": {
+        "yemek": "Kimchi", 
+        "ipucu": "Çin lahanası ve turpun sarımsak, zencefil, taze soğan ve acı biber salçasıyla fermente edilmesiyle yapılan garnitürdür."
+    },
+    "Brezilya": {
+        "yemek": "Feijoada", 
+        "ipucu": "Siyah fasulye, domuz eti ve sığır etinin toprak tencerede kısık ateşte uzun süre pişirilmesiyle yapılan ulusal yemektir."
+    },
+    "Lübnan": {
+        "yemek": "Falafel", 
+        "ipucu": "Nohut veya baklanın ezilip baharatlar ve taze otlarla karıştırılarak yuvarlak köfteler halinde kızgın yağda kızartılmasıdır."
+    },
+    "Arjantin": {
+        "yemek": "Empanada", 
+        "ipucu": "Ay şeklindeki hamur parçalarının içine kıymalı, tavuklu veya peynirli harç doldurularak fırında veya kızgın yağda pişirilmesidir."
+    },
+    "Vietnam": {
+        "yemek": "Pho", 
+        "ipucu": "Pirinç erişteleri, uzun süre kemik suyuyla kaynatılan et dilimleri, taze otlar ve baharatlarla servis edilen çorbadır."
+    },
+    "İngiltere": {
+        "yemek": "Fish and Chips", 
+        "ipucu": "Beyaz etli balık filetosunun hamur harcına bulanarak kızartılması ve yanında patates kızartmasıyla sunulmasıdır."
+    },
+    "Fas": {
+        "yemek": "Kuskus", 
+        "ipucu": "Buğday irmik tanelerinin buharda pişirilip üzerine sebze, et ve özel baharatlı sos dökülerek servis edilmesidir."
+    },
+    "Rusya": {
+        "yemek": "Borsç Çorbası", 
+        "ipucu": "Kırmızı pancarın başrolde olduğu, lahana, patates ve et eklenerek üzerine ekşi krema (smetana) ile sunulan çorbadır."
+    },
+    "İsveç": {
+        "yemek": "İsveç Köftesi", 
+        "ipucu": "Kıyma, soğan ve baharatlardan yapılan küçük yuvarlak köftelerin krema bazlı kahverengi sos ve reçelle servis edilmesidir."
+    },
+    "Belçika": {
+        "yemek": "Belçika Wafflesu", 
+        "ipucu": "Özel kalıplarda pişirilen, dışı çıtır içi yumuşak hamurun üzerine çikolata, çilek ve krema sürülerek yenmesidir."
+    },
+    "İsviçre": {
+        "yemek": "Fondü", 
+        "ipucu": "Çeşitli eritilmiş peynirlerin özel bir tencerede ısıtılarak ekmek parçalarının sosa batırılarak yendiği yemektir."
+    },
+    "Macaristan": {
+        "yemek": "Gulaş", 
+        "ipucu": "Dana eti, patates ve kök sebzelerin yoğun miktarda tatlı kırmızı toz biber (paprika) ile tencerede yahni şeklinde pişmesidir."
+    },
+    "Ukrayna": {
+        "yemek": "Varenyky", 
+        "ipucu": "İnce açılmış mayasız hamurun içine patates, mantar veya meyve koyulup kapatılarak suda haşlanan bir çeşit mantıdır."
+    },
+    "Küba": {
+        "yemek": "Küba Sandviçi", 
+        "ipucu": "Küba ekmeği arasına domuz eti, jambon, İsviçre peyniri, turşu ve hardal konularak pres makinesinde ısıtılmasıdır."
+    },
+    "Mısır": {
+        "yemek": "Kişeri", 
+        "ipucu": "Mercimek, makarna, pirinç ve nohut karışımının üzerine kızarmış soğan ve domates sosu dökülerek yapılan yemektir."
+    },
+    "Avustralya": {
+        "yemek": "Meat Pie (Etli Turta)", 
+        "ipucu": "Kıymalı ve soğanlı koyu sosun, ufalanan tereyağlı turta hamuruyla kaplanıp fırında pişirilmesiyle elde edilir."
+    },
+    "Endonezya": {
+        "yemek": "Nasi Goreng", 
+        "ipucu": "Haşlanmış pirincin soya sosu, sarımsak, karides ezpesi, sebze ve etle tavada karıştırılarak kavrulmasıdır."
+    },
+    "Gisra": {
+        "yemek": "Philly Cheesesteak (ABD/Philadelphia)", 
+        "ipucu": "İnce dilimlenmiş biftek etinin eritilmiş peynir ve karamelize soğanla birlikte uzun sandviç ekmeğine doldurulmasıdır."
+    },
+    "İran": {
+        "yemek": "Fesencan", 
+        "ipucu": "Tavuk veya ördek etinin dövülmüş ceviz içi ve nar ekşisi sosuyla uzun süre kısık ateşte pişirilmesiyle yapılır."
+    }
 }
 # =========================================================
 # 3. SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
@@ -538,19 +715,27 @@ def uniteye_ozel_soru_uret(ders, unite):
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
             
         elif "Türk Mutfağı ve Yöresel Lezzetler" in unite:
-            sehir, dogru = random.choice(list(TURK_MUTFAGI_YORESEL.items()))
-            tum_lezzetler = list(TURK_MUTFAGI_YORESEL.values())
+            sehir, veri = random.choice(list(TURK_MUTFAGI_YORESEL.items()))
+            dogru = veri["yemek"]
+            ipucu = veri["ipucu"]
+            
+            tum_lezzetler = [v["yemek"] for v in TURK_MUTFAGI_YORESEL.values()]
             yanlis_havuzu = [l for l in tum_lezzetler if l != dogru]
             yanlislar = random.sample(yanlis_havuzu, 3)
-            soru = f"{kaynak_turu}<br><br>🍲 <b>[Bilgi Yarışması - Türk Mutfağı]</b> Aşağıdaki yöresel lezzetlerimizden hangisi <b>{sehir}</b> ile tanınır ve özdeşleşmiştir?"
+            
+            soru = f"{kaynak_turu}<br><br>🍲 <b>[Bilgi Yarışması - Türk Mutfağı]</b><br><i>'{ipucu}'</i><br><br>Yukarıda tarifi/özellikleri verilen ve <b>{sehir}</b> ile özdeşleşen yöresel lezzetimiz hangisidir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
             
         elif "Dünya Mutfakları ve Lezzetler" in unite:
-            ulke, dogru = random.choice(list(DUNYA_MUTFAGI_LEZZETLER.items()))
-            tum_lezzetler = list(DUNYA_MUTFAGI_LEZZETLER.values())
+            ulke, veri = random.choice(list(DUNYA_MUTFAGI_LEZZETLER.items()))
+            dogru = veri["yemek"]
+            ipucu = veri["ipucu"]
+            
+            tum_lezzetler = [v["yemek"] for v in DUNYA_MUTFAGI_LEZZETLER.values()]
             yanlis_havuzu = [l for l in tum_lezzetler if l != dogru]
             yanlislar = random.sample(yanlis_havuzu, 3)
-            soru = f"{kaynak_turu}<br><br>🌍 <b>[Bilgi Yarışması - Dünya Mutfakları]</b> Aşağıdaki meşhur lezzetlerden hangisi <b>{ulke}</b> mutfağı ile özdeşleşmiştir?"
+            
+            soru = f"{kaynak_turu}<br><br>🌍 <b>[Bilgi Yarışması - Dünya Mutfakları]</b><br><i>'{ipucu}'</i><br><br>Yukarıda yapım özellikleri verilen meşhur lezzet hangi ülkenin mutfağına aittir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
             
         else:
