@@ -238,7 +238,23 @@ DUNYA_MUTFAGI_LEZZETLER = {
     "Güney Kore": "Kimchi",
     "Almanya": "Sosis / Prezel",
     "Tayland": "Pad Thai",
-    "Arjantin": "Empanada"
+    "Arjantin": "Empanada",
+    "Bangkok": "Pad Thai",
+    "Hindistan": "Biryani",
+    "Endonezya": "Nasi Goreng",
+    "Kazakistan": "Gözleme / Mantı",
+    "Gürcistan": "Khachapuri",
+    "Malezya": "Satay",
+    "Macaristan": "Langoş /Gulaş",
+    "İngiltere": "Fish and Chips",
+    "Belçika": "Waffle",
+    "İsviçre": "Föndü",
+    "Portekiz": "Pastel de Nata",
+    "Polonya": "Pirogi",
+    "Güney Kore": "Kimçi / Bibimbap",
+    "Tayvan": "Bubble Tea / Gua Bao",
+    "Moğolistan": "Buuz / Khorkhog"
+    
 }
 # =========================================================
 # 3. SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
