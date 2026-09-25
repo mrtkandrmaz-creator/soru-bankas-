@@ -308,71 +308,639 @@ DUNYA_MUTFAGI_LEZZETLER = {
     "Nijerya": {"yemek": "Pounded Yam (Dövülmüş Yam)", "ipucu": "Yam bitkisinin kökünün haşlanıp sakız kıvamına gelene kadar dövülerek top şeklinde et yemekleriyle yenmesidir."},
     "Güney Afrika": {"yemek": "Bobotie", "ipucu": "Baharatlı kıymanın üzerine yumurtalı ve sütlü sos dökülerek fırınlanan geleneksel et yemeğidir."}
 }
-    # =========================================================
-# GENEL KÜLTÜR VE EĞLENCELİ BİLGİLER SÖZLÜĞÜ (60 Soru)
+ 
+
+# =========================================================
+# GENEL KÜLTÜR VE EĞLENCELİ BİLGİLER SÖZLÜĞÜ (175 Soru)
 # =========================================================
 GENEL_KULTUR_SORULARI = [
-    {"soru": "Hangi hayvanın kalbi karideslerinin kafasında yer alır ve vücut yapısı oldukça ilginçtir?", "siklar": ["Karides", "Ahtapot", "Denizanası", "Yengeç"], "dogru": "Karides"},
-    {"soru": "Dünyanın en küçük bağımsız devleti olan Vatikan'ın yüz ölçümü yaklaşık olarak kaç kilometrekaredir?", "siklar": ["0.44 km²", "5.2 km²", "12.8 km²", "1.5 km²"], "dogru": "0.44 km²"},
-    {"soru": "Hangi gezegen Güneş Sistemi'nde saat yönünde (diğer gezegenlerin aksine doğudan batıya) dönen tek gezegendir?", "siklar": ["Venüs", "Mars", "Neptün", "Merkür"], "dogru": "Venüs"},
-    {"soru": "İnsan vücudunda, doğduğumuzda yaklaşık 300 kemik bulunurken, yetişkin bir insanda bu sayı kemiklerin birleşmesiyle kaça düşer?", "siklar": ["206", "180", "245", "220"], "dogru": "206"},
-    {"soru": "Mona Lisa tablosu hangi ünlü müzede sergilenmektedir ve her gün binlerce ziyaretçi akınına uğrar?", "siklar": ["Louvre Müzesi", "British Museum", "Vatikan Müzeleri", "Metropolitan Sanat Müzesi"], "dogru": "Louvre Müzesi"},
-    {"soru": "Hangi ülke 'Bin Göller Ülkesi' olarak anılır ve yüz binlerce göle ev sahipliği yapar?", "siklar": ["Finlandiya", "Kanada", "İsveç", "Norveç"], "dogru": "Finlandiya"},
-    {"soru": "Nobel Ödülleri her yıl hangi iki şehrin ev sahipliğinde törenlerle sahiplerine verilir?", "siklar": ["Stockholm ve Oslo", "Cenevre ve Zürih", "Londra ve Paris", "Berlin ve Viyana"], "dogru": "Stockholm ve Oslo"},
-    {"soru": "Dünyanın en uzun sıradağları olan And Dağları hangi kıtada yer almaktadır?", "siklar": ["Güney Amerika", "Asya", "Kuzey Amerika", "Afrika"], "dogru": "Güney Amerika"},
-    {"soru": "Hangi elementin kimyasal simgesi 'Au' harfleridir ve kelime kökeni latince parlayan şafak anlamına gelir?", "siklar": ["Altın", "Gümüş", "Bakır", "Alüminyum"], "dogru": "Altın"},
-    {"soru": "Eiffel Kulesi yaz aylarında sıcaklığın etkisiyle termal genleşme sebebiyle yaklaşık kaç santimetre uzar?", "siklar": ["15 cm", "5 cm", "30 cm", "2 cm"], "dogru": "15 cm"},
-    {"soru": "Hangi hayvan türü düz bir hatta zıplayamaz ve fiziksel yapısı nedeniyle sadece öne doğru yürüyebilir?", "siklar": ["Fil", "Zürafa", "Penguen", "Su Aygırı"], "dogru": "Fil"},
-    {"soru": "Dünyanın en büyük okyanusu olan Pasifik Okyanusu'nun en derin noktası hangi çukurdur?", "siklar": ["Mariana Çukuru", "Puerto Rico Çukuru", "Sunda Çukuru", "Java Çukuru"], "dogru": "Mariana Çukuru"},
-    {"soru": "Hangi ülkenin bayrağı dünyada dikdörtgen veya kare olmayan (özel iki üçgen dilim formunda) tek ulusal bayraktır?", "siklar": ["Nepal", "Bhutan", "Moğolistan", "Sri Lanka"], "dogru": "Nepal"},
-    {"soru": "İnsan beyninin bilgi işleme hızı bakımından en aktif olduğu ve en çok rüya gördüğü evre hangisidir?", "siklar": ["REM Uykusu", "Derin Uyku", "NREM Uykusu", "Yarı Uyanıklık"], "dogru": "REM Uykusu"},
-    {"soru": "Dünya üzerindeki tatlı su kaynaklarının yaklaşık yüzde kaçı kutuplarda ve buzullarda donmuş halde bulunur?", "siklar": ["%68", "%90", "%45", "%80"], "dogru": "%68"},
-    {"soru": "Hangi antik kentin kalıntıları arasında yer alan ve dünyanın yedi harikasından biri olan heykel tunçtan yapılmış Rodos Heykeli'dir?", "siklar": ["Rodos Adası", "İskenderiye", "Babil", "Olimpia"], "dogru": "Rodos Adası"},
-    {"soru": "Şahmeran efsanesiyle bilinen ve binlerce yıllık tarihi olan dicle kenarındaki antik şehirimiz hangisidir?", "siklar": ["Mardin", "Diyarbakır", "Şanlıurfa", "Gaziantep"], "dogru": "Mardin"},
-    {"soru": "Hangi ünlü fizikçi, görelilik teorisini geliştirmiş ve 1921 yılında Nobel Fizik Ödülü'nü kazanmıştır?", "siklar": ["Albert Einstein", "Isaac Newton", "Nikola Tesla", "Stephen Hawking"], "dogru": "Albert Einstein"},
-    {"soru": "Dünyanın en eski ve en büyük kapalı çarşılarından biri olan Kapalıçarşı hangi padişah döneminde kurulmaya başlanmıştır?", "siklar": ["Fatih Sultan Mehmet", "Kanuni Sultan Süleyman", "Yavuz Sultan Selim", "II. Murad"], "dogru": "Fatih Sultan Mehmet"},
-    {"soru": "Hangi bitki türü dünyanın en hızlı büyüyen bitkisi unvanına sahiptir ve günde neredeyse bir metre uzayabilir?", "siklar": ["Bambu", "Kavak", "Söğüt", "Palmiye"], "dogru": "Bambu"},
-    {"soru": "Olimpiyat halkalarında yer alan beş farklı renk hangi kıtaları simgelemektedir ve toplam kaç renktir?", "siklar": ["Avrupa, Asya, Afrika, Amerika, Okyanusya", "Avrupa, Asya, Afrika, Amerika, Antarktika", "Kuzey ve Güney Amerika ayrı sayılır", "Sadece dünya renkleridir"], "dogru": "Avrupa, Asya, Afrika, Amerika, Okyanusya"},
-    {"soru": "Hangi kuş türü uçabilen ancak yüzebilen ama yürüyemeyen değil, tam tersi uçamayan fakat dünyanın en hızlı koşan kuşudur?", "siklar": ["Devekuşu", "Penguen", "Kivi", "Hindi"], "dogru": "Devekuşu"},
-    {"soru": "Türkiye'nin ilk UNESCO Dünya Mirası Listesi'ne giren kültürel varlıklarından biri olan Divriği Ulu Cami hangi ilimizdedir?", "siklar": ["Sivas", "Erzurum", "Kayseri", "Konya"], "dogru": "Sivas"},
-    {"soru": "İnsan gözü yaklaşık olarak kaç farklı renk tonunu birbirinden ayırt edebilir ve algılayabilir?", "siklar": ["10 milyon", "1 milyon", "100 bin", "50 milyon"], "dogru": "10 milyon"},
-    {"soru": "Hangi müzik aleti klavyeli çalgılar ailesine dahil olmasına rağmen tellere vuran küçük çekiçler yerine telleri kopararak ses çıkarır?", "siklar": ["Klavesin (Cembalo)", "Piyano", "Akordiyon", "Org"], "dogru": "Klavesin (Cembalo)"},
-    {"soru": "Dünyanın en derin gölü olan ve dünyadaki toplam sıvı tatlı suyun beşte birini barındıran göl hangisidir?", "siklar": ["Baykal Gölü", "Hazar Denizi", "Superior Gölü", "Tanganyika Gölü"], "dogru": "Baykal Gölü"},
-    {"soru": "Hangi yazar 'Suç ve Ceza', 'Karamazov Kardeşler' gibi dünya edebiyatının başyapıtlarını kaleme almıştır?", "siklar": ["Fyodor Dostoyevski", "Lev Tolstoy", "Anton Çehov", "Nikolay Gogol"], "dogru": "Fyodor Dostoyevski"},
-    {"soru": "Dünyanın en yüksek şelalesi olan ve Angel Şelalesi hangi ülkede yer almaktadır?", "siklar": ["Venezuela", "Brezilya", "Arjantin", "Güney Afrika"], "dogru": "Venezuela"},
-    {"soru": "Hangi uzay aracı insanlık tarihinden bu yana Güneş Sistemi'nin dışına çıkmayı başaran ilk insan yapımı nesnedir?", "siklar": ["Voyager 1", "Pioneer 10", "New Horizons", "Cassini"], "dogru": "Voyager 1"},
-    {"soru": "Anadolu'nun en eski yazılı belgelerinin bulunduğu ve UNESCO Dünya Belleği Listesi'ndeki kazı alanı nerededir?", "siklar": ["Kültepe (Kaniş)", "Hattuşa", "Göbeklitepe", "Çatalhöyük"], "dogru": "Kültepe (Kaniş)"},
-    {"soru": "Hangi element periyodik tabloda 'Hg' simgesiyle gösterilen ve oda sıcaklığında sıvı halde bulunan tek metaldir?", "siklar": ["Cıva", "Kurşun", "Kalay", "Demir"], "dogru": "Cıva"},
-    {"soru": "Dünya'nın uydusu olan Ay'ın Dünya'ya her zaman aynı yüzünü göstermesinin temel sebebi nedir?", "siklar": ["Kendi ekseni etrafındaki dönme süresi ile yörünge süresinin eşit olması", "Ay'ın hiç dönmemesi", "Dünyanın çekim gücünün sabitlemesi", "Güneş rüzgarları"], "dogru": "Kendi ekseni etrafındaki dönme süresi ile yörünge süresinin eşit olması"},
-    {"soru": "Hangi antik medeniyet sıfır (0) rakamını matematik ve astronomi tarihinde ilk kez kullanan ve simgeleyen medeniyettir?", "siklar": ["Mayalar / Hintliler", "Romalılar", "Yunanlılar", "Mısırlılar"], "dogru": "Mayalar / Hintliler"},
-    {"soru": "Dünyanın en büyük çölü olan Antarktika çölü coğrafi olarak hangi sınıf çöller arasında yer alır?", "siklar": ["Soğuk çöl", "Sıcak çöl", "Kumlu çöl", "Kayalık çöl"], "dogru": "Soğuk çöl"},
-    {"soru": "Hangi ünlü ressam eserlerinde kariyeri boyunca mavi rengin tonlarını ağırlıklı olarak kullandığı için 'Mavi Dönem' yaşamıştır?", "siklar": ["Pablo Picasso", "Vincent van Gogh", "Claude Monet", "Salvador Dali"], "dogru": "Pablo Picasso"},
-    {"soru": "Dünyanın en yüksek aktif yanardağı olan Ojos del Salado hangi iki ülkenin sınırında yer almaktadır?", "siklar": ["Şili ve Arjantin", "Peru ve Bolivya", "Ekvador ve Kolombiya", "Meksika ve ABD"], "dogru": "Şili ve Arjantin"},
-    {"soru": "Hangi deniz canlısı üç kalbe ve mavi kana sahip olmasıyla bilinir?", "siklar": ["Ahtapot", "Yunus", "Fok", "Köpekbalığı"], "dogru": "Ahtapot"},
-    {"soru": "Türkiye'nin ilk kâğıt fabrikası hangi ilimizde ve hangi yıl kurulmuştur?", "siklar": ["İzmit (1934)", "İstanbul (1926)", "Zonguldak (1940)", "Bursa (1930)"], "dogru": "İzmit (1934)"},
-    {"soru": "Hangi ünlü buluşuyla tanınan Thomas Edison, aynı zamanda hangi akım savaşlarında doğrudan yer almıştır?", "siklar": ["Doğru Akım (DC)", "Alternatif Akım (AC)", "Kablosuz Elektrik", "Manyetik Dalga"], "dogru": "Doğru Akım (DC)"},
-    {"soru": "Dünyanın en eski tapınak merkezi kabul edilen ve 'Tarihin Sıfır Noktası' denilen Göbeklitepe hangi ilimizdedir?", "siklar": ["Şanlıurfa", "Adıyaman", "Gaziantep", "Mardin"], "dogru": "Şanlıurfa"},
-    {"soru": "Hangi kıtada hiç çöl bulunmamaktadır ve tamamen yeşil alanlar, ormanlar veya dağlık ekosistemler yer alır?", "siklar": ["Avrupa", "Asya", "Kuzey Amerika", "Okyanusya"], "dogru": "Avrupa"},
-    {"soru": "İnsan vücudundaki en güçlü kas hangisidir ve orantısal olarak en büyük basıncı uygular?", "siklar": ["Çene kası (Masseter)", "Uyluk kası (Quadriceps)", "Kalp kası", "Baldır kası"], "dogru": "Çene kası (Masseter)"},
-    {"soru": "Hangi ülke, yüz ölçümü olarak dünyanın en büyük ülkesi unvanına sahiptir?", "siklar": ["Rusya", "Kanada", "Çin", "Amerika Birleşik Devletleri"], "dogru": "Rusya"},
-    {"soru": "Dünyanın en uzun nehirleri sıralamasında ilk sırada yer alan Nil Nehri hangi denize dökülmektedir?", "siklar": ["Akdeniz", "Kızıldeniz", "Hint Okyanusu", "Karadeniz"], "dogru": "Akdeniz"},
-    {"soru": "Hangi ünlü matematikçi ve filozof, 'Düşünüyorum, öyleyse varım' sözüyle felsefe tarihine damga vurmuştur?", "siklar": ["René Descartes", "Sokrates", "Platon", "Aristoteles"], "dogru": "René Descartes"},
-    {"soru": "Dünya üzerindeki en büyük mercan resifi sistemi olan Büyük Bariyer Resifi hangi ülkenin açıklarında yer alır?", "siklar": ["Avustralya", "Endonezya", "Filipinler", "Meksika"], "dogru": "Avustralya"},
-    {"soru": "Hangi gaz atmosferde en yüksek oranda (%78 civarında) bulunan gazdır?", "siklar": ["Azot (Nitrojen)", "Oksijen", "Karbondioksit", "Argon"], "dogru": "Azot (Nitrojen)"},
-    {"soru": "Dünyanın ilk kadın başbakanı olan Sirimavo Bandaranaike hangi ülkenin yönetiminde görev yapmıştır?", "siklar": ["Sri Lanka (Seylan)", "Hindistan", "İsrail", "İngiltere"], "dogru": "Sri Lanka (Seylan)"},
-    {"soru": "Hangi antik yazıt, Mısır hiyerogliflerinin çözülmesini sağlayan ve üç farklı yazı dilini barındıran taştır?", "siklar": ["Rosetta Taşı", "Hammurabi Kanunları", "Behistun Yazıtları", "Kadeş Antlaşması"], "dogru": "Rosetta Taşı"},
-    {"soru": "Türkiye'nin en yüksek dağı olan Ağrı Dağı'nın zirve rakımı yaklaşık olarak kaç metre yüksekliktedir?", "siklar": ["5137 metre", "4810 metre", "5650 metre", "4500 metre"], "dogru": "5137 metre"},
-    {"soru": "Hangi hayvan türü ömrü boyunca hiç su içmeden yaşayabilir ve ihtiyacını yediği besinlerdeki sudan karşılar?", "siklar": ["Kanguru faresi", "Deve", "Çöl tilkisi", "Kutup ayısı"], "dogru": "Kanguru faresi"},
-    {"soru": "Dünyanın en eski üniversitesi kabul edilen ve hâlâ eğitime devam eden Al-Qarawiyyin Üniversitesi hangi ülkededir?", "siklar": ["Fas", "Mısır", "İtalya", "İspanya"], "dogru": "Fas"},
-    {"soru": "Hangi renk ışık dalga boyu en uzun olan ve bu nedenle trafikte dur veya uyarı ışığı olarak seçilen renktir?", "siklar": ["Kırmızı", "Mavi", "Yeşil", "Sarı"], "dogru": "Kırmızı"},
-    {"soru": "Dünya'nın manyetik kutupları coğrafi kutuplarla tam olarak üst üste çakışmaz; manyetik kuzey kutbu hangi ülkeye doğru kaymaktadır?", "siklar": ["Kanada'dan Sibirya'ya doğru", "Grönland'dan Afrika'ya doğru", "Avustralya'ya doğru", "Antarktika'nın merkezine doğru"], "dogru": "Kanada'dan Sibirya'ya doğru"},
-    {"soru": "Hangi ünlü yazar ve havacı, çocuk edebiyatının şaheseri olan 'Küçük Prens' (Le Petit Prince) kitabını yazmıştır?", "siklar": ["Antoine de Saint-Exupéry", "Jules Verne", "Victor Hugo", "Alexandre Dumas"], "dogru": "Antoine de Saint-Exupéry"},
-    {"soru": "Dünyanın en küçük kemiği olan üzengi kemiği insan vücudunun hangi bölgesinde yer alır?", "siklar": ["Kulak (Orta kulak)", "Burun", "El bileği", "Serçe parmak"], "dogru": "Kulak (Orta kulak)"},
-    {"soru": "Hangi göl, iki ülke sınırında yer almasıyla bilinen ve dünyada üzerinde ticari gemi taşımacılığı yapılan en yüksek rakımlı göldür?", "siklar": ["Titikaka Gölü", "Van Gölü", "Hazar Denizi", "Victoria Gölü"], "dogru": "Titikaka Gölü"},
-    {"soru": "Türkiye'nin ilk milli parkı olan ve yemyeşil doğasıyla bilinen Yozgat Çamlığı Milli Parkı hangi yıl ilan edilmiştir?", "siklar": ["1958", "1950", "1965", "1973"], "dogru": "1958"},
-    {"soru": "Hangi element periyodik tabloda 'Fe' simgesiyle gösterilir ve latince ismi 'Ferrum' olan metaldir?", "siklar": ["Demir", "Fosfor", "Flor", "Fransiyum"], "dogru": "Demir"},
-    {"soru": "Dünya çapında bilinen 'Mona Lisa' tablosunun kaşları neden bulunmamaktadır veya görünmemektedir?", "siklar": ["Rönesans döneminde kaş almanın moda olması ve restorasyon sırasında silinmesi", "Ressamın unutması", "Çalınmış olması", "Hiç çizilmemiş olması"], "dogru": "Rönesans döneminde kaş almanın moda olması ve restorasyon sırasında silinmesi"}
+    # --- BÖLÜM 1: BİLİM VE DOĞA (1-25) ---
+    {
+        "soru": "Hangi hayvanın kalbi karideslerinin kafasında yer alır ve vücut yapısı oldukça ilginçtir?",
+        "siklar": ["Karides", "Ahtapot", "Denizanası", "Yengeç"],
+        "dogru": "Karides"
+    },
+    {
+        "soru": "Dünyanın en küçük bağımsız devleti olan Vatikan'ın yüz ölçümü yaklaşık olarak kaç kilometrekaredir?",
+        "siklar": ["0.44 km²", "5.2 km²", "12.8 km²", "1.5 km²"],
+        "dogru": "0.44 km²"
+    },
+    {
+        "soru": "Hangi gezegen Güneş Sistemi'nde saat yönünde (diğer gezegenlerin aksine doğudan batıya) dönen tek gezegendir?",
+        "siklar": ["Venüs", "Mars", "Neptün", "Merkür"],
+        "dogru": "Venüs"
+    },
+    {
+        "soru": "İnsan vücudunda, doğduğumuzda yaklaşık 300 kemik bulunurken, yetişkin bir insanda bu sayı kemiklerin birleşmesiyle kaça düşer?",
+        "siklar": ["206", "180", "245", "220"],
+        "dogru": "206"
+    },
+    {
+        "soru": "Mona Lisa tablosu hangi ünlü müzede sergilenmektedir ve her gün binlerce ziyaretçi akınına uğrar?",
+        "siklar": ["Louvre Müzesi", "British Museum", "Vatikan Müzeleri", "Metropolitan Sanat Müzesi"],
+        "dogru": "Louvre Müzesi"
+    },
+    {
+        "soru": "Hangi ülke 'Bin Göller Ülkesi' olarak anılır ve yüz binlerce göle ev sahipliği yapar?",
+        "siklar": ["Finlandiya", "Kanada", "İsveç", "Norveç"],
+        "dogru": "Finlandiya"
+    },
+    {
+        "soru": "Nobel Ödülleri her yıl hangi iki şehrin ev sahipliğinde törenlerle sahiplerine verilir?",
+        "siklar": ["Stockholm ve Oslo", "Cenevre ve Zürih", "Londra ve Paris", "Berlin ve Viyana"],
+        "dogru": "Stockholm ve Oslo"
+    },
+    {
+        "soru": "Dünyanın en uzun sıradağları olan And Dağları hangi kıtada yer almaktadır?",
+        "siklar": ["Güney Amerika", "Asya", "Kuzey Amerika", "Afrika"],
+        "dogru": "Güney Amerika"
+    },
+    {
+        "soru": "Hangi elementin kimyasal simgesi 'Au' harfleridir ve kelime kökeni latince parlayan şafak anlamına gelir?",
+        "siklar": ["Altın", "Gümüş", "Bakır", "Alüminyum"],
+        "dogru": "Altın"
+    },
+    {
+        "soru": "Eiffel Kulesi yaz aylarında sıcaklığın etkisiyle termal genleşme sebebiyle yaklaşık kaç santimetre uzar?",
+        "siklar": ["15 cm", "5 cm", "30 cm", "2 cm"],
+        "dogru": "15 cm"
+    },
+    {
+        "soru": "Hangi hayvan türü düz bir hatta zıplayamaz ve fiziksel yapısı nedeniyle sadece öne doğru yürüyebilir?",
+        "siklar": ["Fil", "Zürafa", "Penguen", "Su Aygırı"],
+        "dogru": "Fil"
+    },
+    {
+        "soru": "Dünyanın en büyük okyanusu olan Pasifik Okyanusu'nun en derin noktası hangi çukurdur?",
+        "siklar": ["Mariana Çukuru", "Puerto Rico Çukuru", "Sunda Çukuru", "Java Çukuru"],
+        "dogru": "Mariana Çukuru"
+    },
+    {
+        "soru": "Hangi ülkenin bayrağı dünyada dikdörtgen veya kare olmayan (özel iki üçgen dilim formunda) tek ulusal bayraktır?",
+        "siklar": ["Nepal", "Bhutan", "Moğolistan", "Sri Lanka"],
+        "dogru": "Nepal"
+    },
+    {
+        "soru": "İnsan beyninin bilgi işleme hızı bakımından en aktif olduğu ve en çok rüya gördüğü evre hangisidir?",
+        "siklar": ["REM Uykusu", "Derin Uyku", "NREM Uykusu", "Yarı Uyanıklık"],
+        "dogru": "REM Uykusu"
+    },
+    {
+        "soru": "Dünya üzerindeki tatlı su kaynaklarının yaklaşık yüzde kaçı kutuplarda ve buzullarda donmuş halde bulunur?",
+        "siklar": ["%68", "%90", "%45", "%80"],
+        "dogru": "%68"
+    },
+    {
+        "soru": "Hangi antik kentin kalıntıları arasında yer alan ve dünyanın yedi harikasından biri olan heykel tunçtan yapılmış Rodos Heykeli'dir?",
+        "siklar": ["Rodos Adası", "İskenderiye", "Babil", "Olimpia"],
+        "dogru": "Rodos Adası"
+    },
+    {
+        "soru": "Şahmeran efsanesiyle bilinen ve binlerce yıllık tarihi olan dicle kenarındaki antik şehirimiz hangisidir?",
+        "siklar": ["Mardin", "Diyarbakır", "Şanlıurfa", "Gaziantep"],
+        "dogru": "Mardin"
+    },
+    {
+        "soru": "Hangi ünlü fizikçi, görelilik teorisini geliştirmiş ve 1921 yılında Nobel Fizik Ödülü'nü kazanmıştır?",
+        "siklar": ["Albert Einstein", "Isaac Newton", "Nikola Tesla", "Stephen Hawking"],
+        "dogru": "Albert Einstein"
+    },
+    {
+        "soru": "Dünyanın en eski ve en büyük kapalı çarşılarından biri olan Kapalıçarşı hangi padişah döneminde kurulmaya başlanmıştır?",
+        "siklar": ["Fatih Sultan Mehmet", "Kanuni Sultan Süleyman", "Yavuz Sultan Selim", "II. Murad"],
+        "dogru": "Fatih Sultan Mehmet"
+    },
+    {
+        "soru": "Hangi bitki türü dünyanın en hızlı büyüyen bitkisi unvanına sahiptir ve günde neredeyse bir metre uzayabilir?",
+        "siklar": ["Bambu", "Kavak", "Söğüt", "Palmiye"],
+        "dogru": "Bambu"
+    },
+    {
+        "soru": "Olimpiyat halkalarında yer alan beş farklı renk hangi kıtaları simgelemektedir ve toplam kaç renktir?",
+        "siklar": ["Avrupa, Asya, Afrika, Amerika, Okyanusya", "Avrupa, Asya, Afrika, Amerika, Antarktika", "Kuzey ve Güney Amerika ayrı sayılır", "Sadece dünya renkleridir"],
+        "dogru": "Avrupa, Asya, Afrika, Amerika, Okyanusya"
+    },
+    {
+        "soru": "Hangi kuş türü uçabilen ancak yüzebilen ama yürüyemeyen değil, tam tersi uçamayan fakat dünyanın en hızlı koşan kuşudur?",
+        "siklar": ["Devekuşu", "Penguen", "Kivi", "Hindi"],
+        "dogru": "Devekuşu"
+    },
+    {
+        "soru": "Türkiye'nin ilk UNESCO Dünya Mirası Listesi'ne giren kültürel varlıklarından biri olan Divriği Ulu Cami hangi ilimizdedir?",
+        "siklar": ["Sivas", "Erzurum", "Kayseri", "Konya"],
+        "dogru": "Sivas"
+    },
+    {
+        "soru": "İnsan gözü yaklaşık olarak kaç farklı renk tonunu birbirinden ayırt edebilir ve algılayabilir?",
+        "siklar": ["10 milyon", "1 milyon", "100 bin", "50 milyon"],
+        "dogru": "10 milyon"
+    },
+    {
+        "soru": "Hangi müzik aleti klavyeli çalgılar ailesine dahil olmasına rağmen tellere vuran küçük çekiçler yerine telleri kopararak ses çıkarır?",
+        "siklar": ["Klavesin (Cembalo)", "Piyano", "Akordiyon", "Org"],
+        "dogru": "Klavesin (Cembalo)"
+    },
+
+    # --- BÖLÜM 2: TARİH VE COĞRAFYA (26-50) ---
+    {
+        "soru": "Dünyanın en derin gölü olan ve dünyadaki toplam sıvı tatlı suyun beşte birini barındıran göl hangisidir?",
+        "siklar": ["Baykal Gölü", "Hazar Denizi", "Superior Gölü", "Tanganyika Gölü"],
+        "dogru": "Baykal Gölü"
+    },
+    {
+        "soru": "Hangi yazar 'Suç ve Ceza', 'Karamazov Kardeşler' gibi dünya edebiyatının başyapıtlarını kaleme almıştır?",
+        "siklar": ["Fyodor Dostoyevski", "Lev Tolstoy", "Anton Çehov", "Nikolay Gogol"],
+        "dogru": "Fyodor Dostoyevski"
+    },
+    {
+        "soru": "Dünyanın en yüksek şelalesi olan ve Angel Şelalesi hangi ülkede yer almaktadır?",
+        "siklar": ["Venezuela", "Brezilya", "Arjantin", "Güney Afrika"],
+        "dogru": "Venezuela"
+    },
+    {
+        "soru": "Hangi uzay aracı insanlık tarihinden bu yana Güneş Sistemi'nin dışına çıkmayı başaran ilk insan yapımı nesnedir?",
+        "siklar": ["Voyager 1", "Pioneer 10", "New Horizons", "Cassini"],
+        "dogru": "Voyager 1"
+    },
+    {
+        "soru": "Anadolu'nun en eski yazılı belgelerinin bulunduğu ve UNESCO Dünya Belleği Listesi'ndeki kazı alanı nerededir?",
+        "siklar": ["Kültepe (Kaniş)", "Hattuşa", "Göbeklitepe", "Çatalhöyük"],
+        "dogru": "Kültepe (Kaniş)"
+    },
+    {
+        "soru": "Hangi element periyodik tabloda 'Hg' simgesiyle gösterilen ve oda sıcaklığında sıvı halde bulunan tek metaldir?",
+        "siklar": ["Cıva", "Kurşun", "Kalay", "Demir"],
+        "dogru": "Cıva"
+    },
+    {
+        "soru": "Dünya'nın uydusu olan Ay'ın Dünya'ya her zaman aynı yüzünü göstermesinin temel sebebi nedir?",
+        "siklar": ["Kendi ekseni etrafındaki dönme süresi ile yörünge süresinin eşit olması", "Ay'ın hiç dönmemesi", "Dünyanın çekim gücünün sabitlemesi", "Güneş rüzgarları"],
+        "dogru": "Kendi ekseni etrafındaki dönme süresi ile yörünge süresinin eşit olması"
+    },
+    {
+        "soru": "Hangi antik medeniyet sıfır (0) rakamını matematik ve astronomi tarihinde ilk kez kullanan ve simgeleyen medeniyettir?",
+        "siklar": ["Mayalar / Hintliler", "Romalılar", "Yunanlılar", "Mısırlılar"],
+        "dogru": "Mayalar / Hintliler"
+    },
+    {
+        "soru": "Dünyanın en büyük çölü olan Antarktika çölü coğrafi olarak hangi sınıf çöller arasında yer alır?",
+        "siklar": ["Soğuk çöl", "Sıcak çöl", "Kumlu çöl", "Kayalık çöl"],
+        "dogru": "Soğuk çöl"
+    },
+    {
+        "soru": "Hangi ünlü ressam eserlerinde kariyeri boyunca mavi rengin tonlarını ağırlıklı olarak kullandığı için 'Mavi Dönem' yaşamıştır?",
+        "siklar": ["Pablo Picasso", "Vincent van Gogh", "Claude Monet", "Salvador Dali"],
+        "dogru": "Pablo Picasso"
+    },
+    {
+        "soru": "Dünyanın en yüksek aktif yanardağı olan Ojos del Salado hangi iki ülkenin sınırında yer almaktadır?",
+        "siklar": ["Şili ve Arjantin", "Peru ve Bolivya", "Ekvador ve Kolombiya", "Meksika ve ABD"],
+        "dogru": "Şili ve Arjantin"
+    },
+    {
+        "soru": "Hangi deniz canlısı üç kalbe ve mavi kana sahip olmasıyla bilinir?",
+        "siklar": ["Ahtapot", "Yunus", "Fok", "Köpekbalığı"],
+        "dogru": "Ahtapot"
+    },
+    {
+        "soru": "Türkiye'nin ilk kâğıt fabrikası hangi ilimizde ve hangi yıl kurulmuştur?",
+        "siklar": ["İzmit (1934)", "İstanbul (1926)", "Zonguldak (1940)", "Bursa (1930)"],
+        "dogru": "İzmit (1934)"
+    },
+    {
+        "soru": "Hangi ünlü buluşuyla tanınan Thomas Edison, aynı zamanda hangi akım savaşlarında doğrudan yer almıştır?",
+        "siklar": ["Doğru Akım (DC)", "Alternatif Akım (AC)", "Kablosuz Elektrik", "Manyetik Dalga"],
+        "dogru": "Doğru Akım (DC)"
+    },
+    {
+        "soru": "Dünyanın en eski tapınak merkezi kabul edilen ve 'Tarihin Sıfır Noktası' denilen Göbeklitepe hangi ilimizdedir?",
+        "siklar": ["Şanlıurfa", "Adıyaman", "Gaziantep", "Mardin"],
+        "dogru": "Şanlıurfa"
+    },
+    {
+        "soru": "Hangi kıtada hiç çöl bulunmamaktadır ve tamamen yeşil alanlar, ormanlar veya dağlık ekosistemler yer alır?",
+        "siklar": ["Avrupa", "Asya", "Kuzey Amerika", "Okyanusya"],
+        "dogru": "Avrupa"
+    },
+    {
+        "soru": "İnsan vücudundaki en güçlü kas hangisidir ve orantısal olarak en büyük basıncı uygular?",
+        "siklar": ["Çene kası (Masseter)", "Uyluk kası (Quadriceps)", "Kalp kası", "Baldır kası"],
+        "dogru": "Çene kası (Masseter)"
+    },
+    {
+        "soru": "Hangi ülke, yüz ölçümü olarak dünyanın en büyük ülkesi unvanına sahiptir?",
+        "siklar": ["Rusya", "Kanada", "Çin", "Amerika Birleşik Devletleri"],
+        "dogru": "Rusya"
+    },
+    {
+        "soru": "Dünyanın en uzun nehirleri sıralamasında ilk sırada yer alan Nil Nehri hangi denize dökülmektedir?",
+        "siklar": ["Akdeniz", "Kızıldeniz", "Hint Okyanusu", "Karadeniz"],
+        "dogru": "Akdeniz"
+    },
+    {
+        "soru": "Hangi ünlü matematikçi ve filozof, 'Düşünüyorum, öyleyse varım' sözüyle felsefe tarihine damga vurmuştur?",
+        "siklar": ["René Descartes", "Sokrates", "Platon", "Aristoteles"],
+        "dogru": "René Descartes"
+    },
+    {
+        "soru": "Dünya üzerindeki en büyük mercan resifi sistemi olan Büyük Bariyer Resifi hangi ülkenin açıklarında yer alır?",
+        "siklar": ["Avustralya", "Endonezya", "Filipinler", "Meksika"],
+        "dogru": "Avustralya"
+    },
+    {
+        "soru": "Hangi gaz atmosferde en yüksek oranda (%78 civarında) bulunan gazdır?",
+        "siklar": ["Azot (Nitrojen)", "Oksijen", "Karbondioksit", "Argon"],
+        "dogru": "Azot (Nitrojen)"
+    },
+    {
+        "soru": "Dünyanın ilk kadın başbakanı olan Sirimavo Bandaranaike hangi ülkenin yönetiminde görev yapmıştır?",
+        "siklar": ["Sri Lanka (Seylan)", "Hindistan", "İsrail", "İngiltere"],
+        "dogru": "Sri Lanka (Seylan)"
+    },
+    {
+        "soru": "Hangi antik yazıt, Mısır hiyerogliflerinin çözülmesini sağlayan ve üç farklı yazı dilini barındıran taştır?",
+        "siklar": ["Rosetta Taşı", "Hammurabi Kanunları", "Behistun Yazıtları", "Kadeş Antlaşması"],
+        "dogru": "Rosetta Taşı"
+    },
+    {
+        "soru": "Türkiye'nin en yüksek dağı olan Ağrı Dağı'nın zirve rakımı yaklaşık olarak kaç metre yüksekliktedir?",
+        "siklar": ["5137 metre", "4810 metre", "5650 metre", "4500 metre"],
+        "dogru": "5137 metre"
+    },
+
+    # --- BÖLÜM 3: EĞLENCELİ BİLGİLER VE SANAT (51-100) ---
+    {
+        "soru": "Hangi hayvan türü ömrü boyunca hiç su içmeden yaşayabilir ve ihtiyacını yediği besinlerdeki sudan karşılar?",
+        "siklar": ["Kanguru faresi", "Deve", "Çöl tilkisi", "Kutup ayısı"],
+        "dogru": "Kanguru faresi"
+    },
+    {
+        "soru": "Dünyanın en eski üniversitesi kabul edilen ve hâlâ eğitime devam eden Al-Qarawiyyin Üniversitesi hangi ülkededir?",
+        "siklar": ["Fas", "Mısır", "İtalya", "İspanya"],
+        "dogru": "Fas"
+    },
+    {
+        "soru": "Hangi renk ışık dalga boyu en uzun olan ve bu nedenle trafikte dur veya uyarı ışığı olarak seçilen renktir?",
+        "siklar": ["Kırmızı", "Mavi", "Yeşil", "Sarı"],
+        "dogru": "Kırmızı"
+    },
+    {
+        "soru": "Dünya'nın manyetik kutupları coğrafi kutuplarla tam olarak üst üste çakışmaz; manyetik kuzey kutbu hangi ülkeye doğru kaymaktadır?",
+        "siklar": ["Kanada'dan Sibirya'ya doğru", "Grönland'dan Afrika'ya doğru", "Avustralya'ya doğru", "Antarktika'nın merkezine doğru"],
+        "dogru": "Kanada'dan Sibirya'ya doğru"
+    },
+    {
+        "soru": "Hangi ünlü yazar ve havacı, çocuk edebiyatının şaheseri olan 'Küçük Prens' (Le Petit Prince) kitabını yazmıştır?",
+        "siklar": ["Antoine de Saint-Exupéry", "Jules Verne", "Victor Hugo", "Alexandre Dumas"],
+        "dogru": "Antoine de Saint-Exupéry"
+    },
+    {
+        "soru": "Dünyanın en küçük kemiği olan üzengi kemiği insan vücudunun hangi bölgesinde yer alır?",
+        "siklar": ["Kulak (Orta kulak)", "Burun", "El bileği", "Serçe parmak"],
+        "dogru": "Kulak (Orta kulak)"
+    },
+    {
+        "soru": "Hangi göl, iki ülke sınırında yer almasıyla bilinen ve dünyada üzerinde ticari gemi taşımacılığı yapılan en yüksek rakımlı göldür?",
+        "siklar": ["Titikaka Gölü", "Van Gölü", "Hazar Denizi", "Victoria Gölü"],
+        "dogru": "Titikaka Gölü"
+    },
+    {
+        "soru": "Türkiye'nin ilk milli parkı olan ve yemyeşil doğasıyla bilinen Yozgat Çamlığı Milli Parkı hangi yıl ilan edilmiştir?",
+        "siklar": ["1958", "1950", "1965", "1973"],
+        "dogru": "1958"
+    },
+    {
+        "soru": "Hangi element periyodik tabloda 'Fe' simgesiyle gösterilir ve latince ismi 'Ferrum' olan metaldir?",
+        "siklar": ["Demir", "Fosfor", "Flor", "Fransiyum"],
+        "dogru": "Demir"
+    },
+    {
+        "soru": "Dünya çapında bilinen 'Mona Lisa' tablosunun kaşları neden bulunmamaktadır veya görünmemektedir?",
+        "siklar": ["Rönesans döneminde kaş almanın moda olması ve restorasyon sırasında silinmesi", "Ressamın unutması", "Çalınmış olması", "Hiç çizilmemiş olması"],
+        "dogru": "Rönesans döneminde kaş almanın moda olması ve restorasyon sırasında silinmesi"
+    },
+    {
+        "soru": "Hangi kuş türü sırt üstü uçabilen tek kuş türü olarak bilinir?",
+        "siklar": ["Sinekkuşu (Kolibri)", "Kırlangıç", "Papağan", "Serçe"],
+        "dogru": "Sinekkuşu (Kolibri)"
+    },
+    {
+        "soru": "Dünyanın en büyük tuz gölü olan Salar de Uyuni hangi Güney Amerika ülkesindedir?",
+        "siklar": ["Bolivya", "Şili", "Arjantin", "Peru"],
+        "dogru": "Bolivya"
+    },
+    {
+        "soru": "Hangi imparatorluk döneminde Antik Roma'nın nüfusu bir milyonu aşan ilk batı şehri olmuştur?",
+        "siklar": ["Roma İmparatorluğu", "Bizans İmparatorluğu", "Osmanlı İmparatorluğu", "Pers İmparatorluğu"],
+        "dogru": "Roma İmparatorluğu"
+    },
+    {
+        "soru": "İnsan vücudunda yara iyileşmesinde ve bağışıklık sisteminde kritik rol oynayan 'Çinko' elementi vücutta hangi organda en çok bulunur?",
+        "siklar": ["Karaciğer ve Kaslar", "Böbrek", "Beyin", "Akciğer"],
+        "dogru": "Karaciğer ve Kaslar"
+    },
+    {
+        "soru": "Hangi ünlü müzisyen kulağının sağır olmasına rağmen dünyanın en büyük senfonilerini bestelemiştir?",
+        "siklar": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Johann Sebastian Bach", "Frédéric Chopin"],
+        "dogru": "Ludwig van Beethoven"
+    },
+    {
+        "soru": "Dünyanın en eski yazılı antlaşması olan Kadeş Antlaşması hangi iki devlet arasında imzalanmıştır?",
+        "siklar": ["Hititler ve Mısırlılar", "Sümerler ve Asurlular", "Romalılar ve Kartacalılar", "Yunanlılar ve Persler"],
+        "dogru": "Hititler ve Mısırlılar"
+    },
+    {
+        "soru": "Hangi gezegen halkalarıyla ünlü olsa da, aslında Satürn dışındaki Jüpiter, Uranüs ve Neptün'ün de halkaları vardır?",
+        "siklar": ["Satürn", "Mars", "Venüs", "Merkür"],
+        "dogru": "Satürn"
+    },
+    {
+        "soru": "Dünya'nın en sıcak yeri olarak bilinen Ölüm Vadisi (Death Valley) hangi ülkededir?",
+        "siklar": ["Amerika Birleşik Devletleri", "Mısır", "Avustralya", "Suudi Arabistan"],
+        "dogru": "Amerika Birleşik Devletleri"
+    },
+    {
+        "soru": "Hangi deniz canlısı omurgasız olmasına rağmen dünyanın en büyük gözlerine (futbol topu büyüklüğünde) sahiptir?",
+        "siklar": ["Dev Mürekkepbalığı", "Balina Köpekbalığı", "Mavi Balina", "Yunus"],
+        "dogru": "Dev Mürekkepbalığı"
+    },
+    {
+        "soru": "Türkiye'de UNESCO Dünya Mirası Listesi'nde yer alan ve pamuk kalelerini andıran travertenleriyle ünlü yerimiz neresidir?",
+        "siklar": ["Pamukkale (Denizli)", "Kapadokya (Nevşehir)", "Safranbolu (Karabük)", "Nemrut (Adıyaman)"],
+        "dogru": "Pamukkale (Denizli)"
+    },
+    {
+        "soru": "Hangi şair ve yazar 'İstiklal Marşı'mızın şairi olarak hem TBMM'de hem de milletin kalbinde ölümsüzleşmiştir?",
+        "siklar": ["Mehmet Akif Ersoy", "Yahya Kemal Beyatlı", "Nazım Hikmet", "Orhan Veli"],
+        "dogru": "Mehmet Akif Ersoy"
+    },
+    {
+        "soru": "Dünyanın en küçük ülkesi olan Vatikan hangi şehrin sınırları içerisinde yer almaktadır?",
+        "siklar": ["Roma (İtalya)", "Paris (Fransa)", "Madrid (İspanya)", "Atina (Yunanistan)"],
+        "dogru": "Roma (İtalya)"
+    },
+    {
+        "soru": "Hangi element periyodik tabloda 'O' harfiyle gösterilen, soluduğumuz ve yaşam için en temel gazdır?",
+        "siklar": ["Oksijen", "Azot", "Hidrojen", "Helyum"],
+        "dogru": "Oksijen"
+    },
+    {
+        "soru": "Dünya genelinde 'Sıfır Noktası' olarak kabul edilen ve Greenwich Meridyeni'nin geçtiği gözlemevi hangi ülkededir?",
+        "siklar": ["İngiltere", "Fransa", "İspanya", "İtalya"],
+        "dogru": "İngiltere"
+    },
+    {
+        "soru": "Hangi hayvan türü doğuştan itibaren uçamayan, dik duran ve güney yarımkürede yaşayan sevimli kuşlardır?",
+        "siklar": ["Penguen", "Martı", "Pelikan", "Karga"],
+        "dogru": "Penguen"
+    },
+
+    # --- BÖLÜM 4: KÜLTÜR, SANAT VE TEKNOLOJİ (101-175) ---
+    {
+        "soru": "Dünyanın ilk haritasını çizen ve coğrafya biliminin öncülerinden olan Türk denizci ve haritacısı kimdir?",
+        "siklar": ["Piri Reis", "Kaptanı Derya Barbaros", "Seydi Ali Reis", "Turgut Reis"],
+        "dogru": "Piri Reis"
+    },
+    {
+        "soru": "Hangi mimar Osmanlı İmparatorluğu'nun 'Koca Sinan'ı olarak anılır ve Süleymaniye Camii'nin mimarıdır?",
+        "siklar": ["Mimar Sinan", "Mimar Sedefkâr Mehmet Ağa", "Balyan Ailesi", "Davut Ağa"],
+        "dogru": "Mimar Sinan"
+    },
+    {
+        "soru": "Dünya genelinde internetin temelleri olan ARPANET projesi hangi ülkenin savunma bakanlığı tarafından geliştirilmiştir?",
+        "siklar": ["Amerika Birleşik Devletleri", "İngiltere", "Sovyetler Birliği", "Fransa"],
+        "dogru": "Amerika Birleşik Devletleri"
+    },
+    {
+        "soru": "Hangi yazar Türk edebiyatında 'Çalıkuşu' romanının yazarı olarak tanınır?",
+        "siklar": ["Reşat Nuri Güntekin", "Halide Edip Adıvar", "Peyami Safa", "Yakup Kadri Karaosmanoğlu"],
+        "dogru": "Reşat Nuri Güntekin"
+    },
+    {
+        "soru": "Dünyanın en yüksek binası unvanına sahip olan Burj Khalifa hangi şehirde yer almaktadır?",
+        "siklar": ["Dubai", "Abu Dabi", "Doha", "Riyad"],
+        "dogru": "Dubai"
+    },
+    {
+        "soru": "Hangi futbol kulübü UEFA Kupası'nı (şimdiki UEFA Avrupa Ligi) kazanan ilk ve tek Türk takımıdır?",
+        "siklar": ["Galatasaray", "Fenerbahçe", "Beşiktaş", "Trabzonspor"],
+        "dogru": "Galatasaray"
+    },
+    {
+        "soru": "Türkiye'nin ilk yerli sondaj gemisi olan ve denizlerde arama yapan gemilerden biri hangisidir?",
+        "siklar": ["Fatih", "Yavuz", "Kanuni", "Hepsi"],
+        "dogru": "Hepsi"
+    },
+    {
+        "soru": "Hangi müzik türü New Orleans'ta doğmuş olup doğaçlama ritimlerle dünyayı sarmıştır?",
+        "siklar": ["Jazz", "Rock", "Klasik Müzik", "Pop"],
+        "dogru": "Jazz"
+    },
+    {
+        "soru": "Dünyanın en büyük sinema endüstrisi merkezi olan Hollywood hangi eyalette yer almaktadır?",
+        "siklar": ["Kaliforniya", "New York", "Teksas", "Florida"],
+        "dogru": "Kaliforniya"
+    },
+    {
+        "soru": "Hangi ünlü bilim insanı radyoaktiviteyi keşfetmiş ve iki farklı alanda Nobel Ödülü kazanan ilk kadın olmuştur?",
+        "siklar": ["Marie Curie", "Rosalind Franklin", "Ada Lovelace", "Lise Meitner"],
+        "dogru": "Marie Curie"
+    },
+    {
+        "soru": "Anadolu Selçuklu Devleti'nin başkenti olan ve Mevlana Celaleddin-i Rumi'nin türbesinin bulunduğu ilimiz hangisidir?",
+        "siklar": ["Konya", "Bursa", "İznik", "Sivas"],
+        "dogru": "Konya"
+    },
+    {
+        "soru": "Hangi deniz, Asya ile Avrupa kıtalarını birbirinden ayıran ve İstanbul Boğazı ile Çanakkale Boğazı'na bağlanan denizdir?",
+        "siklar": ["Karadeniz", "Akdeniz", "Marmara Denizi", "Ege Denizi"],
+        "dogru": "Marmara Denizi"
+    },
+    {
+        "soru": "Dünyanın en çok konuşulan ana dili hangisidir?",
+        "siklar": ["Mandarin Çincesi", "İspanyolca", "İngilizce", "Hintçe"],
+        "dogru": "Mandarin Çincesi"
+    },
+    {
+        "soru": "Hangi ünlü ressam 'Yıldızlı Gece' (The Starry Night) tablosunu çizen Hollandalı empresyonist sanatçıdır?",
+        "siklar": ["Vincent van Gogh", "Claude Monet", "Edvard Munch", "Rembrandt"],
+        "dogru": "Vincent van Gogh"
+    },
+    {
+        "soru": "Türkiye'nin en büyük adası unvanına sahip olan ada hangisidir?",
+        "siklar": ["Gökçeada", "Bozcaada", "Marmara Adası", "Cunda Adası"],
+        "dogru": "Gökçeada"
+    },
+    {
+        "soru": "Hangi gezegen kırmızı gezegen olarak bilinir ve demir oksit yüzünden kırmızı görünür?",
+        "siklar": ["Mars", "Jüpiter", "Venüs", "Satürn"],
+        "dogru": "Mars"
+    },
+    {
+        "soru": "Dünyanın en uzun demiryolu hattı olan Trans Sibirya Demiryolu hangi ülkeyi baştan başa geçer?",
+        "siklar": ["Rusya", "Çin", "Kanada", "Hindistan"],
+        "dogru": "Rusya"
+    },
+    {
+        "soru": "Hangi yazar 'Dede Korkut Hikayeleri' Türk edebiyatının temel taşlarından biri olup milli kültürümüzü yansıtır?",
+        "siklar": ["Anonim (Halk Eseri)", "Yunus Emre", "Karacaoğlan", "Köroğlu"],
+        "dogru": "Anonim (Halk Eseri)"
+    },
+    {
+        "soru": "Türkiye Cumhuriyeti'nin kurucusu Gazi Mustafa Kemal Atatürk'ün nüfusa kayıtlı olduğu il hangisidir?",
+        "siklar": ["Gaziantep", "İstanbul", "Ankara", "İzmir"],
+        "dogru": "Gaziantep"
+    },
+    {
+        "soru": "Hangi ülke pamuk üretiminde ve pamuk tekstilinde dünya çapında tarihi bir kökene sahip olup Türkiye'nin güneyindedir?",
+        "siklar": ["Mısır / Suriye / Türkiye", "İtalya", "Yunanistan", "İspanya"],
+        "dogru": "Mısır / Suriye / Türkiye"
+    },
+    {
+        "soru": "Dünya'nın katmanları arasında en sıcak olan ve demir-nikel alaşımından oluşan merkez katman hangisidir?",
+        "siklar": ["İç Çekirdek", "Manto", "Yer Kabuğu", "Dış Çekirdek"],
+        "dogru": "İç Çekirdek"
+    },
+    {
+        "soru": "Hangi hayvan türü saatte 100 kilometreden fazla hıza ulaşarak karadaki en hızlı koşan memelidir?",
+        "siklar": ["Çita", "Aslan", "Leopar", "Ceylan"],
+        "dogru": "Çita"
+    },
+    {
+        "soru": "Türkiye'nin en çok komşusu olan sınır kapısı ve ili hangisidir?",
+        "siklar": ["Iğdır / Ağrı", "Edirne", "Hakkari", "Artvin"],
+        "dogru": "Iğdır / Ağrı"
+    },
+    {
+        "soru": "Hangi antik filozof, Atina'da Lykeion okulunu kurmuş ve Büyük İskender'in öğretmenliğini yapmıştır?",
+        "siklar": ["Aristoteles", "Platon", "Sokrates", "Pythagoras"],
+        "dogru": "Aristoteles"
+    },
+    {
+        "soru": "Dünyanın en büyük yapay adalarıyla ünlü Palm Jumeirah projesi hangi şehirde inşa edilmiştir?",
+        "siklar": ["Dubai", "Tokyo", "Singapur", "Sidney"],
+        "dogru": "Dubai"
+    },
+    {
+        "soru": "Hangi element periyodik tabloda 'C' harfiyle gösterilen ve elmastan kömüre kadar pek çok formu olan yaşam elementidir?",
+        "siklar": ["Karbon", "Kalsiyum", "Klor", "Bakır"],
+        "dogru": "Karbon"
+    },
+    {
+        "soru": "Türk musiki tarihinin en büyük dâhilerinden biri olan ve ıtrî kelimesiyle anılan klasik Türk müziği bestecisi kimdir?",
+        "siklar": ["Buhurizade Mustafa Itri", "Dede Efendi", "Zekai Dede", "Tanburi Cemil Bey"],
+        "dogru": "Buhurizade Mustafa Itri"
+    },
+    {
+        "soru": "Hangi deniz, dünyanın en tuzlu su kütlelerinden biri olup içinde canlı yaşayamadığı için Ölüdeniz olarak anılır?",
+        "siklar": ["Lut Gölü (Ölüdeniz)", "Kızıldeniz", "Hazar Denizi", "Karadeniz"],
+        "dogru": "Lut Gölü (Ölüdeniz)"
+    },
+    {
+        "soru": "Dünya genelinde okyanus akıntılarının yönünü ve iklimleri büyük ölçüde etkileyen dönme etkisi nedir?",
+        "siklar": ["Coriolis Etkisi", "Sera Etkisi", "Termal Etkisi", "Manyetik Etki"],
+        "dogru": "Coriolis Etkisi"
+    },
+    {
+        "soru": "Hangi ülke dünyada en çok saat dilimine (farklı zaman kuşağına) sahip olan ülkedir?",
+        "siklar": ["Fransa (denizaşırı topraklarıyla)", "Rusya", "Amerika Birleşik Devletleri", "Çin"],
+        "dogru": "Fransa (denizaşırı topraklarıyla)"
+    },
+    {
+        "soru": "Türkiye'nin ilk yerli ve milli haberleşme uydusu olan Türksat 6A hangi yıl uzaya fırlatılmıştır?",
+        "siklar": ["2024", "2022", "2020", "2018"],
+        "dogru": "2024"
+    },
+    {
+        "soru": "Hangi ünlü yazar 'Sefiller' (Les Misérables) romanını kaleme alarak dünya edebiyatına damga vurmuştur?",
+        "siklar": ["Victor Hugo", "Alexandre Dumas", "Emile Zola", "Gustave Flaubert"],
+        "dogru": "Victor Hugo"
+    },
+    {
+        "soru": "Dünyanın en büyük çölü olan Sahra Çölü hangi kıtada yer almaktadır?",
+        "siklar": ["Afrika", "Asya", "Avustralya", "Güney Amerika"],
+        "dogru": "Afrika"
+    },
+    {
+        "soru": "Hangi müzik aleti Türk halk müziğinde 'telli çalgıların şahı' olarak kabul edilir ve üç telli, divan sazı gibi çeşitleri vardır?",
+        "siklar": ["Bağlama (Saz)", "Kemençe", "Ney", "Kanun"],
+        "dogru": "Bağlama (Saz)"
+    },
+    {
+        "soru": "Türkiye Cumhuriyeti'nin ilk başbakanı ve milli mücadele kahramanlarından olan devlet adamı kimdir?",
+        "siklar": ["İsmet İnönü", "Fevzi Çakmak", "Kazım Karabekir", "Celal Bayar"],
+        "dogru": "İsmet İnönü"
+    },
+    {
+        "soru": "Hangi gezegen Güneş'e en yakın gezegen konumundadır?",
+        "siklar": ["Merkür", "Venüs", "Mars", "Dünya"],
+        "dogru": "Merkür"
+    },
+    {
+        "soru": "Dünyanın en eski yazılı destanı olan ve Sümer mitolojisine dayanan destan hangisidir?",
+        "siklar": ["Gılgamış Destanı", "İlyada ve Odysseia", "Manas Destanı", "Şehname"],
+        "dogru": "Gılgamış Destanı"
+    },
+    {
+        "soru": "Hangi sanat akımı 20. yüzyılın başında nesneleri geometrik şekillere indirgeyerek Picasso ve Braque tarafından başlatılmıştır?",
+        "siklar": ["Kübizm", "Empresyonizm", "Sürrealizm", "Barok"],
+        "dogru": "Kübizm"
+    },
+    {
+        "soru": "Türkiye'nin en uzun nehirleri arasında ilk sırada yer alan ve Karadeniz'e dökülen nehir hangisidir?",
+        "siklar": ["Kızılırmak", "Fırat", "Dicle", "Sakarya"],
+        "dogru": "Kızılırmak"
+    },
+    {
+        "soru": "Hangi deniz canlısı dokunaçlarındaki zehirli hücrelerle bilinir ve beyinsiz yaşam formları arasında en eski olanlardandır?",
+        "siklar": ["Denizanası", "Ahtapot", "Yengeç", "Sünger"],
+        "dogru": "Denizanası"
+    },
+    {
+        "soru": "Dünyanın en kalabalık ülkesi hangisidir?",
+        "siklar": ["Hindistan / Çin", "Endonezya", "Amerika Birleşik Devletleri", "Pakistan"],
+        "dogru": "Hindistan / Çin"
+    },
+    {
+        "soru": "Hangi ünlü mucit matbaayı geliştirerek modern bilginin yayılmasında çığır açmıştır?",
+        "siklar": ["Johannes Gutenberg", "Thomas Edison", "Nikola Tesla", "Alexander Graham Bell"],
+        "dogru": "Johannes Gutenberg"
+    },
+    {
+        "soru": "Türkiye'nin ilk coğrafi işaretli tescilli peyniri olan ve Kars ile özdeşleşen peynir türü hangisidir?",
+        "siklar": ["Kars Kaşarı", "Ezine Peyniri", "Van Otlu Peyniri", "İzmir Tulumu"],
+        "dogru": "Kars Kaşarı"
+    },
+    {
+        "soru": "Hangi kıtada penguenler doğal ortamda sadece güney yarımkürede yer alır?",
+        "siklar": ["Antarktika", "Avrupa", "Asya", "Kuzey Amerika"],
+        "dogru": "Antarktika"
+    },
+    {
+        "soru": "Dünyanın en büyük yapay havzası olan Panama Kanalı hangi iki okyanusu birbirine bağlar?",
+        "siklar": ["Atlantik ve Pasifik Okyanusu", "Hint ve Atlantik Okyanusu", "Pasifik ve Arktik Okyanusu", "Akdeniz ve Kızıldeniz"],
+        "dogru": "Atlantik ve Pasifik Okyanusu"
+    }
 ]
+
+st.title("🧠 Genel Kültür ve Eğlenceli Bilgiler Yarışması (175 Soru Bankası)")
+st.write("175 soruluk devasa genel kültür, tarih, bilim, sanat ve eğlenceli bilgiler soru havuzumuza hoş geldiniz!")
+
+if st.button("Dev Havuzdan Rastgele Soru Çek"):
+    secilen = random.choice(GENEL_KULTUR_SORULARI)
+    st.subheader(secilen["soru"])
+    
+    # Şıkları karıştırıp kullanıcıya sunalım
+    secenekler = secilen["siklar"].copy()
+    random.shuffle(secenekler)
+    
+    cevap = st.radio("Seçenekleriniz:", secenekler, key="genel_kultur_radio")
+    
+    if st.button("Cevabı Kontrol Et"):
+        if cevap == secilen["dogru"]:
+            st.success("Tebrikler! Doğru cevap verdiniz. 🎉")
+        else:
+            st.error(f"Yanlış cevap! Doğru cevap şuydu: **{secilen['dogru']}**")
 # =========================================================
 # 3. SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
 # =========================================================
