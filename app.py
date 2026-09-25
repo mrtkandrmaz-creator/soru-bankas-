@@ -271,7 +271,7 @@ DUNYA_MUTFAGI_LEZZETLER = {
     "İsviçre": {"yemek": "İsviçre Fondü", "ipucu": "Çeşitli eritilmiş peynirlerin özel bir tencerede ısıtılarak ekmek parçalarının sosa batırılarak yendiği yemektir."},
     "Macaristan": {"yemek": "Macaristan Gulaş", "ipucu": "Dana eti, patates ve kök sebzelerin yoğun miktarda tatlı kırmızı toz biber ile tencere yahni şeklinde pişmesidir."},
     "Ukrayna": {"yemek": "Ukrayna Varenyky", "ipucu": "İnce açılmış mayasız hamurun içine patates veya mantar koyulup kapatılarak suda haşlanan bir çeşit mantıdır."},
-    "Küba": {"yemek": "Küba Sandviçi", "ipucu": "Küba ekmeği arasına domuz eti, jambon, peynir, turşu ve hardal konularak pres makinesinde ısıtılmasıdır."},
+    "Küba": {"yemek": "Küba Sandviçi", "ipucu": "Ekmek arasına domuz eti, jambon, peynir, turşu ve hardal konularak pres makinesinde ısıtılarak hazırlanan yemektir."},
     "Mısır": {"yemek": "Mısır Kişeri", "ipucu": "Mercimek, makarna, pirinç ve nohut karışımının üzerine kızarmış soğan ve domates sosu dökülerek yapılan yemektir."},
     "Avustralya": {"yemek": "Avustralya Meat Pie (Etli Turta)", "ipucu": "Kıymalı ve soğanlı koyu sosun, ufalanan tereyağlı turta hamuruyla kaplanıp fırında pişirilmesiyle elde edilir."},
     "Endonezya": {"yemek": "Endonezya Nasi Goreng", "ipucu": "Haşlanmış pirincin soya sosu, sarımsak, sebze ve etle tavada karıştırılarak kavrulmasıdır."},
