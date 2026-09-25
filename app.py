@@ -644,7 +644,7 @@ def uniteye_ozel_soru_uret(ders, unite):
             soru = f"{kaynak_turu}<br><br><b>[Daily Routine]</b> Günlük rutini belirten ifade hangisidir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
 
-   # --- BİLGİ YARIŞMASI (DÜNYA BAŞKENTLERİ, TÜRK VE DÜNYA MUTFAĞI ENTEGRASYONU) ---
+   # --- BİLGİ YARIŞMASI KATEGORİLERİ ---
     else:
         if "Başkentleri ve Coğrafya" in unite:
             ulke, dogru = random.choice(list(DUNYA_ULKELERI.items()))
@@ -658,11 +658,9 @@ def uniteye_ozel_soru_uret(ders, unite):
             sehir, veri = random.choice(list(TURK_MUTFAGI_YORESEL.items()))
             dogru = veri["yemek"]
             ipucu = veri["ipucu"]
-            
             tum_lezzetler = [v["yemek"] for v in TURK_MUTFAGI_YORESEL.values()]
             yanlis_havuzu = [l for l in tum_lezzetler if l != dogru]
             yanlislar = random.sample(yanlis_havuzu, 3)
-            
             soru = f"{kaynak_turu}<br><br>🍲 <b>[Bilgi Yarışması - Türk Mutfağı]</b><br><i>'{ipucu}'</i><br><br>Yukarıda tarifi/özellikleri verilen ve <b>{sehir}</b> ile özdeşleşen yöresel lezzetimiz hangisidir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
             
@@ -670,22 +668,20 @@ def uniteye_ozel_soru_uret(ders, unite):
             ulke, veri = random.choice(list(DUNYA_MUTFAGI_LEZZETLER.items()))
             dogru = veri["yemek"]
             ipucu = veri["ipucu"]
-            
             tum_lezzetler = [v["yemek"] for v in DUNYA_MUTFAGI_LEZZETLER.values()]
             yanlis_havuzu = [l for l in tum_lezzetler if l != dogru]
             yanlislar = random.sample(yanlis_havuzu, 3)
-            
             soru = f"{kaynak_turu}<br><br>🌍 <b>[Bilgi Yarışması - Dünya Mutfakları]</b><br><i>'{ipucu}'</i><br><br>Yukarıda yapım özellikleri verilen meşhur lezzet hangi ülkenin mutfağına aittir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
-            
-        elif "Genel Kültür " in unite:
+
+        elif "Genel Kültür ve Eğlenceli Bilgiler" in unite:
             secilen = random.choice(GENEL_KULTUR_SORULARI)
             dogru = secilen["dogru"]
             tum_siklar = secilen["siklar"]
             soru = f"{kaynak_turu}<br><br>🧠 <b>[Bilgi Yarışması - Genel Kültür]</b><br>{secilen['soru']}"
             return {"soru": soru, "siklar": tum_siklar, "dogru": dogru}
+            
         else:
-            # Diğer bilgi yarışması kategorileri için standart akış
             dogru = "Ankara"
             yanlislar = ["İstanbul", "İzmir", "Bursa"]
             soru = f"{kaynak_turu}<br><br>🏆 <b>[Bilgi Yarışması]</b> Türkiye Cumhuriyeti'nin başkenti neresidir?"
