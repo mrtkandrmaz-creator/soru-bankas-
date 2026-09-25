@@ -113,7 +113,7 @@ for h in range(1, 41):
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 # =========================================================
-# 3. PROFESYONEL MEB UYUMLU SVG ÜÇGEN ÇİZİM MOTORU (GÜNCELLENDİ)
+# 3. PROFESYONEL MEB UYUMLU SVG ÜÇGEN ÇİZİM MOTORU
 # =========================================================
 def svg_ucgen_ciz(tip, tepe_aci, sol_aci, sag_aci):
     """MEB soru kitapçıklarına birebir uyumlu, harflendirmesi tepeden başlayan SVG üçgen şeması üretir."""
@@ -273,7 +273,7 @@ def uniteye_ozel_soru_uret(ders, unite):
                 dar2 = kalan - dar1
                 dogru = f"{genis_aci}°"
                 yanlislar = [f"{genis_aci - 15}°", f"90°", f"{genis_aci + 10}°"]
-                svg_gorsel = svg_ucgen_ciz("cesitkenar", genis_aci, dar1, dar2)
+                svg_gorsel = svg_ucgen_ciz("cesitkenar", "?", dar1, dar2) # Tepe açısı '?' olarak güncellendi
                 soru = (
                     f"{kaynak_turu}<br><br><b>[MEB Soru Bankası - Geniş Açılı Üçgen]</b><br>"
                     f"{svg_gorsel}<br>"
