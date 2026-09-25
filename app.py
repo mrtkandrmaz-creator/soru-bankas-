@@ -1221,7 +1221,7 @@ def uniteye_ozel_soru_uret(ders, unite):
             tum_lezzetler = [v["yemek"] for v in DUNYA_MUTFAGI_LEZZETLER.values()]
             yanlis_havuzu = [l for l in tum_lezzetler if l != dogru]
             yanlislar = random.sample(yanlis_havuzu, 3)
-            soru = f"{kaynak_turu}<br><br>🌍 <b>[Bilgi Yarışması - Dünya Mutfakları]</b><br><i>'{ipucu}'</i><br><br>Yukarıda yapım özellikleri verilen meşhur lezzet hangi ülkenin mutfağına aittir?"
+            soru = f"{kaynak_turu}<br><br>🌍 <b>[Bilgi Yarışması - Dünya Mutfakları]</b><br><i>'{ipucu}'</i><br><br>Yukarıda yapım özellikleri verilen meşhur lezzet hangisidir ve hangi ülkenin mutfağına aittir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
 
         elif "Genel Kültür" in unite or "Eğlenceli Bilgiler" in unite:
