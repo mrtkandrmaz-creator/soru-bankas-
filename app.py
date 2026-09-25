@@ -284,7 +284,7 @@ DUNYA_MUTFAGI_LEZZETLER = {
     "Hollanda": {"yemek": "Hollanda Stroopwafel", "ipucu": "İki ince waffle katmanının arasına karamel bazlı şurup sürülerek yapıştırılan tatlı bisküvidir."},
     "Danimarka": {"yemek": "Danimarka Hamur İşi (Danish)", "ipucu": "Tereyağlı hamur katmanlarının arasına reçel, çikolata veya krem peynir sürülerek hazırlanan tatlı hamur işidir."},
     "Norveç": {"yemek": "Norveç Lutefisk", "ipucu": "Kurutulmuş beyaz balığın su ve sodalı potas çözeltisinde bekletilip fırınlanmasıyla yapılan geleneksel yemektir."},
-    "Finlandiya": {"yemek": "Finlandiya Lohikeitto", "ipucu": "Taze somon balığı parçaları, patates, pırasa ve krema ile yapılan lezzetli Fin balık çorbasıdır."},
+    "Finlandiya": {"yemek": "Finlandiya Lohikeitto", "ipucu": "Taze somon balığı parçaları, patates, pırasa ve krema ile yapılan lezzetli balık çorbasıdır."},
     "İrlanda": {"yemek": "İrlanda Irish Stew (Yahni)", "ipucu": "Kuzu eti, patates, soğan ve havuç kullanılarak ağır ateşte güveçte pişirilen geleneksel yemektir."},
     "Romanya": {"yemek": "Romanya Sarmale", "ipucu": "Lahana yapraklarının içine kıymalı ve pirinçli harç sarılarak kısık ateşte domates sosuyla pişirilmesidir."},
     "Bulgaristan": {"yemek": "Bulgaristan Tarator Çorbası", "ipucu": "Yoğurt, salatalık, sarımsak, zeytinyağı ve cevizle yapılan soğuk servis edilen yaz çorbasıdır."},
