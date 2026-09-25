@@ -26,7 +26,7 @@ if "toplam_sure_sn" not in st.session_state:
     st.session_state["toplam_sure_sn"] = 0
 
 # =========================================================
-# 2. DERSLER VE MÜFREDAT YAPISI
+# 2. DERSLER VE MEB MÜFREDAT SIRASI
 # =========================================================
 DERS_ONCELIK_SIRASI = [
     "Türkçe",
@@ -111,20 +111,16 @@ for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
 # =========================================================
-# 3. HAVUZ VERİLERİ (UYUMLULUK DÜZENLEMELERİYLE)
+# 3. SORU HAVUZU
 # =========================================================
-ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz", "Yusuf", "İpek", "Emre", "Ceren", "Tarık", "Lale", "Beste", "Berk", "Aslı"]
+ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 FEN_UNITE_1_MATRIS = [
     ("Güneş'in küre şeklinde olduğunu ve kendi ekseni etrafında döndüğünü ilk savunan veya gözleyen bilimsel gerçeklik aşağıdakilerden hangisidir?", "Güneş de tıpkı Dünya gibi kendi ekseni etrafında döner ve küresel şekle sahiptir.", ["Güneş tamamen hareketsiz ve düz bir levhadır.", "Güneş sadece etrafına ışık saçar, dönme hareketi yapmaz.", "Güneş, Dünya'nın etrafında döner."]),
     ("Dünya'mızın şekli geoit olarak adlandırılır. Bu şeklin temel sebebi nedir?", "Kutuplardan basık, ekvatordan şişkin olması.", ["Tamamen kusursuz bir daire olması.", "Küp şeklinde köşeli olması.", "Sürekli büyüklüğünün değişmesi."]),
     ("Ay'ın Dünya'ya göre büyüklüğü nasıldır?", "Dünya'nın büyüklüğü Ay'ınkinden çok büyüktür (yaklaşık 4 katı çap oranında).", ["Ay, Dünya'dan çok daha büyüktür.", "Dünya ile Ay tamamen aynı boyuttadır.", "Ay, Güneş ile aynı boyuttadır."]),
     ("Ay'ın ana evreleri sırasıyla hangi seçenekte doğru verilmiştir?", "Yeniay -> İlk Dördün -> Dolunay -> Son Dördün", ["Dolunay -> Yeniay -> Son Dördün -> İlk Dördün", "İlk Dördün -> Dolunay -> Yeniay -> Son Dördün", "Yeniay -> Dolunay -> İlk Dördün -> Son Dördün"]),
-    ("Dünya'nın kendi ekseni etrafında bir tam tur dönmesi sonucunda ne oluşur?", "Gece ve gündüz", ["Mevsimler", "Yıl", "Ay'ın evreleri"]),
-    ("Dünya'nın Güneş etrafında dolanma hareketi ne kadar sürer?", "1 yıl (365 gün 6 saat)", ["1 gün (24 saat)", "1 ay (29.5 gün)", "1 hafta"]),
-    ("Ay'ın ana evreleri arasında yaklaşık ne kadar süre geçer?", "Yaklaşık 1 hafta (7-8 gün)", ["24 saat", "1 yıl", "6 ay"]),
-    ("Ay'ın ışık kaynağı olma durumu nedir?", "Ay bir ışık kaynağı değildir, Güneş'ten aldığı ışığı yansıtır.", ["Kendi başına büyük bir ışık kaynağıdır.", "Geceleri kendi enerjisiyle parlar.", "Hiçbir şekilde ışık yaymaz ve yansıtmaz."]),
-    ("Güneş, Dünya ve Ay'ın büyüklükleri büyükten küçüğe doğru hangi seçenekte doğru sıralanmıştır?", "Güneş > Dünya > Ay", ["Dünya > Güneş > Ay", "Ay > Dünya > Güneş", "Güneş > Ay > Dünya"])
+    ("Dünya'nın kendi ekseni etrafında bir tam tur dönmesi sonucunda ne oluşur?", "Gece ve gündüz", ["Mevsimler", "Yıl", "Ay'ın evreleri"])
 ]
 
 TURKCE_ANLAM = [
@@ -133,68 +129,71 @@ TURKCE_ANLAM = [
 ]
 
 # =========================================================
-# 4. HİBRİT SORU ÜRETİCİ (%75 AI - %25 Havuz)
+# 4. %50 AI - %50 HAVUZ VE MEB SIRALI ÜRETİCİ
 # =========================================================
 def yapay_zekadan_soru_uret(ders, unite):
     kisi = random.choice(ISIMLER)
-    
     if ders == "Matematik":
         sayi = random.randint(1000, 99999)
         dogru = str(sayi)
         yanlislar = [str(sayi + 10), str(sayi - 5), str(sayi + 100)]
-        siklar = [dogru] + yanlislar
-        return {"soru": f"🤖 [AI-Üretim] {kisi} <b>{sayi}</b> sayısını incelemektedir. Bu sayının doğru ifadesi aşağıdakilerden hangisidir?", "siklar": siklar, "dogru": dogru, "gorsel_svg": None}
-        
+        return {"soru": f"🤖 [AI] {kisi} <b>{sayi}</b> sayısını incelemektedir. Bu sayının okunuşu veya basamak değeriyle ilgili doğru ifade hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
     elif ders == "Fen Bilimleri":
-        dogru = "Bilimsel olarak doğrudur"
-        yanlislar = ["Tamamen yanlıştır", "Hacmi etkilemez", "Isı yaymaz"]
-        return {"soru": f"🤖 [AI-Üretim] {kisi}'in fen laboratuvarında gözlemlediği deney sonucuna göre doğru ifade hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru, "gorsel_svg": None}
-        
+        dogru = "Bilimsel olarak gözlemlenen doğrudur."
+        yanlislar = ["Tamamen yanlıştır.", "Isı yaymaz.", "Kütlesi sıfırdır."]
+        return {"soru": f"🤖 [AI] {kisi}'in <b>{unite}</b> konusunda laboratuvarda yaptığı deneyde ulaştığı doğru sonuç hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
     else:
-        dogru = "Doğru Seçenek A"
-        yanlislar = ["Çeldirici B", "Çeldirici C", "Çeldirici D"]
-        return {"soru": f"🤖 [AI-Üretim] {kisi} tarafından hazırlanan özgün <b>{unite}</b> kazanım sorusu...", "siklar": [dogru] + yanlislar, "dogru": dogru, "gorsel_svg": None}
+        dogru = "Doğru ifade veya kural budur."
+        yanlislar = ["Yanlış çeldirici 1", "Yanlış çeldirici 2", "Yanlış çeldirici 3"]
+        return {"soru": f"🤖 [AI] <b>{ders} ({unite})</b> kazanımıyla ilgili olarak {kisi} bir soru hazırlamıştır. Hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
 def havuzdan_soru_uret(ders, unite):
-    if ders == "Fen Bilimleri":
+    if ders == "Fen Bilimleri" and FEN_UNITE_1_MATRIS:
         q, ans, celd = random.choice(FEN_UNITE_1_MATRIS)
-        return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
-    elif ders == "Türkçe":
+        return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans}
+    elif ders == "Türkçe" and TURKCE_ANLAM:
         q, ans, celd = random.choice(TURKCE_ANLAM)
-        return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
+        return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans}
     else:
-        dogru = "Cevap 1"
-        yanlislar = ["Cevap 2", "Cevap 3", "Cevap 4"]
-        return {"soru": f"📚 [Havuz] <b>{unite}</b> ile ilgili standart soru...", "siklar": [dogru] + yanlislar, "dogru": dogru, "gorsel_svg": None}
+        dogru = "Standart Havuz Doğru Cevabı"
+        yanlislar = ["Çeldirici A", "Çeldirici B", "Çeldirici C"]
+        return {"soru": f"📚 [Havuz] <b>{unite}</b> ünitesine ait temel soru metni...", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
-def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
+def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
         return []
 
-    toplam_secilen = len(secilen_uniteler)
+    # Üniteleri MEB_ONCELIK_SIRASI na göre sırala
+    sirali_uniteler = []
+    for d in DERS_ONCELIK_SIRASI:
+        for item in secilen_uniteler:
+            if item[0] == d and item not in sirali_uniteler:
+                sirali_uniteler.append(item)
+                
+    toplam_secilen = len(sirali_uniteler)
     temel_pay = hedef_sayi // toplam_secilen
     kalan = hedef_sayi % toplam_secilen
 
     ham_soru_listesi = []
     hash_set = set()
 
-    for idx, (ders, unite) in enumerate(secilen_uniteler):
+    for idx, (ders, unite) in enumerate(sirali_uniteler):
         bu_unite_hedef = temel_pay + (1 if idx < kalan else 0)
         
-        ai_hedef = int(bu_unite_hedef * 0.75)
+        # %50 AI - %50 Havuz Dağılımı
+        ai_hedef = bu_unite_hedef // 2
         havuz_hedef = bu_unite_hedef - ai_hedef
 
-        # Yapay Zeka Soruları
+        # Yapay Zeka Soruları (%50)
         uretilen = 0
         while uretilen < ai_hedef:
             s = yapay_zekadan_soru_uret(ders, unite)
             s["ders"] = ders
             s["unite"] = unite
             
-            # Şıkları rastgele karıştır ama doğru cevabın listede olduğundan ve eşleştiğinden emin ol
             correct_ans = s["dogru"]
             random.shuffle(s["siklar"])
-            if correct_ans not in s["siklar"]: # Güvenlik önlemi
+            if correct_ans not in s["siklar"]:
                 s["siklar"][0] = correct_ans
                 random.shuffle(s["siklar"])
                 
@@ -204,7 +203,7 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
                 ham_soru_listesi.append(s)
                 uretilen += 1
 
-        # Havuz Soruları
+        # Havuz Soruları (%50)
         uretilen = 0
         while uretilen < havuz_hedef:
             s = havuzdan_soru_uret(ders, unite)
@@ -223,16 +222,18 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
                 ham_soru_listesi.append(s)
                 uretilen += 1
 
-    for _ in range(3):
-        random.shuffle(ham_soru_listesi)
+    # Ders sırasını koruyarak aynı dersin sorularını kendi içinde kümele
+    nihai_liste = []
+    for ders_adi in DERS_ONCELIK_SIRASI:
+        ders_sorulari = [s for s in ham_soru_listesi if s["ders"] == ders_adi]
+        nihai_liste.extend(ders_sorulari)
 
-    return ham_soru_listesi[:hedef_sayi]
+    return nihai_liste[:hedef_sayi]
 
 # =========================================================
 # 5. STREAMLIT ARAYÜZÜ (SOL MENÜ)
 # =========================================================
 st.title("🎓 MEB 5. Sınıf Soru Bankası & Deneme Sınavı Motoru")
-
 st.sidebar.header("⚙️ Müfredat ve Sınav Ayarları")
 
 is_disabled = st.session_state["test_aktif"] or st.session_state["sorular_hazir"]
@@ -272,38 +273,24 @@ if mod_bilgi:
                 secilen_uniteler.append(("🏆 Bilgi Yarışması", u))
 
 st.sidebar.divider()
-
-soru_sayisi = st.sidebar.slider(
-    "Toplam Soru Sayısı:", 
-    min_value=20, 
-    max_value=100, 
-    value=20, 
-    step=5, 
-    disabled=is_disabled
-)
+soru_sayisi = st.sidebar.slider("Toplam Soru Sayısı:", min_value=20, max_value=100, value=20, step=5, disabled=is_disabled)
 
 st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🚀 Hazırla ve Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            tahmini_sure = max(3, int((soru_sayisi * len(secilen_uniteler)) / 120))
-            
             status_box = st.empty()
             progress_bar = st.progress(0)
             
-            for kalan_sn in range(tahmini_sure, 0, -1):
-                progress_yuzdesi = int(((tahmini_sure - kalan_sn + 1) / tahmini_sure) * 100)
-                progress_bar.progress(min(progress_yuzdesi, 95))
-                status_box.info(
-                    f"🤖 Soruların %75'i yapay zekadan, %25'i yerel havuzdan harmanlanıyor... "
-                    f"Kalan tahmini süre: **{kalan_sn} saniye**"
-                )
-                time.sleep(1)
+            for sn in range(3, 0, -1):
+                progress_bar.progress(int((4 - sn) * 25))
+                status_box.info(f"🔄 %50 AI ve %50 Havuz soruları MEB sırasına göre harmanlanıyor... ({sn}s)")
+                time.sleep(0.5)
             
-            sorular = ders_sirali_soru_uret(secilen_uniteler, soru_sayisi)
+            sorular = ders_sirali_ve_dengeli_uret(secilen_uniteler, soru_sayisi)
             
             progress_bar.progress(100)
-            status_box.success("✅ Hibrit sorular başarıyla hazırlandı!")
+            status_box.success("✅ Sorular MEB sıralamasına göre hazırlandı!")
             time.sleep(0.5)
             
             st.session_state["soru_listesi"] = sorular
@@ -311,7 +298,7 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
             st.session_state["sorular_hazir"] = True
             st.rerun()
         else:
-            st.sidebar.error("⚠️ Lütfen sol menüden en az bir mod ve ünite seçimi yapın!")
+            st.sidebar.error("⚠️ Lütfen en az bir mod ve ünite seçimi yapın!")
 
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🔄 Yeniden Hazırla", use_container_width=True):
@@ -321,10 +308,10 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
         st.rerun()
 
 # =========================================================
-# 6. TEST EKRANI VE SONUÇ GÖSTERİMİ
+# 6. TEST EKRANI
 # =========================================================
 if st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet hibrit soru** (%75 AI - %25 Havuz) başarıyla hazırlandı!")
+    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet soru** Türkçe $\rightarrow$ Matematik $\rightarrow$ Fen... sırasıyla hazır!")
     if st.button("🏁 Sınavı Şimdi Başlat", type="primary", use_container_width=True):
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
@@ -337,22 +324,18 @@ if st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     if idx < len(soru_listesi):
         s = soru_listesi[idx]
         
-        st.subheader(f"Soru {idx + 1} / {len(soru_listesi)} ({s['ders']} - {s['unite']})")
+        st.subheader(f"Soru {idx + 1} / {len(soru_listesi)} | Ders: **{s['ders']}** ({s['unite']})")
         st.markdown(s["soru"], unsafe_allow_html=True)
         
-        if s.get("gorsel_svg"):
-            st.markdown(s["gorsel_svg"], unsafe_allow_html=True)
-            
-        # Önceden seçili gelme (hazır gelme) sorununu çözmek için index=None kullanıldı
         onceki_cevap = st.session_state["kullanici_cevaplari"].get(idx)
         secim_index = s["siklar"].index(onceki_cevap) if onceki_cevap in s["siklar"] else None
             
+        # index=None ile hazır/seçili gelme sorunu tamamen giderildi
         secim = st.radio(
             "Seçenekleriniz:", 
             s["siklar"], 
             key=f"soru_r_{idx}",
-            index=secim_index,
-            placeholder="Lütfen bir seçenek seçiniz..."
+            index=secim_index
         )
         
         col1, col2 = st.columns(2)
