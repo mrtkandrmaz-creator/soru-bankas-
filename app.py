@@ -208,7 +208,17 @@ TURK_MUTFAGI_YORESEL = {
     "İstanbul": "Balık Ekmek" ,
     "Edirne": "Çiğer Tava / Badem Ezmesi",
     "Kırklareli": "Papaz Yahnisi",
-    "Balıkesir": "Höşmerim"
+    "Balıkesir": "Höşmerim",
+    "Çanakkale": "Peynir Helvası",
+    "Osmaniye": "Yer Fıstığı",
+    "Bilecik": "Büzme tatlısı / keklik kebabı",
+    "Sakarya ": "Islama Köfte ",
+    "Düzce": "Çerkez Tavuğu / Akçakoca Melengücü Tatlısı",
+    "Aydın": "Çine köftesi / Keşkek",
+    "Kütahya": "Cimcik / Sıkıcık Çorbası",
+    "Antalya": "Piyaz / Hibeş",
+    "Isparta": "Kabune Pilavı",
+    "Kırşehir": "Çullama",
 }
 # =========================================================
 # 3. SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
