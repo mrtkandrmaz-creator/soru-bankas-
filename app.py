@@ -110,83 +110,150 @@ for h in range(1, 41):
     i_idx = min((h - 1) // 10, len(MEB_MUFREDAT["İngilizce"]) - 1)
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
-# =========================================================
-# 3. ZENGİN VE GERÇEKÇİ SORU HAVUZU
-# =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
-FEN_UNITE_1_MATRIS = [
-    ("Güneş'in küre şeklinde olduğunu ve kendi ekseni etrafında döndüğünü ilk savunan veya gözleyen bilimsel gerçeklik aşağıdakilerden hangisidir?", "Güneş de tıpkı Dünya gibi kendi ekseni etrafında döner ve küresel şekle sahiptir.", ["Güneş tamamen hareketsiz ve düz bir levhadır.", "Güneş sadece etrafına ışık saçar, dönme hareketi yapmaz.", "Güneş, Dünya'nın etrafında döner."]),
-    ("Dünya'mızın şekli geoit olarak adlandırılır. Bu şeklin temel sebebi nedir?", "Kutuplardan basık, ekvatordan şişkin olması.", ["Tamamen kusursuz bir daire olması.", "Küp şeklinde köşeli olması.", "Sürekli büyüklüğünün değişmesi."]),
-    ("Ay'ın Dünya'ya göre büyüklüğü nasıldır?", "Dünya'nın büyüklüğü Ay'ınkinden çok büyüktür (yaklaşık 4 katı çap oranında).", ["Ay, Dünya'dan çok daha büyüktür.", "Dünya ile Ay tamamen aynı boyuttadır.", "Ay, Güneş ile aynı boyuttadır."]),
-    ("Ay'ın ana evreleri sırasıyla hangi seçenekte doğru verilmiştir?", "Yeniay -> İlk Dördün -> Dolunay -> Son Dördün", ["Dolunay -> Yeniay -> Son Dördün -> İlk Dördün", "İlk Dördün -> Dolunay -> Yeniay -> Son Dördün", "Yeniay -> Dolunay -> İlk Dördün -> Son Dördün"]),
-    ("Dünya'nın kendi ekseni etrafında bir tam tur dönmesi sonucunda ne oluşur?", "Gece ve gündüz", ["Mevsimler", "Yıl", "Ay'ın evreleri"])
-]
-
-TURKCE_ANLAM = [
-    ("Aşağıdaki cümlelerin hangisinde 'çıkmak' sözcüğü 'ortaya çıkmak, görünmek' anlamında kullanılmıştır?", "Güneş yavaş yavaş dağların arkasından çıkıyordu.", ["Bu gömlek bana biraz küçük çıktı.", "Merdivenleri çıkarken çok yoruldum.", "Toplantıdan erken çıkmak zorunda kaldım."]),
-    ("Aşağıdaki cümlelerin hangisinde 'neden-sonuç' ilişkisi vardır?", "Hava yağmurlu olduğu için pikniği iptal ettik.", ["Ders çalışmak üzere odasına çekildi.", "Erken kalkarsa otobüse yetişebilir.", "Sokakta yürürken eski bir arkadaşıyla karşılaştı."])
-]
-
 # =========================================================
-# 4. TAMAMEN UYUMLU %50 AI - %50 HAVUZ ÜRETİCİ
+# 3. MEB SORU TİPLERİNE UYGUN DİNAMİK SORU ÜRETİCİ
 # =========================================================
-def yapay_zekadan_soru_uret(ders, unite):
+def dinamik_soru_uret(ders, unite):
     kisi = random.choice(ISIMLER)
     
     if ders == "Matematik":
-        sayi1 = random.randint(150, 850)
-        sayi2 = random.randint(15, 85)
-        toplam = sayi1 + sayi2
-        yanlis1 = toplam + random.choice([3, 10, -5])
-        yanlis2 = toplam + random.choice([7, 20, -12])
-        yanlis3 = toplam + random.choice([4, 15, -8])
-        siklar = [str(toplam), str(yanlis1), str(yanlis2), str(yanlis3)]
-        return {
-            "soru": f"🤖 [AI] {kisi}, kırtasiyeden aldığı <b>{sayi1}</b> TL'lik hikaye kitabı ile <b>{sayi2}</b> TL'lik boya kalemine toplam kaç TL ödemelidir?",
-            "siklar": siklar,
-            "dogru": str(toplam)
-        }
-        
+        tip = random.choice(["islem", "problem", "sayi_oruntusu"])
+        if tip == "islem":
+            a = random.randint(1200, 8900)
+            b = random.randint(300, 1500)
+            islem_turu = random.choice(["toplam", "fark"])
+            if islem_turu == "toplam":
+                dogru = a + b
+                soru = f"<b>[İşlem Sorusu]</b> İşlemin sonucu kaçtır?<br><br><b>{a} + {b} = ?</b>"
+            else:
+                if a < b: a, b = b, a
+                dogru = a - b
+                soru = f"<b>[İşlem Sorusu]</b> İşlemin sonucu kaçtır?<br><br><b>{a} - {b} = ?</b>"
+            
+            y1 = dogru + random.randint(5, 25)
+            y2 = dogru - random.randint(3, 20)
+            y3 = dogru + random.randint(30, 80)
+            siklar = [str(dogru), str(y1), str(y2), str(y3)]
+            return {"soru": soru, "siklar": siklar, "dogru": str(dogru)}
+            
+        elif tip == "problem":
+            urun = random.choice(["bilgisayar", "bisiklet", "televizyon", "tablet"])
+            fiyat = random.randint(1500, 6000)
+            taksit = random.choice([4, 6, 8, 10])
+            dogru = fiyat // taksit
+            # Tam bölünme garantisi için ayarlayalım
+            fiyat = dogru * taksit
+            
+            y1 = dogru + random.choice([25, 50, 100])
+            y2 = dogru - random.randint(10, 40)
+            y3 = dogru + random.randint(150, 250)
+            siklar = [str(dogru), str(y1), str(y2), str(y3)]
+            return {
+                "soru": f"<b>[Problem Analizi]</b> {kisi}, fiyatı <b>{fiyat} TL</b> olan bir {urun} satın almıştır. Bu tutarı <b>{taksit}</b> eşit taksitte ödeyeceğine göre, bir aylık taksit tutarı kaç TL olur?",
+                "siklar": siklar,
+                "dogru": str(dogru)
+            }
+        else:
+            baslangic = random.randint(5, 20)
+            artis = random.randint(3, 9)
+            dizi = [baslangic + i * artis for i in range(4)]
+            dogru = dizi[-1] + artis
+            soru = f"<b>[Örüntü Sorusu]</b> Aşağıdaki sayı örüntüsünde soru işaretli (?) yerine hangi sayı gelmelidir?<br><br><b>{dizi[0]} - {dizi[1]} - {dizi[2]} - {dizi[3]} - ?</b>"
+            y1 = dogru + artis
+            y2 = dogru - 2
+            y3 = dogru + 5
+            siklar = [str(dogru), str(y1), str(y2), str(y3)]
+            return {"soru": soru, "siklar": siklar, "dogru": str(dogru)}
+
     elif ders == "Fen Bilimleri":
-        dogru = "Kendi ekseni etrafında batıdan doğuya doğru döner."
-        yanlislar = [
-            "Dünya etrafında dolanma hareketi yapmaz, tamamen sabittir.",
-            "Sadece çevresine ısı yayar, kendi etrafında dönmez.",
-            "Şekli kübik olup hiç hareket etmeyen bir gök cismidir."
-        ]
-        return {
-            "soru": f"🤖 [AI] {kisi}, fen bilimleri projesinde Güneş'in temel özelliklerini incelemektedir. Buna göre Güneş için aşağıdakilerden hangisi doğrudur?",
-            "siklar": [dogru] + yanlislar,
-            "dogru": dogru
-        }
-        
+        tip = random.choice(["oncul", "tablo", "yorumlama"])
+        if tip == "oncul":
+            dogru = "Yalnız I ve II"
+            yanlislar = ["Yalnız III", "I, II ve III", "Yalnız II"]
+            return {
+                "soru": f"<b>[Öncüllü Soru]</b> {kisi}, Güneş, Dünya ve Ay ile ilgili şu bilgileri vermiştir:<br>I. Güneş kendi ekseni etrafında döner.<br>II. Dünya'nın tek doğal uydusu Ay'dır.<br>III. Ay'ın kendi ışık kaynağı vardır.<br><br><b>Yukarıdaki ifadelerden hangileri doğrudur?</b>",
+                "siklar": [dogru] + yanlislar,
+                "dogru": dogru
+            }
+        elif tip == "tablo":
+            dogru = "Güneş, Dünya'dan çok daha büyük ve sıcaktır."
+            yanlislar = [
+                "Dünya, Güneş'ten daha büyüktür.",
+                "Ay, Güneş ile aynı boyuttadır.",
+                "Güneş ve Ay'ın sıcaklık değerleri eşittir."
+            ]
+            return {
+                "soru": f"<b>[Karşılaştırma Soru Tipi]</b> {kisi} gök cisimlerinin büyüklük ve sıcaklık özelliklerini karşılaştırıyor. Aşağıdaki yargılardan hangisi bilimsel olarak doğrudur?",
+                "siklar": [dogru] + yanlislar,
+                "dogru": dogru
+            }
+        else:
+            dogru = "Yeniay -> İlk Dördün -> Dolunay -> Son Dördün"
+            yanlislar = [
+                "Dolunay -> Yeniay -> Son Dördün -> İlk Dördün",
+                "İlk Dördün -> Dolunay -> Yeniay -> Son Dördün",
+                "Yeniay -> Dolunay -> İlk Dördün -> Son Dördün"
+            ]
+            return {
+                "soru": f"<b>[Görsel / Sıralama Soru Tipi]</b> Ay'ın ana evrelerinin doğru kronolojik sıralaması hangi seçenekte eksiksiz verilmiştir?",
+                "siklar": [dogru] + yanlislar,
+                "dogru": dogru
+            }
+
     elif ders == "Türkçe":
-        dogru = "Hava yağmurlu olduğu için yarışma ertelendi."
-        yanlislar = [
-            "Sabah erkenden kalkıp kahvaltısını yaptı.",
-            "Kitap okumak üzere odasına geçip oturdu.",
-            "Yarın akşam ailece sinemaya gideceğiz."
-        ]
-        return {
-            "soru": f"🤖 [AI] {kisi} Türkçe dersinde neden-sonuç (gerekçe) cümleleri üzerine çalışmaktadır. Aşağıdakilerden hangisi bir neden-sonuç cümlesidir?",
-            "siklar": [dogru] + yanlislar,
-            "dogru": dogru
-        }
-        
+        tip = random.choice(["sozcuk_anlam", "cumle_anlam", "noktalama"])
+        if tip == "sozcuk_anlam":
+            dogru = "Güneş yavaş yavaş tepelerin arkasından görünmeye başladı."
+            yanlislar = [
+                "Bu mont kardeşime biraz küçük geldi.",
+                "Toplantıdan en son ben ayrıldım.",
+                "Merdivenleri çıkarken nefes nefese kaldı."
+            ]
+            return {
+                "soru": f"<b>[Sözcükte Anlam]</b> 'Çıkmak' sözcüğü aşağıdaki cümlelerin hangisinde <u>'ortaya çıkmak, görünmek'</u> anlamında kullanılmıştır?",
+                "siklar": [dogru] + yanlislar,
+                "dogru": dogru
+            }
+        elif tip == "cumle_anlam":
+            dogru = "Hava sağanak yağışlı olduğundan maç ertelendi."
+            yanlislar = [
+                "Başarılı olmak için her gün düzenli ders çalışıyor.",
+                "Sabah uyanınca elini yüzünü yıkadı.",
+                "Yarın akşam eski arkadaşlarıyla buluşacak."
+            ]
+            return {
+                "soru": f"<b>[Cümlede Anlam]</b> Aşağıdaki cümlelerin hangisinde <u>neden-sonuç (gerekçe)</u> ilişkisi vardır?",
+                "siklar": [dogru] + yanlislar,
+                "dogru": dogru
+            }
+        else:
+            dogru = "Eyvah, elimdeki bardak yere düştü!"
+            yanlislar = [
+                "Bugün okulda hangi dersleri işlediniz?",
+                "Ödevlerimi bitirip odamı topladım.",
+                "Ankara Türkiye'nin başkentidir."
+            ]
+            return {
+                "soru": f"<b>[Noktalama İşaretleri]</b> Aşağıdaki cümlelerin hangisinde <u>ünlem işareti (!)</u> yanlış ya da gereksiz kullanılmıştır?",
+                "siklar": [dogru] + yanlislar,
+                "dogru": dogru
+            }
+
     elif ders == "Sosyal Bilgiler":
-        dogru = "Aile bütçesine katkı sağlamak ve ev işlerinde yardımlaşmak"
+        dogru = "Aile bütçesine katkı sağlamak ve ortak ev işlerinde yardımlaşmak"
         yanlislar = [
             "Evdeki tüm kuralları tek başına değiştirmek",
-            "Gün boyunca sadece kendi odasında vakit geçirmek",
-            "Hiçbir sorumluluk almadan dışarıda oynamak"
+            "Gün boyu sadece kendi odasında vakit geçirmek",
+            "Hiçbir sorumluluk almadan dışarıda oyun oynamak"
         ]
         return {
-            "soru": f"🤖 [AI] {kisi}, 'Birey ve Toplum' ünitesinde sorumluluklar konusunu işlemektedir. Buna göre bir çocuğun ev içi temel sorumluluklarından biri hangisidir?",
+            "soru": f"<b>[Sözel Mantık / Öncül]</b> {kisi}, 'Birey ve Toplum' ünitesinde ev içi hak ve sorumlulukları incelemektedir. Buna göre bir çocuğun ev içerisindeki temel sorumluluklarından biri hangisidir?",
             "siklar": [dogru] + yanlislar,
             "dogru": dogru
         }
-        
+
     elif ders == "Din Kültürü ve Ahlak Bilgisi":
         dogru = "Evrendeki kusursuz düzen, uyum ve planlı yaratılış"
         yanlislar = [
@@ -195,11 +262,11 @@ def yapay_zekadan_soru_uret(ders, unite):
             "Mevsim döngülerinin tamamen düzensiz gerçekleşmesi"
         ]
         return {
-            "soru": f"🤖 [AI] {kisi}, 'Allah İnancı' ünitesinde evrendeki nizamı araştırmaktadır. Aşağıdakilerden hangisi Yaratıcı'nın varlığına delil gösterilebilir?",
+            "soru": f"<b>[Kavram Analizi]</b> {kisi}, 'Allah İnancı' ünitesinde evrendeki nizamı araştırmaktadır. Aşağıdakilerden hangisi Yaratıcı'nın varlığına ve birliğine delil gösterilebilir?",
             "siklar": [dogru] + yanlislar,
             "dogru": dogru
         }
-        
+
     elif ders == "İngilizce":
         dogru = "I am from Turkey and I am Turkish."
         yanlislar = [
@@ -208,35 +275,19 @@ def yapay_zekadan_soru_uret(ders, unite):
             "I get up early in the morning."
         ]
         return {
-            "soru": f"🤖 [AI] {kisi} İngilizce dersinde kendisini tanıtmaktadır. Hangi ifade {kisi}'nin ülkesini ve milliyetini belirtir?",
-            "siklar": [dogru] + yanlislar,
-            "dogru": dogru
-        }
-        
-    else:
-        dogru = "Ankara"
-        yanlislar = ["İstanbul", "İzmir", "Bursa"]
-        return {
-            "soru": f"🏆 [Bilgi Yarışması] Türkiye Cumhuriyeti'nin başkenti hangi şehirdir?",
+            "soru": f"<b>[Diyalog / Tanışma]</b> {kisi} İngilizce dersinde kendisini tanıtmaktadır. Hangi ifade {kisi}'nin ülkesini ve milliyetini belirtir?",
             "siklar": [dogru] + yanlislar,
             "dogru": dogru
         }
 
-def havuzdan_soru_uret(ders, unite):
-    if ders == "Fen Bilimleri" and FEN_UNITE_1_MATRIS:
-        q, ans, celd = random.choice(FEN_UNITE_1_MATRIS)
-        return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans}
-    elif ders == "Türkçe" and TURKCE_ANLAM:
-        q, ans, celd = random.choice(TURKCE_ANLAM)
-        return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans}
     else:
-        dogru = f"{unite} kazanımına ait temel bilimsel/sözel doğru yanıt"
-        yanlislar = [
-            f"{unite} ile ilgili çelişkili veya yanıltıcı ifade",
-            "Konu dışı farklı bir tanım veya kural",
-            "Eksik bırakılmış kavram açıklaması"
+        secimler = [
+            ("Türkiye Cumhuriyeti'nin başkenti hangi şehirdir?", "Ankara", ["İstanbul", "İzmir", "Bursa"]),
+            ("Dünyanın en büyük okyanusu hangisidir?", "Pasifik Okyanusu", ["Atlantik Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"]),
+            ("Yer kabuğunun ana maddesi nedir?", "Kayaçlar ve mineraller", ["Sadece su kütleleri", "Saf demir tabakası", "Gaz bulutları"])
         ]
-        return {"soru": f"📚 [Havuz] <b>{unite}</b> ünitesine ait temel kazanım sorusu...", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        q, ans, celd = random.choice(secimler)
+        return {"soru": f"<b>[Genel Kültür]</b> {q}", "siklar": [ans] + celd, "dogru": ans}
 
 def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -257,33 +308,10 @@ def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
 
     for idx, (ders, unite) in enumerate(sirali_uniteler):
         bu_unite_hedef = temel_pay + (1 if idx < kalan else 0)
+        uretilen = 0
         
-        ai_hedef = bu_unite_hedef // 2
-        havuz_hedef = bu_unite_hedef - ai_hedef
-
-        # Yapay Zeka Soruları (%50)
-        uretilen = 0
-        while uretilen < ai_hedef:
-            s = yapay_zekadan_soru_uret(ders, unite)
-            s["ders"] = ders
-            s["unite"] = unite
-            
-            correct_ans = s["dogru"]
-            random.shuffle(s["siklar"])
-            if correct_ans not in s["siklar"]:
-                s["siklar"][0] = correct_ans
-                random.shuffle(s["siklar"])
-                
-            fingerprint = hashlib.sha256((s["soru"] + str(s["siklar"])).encode('utf-8')).hexdigest()
-            if fingerprint not in hash_set:
-                hash_set.add(fingerprint)
-                ham_soru_listesi.append(s)
-                uretilen += 1
-
-        # Havuz Soruları (%50)
-        uretilen = 0
-        while uretilen < havuz_hedef:
-            s = havuzdan_soru_uret(ders, unite)
+        while uretilen < bu_unite_hedef:
+            s = dinamik_soru_uret(ders, unite)
             s["ders"] = ders
             s["unite"] = unite
             
@@ -307,7 +335,7 @@ def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
     return nihai_liste[:hedef_sayi]
 
 # =========================================================
-# 5. STREAMLIT ARAYÜZÜ (SOL MENÜ)
+# 4. STREAMLIT ARAYÜZÜ (SOL MENÜ)
 # =========================================================
 st.title("🎓 MEB 5. Sınıf Soru Bankası & Deneme Sınavı Motoru")
 st.sidebar.header("⚙️ Müfredat ve Sınav Ayarları")
@@ -360,13 +388,13 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
             
             for sn in range(3, 0, -1):
                 progress_bar.progress(int((4 - sn) * 25))
-                status_box.info(f"🔄 Kaliteli ve uyumlu çeldiricilerle sorular harmanlanıyor... ({sn}s)")
+                status_box.info(f"🔄 Tamamen özgün MEB tarzı sorular üretiliyor... ({sn}s)")
                 time.sleep(0.5)
             
             sorular = ders_sirali_ve_dengeli_uret(secilen_uniteler, soru_sayisi)
             
             progress_bar.progress(100)
-            status_box.success("✅ Sorular başarıyla hazırlandı!")
+            status_box.success("✅ Sorular başarıyla oluşturuldu!")
             time.sleep(0.5)
             
             st.session_state["soru_listesi"] = sorular
@@ -384,20 +412,19 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
         st.rerun()
 
 # =========================================================
-# 6. TEST EKRANI
+# 5. TEST EKRANI
 # =========================================================
 if st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet soru** sırayla hazır!")
+    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet özgün soru** hazır!")
     if st.button("🏁 Sınavı Şimdi Başlat", type="primary", use_container_width=True):
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
         st.rerun()
 
 if st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    # Sınavın her anında bitirilebilmesi için üst kısma buton yerleştirildi
     top_col1, top_col2 = st.columns([4, 1])
     with top_col1:
-        st.info("💡 İstediğin an testi sonlandırıp sonuçlarını görebilirsin.")
+        st.info("💡 İstediğin an testi sonlandırıp puanını ve detaylı cevap anahtarını görebilirsin.")
     with top_col2:
         if st.button("🏁 Sınavı Bitir", type="secondary", use_container_width=True):
             st.session_state["test_aktif"] = False
@@ -416,7 +443,6 @@ if st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
         onceki_cevap = st.session_state["kullanici_cevaplari"].get(idx)
         secim_index = s["siklar"].index(onceki_cevap) if onceki_cevap in s["siklar"] else None
             
-        # index=None ile hazır/seçili gelme sorunu engellendi
         secim = st.radio(
             "Seçenekleriniz:", 
             s["siklar"], 
@@ -450,9 +476,12 @@ if st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
         st.session_state["test_bitti"] = True
         st.rerun()
 
+# =========================================================
+# 6. SONUÇLAR VE CEVAP ANAHTARI
+# =========================================================
 if st.session_state["test_bitti"]:
     st.balloons()
-    st.header("📊 Sınav Sonuçları")
+    st.header("📊 Sınav Sonuçları ve Detaylı Cevap Anahtarı")
     
     dogru_sayisi = 0
     yanlis_sayisi = 0
@@ -471,10 +500,24 @@ if st.session_state["test_bitti"]:
     puan = int((dogru_sayisi / toplam_soru) * 100) if toplam_soru > 0 else 0
     
     st.metric(label="Notunuz / Puanınız", value=f"{puan} Puan")
-    st.write(f"✅ Doğru Sayısı: **{dogru_sayisi}**")
-    st.write(f"❌ Yanlış Sayısı: **{yanlis_sayisi}**")
-    st.write(f"⚠️ Boş Sayısı: **{bos_sayisi}**")
+    st.write(f"✅ Doğru Sayısı: **{dogru_sayisi}** | ❌ Yanlış Sayısı: **{yanlis_sayisi}** | ⚠️ Boş Sayısı: **{bos_sayisi}**")
     
+    st.divider()
+    st.subheader("📝 Detaylı Cevap Anahtarı")
+    
+    for idx, s in enumerate(st.session_state["soru_listesi"]):
+        k_cevabi = st.session_state["kullanici_cevaplari"].get(idx, "Boş bırakıldı")
+        d_cevabi = s["dogru"]
+        
+        durum_ikonu = "✅" if k_cevabi == d_cevabi else "❌"
+        
+        with st.expander(f"Soru {idx + 1} ({s['ders']}) - {durum_ikonu}"):
+            st.markdown(s["soru"], unsafe_allow_html=True)
+            st.write(f"📌 **Ünite / Konu:** {s['unite']}")
+            st.write(f"👤 **Senin Cevabın:** {k_cevabi}")
+            st.write(f"🎯 **Doğru Cevap:** {d_cevabi}")
+
+    st.write("")
     if st.button("🔄 Yeni Sınav Başlat", type="primary"):
         st.session_state["sorular_hazir"] = False
         st.session_state["test_aktif"] = False
