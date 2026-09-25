@@ -221,6 +221,26 @@ TURK_MUTFAGI_YORESEL = {
     "Kırşehir": "Çullama",
 }
 # =========================================================
+# DÜNYA MUTFAKLARI VE LEZZETLER SÖZLÜĞÜ
+# =========================================================
+DUNYA_MUTFAGI_LEZZETLER = {
+    "İtalya": "Pizza / Makarna",
+    "Japonya": "Suşi / Ramen",
+    "Meksika": "Taco / Burrito",
+    "Çin": "Çin Mantısı / Noodle",
+    "Fransa": "Kroasan / Baget Ekmek",
+    "Hindistan": "Köri Soslu Tavuk / Naan Ekmeği",
+    "Amerika Birleşik Devletleri": "Hamburger / Hot Dog",
+    "Yunanistan": "Musakka / Souvlaki",
+    "İspanya": "Paella / Tapas",
+    "Lübnan": "Falafel / Humus",
+    "Brezilya": "Feijoada",
+    "Güney Kore": "Kimchi",
+    "Almanya": "Sosis / Prezel",
+    "Tayland": "Pad Thai",
+    "Arjantin": "Empanada"
+}
+# =========================================================
 # 3. SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
 # =========================================================
 def svg_ucgen_ciz(tip, tepe_aci, sol_aci, sag_aci):
@@ -491,7 +511,7 @@ def uniteye_ozel_soru_uret(ders, unite):
             soru = f"{kaynak_turu}<br><br><b>[Daily Routine]</b> Günlük rutini belirten ifade hangisidir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
 
-   # --- BİLGİ YARIŞMASI (DÜNYA BAŞKENTLERİ VE TÜRK MUTFAĞI ENTEGRASYONU) ---
+   # --- BİLGİ YARIŞMASI (DÜNYA BAŞKENTLERİ, TÜRK VE DÜNYA MUTFAĞI ENTEGRASYONU) ---
     else:
         if "Başkentleri ve Coğrafya" in unite:
             ulke, dogru = random.choice(list(DUNYA_ULKELERI.items()))
@@ -502,12 +522,26 @@ def uniteye_ozel_soru_uret(ders, unite):
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
             
         elif "Türk Mutfağı ve Yöresel Lezzetler" in unite:
-            # Sözlükten rastgele bir şehir ve yöresel lezzeti seçilir
             sehir, dogru = random.choice(list(TURK_MUTFAGI_YORESEL.items()))
             tum_lezzetler = list(TURK_MUTFAGI_YORESEL.values())
             yanlis_havuzu = [l for l in tum_lezzetler if l != dogru]
             yanlislar = random.sample(yanlis_havuzu, 3)
             soru = f"{kaynak_turu}<br><br>🍲 <b>[Bilgi Yarışması - Türk Mutfağı]</b> Aşağıdaki yöresel lezzetlerimizden hangisi <b>{sehir}</b> ile tanınır ve özdeşleşmiştir?"
+            return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
+            
+        elif "Dünya Mutfakları ve Lezzetler" in unite:
+            ulke, dogru = random.choice(list(DUNYA_MUTFAGI_LEZZETLER.items()))
+            tum_lezzetler = list(DUNYA_MUTFAGI_LEZZETLER.values())
+            yanlis_havuzu = [l for l in tum_lezzetler if l != dogru]
+            yanlislar = random.sample(yanlis_havuzu, 3)
+            soru = f"{kaynak_turu}<br><br>🌍 <b>[Bilgi Yarışması - Dünya Mutfakları]</b> Aşağıdaki meşhur lezzetlerden hangisi <b>{ulke}</b> mutfağı ile özdeşleşmiştir?"
+            return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
+            
+        else:
+            # Diğer bilgi yarışması kategorileri için standart akış
+            dogru = "Ankara"
+            yanlislar = ["İstanbul", "İzmir", "Bursa"]
+            soru = f"{kaynak_turu}<br><br>🏆 <b>[Bilgi Yarışması]</b> Türkiye Cumhuriyeti'nin başkenti neresidir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
             
         else:
