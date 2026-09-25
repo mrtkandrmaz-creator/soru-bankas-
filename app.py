@@ -113,7 +113,7 @@ for h in range(1, 41):
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 # =========================================================
-# 3. GÖRSEL VE ŞEMA DESTEKLİ ÜNİTE SORU ÜRETİCİ
+# 3. HTML / CSS TABANLI GERÇEKÇİ GÖRSEL VE ŞEMA MOTORU
 # =========================================================
 def uniteye_ozel_soru_uret(ders, unite):
     kisi = random.choice(ISIMLER)
@@ -137,7 +137,7 @@ def uniteye_ozel_soru_uret(ders, unite):
         elif "Paragraf" in unite:
             dogru = "Metnin ana düşüncesi kitap okumanın zihinsel gelişime katkısıdır."
             yanlislar = ["Metinde sadece spor salonlarından bahsedilmiştir.", "Yazar alışveriş yapmanın önemini vurgulamıştır.", "Paragrafın konusu mevsim geçişleridir."]
-            soru = f"{kaynak_turu}<br><br><b>[Paragraf Analizi ve Görsel Okuma]</b><br>📖 <i>[Metin Çerçevesi: Düzenli kitap okuyan bireylerin kelime hazinesinin zenginleştiğini ve problem çözme yeteneğinin arttığını savunan bir paragraf.]</i><br><br>Bu metne göre aşağıdakilerden hangisi söylenebilir?"
+            soru = f"{kaynak_turu}<br><br><b>[Paragraf Analizi]</b> Düzenli kitap okuyan bir bireyin ifade becerisinin arttığını anlatan bir metne göre aşağıdakilerden hangisi söylenebilir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
         else:
             dogru = "Eyvah, elimdeki bardak yere düştü!"
@@ -161,7 +161,7 @@ def uniteye_ozel_soru_uret(ders, unite):
             pay = random.randint(3, payda - 1)
             dogru = f"{pay}/{payda} birim kesirlerden oluşur."
             yanlislar = [f"{payda}/{pay} bileşik kesirdir.", f"Payı {payda}, paydası {pay} olan kesirdir.", "Tamamı bütün bir sayıdır."]
-            soru = f"{kaynak_turu}<br><br><b>[Kesir Modeli ve Gösterimi]</b><br>🟩 <i>[Görsel Şema: {payda} eşit parçaya bölünmüş ve bunlardan {pay} tanesi taranmış bir bütün kesir modeli.]</i><br><br>Model verilen bu kesir için aşağıdakilerden hangisi doğrudur?"
+            soru = f"{kaynak_turu}<br><br><b>[Kesir Modeli]</b><br><div style='background:#e8f4fd; border:2px solid #2196F3; padding:10px; border-radius:8px; text-align:center;'>🟩 <b>Kesir Şeması:</b> {payda} eş parçadan <b>{pay}</b> tanesi boyalı model.</div><br>Bu model için aşağıdakilerden hangisi doğrudur?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
         elif "Ondalık" in unite:
             ondalik = f"0,{random.randint(15, 85)}"
@@ -182,14 +182,12 @@ def uniteye_ozel_soru_uret(ders, unite):
                 yanlislar = ["45°", "90°", "30°"]
                 soru = (
                     f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - Eşkenar Üçgen]</b><br>"
-                    "```text\n"
-                    "        / \\\n"
-                    "       /   \\\n"
-                    "      /     \\\n"
-                    "     /_______\\\n"
-                    "   (Tüm kenarlar ve açılar eşit)\n"
-                    "```\n"
-                    "Yukarıdaki şemada kenar uzunlukları birbirine eşit olan bir **eşkenar üçgen** verilmiştir. Bu eşkenar üçgenin bir iç açısının ölçüsü kaç derecedir?"
+                    "<div style='background:#f4f6f7; border:2px solid #34495e; padding:15px; border-radius:10px; text-align:center; font-family:monospace;'>"
+                    "🔺 <b>[ABC Eşkenar Üçgen Şeması]</b><br>"
+                    "Kenar Uzunlukları: AB = BC = AC<br>"
+                    "İç Açılar: m(A) = m(B) = m(C)"
+                    "</div><br>"
+                    "Yukarıdaki şemada tüm kenar uzunlukları ve iç açıları birbirine eşit olan bir <b>eşkenar üçgen</b> verilmiştir. Bu üçgenin bir iç açısının ölçüsü kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
@@ -200,14 +198,12 @@ def uniteye_ozel_soru_uret(ders, unite):
                 yanlislar = [f"{dogru_val + 10}°", f"{dogru_val - 10}°", f"{dogru_val + 20}°"]
                 soru = (
                     f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - Dik Üçgen]</b><br>"
-                    "```text\n"
-                    "        /|\n"
-                    "       / |\n"
-                    "      /  | 90°\n"
-                    "     /___|___ \n"
-                    f"     ( ? )  {aci1}°\n"
-                    "```\n"
-                    f"Yukarıdaki şemada bir açısı dik açı (90°) ve diğer iç açısı **{aci1}°** olan bir **dik üçgen** gösterilmiştir. Verilmeyen diğer dar açının ölçüsü kaç derecedir?"
+                    "<div style='background:#fef9e7; border:2px solid #f39c12; padding:15px; border-radius:10px; text-align:center; font-family:monospace;'>"
+                    "📐 <b>[DEF Dik Üçgen Şeması]</b><br>"
+                    "Köşe D Açısı = <b>90° (Dik Açı Sembolü)</b><br>"
+                    "Köşe E Açısı = <b>" + str(aci1) + "°</b> | Köşe F Açısı = <b>?</b>"
+                    "</div><br>"
+                    f"Yukarıdaki şemada bir açısı 90° ve diğer iç açısı <b>{aci1}°</b> olan bir <b>dik üçgen</b> gösterilmiştir. Verilmeyen diğer dar açının ölçüsü kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
@@ -218,14 +214,13 @@ def uniteye_ozel_soru_uret(ders, unite):
                 yanlislar = [f"{taban_aci + 10}°", f"{tepe_aci}°", f"{taban_aci - 5}°"]
                 soru = (
                     f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - İkizkenar Üçgen]</b><br>"
-                    "```text\n"
-                    "         / \\\n"
-                    "        /   \\\n"
-                    f"       /  {tepe_aci}° \\  (İki kenar eşit)\n"
-                    "      /_______\\\n"
-                    "     (Taban Açı) (Taban Açı)\n"
-                    "```\n"
-                    f"Yukarıdaki şemada ikizkenar bir üçgenin tepe açısı **{tepe_aci}°** olarak verilmiştir. Bu ikizkenar üçgenin taban açılarından birinin ölçüsü kaç derecedir?"
+                    "<div style='background:#e8f8f5; border:2px solid #1abc9c; padding:15px; border-radius:10px; text-align:center; font-family:monospace;'>"
+                    "🔺 <b>[PRS İkizkenar Üçgen Şeması]</b><br>"
+                    "Eşit Kenarlar: PR = PS<br>"
+                    "Tepe Açısı m(P) = <b>" + str(tepe_aci) + "°</b><br>"
+                    "Taban Açılar m(R) = m(S) = ?"
+                    "</div><br>"
+                    f"Yukarıdaki ikizkenar üçgende tepe açısı <b>{tepe_aci}°</b> verilmiştir. Buna göre taban açılarından birinin ölçüsü kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
@@ -237,14 +232,12 @@ def uniteye_ozel_soru_uret(ders, unite):
                 yanlislar = [f"{c_aci + 10}°", f"{c_aci - 15}°", f"{c_aci + 20}°"]
                 soru = (
                     f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - Çeşitkenar Üçgen]</b><br>"
-                    "```text\n"
-                    "         /\\\n"
-                    "        /  \\\n"
-                    f"  {a_aci}° /    \\ ?\n"
-                    "     /______\\\n"
-                    f"       {b_aci}°\n"
-                    "```\n"
-                    f"Yukarıdaki çeşitkenar üçgen şemasında iç açılardan ikisi **{a_aci}°** ve **{b_aci}°** olarak ölçülmüştür. Buna göre verilmeyen üçüncü iç açı kaç derecedir?"
+                    "<div style='background:#fdedec; border:2px solid #e74c3c; padding:15px; border-radius:10px; text-align:center; font-family:monospace;'>"
+                    "📐 <b>[KLM Çeşitkenar Üçgen Şeması]</b><br>"
+                    "Tüm Kenar Uzunlukları ve Açılar Farklıdır.<br>"
+                    "İç Açı 1: <b>" + str(a_aci) + "°</b> | İç Açı 2: <b>" + str(b_aci) + "°</b> | İç Açı 3: <b>?</b>"
+                    "</div><br>"
+                    f"Yukarıdaki çeşitkenar üçgen şemasında iç açılardan ikisi <b>{a_aci}°</b> ve <b>{b_aci}°</b> olarak verilmiştir. Buna göre verilmeyen üçüncü iç açı kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
         else:
@@ -262,10 +255,10 @@ def uniteye_ozel_soru_uret(ders, unite):
                 dogru = "Dünya, Güneş etrafında dolanırken aynı zamanda kendi ekseni etrafında döner."
                 yanlislar = ["Güneş, Dünya'nın etrafında dolanma hareketi yapar.", "Ay, kendi ekseni etrafında dönme hareketi yapmaz.", "Dünya sabittir, sadece Ay hareket eder."]
                 soru = (
-                    f"{kaynak_turu}<br><br><b>[Uzay ve Yörünge Simülasyonu]</b><br>"
-                    "```text\n"
-                    "   ( ☀️ GÜNEŞ ) <========= [Yörünge] =========> ( 🌍 DÜNYA ) <---> ( 🌙 AY )\n"
-                    "```\n"
+                    f"{kaynak_turu}<br><br><b>[Güneş, Dünya ve Ay - Uzay Simülasyonu]</b><br>"
+                    "<div style='background:#ebf5fb; border:2px solid #2980b9; padding:15px; border-radius:10px; text-align:center;'>"
+                    "☀️ <b>Güneş (Merkez)</b> ➔ 🌍 <b>Dünya (Dolanma & Dönme Yörüngesi)</b> ➔ 🌙 <b>Ay (Dünya Çevresi Dolanması)</b>"
+                    "</div><br>"
                     "Yukarıdaki uzay simülasyon modeline göre gök cisimlerinin hareketleri hakkında aşağıdakilerden hangisi doğrudur?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
@@ -275,12 +268,12 @@ def uniteye_ozel_soru_uret(ders, unite):
                 yanlislar = ["Dünya > Güneş > Ay", "Ay > Dünya > Güneş", "Güneş = Dünya = Ay"]
                 soru = (
                     f"{kaynak_turu}<br><br><b>[Boyut Karşılaştırma Şeması]</b><br>"
-                    "```text\n"
-                    "  🔴 [ GÜNEŞ (Basketbol Topu Ölçeği) ]\n"
-                    "  🟢 [ DÜNYA (Tenis Topu Ölçeği) ]\n"
-                    "  ⚪ [ AY (Misket Ölçeği) ]\n"
-                    "```\n"
-                    "Gök cisimlerinin gerçek boyutları göz önüne alındığında büyükten küçüğe doğru sıralanışı hangi seçenekte doğru verilmiştir?"
+                    "<div style='background:#f4ecf7; border:2px solid #8e44ad; padding:15px; border-radius:10px; text-align:center;'>"
+                    "🔴 <b>Güneş:</b> Basketbol Topu Ölçeği<br>"
+                    "🟢 <b>Dünya:</b> Tenis Topu Ölçeği<br>"
+                    "⚪ <b>Ay:</b> Misket Ölçeği"
+                    "</div><br>"
+                    "Gök cisimlerinin gerçek boyutları dikkate alındığında büyükten küçüğe doğru sıralanışı hangi seçenekte doğru verilmiştir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
@@ -288,10 +281,10 @@ def uniteye_ozel_soru_uret(ders, unite):
                 dogru = "Yeniay -> İlk Dördün -> Dolunay -> Son Dördün"
                 yanlislar = ["Dolunay -> Yeniay -> Son Dördün -> İlk Dördün", "İlk Dördün -> Dolunay -> Yeniay -> Son Dördün", "Yeniay -> Dolunay -> İlk Dördün -> Son Dördün"]
                 soru = (
-                    f"{kaynak_turu}<br><br><b>[Ay'ın Evreleri Görsel Döngüsü]</b><br>"
-                    "```text\n"
-                    "  [ 🌑 Yeniay ] ---> [ 🌓 İlk Dördün ] ---> [ 🌕 Dolunay ] ---> [ 🌗 Son Dördün ]\n"
-                    "```\n"
+                    f"{kaynak_turu}<br><br><b>[Ay'ın Evreleri Döngü Şeması]</b><br>"
+                    "<div style='background:#f9ebea; border:2px solid #c0392b; padding:15px; border-radius:10px; text-align:center;'>"
+                    "🌑 <b>Yeniay</b> ➔ 🌓 <b>İlk Dördün</b> ➔ 🌕 <b>Dolunay</b> ➔ 🌗 <b>Son Dördün</b>"
+                    "</div><br>"
                     "Ay'ın ana evrelerinin doğru kronolojik sıralaması hangi seçenekte eksiksiz verilmiştir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
@@ -487,7 +480,7 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
             
             for sn in range(3, 0, -1):
                 progress_bar.progress(int((4 - sn) * 25))
-                status_box.info(f"🔄 Görsel şemalı sorular hazırlanıyor... ({sn}s)")
+                status_box.info(f"🔄 Gerçekçi grafikli sorular hazırlanıyor... ({sn}s)")
                 time.sleep(0.5)
             
             sorular = ders_sirali_ve_dengeli_uret(secilen_uniteler, soru_sayisi)
@@ -514,7 +507,7 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 # 5. TEST EKRANI
 # =========================================================
 if st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet şemalı soru** hazır!")
+    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet özel şemalı soru** hazır!")
     if st.button("🏁 Sınavı Şimdi Başlat", type="primary", use_container_width=True):
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
