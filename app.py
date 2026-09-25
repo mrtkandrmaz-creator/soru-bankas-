@@ -423,7 +423,7 @@ def dinamik_soru_uretici(ders, unite):
             return {"soru": q, "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
 
 # =========================================================
-# 6. EŞİT PAYLAŞTIRICILI SORU LİSTESİ OLUŞTURUCU
+# 6. KARIŞIK VE EŞİT PAYLAŞTIRICILI SORU LİSTESİ OLUŞTURUCU
 # =========================================================
 def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -433,7 +433,7 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     temel_pay = hedef_sayi // toplam_secilen
     kalan = hedef_sayi % toplam_secilen
 
-    tam_soru_listesi = []
+    ham_soru_listesi = []
     hash_set = set()
 
     for idx, (ders, unite) in enumerate(secilen_uniteler):
@@ -453,12 +453,14 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
             fingerprint = hashlib.sha256((s["soru"] + str(s["siklar"])).encode('utf-8')).hexdigest()
             if fingerprint not in hash_set:
                 hash_set.add(fingerprint)
-                tam_soru_listesi.append(s)
+                ham_soru_listesi.append(s)
                 uretilen_sayi += 1
 
-    # Tam istenen hedef sayıyı tam tutturmak için karıştırıp döndürelim
-    random.shuffle(tam_soru_listesi)
-    return tam_soru_listesi[:hedef_sayi]
+    # Blok halinde gelme sorununu çözmek için çoklu karıştırma algoritması
+    for _ in range(3):
+        random.shuffle(ham_soru_listesi)
+
+    return ham_soru_listesi[:hedef_sayi]
 
 # =========================================================
 # 7. STREAMLIT ARAYÜZÜ
@@ -530,100 +532,4 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🔄 Yeniden Hazırla", use_container_width=True):
         st.session_state["sorular_hazir"] = False
-        st.rerun()
-
-# --- EKRAN AKIŞI ---
-if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.subheader("📋 Sınav Başlatma Alanı")
-    st.info("Sol panelden mod seçip üniteleri belirledikten sonra **'Hazırla ve Başlat'** butonuna tıklayın.")
-
-elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.success("✅ Sorularınız Eşit Paylaşımla Başarıyla Oluşturuldu!")
-    
-    ders_sayilari = {}
-    for s in st.session_state['soru_listesi']:
-        ders_sayilari[s['ders']] = ders_sayilari.get(s['ders'], 0) + 1
-    
-    cols = st.columns(len(ders_sayilari))
-    for i, (d_isimlendirme, d_adet) in enumerate(ders_sayilari.items()):
-        cols[i].markdown(f"""
-        <div style="background-color: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid #e2e8f0; text-align: center;">
-            <h4 style="color: #1e293b; margin: 0; font-size: 16px;">{d_isimlendirme}</h4>
-            <h1 style="color: #2563eb; margin: 5px 0 0 0; font-size: 36px;">{d_adet}</h1>
-            <p style="color: #64748b; margin: 0; font-size: 12px;">Adet Soru</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.write("")
-    if st.button("⏱️ Sınavı Başlat", type="primary", use_container_width=True):
-        st.session_state["test_aktif"] = True
-        st.session_state["baslangic_zamani"] = time.time()
-        st.session_state["kullanici_cevaplari"] = {}
-        st.session_state["mevcut_soru_index"] = 0
-        st.rerun()
-
-elif st.session_state["test_aktif"]:
-    gecen_sure = int(time.time() - st.session_state["baslangic_zamani"])
-    kalan_sure = st.session_state["toplam_sure_sn"] - gecen_sure
-
-    if kalan_sure <= 0:
-        st.warning("⏰ Süreniz doldu!")
-        st.session_state["test_aktif"] = False
-        st.session_state["test_bitti"] = True
-        st.rerun()
-
-    idx = st.session_state["mevcut_soru_index"]
-    q = st.session_state["soru_listesi"][idx]
-
-    c_left, c_middle, c_right = st.columns([3, 1, 1])
-    c_left.markdown(f"📖 **Ders:** {q['ders']} | 📌 **Konu:** {q['unite']}")
-    c_middle.metric("⏳ Kalan Süre", f"{kalan_sure // 60:02d}:{kalan_sure % 60:02d}")
-    
-    if c_right.button("🏁 Sınavı Bitir", key=f"top_finish_{idx}", type="secondary", use_container_width=True):
-        st.session_state["test_aktif"] = False
-        st.session_state["test_bitti"] = True
-        st.rerun()
-
-    st.markdown(f"### **Soru {idx + 1} / {len(st.session_state['soru_listesi'])}:**\n{q['soru']}", unsafe_allow_html=True)
-
-    if q.get("gorsel_svg"):
-        st.components.v1.html(q["gorsel_svg"], height=145)
-
-    onceki_cevap = st.session_state["kullanici_cevaplari"].get(idx, None)
-    secim_index = q["siklar"].index(onceki_cevap) if onceki_cevap in q["siklar"] else None
-
-    secim = st.radio("Cevabınızı seçin:", q["siklar"], index=secim_index, key=f"radio_{idx}")
-    if secim:
-        st.session_state["kullanici_cevaplari"][idx] = secim
-
-    st.divider()
-    b1, b2 = st.columns(2)
-    if idx > 0 and b1.button("⬅️ Önceki Soru"):
-        st.session_state["mevcut_soru_index"] -= 1
-        st.rerun()
-
-    if idx + 1 < len(st.session_state["soru_listesi"]):
-        if b2.button("Sonraki Soru ➡️", type="primary"):
-            st.session_state["mevcut_soru_index"] += 1
-            st.rerun()
-    else:
-        if b2.button("🏁 Sınavı Tamamla", type="primary"):
-            st.session_state["test_aktif"] = False
-            st.session_state["test_bitti"] = True
-            st.rerun()
-
-elif st.session_state["test_bitti"]:
-    st.balloons()
-    st.header("📊 Sınav Sonuç Karnesi")
-    
-    toplam = len(st.session_state["soru_listesi"])
-    dogru = sum(1 for i, q in enumerate(st.session_state["soru_listesi"]) if st.session_state["kullanici_cevaplari"].get(i) == q["dogru"])
-    
-    st.metric("Doğru / Toplam", f"{dogru} / {toplam}")
-    st.progress(dogru / toplam if toplam > 0 else 0)
-    
-    if st.button("🔄 Yeni Sınav / Deneme Yap"):
-        st.session_state["sorular_hazir"] = False
-        st.session_state["test_bitti"] = False
-        st.session_state["test_aktif"] = False
         st.rerun()
