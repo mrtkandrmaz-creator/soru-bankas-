@@ -111,39 +111,9 @@ for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
 # =========================================================
-# 3. SVG GEOMETRİ ÇİZİCİ
-# =========================================================
-def svg_dinamik_ucgen_ciz(t_tip, gorunen_etiketler, koseler=("A", "B", "C")):
-    if t_tip == "eskenar":
-        p_top, p_left, p_right = "140, 15", "40, 115", "240, 115"
-        dik_sembol = ""
-    elif t_tip == "dik":
-        p_top, p_left, p_right = "50, 20", "50, 110", "220, 110"
-        dik_sembol = '<path d="M 50 95 L 65 95 L 65 110" fill="none" stroke="#ef4444" stroke-width="2"/>'
-    elif t_tip == "ikizkenar":
-        p_top, p_left, p_right = "140, 20", "60, 110", "220, 110"
-        dik_sembol = ""
-    else:
-        p_top, p_left, p_right = "130, 20", "40, 110", "220, 110"
-        dik_sembol = ""
-
-    lbl0, lbl1, lbl2 = gorunen_etiketler
-    return f'''
-    <svg width="280" height="135" viewBox="0 0 280 135" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="#ffffff" rx="8" stroke="#cbd5e1"/>
-      <polygon points="{p_top} {p_left} {p_right}" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
-      {dik_sembol}
-      <text x="140" y="16" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[0]} ({lbl0})</text>
-      <text x="35" y="125" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[1]} ({lbl1})</text>
-      <text x="235" y="125" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e40af" text-anchor="middle">{koseler[2]} ({lbl2})</text>
-    </svg>
-    '''
-
-# =========================================================
-# 4. HAVUZ VERİLERİ
+# 3. HAVUZ VERİLERİ (UYUMLULUK DÜZENLEMELERİYLE)
 # =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem", "Onur", "Görkem", "Arda", "Defne", "Cem", "Melis", "Umut", "Naz", "Yusuf", "İpek", "Emre", "Ceren", "Tarık", "Lale", "Beste", "Berk", "Aslı"]
-NESNELER = ["fındık", "bilye", "kitap", "kalem", "pul", "elma", "ceviz", "etiket", "sayfa", "çikolata", "kart", "balon", "silgi", "defter", "misket", "toka", "klemens", "not kağıdı", "bisküvi"]
 
 FEN_UNITE_1_MATRIS = [
     ("Güneş'in küre şeklinde olduğunu ve kendi ekseni etrafında döndüğünü ilk savunan veya gözleyen bilimsel gerçeklik aşağıdakilerden hangisidir?", "Güneş de tıpkı Dünya gibi kendi ekseni etrafında döner ve küresel şekle sahiptir.", ["Güneş tamamen hareketsiz ve düz bir levhadır.", "Güneş sadece etrafına ışık saçar, dönme hareketi yapmaz.", "Güneş, Dünya'nın etrafında döner."]),
@@ -157,58 +127,35 @@ FEN_UNITE_1_MATRIS = [
     ("Güneş, Dünya ve Ay'ın büyüklükleri büyükten küçüğe doğru hangi seçenekte doğru sıralanmıştır?", "Güneş > Dünya > Ay", ["Dünya > Güneş > Ay", "Ay > Dünya > Güneş", "Güneş > Ay > Dünya"])
 ]
 
-FEN_UNITE_2 = [("Mikroskobik canlılar grubuna girmeyen organizma aşağıdakilerden hangisidir?", "Kuşlar", ["Bakteriler", "Amip", "Paramesyum"])]
-FEN_UNITE_3 = [("Kuvvetin büyüklüğünü ölçmek için kullanılan araç nedir?", "Dinamometre", ["Termometre", "Barometre", "Kronometre"])]
-FEN_UNITE_4 = [("Saf bir maddenin ısı alarak katı halden sıvı hale geçmesine ne denir?", "Erime", ["Donma", "Buharlaşma", "Yoğuşma"])]
-FEN_UNITE_5 = [("Işık maddelerle karşılaştığında geçiş durumuna göre sınıflandırılır. Aşağıdakilerden hangisi ışığı geçirmeyen (saydam olmayan) maddedir?", "Tahta levha", ["Cam", "Su", "Hava"])]
-
-TURKCE_ANLAM = [("Aşağıdaki cümlelerin hangisinde 'çıkmak' sözcüğü 'ortaya çıkmak, görünmek' anlamında kullanılmıştır?", "Güneş yavaş yavaş dağların arkasından çıkıyordu.", ["Bu gömlek bana biraz küçük çıktı.", "Merdivenleri çıkarken çok yoruldum.", "Toplantıdan erken çıkmak zorunda kaldım."])]
-TURKCE_CUMLE = [("Aşağıdaki cümlelerin hangisinde 'neden-sonuç' ilişkisi vardır?", "Hava yağmurlu olduğu için pikniği iptal ettik.", ["Ders çalışmak üzere odasına çekildi.", "Erken kalkarsa otobüse yetişebilir.", "Sokakta yürürken eski bir arkadaşıyla karşılaştı."])]
-TURKCE_PARAGRAF = [("Metnin ana düşüncesi aşağıdakilerden hangisini ifade eder?", "Yazarın okuyucuya aktarmak istediği temel mesajı veya dersi.", ["Metinde geçen en uzun cümleyi.", "Yazarın kişisel yaşantısındaki tüm detayları.", "Paragrafta kullanılan yan düşüncelerin toplamını."])]
-TURKCE_YAZIM = [("Aşağıdaki sözcüklerden hangisinin yazımı <b>yanlıştır</b>?", "herkez", ["herkes", "yalnız", "yanlış"])]
-
-SOSYAL_UNITE_1 = [("Evde veya okulda üstlendiğimiz görevleri yerine getirmeye ne denir?", "Sorumluluk", ["Hak", "Özgürlük", "Yetki"])]
-SOSYAL_UNITE_2 = [("Tarihî eserlerin ve kalıntıların korunması hangi dersin temel konularından biridir?", "Sosyal Bilgiler", ["Matematik", "Fen Bilimleri", "İngilizce"])]
-SOSYAL_UNITE_3 = [("Haritalarda yüksek dağları kahverengiyle, denizleri maviyle göstermek hangi harita türüne hastır?", "Fiziki harita", ["Siyasi harita", "Beşeri harita", "Karayolu haritası"])]
-SOSYAL_UNITE_4 = [("Geçmişten günümüze bilgi depolamak ve aktarmak için kullanılan en önemli buluşlardan biri nedir?", "Matbaa", ["Dinamometre", "Pusula", "Termometre"])]
-
-DIN_UNITE_1 = [("Evrende her şeyin kusursuz bir düzene sahip olması ve bir yaratıcısının bulunması inancına ne denir?", "Allah İnancı", ["Oruç", "Zekat", "Adap"])]
-DIN_UNITE_2 = [("Ramazan ayında imsak vaktinden iftar vaktine kadar yemek ve içmekten uzak durarak yapılan ibadet nedir?", "Oruç", ["Hac", "Zekat", "Kurban"])]
-DIN_UNITE_3 = [("Görgü kurallarına uymak, insanlara karşı güler yüzlü ve kibar olmak hangi kavramla ifade edilir?", "Adap ve Nezaket", ["İbadet", "İnanç", "Oruç"])]
-
-ING_UNITE_1 = [("'-Where are you from?' sorusuna aşağıdaki cevaplardan hangisi uygundur?", "I am from Spain", ["I am ten years old", "I like playing tennis", "Good morning"])]
-ING_UNITE_2 = [("Yön tarif ederken 'Sola dön' demek için hangi ifade kullanılır?", "Turn left", ["Turn right", "Go straight ahead", "Stop"])]
-ING_UNITE_3 = [("Boş zaman aktivitelerini ve hobileri ifade eden ünitenin adı nedir?", "Games and Hobbies", ["My Town", "Hello", "My Daily Routine"])]
-ING_UNITE_4 = [("Sabah kalkma, kahvaltı yapma ve okula gitme gibi günlük rutinler hangi ünitede incelenir?", "My Daily Routine", ["Nationalities", "Directions", "Hobbies"])]
-
-BASKENT_LISTESI = [("Fransa", "Paris"), ("İtalya", "Roma"), ("Japonya", "Tokyo"), ("Almanya", "Berlin"), ("İspanya", "Madrid"), ("İngiltere", "Londra"), ("Yunanistan", "Atina"), ("Rusya", "Moskova")]
-YEMEK_SEHIR_LISTESI = [("Künefe", "Hatay"), ("Cağ Kebabı", "Erzurum"), ("Mantı", "Kayseri"), ("Baklava", "Gaziantep")]
-ALL_SEHIRLER = ["Ankara", "İstanbul", "İzmir", "Bursa", "Antalya", "Trabzon", "Erzurum", "Gaziantep"]
-DNY_MUTFAK_LISTESI = [("Sushi", "Japonya"), ("Pizza", "İtalya"), ("Taco", "Meksika"), ("Kruvasan", "Fransa")]
-ALL_ULKELER = ["Japonya", "İtalya", "Meksika", "Fransa", "İspanya", "Çin", "Almanya"]
-HARITA_HAVUZU = [("Haritalarda yön bulmamıza yardımcı olan ve genellikle kuzeyi gösteren işaret nedir?", "Kuzey oku (Pusula gülü)", ["Ölçek", "Lejant", "Eş yükselti"])]
-ICAT_HAVUZU = [("Telefonu icat ederek ilk sesli iletişim kuran mucit kimdir?", "Alexander Graham Bell", ["Thomas Edison", "Nikola Tesla", "Isaac Newton"])]
-GENEL_KULTUR_HAVUZU = [("Dünyanın en uzun nehri olarak bilinen Nil Nehri hangi kıtadadır?", "Afrika", ["Asya", "Avrupa", "Amerika"])]
+TURKCE_ANLAM = [
+    ("Aşağıdaki cümlelerin hangisinde 'çıkmak' sözcüğü 'ortaya çıkmak, görünmek' anlamında kullanılmıştır?", "Güneş yavaş yavaş dağların arkasından çıkıyordu.", ["Bu gömlek bana biraz küçük çıktı.", "Merdivenleri çıkarken çok yoruldum.", "Toplantıdan erken çıkmak zorunda kaldım."]),
+    ("Aşağıdaki cümlelerin hangisinde 'neden-sonuç' ilişkisi vardır?", "Hava yağmurlu olduğu için pikniği iptal ettik.", ["Ders çalışmak üzere odasına çekildi.", "Erken kalkarsa otobüse yetişebilir.", "Sokakta yürürken eski bir arkadaşıyla karşılaştı."])
+]
 
 # =========================================================
-# 5. YAPAY ZEKA (%75) VE HAVUZ (%25) HİBRİT ÜRETİCİ
+# 4. HİBRİT SORU ÜRETİCİ (%75 AI - %25 Havuz)
 # =========================================================
 def yapay_zekadan_soru_uret(ders, unite):
-    """Simüle edilmiş Yapay Zeka (%75 ağırlıklı akıllı dinamik soru motoru)"""
-    u_low = unite.lower()
     kisi = random.choice(ISIMLER)
     
     if ders == "Matematik":
         sayi = random.randint(1000, 99999)
-        return {"soru": f"🤖 [AI-Üretim] {kisi} <b>{sayi}</b> sayısını incelemektedir. Bu sayının çözümlenmiş hali veya basamak değeri analiziyle ilgili soru...", "siklar": [str(sayi), str(sayi+10), str(sayi-5), str(sayi*2)], "dogru": str(sayi), "gorsel_svg": None}
+        dogru = str(sayi)
+        yanlislar = [str(sayi + 10), str(sayi - 5), str(sayi + 100)]
+        siklar = [dogru] + yanlislar
+        return {"soru": f"🤖 [AI-Üretim] {kisi} <b>{sayi}</b> sayısını incelemektedir. Bu sayının doğru ifadesi aşağıdakilerden hangisidir?", "siklar": siklar, "dogru": dogru, "gorsel_svg": None}
+        
     elif ders == "Fen Bilimleri":
-        return {"soru": f"🤖 [AI-Üretim] {kisi}'in fen laboratuvarında gözlemlediği deney sonucuna göre doğru ifade hangisidir?", "siklar": ["Bilimsel olarak doğrudur", "Tamamen yanlıştır", "Hacmi etkilemez", "Isı yaymaz"], "dogru": "Bilimsel olarak doğrudur", "gorsel_svg": None}
+        dogru = "Bilimsel olarak doğrudur"
+        yanlislar = ["Tamamen yanlıştır", "Hacmi etkilemez", "Isı yaymaz"]
+        return {"soru": f"🤖 [AI-Üretim] {kisi}'in fen laboratuvarında gözlemlediği deney sonucuna göre doğru ifade hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru, "gorsel_svg": None}
+        
     else:
-        return {"soru": f"🤖 [AI-Üretim] {kisi} tarafından hazırlanan özgün <b>{unite}</b> kazanım sorusu...", "siklar": ["Doğru Seçenek A", "Çeldirici B", "Çeldirici C", "Çeldirici D"], "dogru": "Doğru Seçenek A", "gorsel_svg": None}
+        dogru = "Doğru Seçenek A"
+        yanlislar = ["Çeldirici B", "Çeldirici C", "Çeldirici D"]
+        return {"soru": f"🤖 [AI-Üretim] {kisi} tarafından hazırlanan özgün <b>{unite}</b> kazanım sorusu...", "siklar": [dogru] + yanlislar, "dogru": dogru, "gorsel_svg": None}
 
 def havuzdan_soru_uret(ders, unite):
-    """Yerel Havuz (%25 ağırlıklı sabit veya matris tabanlı soru motoru)"""
-    u_low = unite.lower()
     if ders == "Fen Bilimleri":
         q, ans, celd = random.choice(FEN_UNITE_1_MATRIS)
         return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
@@ -216,7 +163,9 @@ def havuzdan_soru_uret(ders, unite):
         q, ans, celd = random.choice(TURKCE_ANLAM)
         return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans, "gorsel_svg": None}
     else:
-        return {"soru": f"📚 [Havuz] <b>{unite}</b> ile ilgili standart soru...", "siklar": ["Cevap 1", "Cevap 2", "Cevap 3", "Cevap 4"], "dogru": "Cevap 1", "gorsel_svg": None}
+        dogru = "Cevap 1"
+        yanlislar = ["Cevap 2", "Cevap 3", "Cevap 4"]
+        return {"soru": f"📚 [Havuz] <b>{unite}</b> ile ilgili standart soru...", "siklar": [dogru] + yanlislar, "dogru": dogru, "gorsel_svg": None}
 
 def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -232,30 +181,42 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     for idx, (ders, unite) in enumerate(secilen_uniteler):
         bu_unite_hedef = temel_pay + (1 if idx < kalan else 0)
         
-        # %75 Yapay Zeka, %25 Havuz Dağılımı Hesaplama
         ai_hedef = int(bu_unite_hedef * 0.75)
         havuz_hedef = bu_unite_hedef - ai_hedef
 
-        # Yapay Zeka Soruları Üret
+        # Yapay Zeka Soruları
         uretilen = 0
         while uretilen < ai_hedef:
             s = yapay_zekadan_soru_uret(ders, unite)
             s["ders"] = ders
             s["unite"] = unite
+            
+            # Şıkları rastgele karıştır ama doğru cevabın listede olduğundan ve eşleştiğinden emin ol
+            correct_ans = s["dogru"]
             random.shuffle(s["siklar"])
+            if correct_ans not in s["siklar"]: # Güvenlik önlemi
+                s["siklar"][0] = correct_ans
+                random.shuffle(s["siklar"])
+                
             fingerprint = hashlib.sha256((s["soru"] + str(s["siklar"])).encode('utf-8')).hexdigest()
             if fingerprint not in hash_set:
                 hash_set.add(fingerprint)
                 ham_soru_listesi.append(s)
                 uretilen += 1
 
-        # Havuz Soruları Üret
+        # Havuz Soruları
         uretilen = 0
         while uretilen < havuz_hedef:
             s = havuzdan_soru_uret(ders, unite)
             s["ders"] = ders
             s["unite"] = unite
+            
+            correct_ans = s["dogru"]
             random.shuffle(s["siklar"])
+            if correct_ans not in s["siklar"]:
+                s["siklar"][0] = correct_ans
+                random.shuffle(s["siklar"])
+                
             fingerprint = hashlib.sha256((s["soru"] + str(s["siklar"])).encode('utf-8')).hexdigest()
             if fingerprint not in hash_set:
                 hash_set.add(fingerprint)
@@ -268,7 +229,7 @@ def ders_sirali_soru_uret(secilen_uniteler, hedef_sayi):
     return ham_soru_listesi[:hedef_sayi]
 
 # =========================================================
-# 6. STREAMLIT ARAYÜZÜ (SOL MENÜ)
+# 5. STREAMLIT ARAYÜZÜ (SOL MENÜ)
 # =========================================================
 st.title("🎓 MEB 5. Sınıf Soru Bankası & Deneme Sınavı Motoru")
 
@@ -312,7 +273,6 @@ if mod_bilgi:
 
 st.sidebar.divider()
 
-# HATA ÇÖZÜLDÜ: min_v / max_v yerine doğru parametre adları kullanıldı
 soru_sayisi = st.sidebar.slider(
     "Toplam Soru Sayısı:", 
     min_value=20, 
@@ -326,10 +286,8 @@ st.sidebar.write("")
 if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
     if st.sidebar.button("🚀 Hazırla ve Başlat", type="primary", use_container_width=True):
         if secilen_uniteler:
-            # Tahmini üretim süresi hesaplama
             tahmini_sure = max(3, int((soru_sayisi * len(secilen_uniteler)) / 120))
             
-            # Dinamik Geri Sayım Görselleştirmesi ve Canlı İlerleme Çubuğu
             status_box = st.empty()
             progress_bar = st.progress(0)
             
@@ -342,7 +300,6 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
                 )
                 time.sleep(1)
             
-            # Hibrit Soru Üretim Fonksiyonunu Çalıştır
             sorular = ders_sirali_soru_uret(secilen_uniteler, soru_sayisi)
             
             progress_bar.progress(100)
@@ -364,7 +321,7 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
         st.rerun()
 
 # =========================================================
-# 7. TEST EKRANI VE SONUÇ GÖSTERİMİ
+# 6. TEST EKRANI VE SONUÇ GÖSTERİMİ
 # =========================================================
 if st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
     st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet hibrit soru** (%75 AI - %25 Havuz) başarıyla hazırlandı!")
@@ -386,28 +343,36 @@ if st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
         if s.get("gorsel_svg"):
             st.markdown(s["gorsel_svg"], unsafe_allow_html=True)
             
+        # Önceden seçili gelme (hazır gelme) sorununu çözmek için index=None kullanıldı
+        onceki_cevap = st.session_state["kullanici_cevaplari"].get(idx)
+        secim_index = s["siklar"].index(onceki_cevap) if onceki_cevap in s["siklar"] else None
+            
         secim = st.radio(
             "Seçenekleriniz:", 
             s["siklar"], 
             key=f"soru_r_{idx}",
-            index=s["siklar"].index(st.session_state["kullanici_cevaplari"].get(idx)) if idx in st.session_state["kullanici_cevaplari"] else 0
+            index=secim_index,
+            placeholder="Lütfen bir seçenek seçiniz..."
         )
         
         col1, col2 = st.columns(2)
         with col1:
             if idx > 0 and st.button("⬅️ Önceki Soru"):
-                st.session_state["kullanici_cevaplari"][idx] = secim
+                if secim is not None:
+                    st.session_state["kullanici_cevaplari"][idx] = secim
                 st.session_state["mevcut_soru_index"] -= 1
                 st.rerun()
         with col2:
             if idx < len(soru_listesi) - 1:
                 if st.button("Sonraki Soru ➡️", type="primary"):
-                    st.session_state["kullanici_cevaplari"][idx] = secim
+                    if secim is not None:
+                        st.session_state["kullanici_cevaplari"][idx] = secim
                     st.session_state["mevcut_soru_index"] += 1
                     st.rerun()
             else:
                 if st.button("🏁 Sınavı Bitir ve Puanı Gör", type="primary"):
-                    st.session_state["kullanici_cevaplari"][idx] = secim
+                    if secim is not None:
+                        st.session_state["kullanici_cevaplari"][idx] = secim
                     st.session_state["test_aktif"] = False
                     st.session_state["test_bitti"] = True
                     st.rerun()
