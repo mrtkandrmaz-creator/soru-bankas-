@@ -204,7 +204,11 @@ TURK_MUTFAGI_YORESEL = {
     "Mersin": "Tantuni",
     "Kars": "Kars Kazı / Gravyer Peyniri",
     "Malatya": "Kayısı",
-    "Çorum": "Çorum Leblebisi"
+    "Çorum": "Çorum Leblebisi",
+    "İstanbul": "Balık Ekmek" ,
+    "Edirne": "Çiğer Tava / Badem Ezmesi",
+    "Kırklareli": "Papaz Yahnisi",
+    "Balıkesir": "Höşmerim"
 }
 # =========================================================
 # 3. SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
