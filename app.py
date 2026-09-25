@@ -113,10 +113,9 @@ for h in range(1, 41):
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 # =========================================================
-# 3. PROFESYONEL MEB UYUMLU SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
+# 3. SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
 # =========================================================
 def svg_ucgen_ciz(tip, tepe_aci, sol_aci, sag_aci):
-    """MEB soru kitapçıklarına birebir uyumlu, harflendirmesi tepeden başlayan SVG üçgen şeması üretir."""
     def fmt(v):
         return f"{v}°" if v != "?" else "?"
 
@@ -158,7 +157,7 @@ def svg_ucgen_ciz(tip, tepe_aci, sol_aci, sag_aci):
     return svg_code
 
 # =========================================================
-# 4. SORU ÜRETME MOTORU
+# 4. ZENGİN ALT KATEGORİLİ SORU ÜRETME MOTORU
 # =========================================================
 def uniteye_ozel_soru_uret(ders, unite):
     kisi = random.choice(ISIMLER)
@@ -170,15 +169,33 @@ def uniteye_ozel_soru_uret(ders, unite):
     # --- TÜRKÇE ---
     if ders == "Türkçe":
         if "Sözcükte Anlam" in unite:
-            dogru = "Güneş yavaş yavaş tepelerin arkasından görünmeye başladı."
-            yanlislar = ["Bu mont kardeşime biraz küçük geldi.", "Toplantıdan en son ben ayrıldım.", "Merdivenleri çıkarken nefes nefese kaldı."]
-            soru = f"{kaynak_turu}<br><br><b>[Sözcükte Anlam]</b> 'Çıkmak' sözcüğü hangi cümlede <u>'ortaya çıkmak, görünmek'</u> anlamındadır?"
+            alt = random.choice([1, 2, 3])
+            if alt == 1:
+                dogru = "Güneş yavaş yavaş tepelerin arkasından görünmeye başladı."
+                yanlislar = ["Bu mont kardeşime biraz küçük geldi.", "Toplantıdan en son ben ayrıldım.", "Merdivenleri çıkarken nefes nefese kaldı."]
+                soru = f"{kaynak_turu}<br><br><b>[Sözcükte Anlam - Gerçek/Mecaz/Terim]</b> 'Çıkmak' sözcüğü hangi cümlede <u>'ortaya çıkmak, görünmek'</u> anlamındadır?"
+            elif alt == 2:
+                dogru = "Keskin bıçak ekmeği çok rahat dilimliyordu."
+                yanlislar = ["Keskin bir zekaya sahip olduğunu hemen belli etti.", "Keskin koku tüm odayı sardı.", "Keskin bir virajdan sonra eve ulaştık."]
+                soru = f"{kaynak_turu}<br><br><b>[Sözcükte Anlam - Gerçek Anlam]</b> 'Keskin' sözcüğü hangi cümlede <u>gerçek anlamıyla</u> kullanılmıştır?"
+            else:
+                dogru = "Bu matematik probleminde doğru orantı kullandım."
+                yanlislar = ["Sınavda başarılı olmak için çok çalıştı.", "Arkadaşına güzel bir kalem hediye etti.", "Bahçedeki çiçekleri sulamayı unutma."]
+                soru = f"{kaynak_turu}<br><br><b>[Sözcükte Anlam - Terim Anlam]</b> Hangi cümlede <u>terim anlamlı</u> bir sözcük vardır?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
+            
         elif "Cümlede Anlam" in unite:
-            dogru = "Hava sağanak yağışlı olduğundan maç ertelendi."
-            yanlislar = ["Başarılı olmak için her gün düzenli ders çalışıyor.", "Sabah uyanınca elini yüzünü yıkadı.", "Yarın akşam eski arkadaşlarıyla buluşacak."]
-            soru = f"{kaynak_turu}<br><br><b>[Cümlede Anlam]</b> Hangi cümlede <u>neden-sonuç</u> ilişkisi vardır?"
+            alt = random.choice([1, 2])
+            if alt == 1:
+                dogru = "Hava sağanak yağışlı olduğundan maç ertelendi."
+                yanlislar = ["Başarılı olmak için her gün düzenli ders çalışıyor.", "Sabah uyanınca elini yüzünü yıkadı.", "Yarın akşam eski arkadaşlarıyla buluşacak."]
+                soru = f"{kaynak_turu}<br><br><b>[Cümlede Anlam - Neden-Sonuç]</b> Hangi cümlede <u>neden-sonuç</u> ilişkisi vardır?"
+            else:
+                dogru = "Projeyi bitirmek için sabaha kadar uyumadı."
+                yanlislar = ["Yağmur yağdığı için sokaklar ıslanmıştı.", "Kardeşi uyuduğu için ses çıkarmıyordu.", "Hava çok sıcak olduğundan gölgede oturdu."]
+                soru = f"{kaynak_turu}<br><br><b>[Cümlede Anlam - Amaç-Sonuç]</b> Hangi cümlede <u>amaç-sonuç</u> ilişkisi vardır?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
+            
         elif "Paragraf" in unite:
             dogru = "Metnin ana düşüncesi kitap okumanın zihinsel gelişime katkısıdır."
             yanlislar = ["Metinde sadece spor salonlarından bahsedilmiştir.", "Yazar alışveriş yapmanın önemini vurgulamıştır.", "Paragrafın konusu mevsim geçişleridir."]
@@ -220,44 +237,28 @@ def uniteye_ozel_soru_uret(ders, unite):
             soru = f"{kaynak_turu}<br><br><b>[Açı Ölçme]</b> Geometrik kavramlar konusuna göre açı çeşitleriyle ilgili hangisi doğrudur?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
         elif "Üçgende Açılar" in unite:
-            # Sadece Eşkenar, Dik ve İkizkenar üçgen tipleri kullanılıyor (Çeşitkenar kaldırıldı)
             tip_secimi = random.choice(["eskenar", "dik", "ikizkenar"])
-            
             if tip_secimi == "eskenar":
                 dogru = "60°"
                 yanlislar = ["45°", "90°", "30°"]
                 svg_gorsel = svg_ucgen_ciz("eskenar", 60, 60, 60)
-                soru = (
-                    f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - Eşkenar Üçgen Analizi]</b><br>"
-                    f"{svg_gorsel}<br>"
-                    "Yukarıdaki vektörel şemada tüm kenar uzunlukları ve iç açıları birbirine eşit olan bir <b>ABC eşkenar üçgeni</b> verilmiştir. Tepe noktası A olan bu üçgenin bir iç açısının ölçüsü kaç derecedir?"
-                )
+                soru = f"{kaynak_turu}<br><br><b>[Eşkenar Üçgen Analizi]</b><br>{svg_gorsel}<br>Tüm kenar uzunlukları ve iç açıları birbirine eşit olan bir ABC eşkenar üçgeninde tepe açısı kaç derecedir?"
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
-                
             elif tip_secimi == "dik":
                 aci1 = random.choice([30, 35, 40, 45, 50, 55, 60])
                 dogru_val = 90 - aci1
                 dogru = f"{dogru_val}°"
                 yanlislar = [f"{dogru_val + 10}°", f"{dogru_val - 10}°", f"{dogru_val + 15}°"]
                 svg_gorsel = svg_ucgen_ciz("dik", "?", 90, aci1)
-                soru = (
-                    f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - Dik Üçgen Soru Tipi]</b><br>"
-                    f"{svg_gorsel}<br>"
-                    f"Yukarıdaki şemada E köşesi 90° dik açı ve F köşesi <b>{aci1}°</b> olan bir <b>DEF dik üçgeni</b> gösterilmiştir. Buna göre tepedeki D köşesinde yer alan dar açının ölçüsü kaç derecedir?"
-                )
+                soru = f"{kaynak_turu}<br><br><b>[Dik Üçgen Soru Tipi]</b><br>{svg_gorsel}<br>E köşesi 90° dik açı ve F köşesi <b>{aci1}°</b> olan DEF dik üçgeninde tepedeki D açısı kaç derecedir?"
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
-                
-            else: # ikizkenar
+            else:
                 tepe_aci = random.choice([40, 50, 60, 70, 80])
                 taban_aci = (180 - tepe_aci) // 2
                 dogru = f"{taban_aci}°"
                 yanlislar = [f"{taban_aci + 10}°", f"{tepe_aci}°", f"{taban_aci - 5}°"]
                 svg_gorsel = svg_ucgen_ciz("ikizkenar", tepe_aci, "?", "?")
-                soru = (
-                    f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - İkizkenar Üçgen Özelliği]</b><br>"
-                    f"{svg_gorsel}<br>"
-                    f"Yukarıdaki şemada |PR| = |PS| olan PRS ikizkenar üçgeninin tepedeki P açısı <b>{tepe_aci}°</b> verilmiştir. Buna göre tabandaki R açısının ölçüsü kaç derecedir?"
-                )
+                soru = f"{kaynak_turu}<br><br><b>[İkizkenar Üçgen Özelliği]</b><br>{svg_gorsel}<br>|PR| = |PS| olan PRS ikizkenar üçgeninde tepe açısı <b>{tepe_aci}°</b> verilmiştir. Taban açısı kaç derecedir?"
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
         else:
             dogru = "Veri analizi tablosunda en çok tercih edilen öge en yüksek sütuna sahiptir."
@@ -265,19 +266,38 @@ def uniteye_ozel_soru_uret(ders, unite):
             soru = f"{kaynak_turu}<br><br><b>[Veri İşleme ve Ölçme]</b> Veri işleme ve grafik yorumlama ile ilgili hangisi doğrudur?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
 
-    # --- FEN BİLİMLERİ ---
+    # --- FEN BİLİMLERİ (GÜNEŞ, DÜNYA VE AY İÇİN ZENGİN ALT KATEGORİLER) ---
     elif ders == "Fen Bilimleri":
         if "Güneş, Dünya ve Ay" in unite:
-            dogru = "Yeniay -> İlk Dördün -> Dolunay -> Son Dördün"
-            yanlislar = ["Dolunay -> Yeniay -> Son Dördün -> İlk Dördün", "İlk Dördün -> Dolunay -> Yeniay -> Son Dördün", "Yeniay -> Dolunay -> İlk Dördün -> Son Dördün"]
-            soru = (
-                f"{kaynak_turu}<br><br><b>[Ay'ın Evreleri Döngü Şeması]</b><br>"
-                "<div style='background:#f9ebea; border:2px solid #c0392b; padding:15px; border-radius:10px; text-align:center;'>"
-                "🌑 <b>Yeniay</b> ➔ 🌓 <b>İlk Dördün</b> ➔ 🌕 <b>Dolunay</b> ➔ 🌗 <b>Son Dördün</b>"
-                "</div><br>"
-                "Ay'ın ana evrelerinin doğru kronolojik sıralaması hangi seçenekte eksiksiz verilmiştir?"
-            )
+            alt_tip = random.choice([1, 2, 3, 4, 5])
+            if alt_tip == 1:
+                dogru = "Güneş, Dünya ve Ay'ın şekli küreye benzer."
+                yanlislar = ["Güneş tam bir kare şeklindedir.", "Dünya düz bir tepsi gibidir.", "Ay'ın şekli üçgene benzer."]
+                soru = f"{kaynak_turu}<br><br><b>[Gök Cisimlerinin Şekli]</b> Güneş, Dünya ve Ay'ın geometrik yapısı ile ilgili aşağıdakilerden hangisi doğrudur?"
+            elif alt_tip == 2:
+                dogru = "Güneş, Dünya'dan çok daha büyük ve uzakta yer alan bir yıldızdır."
+                yanlislar = ["Ay, Güneş'ten daha büyüktür.", "Dünya Güneş'in etrafında değil, Güneş Dünya'nın etrafında döner.", "Güneş bir gezegendir."]
+                soru = f"{kaynak_turu}<br><br><b>[Boyut ve Özellikler]</b> Güneş, Dünya ve Ay'ın birbirine göre boyutları ve yapıları düşünüldüğünde hangisi doğrudur?"
+            elif alt_tip == 3:
+                dogru = "Dünya kendi ekseni etrafında döner ve bu hareket sonucunda gece ve gündüz oluşur."
+                yanlislar = ["Dünya'nın kendi etrafındaki dönüşü 1 yıl sürer.", "Gece ve gündüz Ay'ın dönmesiyle oluşur.", "Güneş kendi etrafında dönmez."]
+                soru = f"{kaynak_turu}<br><br><b>[Dünya'nın Hareketleri]</b> {kisi}'nin incelediği bilgilere göre Dünya'nın kendi ekseni etrafındaki dönme hareketi neyi sağlar?"
+            elif alt_tip == 4:
+                dogru = "Yeniay -> İlk Dördün -> Dolunay -> Son Dördün"
+                yanlislar = ["Dolunay -> Yeniay -> Son Dördün -> İlk Dördün", "İlk Dördün -> Dolunay -> Yeniay -> Son Dördün", "Yeniay -> Dolunay -> İlk Dördün -> Son Dördün"]
+                soru = (
+                    f"{kaynak_turu}<br><br><b>[Ay'ın Evreleri Döngü Şeması]</b><br>"
+                    "<div style='background:#f9ebea; border:2px solid #c0392b; padding:15px; border-radius:10px; text-align:center;'>"
+                    "🌑 <b>Yeniay</b> ➔ 🌓 <b>İlk Dördün</b> ➔ 🌕 <b>Dolunay</b> ➔ 🌗 <b>Son Dördün</b>"
+                    "</div><br>"
+                    "Ay'ın ana evrelerinin doğru kronolojik sıralaması hangi seçenekte eksiksiz verilmiştir?"
+                )
+            else:
+                dogru = "Ay, Dünya'nın etrafındaki dolanma hareketini yaklaşık 29,5 günde tamamlar."
+                yanlislar = ["Ay'ın Dünya etrafında dolanması 1 gün sürer.", "Ay kendi ışığını üreten bir yıldızdır.", "Ay üzerinde atmosfer tabakası çok kalındır."]
+                soru = f"{kaynak_turu}<br><br><b>[Ay'ın Dolanma Hareketi]</b> Ay'ın hareketleri ile ilgili olarak öğrenciler hangi bilgiye ulaşmalıdır?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
+            
         elif "Canlılar Dünyası" in unite:
             dogru = "Mantar ve bakteriler mikroskobik canlılar dünyasında yer alabilir."
             yanlislar = ["Tüm mantarlar bitki sınıfına dahildir.", "Bakteriler gözle çok rahat görülebilir.", "Hayvanlar kendi besinini kendisi üretir."]
@@ -469,7 +489,7 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
             
             for sn in range(3, 0, -1):
                 progress_bar.progress(int((4 - sn) * 25))
-                status_box.info(f"🔄 Vektörel SVG şemalı sorular hazırlanıyor... ({sn}s)")
+                status_box.info(f"🔄 Zengin alt kategorili sorular hazırlanıyor... ({sn}s)")
                 time.sleep(0.5)
             
             sorular = ders_sirali_ve_dengeli_uret(secilen_uniteler, soru_sayisi)
@@ -496,7 +516,7 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 # 6. TEST EKRANI
 # =========================================================
 if st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet vektör şemalı soru** hazır!")
+    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet zenginleştirilmiş soru** hazır!")
     if st.button("🏁 Sınavı Şimdi Başlat", type="primary", use_container_width=True):
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
