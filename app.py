@@ -923,24 +923,6 @@ GENEL_KULTUR_SORULARI = [
     }
 ]
 
-st.title("🧠 Genel Kültür ve Eğlenceli Bilgiler Yarışması (175 Soru Bankası)")
-st.write("175 soruluk devasa genel kültür, tarih, bilim, sanat ve eğlenceli bilgiler soru havuzumuza hoş geldiniz!")
-
-if st.button("Dev Havuzdan Rastgele Soru Çek"):
-    secilen = random.choice(GENEL_KULTUR_SORULARI)
-    st.subheader(secilen["soru"])
-    
-    # Şıkları karıştırıp kullanıcıya sunalım
-    secenekler = secilen["siklar"].copy()
-    random.shuffle(secenekler)
-    
-    cevap = st.radio("Seçenekleriniz:", secenekler, key="genel_kultur_radio")
-    
-    if st.button("Cevabı Kontrol Et"):
-        if cevap == secilen["dogru"]:
-            st.success("Tebrikler! Doğru cevap verdiniz. 🎉")
-        else:
-            st.error(f"Yanlış cevap! Doğru cevap şuydu: **{secilen['dogru']}**")
 # =========================================================
 # 3. SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
 # =========================================================
