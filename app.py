@@ -543,13 +543,6 @@ def uniteye_ozel_soru_uret(ders, unite):
             yanlislar = ["İstanbul", "İzmir", "Bursa"]
             soru = f"{kaynak_turu}<br><br>🏆 <b>[Bilgi Yarışması]</b> Türkiye Cumhuriyeti'nin başkenti neresidir?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
-            
-        else:
-            # Diğer bilgi yarışması kategorileri için standart akış
-            dogru = "Ankara"
-            yanlislar = ["İstanbul", "İzmir", "Bursa"]
-            soru = f"{kaynak_turu}<br><br>🏆 <b>[Bilgi Yarışması]</b> Türkiye Cumhuriyeti'nin başkenti neresidir?"
-            return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
 
 def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
