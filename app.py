@@ -113,44 +113,37 @@ for h in range(1, 41):
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 # =========================================================
-# 3. SVG TABANLI GERÇEKÇİ GEOMETRİK ÜÇGEN ÇİZİM MOTORU
+# 3. SVG TABANLI GERÇEKÇİ GEOMETRİK ÜÇGEN ÇİZİM MOTORU (GİDERİLDİ)
 # =========================================================
 def svg_ucgen_ciz(tip, aci1_val, aci2_val, aci3_val):
     """MEB soru kitapçıklarına birebir uyumlu, SVG vektörel üçgen şeması üretir."""
+    def fmt(v):
+        return f"{v}°" if v != "?" else "?"
+
     if tip == "cesitkenar":
-        # KLM Çeşitkenar Üçgen Koordinatları
         p1, p2, p3 = "70,160", "280,170", "150,30"
         labels = ("K", "L", "M")
-        vals = (f"{aci1_val}°", f"{aci2_val}°", f"{aci3_val}")
+        vals = (fmt(aci1_val), fmt(aci2_val), fmt(aci3_val))
     elif tip == "dik":
-        # DEF Dik Üçgen Koordinatları
         p1, p2, p3 = "60,170", "260,170", "60,40"
         labels = ("D", "E", "F")
-        vals = ("90°", f"{aci1_val}°", f"{aci3_val}")
+        vals = ("90°", fmt(aci2_val), fmt(aci3_val))
     elif tip == "ikizkenar":
-        # PRS İkizkenar Üçgen Koordinatları
         p1, p2, p3 = "70,170", "250,170", "160,35"
         labels = ("P", "R", "S")
-        vals = (f"{aci1_val}°", f"{aci2_val}°", f"{aci3_val}°")
+        vals = (fmt(aci1_val), fmt(aci2_val), fmt(aci3_val))
     else:  # eskenar
-        # ABC Eşkenar Üçgen Koordinatları
         p1, p2, p3 = "70,170", "250,170", "160,20"
         labels = ("A", "B", "C")
         vals = ("60°", "60°", "60°")
 
-    # SVG Çizimi
     svg_code = f"""
     <div style="display: flex; justify-content: center; background-color: #ffffff; padding: 15px; border-radius: 12px; border: 2px solid #e0e0e0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
         <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
-            <!-- Üçgen Dolgusu ve Kenarları -->
             <polygon points="{p1} {p2} {p3}" fill="#f0f7ff" stroke="#1f77b4" stroke-width="3" stroke-linejoin="round"/>
-            
-            <!-- Köşe Harfleri -->
             <text x="50" y="185" font-family="Arial" font-weight="bold" font-size="16" fill="#333">{labels[0]}</text>
             <text x="270" y="185" font-family="Arial" font-weight="bold" font-size="16" fill="#333">{labels[1]}</text>
             <text x="150" y="20" font-family="Arial" font-weight="bold" font-size="16" fill="#333">{labels[2]}</text>
-            
-            <!-- Açı Değerleri -->
             <text x="85" y="150" font-family="Arial" font-weight="600" font-size="13" fill="#d62728">{vals[0]}</text>
             <text x="220" y="150" font-family="Arial" font-weight="600" font-size="13" fill="#d62728">{vals[1]}</text>
             <text x="140" y="60" font-family="Arial" font-weight="600" font-size="13" fill="#d62728">{vals[2]}</text>
@@ -227,7 +220,7 @@ def uniteye_ozel_soru_uret(ders, unite):
             if ucgen_turu == "eskenar":
                 dogru = "60°"
                 yanlislar = ["45°", "90°", "30°"]
-                svg_gorsel = svg_ucgen_ciz("eskenar", "60°", "60°", "60°")
+                svg_gorsel = svg_ucgen_ciz("eskenar", 60, 60, 60)
                 soru = (
                     f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - Eşkenar Üçgen Sınav Sorusu]</b><br>"
                     f"{svg_gorsel}<br>"
@@ -240,7 +233,7 @@ def uniteye_ozel_soru_uret(ders, unite):
                 dogru_val = 90 - aci1
                 dogru = f"{dogru_val}°"
                 yanlislar = [f"{dogru_val + 10}°", f"{dogru_val - 10}°", f"{dogru_val + 20}°"]
-                svg_gorsel = svg_ucgen_ciz("dik", "90°", f"{aci1}°", "?")
+                svg_gorsel = svg_ucgen_ciz("dik", 90, aci1, "?")
                 soru = (
                     f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - Dik Üçgen Sınav Sorusu]</b><br>"
                     f"{svg_gorsel}<br>"
@@ -253,7 +246,7 @@ def uniteye_ozel_soru_uret(ders, unite):
                 taban_aci = (180 - tepe_aci) // 2
                 dogru = f"{taban_aci}°"
                 yanlislar = [f"{taban_aci + 10}°", f"{tepe_aci}°", f"{taban_aci - 5}°"]
-                svg_gorsel = svg_ucgen_ciz("ikizkenar", f"{tepe_aci}°", "?", "?")
+                svg_gorsel = svg_ucgen_ciz("ikizkenar", tepe_aci, "?", "?")
                 soru = (
                     f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - İkizkenar Üçgen Sınav Sorusu]</b><br>"
                     f"{svg_gorsel}<br>"
@@ -267,7 +260,7 @@ def uniteye_ozel_soru_uret(ders, unite):
                 c_aci = 180 - (a_aci + b_aci)
                 dogru = f"{c_aci}°"
                 yanlislar = [f"{c_aci + 10}°", f"{c_aci - 15}°", f"{c_aci + 20}°"]
-                svg_gorsel = svg_ucgen_ciz("cesitkenar", f"{a_aci}°", f"{b_aci}°", "?")
+                svg_gorsel = svg_ucgen_ciz("cesitkenar", a_aci, b_aci, "?")
                 soru = (
                     f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - Çeşitkenar Üçgen Sınav Sorusu]</b><br>"
                     f"{svg_gorsel}<br>"
