@@ -113,181 +113,147 @@ for h in range(1, 41):
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 # =========================================================
-# 3. MEB SORU TİPLERİNE UYGUN DİNAMİK SORU ÜRETİCİ
+# 3. ÜNİTEYE TAM UYUMLU DİNAMİK SORU ÜRETİCİ
 # =========================================================
-def dinamik_soru_uret(ders, unite):
+def uniteye_ozel_soru_uret(ders, unite):
     kisi = random.choice(ISIMLER)
     
-    if ders == "Matematik":
-        tip = random.choice(["islem", "problem", "sayi_oruntusu"])
-        if tip == "islem":
+    # --- TÜRKÇE ---
+    if ders == "Türkçe":
+        if "Sözcükte Anlam" in unite:
+            dogru = "Güneş yavaş yavaş tepelerin arkasından görünmeye başladı."
+            yanlislar = ["Bu mont kardeşime biraz küçük geldi.", "Toplantıdan en son ben ayrıldım.", "Merdivenleri çıkarken nefes nefese kaldı."]
+            return {"soru": f"<b>[Sözcükte Anlam]</b> 'Çıkmak' sözcüğü hangi cümlede <u>'ortaya çıkmak, görünmek'</u> anlamındadır?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Cümlede Anlam" in unite:
+            dogru = "Hava sağanak yağışlı olduğundan maç ertelendi."
+            yanlislar = ["Başarılı olmak için her gün düzenli ders çalışıyor.", "Sabah uyanınca elini yüzünü yıkadı.", "Yarın akşam eski arkadaşlarıyla buluşacak."]
+            return {"soru": f"<b>[Cümlede Anlam]</b> Hangi cümlede <u>neden-sonuç</u> ilişkisi vardır?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Paragraf" in unite:
+            dogru = "Metnin ana düşüncesi kitap okumanın zihinsel gelişime katkısıdır."
+            yanlislar = ["Metinde sadece spor salonlarından bahsedilmiştir.", "Yazar alışveriş yapmanın önemini vurgulamıştır.", "Paragrafın konusu mevsim geçişleridir."]
+            return {"soru": f"<b>[Paragraf Analizi]</b> Düzenli kitap okuyan bir bireyin ifade becerisinin arttığını anlatan bir metne göre aşağıdakilerden hangisi söylenebilir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        else:
+            dogru = "Eyvah, elimdeki bardak yere düştü!"
+            yanlislar = ["Bugün okulda hangi dersleri işlediniz?", "Ödevlerimi bitirip odamı topladım.", "Ankara Türkiye'nin başkentidir."]
+            return {"soru": f"<b>[Yazım ve Noktalama]</b> Hangi cümlede <u>ünlem işareti (!)</u> doğru kullanılmıştır?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+
+    # --- MATEMATİK ---
+    elif ders == "Matematik":
+        if "Doğal Sayılar" in unite:
             a = random.randint(1200, 8900)
             b = random.randint(300, 1500)
-            islem_turu = random.choice(["toplam", "fark"])
-            if islem_turu == "toplam":
-                dogru = a + b
-                soru = f"<b>[İşlem Sorusu]</b> İşlemin sonucu kaçtır?<br><br><b>{a} + {b} = ?</b>"
-            else:
-                if a < b: a, b = b, a
-                dogru = a - b
-                soru = f"<b>[İşlem Sorusu]</b> İşlemin sonucu kaçtır?<br><br><b>{a} - {b} = ?</b>"
-            
+            dogru = a + b
             y1 = dogru + random.randint(5, 25)
             y2 = dogru - random.randint(3, 20)
             y3 = dogru + random.randint(30, 80)
-            siklar = [str(dogru), str(y1), str(y2), str(y3)]
-            return {"soru": soru, "siklar": siklar, "dogru": str(dogru)}
-            
-        elif tip == "problem":
-            urun = random.choice(["bilgisayar", "bisiklet", "televizyon", "tablet"])
-            fiyat = random.randint(1500, 6000)
-            taksit = random.choice([4, 6, 8, 10])
-            dogru = fiyat // taksit
-            # Tam bölünme garantisi için ayarlayalım
-            fiyat = dogru * taksit
-            
-            y1 = dogru + random.choice([25, 50, 100])
-            y2 = dogru - random.randint(10, 40)
-            y3 = dogru + random.randint(150, 250)
-            siklar = [str(dogru), str(y1), str(y2), str(y3)]
-            return {
-                "soru": f"<b>[Problem Analizi]</b> {kisi}, fiyatı <b>{fiyat} TL</b> olan bir {urun} satın almıştır. Bu tutarı <b>{taksit}</b> eşit taksitte ödeyeceğine göre, bir aylık taksit tutarı kaç TL olur?",
-                "siklar": siklar,
-                "dogru": str(dogru)
-            }
+            return {"soru": f"<b>[Doğal Sayılarla İşlemler]</b> İşlemin sonucu kaçtır?<br><br><b>{a} + {b} = ?</b>", "siklar": [str(dogru), str(y1), str(y2), str(y3)], "dogru": str(dogru)}
+        elif "Kesirler" in unite:
+            payda = random.choice([8, 10, 12, 16])
+            pay = random.randint(3, payda - 1)
+            dogru = f"{pay}/{payda} birim kesirlerden oluşur."
+            yanlislar = [f"{payda}/{pay} bileşik kesirdir.", f"Payı {payda}, paydası {pay} olan kesirdir.", "Tamamı bütün bir sayıdır."]
+            return {"soru": f"<b>[Kesirler]</b> Payı <b>{pay}</b>, paydası <b>{payda}</b> olan bir kesir için aşağıdakilerden hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Ondalık" in unite:
+            ondalik = f"0,{random.randint(15, 85)}"
+            dogru = f"Ondalık gösterimin kesir karşılığı paydası 100 olan bir kesirdir."
+            yanlislar = ["Tam kısmı sıfırdan büyüktür.", "Sayımız bir doğal sayıdır.", "Yüzler basamağında yer alır."]
+            return {"soru": f"<b>[Ondalık Gösterim]</b> <b>{ondalik}</b> ondalık gösterimi ile ilgili aşağıdakilerden hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Geometrik Kavramlar" in unite:
+            dogru = "Dar açı ölçüsü 0° ile 90° arasında olan açıdır."
+            yanlislar = ["Geniş açı 90 derecedir.", "Dik açı 180 derecedir.", "Doğru açı 90 derecedir."]
+            return {"soru": f"<b>[Açı Ölçme]</b> Geometrik kavramlar konusuna göre açı çeşitleriyle ilgili hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Üçgende Açılar" in unite:
+            aci1 = random.randint(50, 70)
+            aci2 = random.randint(50, 70)
+            ucuncu = 180 - (aci1 + aci2)
+            dogru = ucuncu
+            return {"soru": f"<b>[Üçgende Açılar]</b> İç açılarından ikisi <b>{aci1}°</b> ve <b>{aci2}°</b> olan bir üçgenin üçüncü iç açısı kaç derecedir?", "siklar": [str(dogru), str(dogru+10), str(dogru-15), str(dogru+20)], "dogru": str(dogru)}
         else:
-            baslangic = random.randint(5, 20)
-            artis = random.randint(3, 9)
-            dizi = [baslangic + i * artis for i in range(4)]
-            dogru = dizi[-1] + artis
-            soru = f"<b>[Örüntü Sorusu]</b> Aşağıdaki sayı örüntüsünde soru işaretli (?) yerine hangi sayı gelmelidir?<br><br><b>{dizi[0]} - {dizi[1]} - {dizi[2]} - {dizi[3]} - ?</b>"
-            y1 = dogru + artis
-            y2 = dogru - 2
-            y3 = dogru + 5
-            siklar = [str(dogru), str(y1), str(y2), str(y3)]
-            return {"soru": soru, "siklar": siklar, "dogru": str(dogru)}
+            dogru = "Veri analizi tablosunda en çok tercih edilen öge en yüksek sütuna sahiptir."
+            yanlislar = ["Sütun grafikleri sadece daire ile çizilir.", "Veri toplamada tabloya gerek yoktur.", "Grafikler uzunluk ölçmek için kullanılır."]
+            return {"soru": f"<b>[Veri İşleme ve Ölçme]</b> Veri işleme ve grafik yorumlama ile ilgili hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
+    # --- FEN BİLİMLERİ ---
     elif ders == "Fen Bilimleri":
-        tip = random.choice(["oncul", "tablo", "yorumlama"])
-        if tip == "oncul":
-            dogru = "Yalnız I ve II"
-            yanlislar = ["Yalnız III", "I, II ve III", "Yalnız II"]
-            return {
-                "soru": f"<b>[Öncüllü Soru]</b> {kisi}, Güneş, Dünya ve Ay ile ilgili şu bilgileri vermiştir:<br>I. Güneş kendi ekseni etrafında döner.<br>II. Dünya'nın tek doğal uydusu Ay'dır.<br>III. Ay'ın kendi ışık kaynağı vardır.<br><br><b>Yukarıdaki ifadelerden hangileri doğrudur?</b>",
-                "siklar": [dogru] + yanlislar,
-                "dogru": dogru
-            }
-        elif tip == "tablo":
-            dogru = "Güneş, Dünya'dan çok daha büyük ve sıcaktır."
-            yanlislar = [
-                "Dünya, Güneş'ten daha büyüktür.",
-                "Ay, Güneş ile aynı boyuttadır.",
-                "Güneş ve Ay'ın sıcaklık değerleri eşittir."
-            ]
-            return {
-                "soru": f"<b>[Karşılaştırma Soru Tipi]</b> {kisi} gök cisimlerinin büyüklük ve sıcaklık özelliklerini karşılaştırıyor. Aşağıdaki yargılardan hangisi bilimsel olarak doğrudur?",
-                "siklar": [dogru] + yanlislar,
-                "dogru": dogru
-            }
+        if "Güneş, Dünya ve Ay" in unite:
+            dogru = "Güneş küre şeklindedir ve kendi ekseni etrafında döner."
+            yanlislar = ["Güneş kendi etrafında dönmez, sabittir.", "Ay'ın ışık kaynağı kendi üzerindedir.", "Dünya'nın şekli kare kutu gibidir."]
+            return {"soru": f"<b>[Güneş, Dünya ve Ay]</b> {kisi}, bu üniteyle ilgili araştırma yapıyor. Hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Canlılar Dünyası" in unite:
+            dogru = "Mantar ve bakteriler mikroskobik canlılar dünyasında yer alabilir."
+            yanlislar = ["Tüm mantarlar bitki sınıfına dahildir.", "Bakteriler gözle çok rahat görülebilir.", "Hayvanlar kendi besinini kendisi üretir."]
+            return {"soru": f"<b>[Canlılar Dünyası]</b> Canlılar dünyasını sınıflandıran {kisi} hangisine ulaşır?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Kuvvetin Ölçülmesi" in unite:
+            dogru = "Kuvvet dinamometre adı verilen aletle ölçülür ve birimi Newton'dur."
+            yanlislar = ["Kuvvet tartı ile ölçülür ve birimi kilogramdır.", "Sürtünme kuvveti hareketi her zaman hızlandırır.", "Dinamometreler sıvı miktarını ölçer."]
+            return {"soru": f"<b>[Kuvvet ve Sürtünme]</b> Kuvvetin ölçülmesi ve sürtünme ile ilgili hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Madde ve Değişim" in unite:
+            dogru = "Maddenin ısı alarak hal değiştirmesine erime veya buharlaşma denir."
+            yanlislar = ["Buzun erimesi kimyasal bir değişimdir.", "Kağıdın yanması fiziksel değişimdir.", "Donma olayında madde dışarıya ısı vermez."]
+            return {"soru": f"<b>[Madde ve Değişim]</b> Maddenin hal değiştirmesiyle ilgili hangisi doğrudur?", "soru": f"<b>[Madde ve Değişim]</b> Maddenin hal değiştirmesiyle ilgili hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
         else:
-            dogru = "Yeniay -> İlk Dördün -> Dolunay -> Son Dördün"
-            yanlislar = [
-                "Dolunay -> Yeniay -> Son Dördün -> İlk Dördün",
-                "İlk Dördün -> Dolunay -> Yeniay -> Son Dördün",
-                "Yeniay -> Dolunay -> İlk Dördün -> Son Dördün"
-            ]
-            return {
-                "soru": f"<b>[Görsel / Sıralama Soru Tipi]</b> Ay'ın ana evrelerinin doğru kronolojik sıralaması hangi seçenekte eksiksiz verilmiştir?",
-                "siklar": [dogru] + yanlislar,
-                "dogru": dogru
-            }
+            dogru = "Işık doğrusal yollarla yayılır ve opak maddelerden geçemez."
+            yanlislar = ["Tam gölge saydam maddelerin arkasında oluşur.", "Işık sadece dairesel dalgalarla yayılır.", "Cam ışığı hiç geçirmez."],
+            return {"soru": f"<b>[Işığın Yayılması]</b> Işığın yayılması ve tam gölge ünitesi için hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
-    elif ders == "Türkçe":
-        tip = random.choice(["sozcuk_anlam", "cumle_anlam", "noktalama"])
-        if tip == "sozcuk_anlam":
-            dogru = "Güneş yavaş yavaş tepelerin arkasından görünmeye başladı."
-            yanlislar = [
-                "Bu mont kardeşime biraz küçük geldi.",
-                "Toplantıdan en son ben ayrıldım.",
-                "Merdivenleri çıkarken nefes nefese kaldı."
-            ]
-            return {
-                "soru": f"<b>[Sözcükte Anlam]</b> 'Çıkmak' sözcüğü aşağıdaki cümlelerin hangisinde <u>'ortaya çıkmak, görünmek'</u> anlamında kullanılmıştır?",
-                "siklar": [dogru] + yanlislar,
-                "dogru": dogru
-            }
-        elif tip == "cumle_anlam":
-            dogru = "Hava sağanak yağışlı olduğundan maç ertelendi."
-            yanlislar = [
-                "Başarılı olmak için her gün düzenli ders çalışıyor.",
-                "Sabah uyanınca elini yüzünü yıkadı.",
-                "Yarın akşam eski arkadaşlarıyla buluşacak."
-            ]
-            return {
-                "soru": f"<b>[Cümlede Anlam]</b> Aşağıdaki cümlelerin hangisinde <u>neden-sonuç (gerekçe)</u> ilişkisi vardır?",
-                "siklar": [dogru] + yanlislar,
-                "dogru": dogru
-            }
-        else:
-            dogru = "Eyvah, elimdeki bardak yere düştü!"
-            yanlislar = [
-                "Bugün okulda hangi dersleri işlediniz?",
-                "Ödevlerimi bitirip odamı topladım.",
-                "Ankara Türkiye'nin başkentidir."
-            ]
-            return {
-                "soru": f"<b>[Noktalama İşaretleri]</b> Aşağıdaki cümlelerin hangisinde <u>ünlem işareti (!)</u> yanlış ya da gereksiz kullanılmıştır?",
-                "siklar": [dogru] + yanlislar,
-                "dogru": dogru
-            }
-
+    # --- SOSYAL BİLGİLER ---
     elif ders == "Sosyal Bilgiler":
-        dogru = "Aile bütçesine katkı sağlamak ve ortak ev işlerinde yardımlaşmak"
-        yanlislar = [
-            "Evdeki tüm kuralları tek başına değiştirmek",
-            "Gün boyu sadece kendi odasında vakit geçirmek",
-            "Hiçbir sorumluluk almadan dışarıda oyun oynamak"
-        ]
-        return {
-            "soru": f"<b>[Sözel Mantık / Öncül]</b> {kisi}, 'Birey ve Toplum' ünitesinde ev içi hak ve sorumlulukları incelemektedir. Buna göre bir çocuğun ev içerisindeki temel sorumluluklarından biri hangisidir?",
-            "siklar": [dogru] + yanlislar,
-            "dogru": dogru
-        }
+        if "Birey ve Toplum" in unite:
+            dogru = "Aile bütçesine katkı sağlamak ve ev işlerinde yardımlaşmak çocukların sorumluluklarındandır."
+            yanlislar = ["Çocukların evde hiçbir sorumluluğu yoktur.", "Haklarımızı kullanırken başkalarının haklarını ihlal edebiliriz.", "Resmi kurumlarla işimiz olamaz."]
+            return {"soru": f"<b>[Hak ve Sorumluluklar]</b> {kisi}, birey ve toplum ünitesinde hangi ifadeye ulaşmalıdır?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Kültür ve Miras" in unite:
+            dogru = "Tarihi yapıları ve kültürel mirasları korumak toplumsal görevimizdir."
+            yanlislar = ["Tarihi eserleri özelleştirip satabiliriz.", "Kültürel ögelerimiz zamanla tamamen yok olmalıdır.", "Müzeler sadece turistik mekanlardır."],
+            return {"soru": f"<b>[Kültür ve Miras]</b> Geçmişten günümüze kalan kültürel miraslar için hangisi söylenebilir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "İnsanlar, Yerler" in unite:
+            dogru = "Haritalarda mavi renk genellikle su kaynaklarını ve denizleri gösterir."
+            yanlislar = ["Dağlar haritalarda daima yeşil renkle gösterilir.", "Yeryüzü şekilleri beşeri unsurlardır.", "İklim insan faaliyetlerini hiç etkilemez."],
+            return {"soru": f"<b>[İnsanlar, Yerler ve Çevreler]</b> Coğrafi özellikler ve harita bilgisi için hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        else:
+            dogru = "Teknolojik ürünleri bilinçli ve güvenli kullanmalıyız."
+            yanlislar = ["İnternette kişisel bilgileri herkesle paylaşabiliriz.", "Teknolojinin zararlı yönleri hiç yoktur.", "İcatlar sadece günümüzde yapılmıştır."],
+            return {"soru": f"<b>[Bilim, Teknoloji]</b> Bilim ve teknoloji ünitesine göre hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
+    # --- DİN KÜLTÜRÜ ---
     elif ders == "Din Kültürü ve Ahlak Bilgisi":
-        dogru = "Evrendeki kusursuz düzen, uyum ve planlı yaratılış"
-        yanlislar = [
-            "Evrenin tamamen tesadüfi olaylarla var olması",
-            "Doğadaki varlıkların hiçbir amaca hizmet etmemesi",
-            "Mevsim döngülerinin tamamen düzensiz gerçekleşmesi"
-        ]
-        return {
-            "soru": f"<b>[Kavram Analizi]</b> {kisi}, 'Allah İnancı' ünitesinde evrendeki nizamı araştırmaktadır. Aşağıdakilerden hangisi Yaratıcı'nın varlığına ve birliğine delil gösterilebilir?",
-            "siklar": [dogru] + yanlislar,
-            "dogru": dogru
-        }
+        if "Allah İnancı" in unite:
+            dogru = "Evrendeki kusursuz düzen Yaratıcı'nın varlığına delildir."
+            yanlislar = ["Evrendeki her şey tesadüfen oluşmuştur.", "Doğanın bir sahibi yoktur.", "Mevsimlerin oluşumunda amaç aranmaz."],
+            return {"soru": f"<b>[Allah İnancı]</b> Evrendeki nizam ve uyumla ilgili hangisi söylenebilir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Ramazan ve Oruç" in unite:
+            dogru = "Oruç İslam'ın temel ibadetlerinden biridir ve imsak vaktiyle başlar."
+            yanlislar = ["Oruç sadece akşam yemeği yememektir.", "Ramazan ayı sadece yaz mevsiminde olur.", "Sahura kalkmak zorunlu değildir."],
+            return {"soru": f"<b>[Ramazan ve Oruç]</b> Ramazan ayı ve oruç ibadeti için hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        else:
+            dogru = "Adap ve nezaket kurallarına uymak toplumsal huzuru artırır."
+            yanlislar = ["Büyüklere saygı göstermek gereksizdir.", "Selamlaşmak sadece aile üyeleri arasındadır.", "Konuşurken başkasının sözünü kesmek kibarlıktır."],
+            return {"soru": f"<b>[Adap ve Nezaket]</b> Günlük yaşamdaki nezahet kuralları için hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
+    # --- İNGİLİZCE ---
     elif ders == "İngilizce":
-        dogru = "I am from Turkey and I am Turkish."
-        yanlislar = [
-            "I like playing football and tennis.",
-            "My school starts at nine o'clock.",
-            "I get up early in the morning."
-        ]
-        return {
-            "soru": f"<b>[Diyalog / Tanışma]</b> {kisi} İngilizce dersinde kendisini tanıtmaktadır. Hangi ifade {kisi}'nin ülkesini ve milliyetini belirtir?",
-            "siklar": [dogru] + yanlislar,
-            "dogru": dogru
-        }
+        if "Hello!" in unite:
+            dogru = "I am from Turkey and I am Turkish."
+            yanlislar = ["I like playing football.", "My school starts at nine.", "I get up early."],
+            return {"soru": f"<b>[Nationalities]</b> Ülke ve milliyet belirten ifade hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "My Town" in unite:
+            dogru = "The hospital is next to the post office."
+            yanlislar = ["I have two brothers.", "She likes playing tennis.", "I get up at 7 AM."],
+            return {"soru": f"<b>[Directions]</b> Yer yön bildiren ifade hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        elif "Games and Hobbies" in unite:
+            dogru = "He likes playing chess and riding a bike."
+            yanlislar = ["I am from Ankara.", "The bank is opposite the park.", "My hair is blonde."],
+            return {"soru": f"<b>[Hobbies]</b> Hobi ve oyun belirten ifade hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        else:
+            dogru = "I wake up at seven o'clock every morning."
+            yanlislar = ["I live in a big city.", "She is from Spain.", "They love playing football."],
+            return {"soru": f"<b>[Daily Routine]</b> Günlük rutini belirten ifade hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
+    # --- BİLGİ YARIŞMASI ---
     else:
-        secimler = [
-            ("Türkiye Cumhuriyeti'nin başkenti hangi şehirdir?", "Ankara", ["İstanbul", "İzmir", "Bursa"]),
-            ("Dünyanın en büyük okyanusu hangisidir?", "Pasifik Okyanusu", ["Atlantik Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"]),
-            ("Yer kabuğunun ana maddesi nedir?", "Kayaçlar ve mineraller", ["Sadece su kütleleri", "Saf demir tabakası", "Gaz bulutları"])
-        ]
-        q, ans, celd = random.choice(secimler)
-        return {"soru": f"<b>[Genel Kültür]</b> {q}", "siklar": [ans] + celd, "dogru": ans}
+        dogru = "Ankara"
+        yanlislar = ["İstanbul", "İzmir", "Bursa"]
+        return {"soru": f"🏆 <b>[Bilgi Yarışması]</b> Türkiye Cumhuriyeti'nin başkenti neresidir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
 def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
@@ -311,7 +277,7 @@ def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
         uretilen = 0
         
         while uretilen < bu_unite_hedef:
-            s = dinamik_soru_uret(ders, unite)
+            s = uniteye_ozel_soru_uret(ders, unite)
             s["ders"] = ders
             s["unite"] = unite
             
@@ -388,7 +354,7 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
             
             for sn in range(3, 0, -1):
                 progress_bar.progress(int((4 - sn) * 25))
-                status_box.info(f"🔄 Tamamen özgün MEB tarzı sorular üretiliyor... ({sn}s)")
+                status_box.info(f"🔄 Seçilen ünitelere birebir uygun sorular hazırlanıyor... ({sn}s)")
                 time.sleep(0.5)
             
             sorular = ders_sirali_ve_dengeli_uret(secilen_uniteler, soru_sayisi)
@@ -415,7 +381,7 @@ elif st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
 # 5. TEST EKRANI
 # =========================================================
 if st.session_state["sorular_hazir"] and not st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
-    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet özgün soru** hazır!")
+    st.info(f"🎉 **{len(st.session_state['soru_listesi'])} adet ünitelere uygun soru** hazır!")
     if st.button("🏁 Sınavı Şimdi Başlat", type="primary", use_container_width=True):
         st.session_state["test_aktif"] = True
         st.session_state["baslangic_zamani"] = time.time()
