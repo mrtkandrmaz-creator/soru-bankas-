@@ -113,35 +113,28 @@ for h in range(1, 41):
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 # =========================================================
-# 3. PROFESYONEL MEB UYUMLU SVG ÜÇGEN ÇİZİM MOTORU
+# 3. PROFESYONEL MEB UYUMLU SVG ÜÇGEN ÇİZİM MOTORU (Çeşitkenar Hariç)
 # =========================================================
 def svg_ucgen_ciz(tip, tepe_aci, sol_aci, sag_aci):
     """MEB soru kitapçıklarına birebir uyumlu, harflendirmesi tepeden başlayan SVG üçgen şeması üretir."""
     def fmt(v):
         return f"{v}°" if v != "?" else "?"
 
-    # Tüm üçgen tiplerinde harflendirme tepeden (index 0) başlar: (Tepe, Sol Alt, Sağ Alt)
-    if tip in ["cesitkenar", "cesitkenar_aci", "genis_aci"]:
-        p1, p2, p3 = "60,160", "270,160", "160,35"
-        labels = ("K", "L", "M") # K: Tepe, L: Sol Alt, M: Sağ Alt
-        pos_list = ("x='150' y='25'", "x='35' y='175'", "x='280' y='175'")
-        val_list = ("x='145' y='65'", "x='80' y='145'", "x='225' y='145'")
-        semboller = ""
-    elif tip == "dik":
+    if tip == "dik":
         p1, p2, p3 = "60,160", "260,160", "60,45"
-        labels = ("D", "E", "F") # D: Tepe, E: Sol Alt, F: Sağ Alt
+        labels = ("D", "E", "F")
         pos_list = ("x='45' y='35'", "x='35' y='178'", "x='270' y='178'")
         val_list = ("x='75' y='75'", "x='90' y='145'", "x='210' y='145'")
         semboller = '<rect x="60" y="140" width="20" height="20" fill="none" stroke="#2c3e50" stroke-width="2"/>'
     elif tip == "ikizkenar":
         p1, p2, p3 = "60,160", "260,160", "160,40"
-        labels = ("P", "R", "S") # P: Tepe, R: Sol Alt, S: Sağ Alt
+        labels = ("P", "R", "S")
         pos_list = ("x='150' y='30'", "x='35' y='175'", "x='275' y='175'")
         val_list = ("x='145' y='70'", "x='80' y='145'", "x='220' y='145'")
         semboller = '<line x1="103" y1="95" x2="115" y2="105" stroke="#e74c3c" stroke-width="3"/><line x1="207" y1="95" x2="217" y2="105" stroke="#e74c3c" stroke-width="3"/>'
     else:  # eskenar
         p1, p2, p3 = "60,160", "260,160", "160,26"
-        labels = ("A", "B", "C") # A: Tepe, B: Sol Alt, C: Sağ Alt
+        labels = ("A", "B", "C")
         pos_list = ("x='150' y='18'", "x='35' y='175'", "x='275' y='175'")
         val_list = ("x='145' y='65'", "x='85' y='145'", "x='220' y='145'")
         semboller = '<line x1="105" y1="95" x2="115" y2="105" stroke="#27ae60" stroke-width="3"/><line x1="205" y1="95" x2="215" y2="105" stroke="#27ae60" stroke-width="3"/><line x1="153" y1="168" x2="167" y2="168" stroke="#27ae60" stroke-width="3"/>'
@@ -227,7 +220,8 @@ def uniteye_ozel_soru_uret(ders, unite):
             soru = f"{kaynak_turu}<br><br><b>[Açı Ölçme]</b> Geometrik kavramlar konusuna göre açı çeşitleriyle ilgili hangisi doğrudur?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
         elif "Üçgende Açılar" in unite:
-            tip_secimi = random.choice(["eskenar", "dik", "ikizkenar", "cesitkenar_aci", "genis_aci"])
+            # Sadece Eşkenar, Dik ve İkizkenar üçgen tipleri kullanılıyor (Çeşitkenar kaldırıldı)
+            tip_secimi = random.choice(["eskenar", "dik", "ikizkenar"])
             
             if tip_secimi == "eskenar":
                 dogru = "60°"
@@ -253,7 +247,7 @@ def uniteye_ozel_soru_uret(ders, unite):
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
-            elif tip_secimi == "ikizkenar":
+            else: # ikizkenar
                 tepe_aci = random.choice([40, 50, 60, 70, 80])
                 taban_aci = (180 - tepe_aci) // 2
                 dogru = f"{taban_aci}°"
@@ -263,35 +257,6 @@ def uniteye_ozel_soru_uret(ders, unite):
                     f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - İkizkenar Üçgen Özelliği]</b><br>"
                     f"{svg_gorsel}<br>"
                     f"Yukarıdaki şemada |PR| = |PS| olan PRS ikizkenar üçgeninin tepedeki P açısı <b>{tepe_aci}°</b> verilmiştir. Buna göre tabandaki R açısının ölçüsü kaç derecedir?"
-                )
-                return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
-                
-            elif tip_secimi == "genis_aci":
-                genis_aci = random.choice([100, 110, 120, 130])
-                kalan = 180 - genis_aci
-                dar1 = random.randint(25, kalan - 15)
-                dar2 = kalan - dar1
-                dogru = f"{genis_aci}°"
-                yanlislar = [f"{genis_aci - 15}°", f"90°", f"{genis_aci + 10}°"]
-                svg_gorsel = svg_ucgen_ciz("cesitkenar", "?", dar1, dar2) # Tepe açısı '?' olarak güncellendi
-                soru = (
-                    f"{kaynak_turu}<br><br><b>[MEB Soru Bankası - Geniş Açılı Üçgen]</b><br>"
-                    f"{svg_gorsel}<br>"
-                    f"Yukarıdaki çeşitkenar üçgen şemasında sol alt açı <b>{dar1}°</b> ve sağ alt açı <b>{dar2}°</b> olarak ölçülmüştür. Buna göre tepedeki K açısı kaç derecedir?"
-                )
-                return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
-                
-            else:
-                a_aci = random.randint(45, 75)
-                b_aci = random.randint(35, 65)
-                c_aci = 180 - (a_aci + b_aci)
-                dogru = f"{c_aci}°"
-                yanlislar = [f"{c_aci + 10}°", f"{c_aci - 15}°", f"{c_aci + 20}°"]
-                svg_gorsel = svg_ucgen_ciz("cesitkenar", "?", a_aci, b_aci)
-                soru = (
-                    f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - Üçgende İç Açılar Toplamı]</b><br>"
-                    f"{svg_gorsel}<br>"
-                    f"Yukarıdaki vektörel şemada verilen KLM çeşitkenar üçgeninin sol alt L açısı <b>{a_aci}°</b> ve sağ alt M açısı <b>{b_aci}°</b>'dir. Buna göre tepedeki K açısı kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
         else:
