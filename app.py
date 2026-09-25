@@ -61,7 +61,7 @@ MEB_MUFREDAT = {
         "5. Ünite: Işığın Yayılması ve Tam Gölge"
     ],
     "Sosyal Bilgiler": [
-        "1. Ünite: Birey ve Toplum (Hak ve Sorumluluklar)",
+        "1. Ünite: Birey dan Toplum (Hak ve Sorumluluklar)",
         "2. Ünite: Kültür ve Miras",
         "3. Ünite: İnsanlar, Yerler ve Çevreler",
         "4. Ünite: Bilim, Teknoloji ve Toplum"
@@ -113,40 +113,64 @@ for h in range(1, 41):
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
 # =========================================================
-# 3. SVG TABANLI GERÇEKÇİ GEOMETRİK ÜÇGEN ÇİZİM MOTORU (GİDERİLDİ)
+# 3. PROFESYONEL MEB UYUMLU SVG ÜÇGEN ÇİZİM MOTORU
 # =========================================================
-def svg_ucgen_ciz(tip, aci1_val, aci2_val, aci3_val):
-    """MEB soru kitapçıklarına birebir uyumlu, SVG vektörel üçgen şeması üretir."""
+def svg_ucgen_ciz(tip, aci1_val, aci2_val, aci3_val, ek_detay=""):
+    """MEB soru kitapçıklarına birebir uyumlu, kusursuz konumlandırılmış SVG üçgen şeması üretir."""
     def fmt(v):
         return f"{v}°" if v != "?" else "?"
 
     if tip == "cesitkenar":
-        p1, p2, p3 = "70,160", "280,170", "150,30"
+        # K(60, 160), L(270, 160), M(160, 35)
+        p1, p2, p3 = "60,160", "270,160", "160,35"
         labels = ("K", "L", "M")
-        vals = (fmt(aci1_val), fmt(aci2_val), fmt(aci3_val))
+        pos = {"K": "x='35' y='175'", "L": "x='280' y='175'", "M": "x='150' y='25'"}
+        vals = {"K": "x='80' y='145'", "L": "x='225' y='145'", "M": "x='145' y='65'"}
+        semboller = ""
     elif tip == "dik":
-        p1, p2, p3 = "60,170", "260,170", "60,40"
+        # D(60, 160), E(260, 160), F(60, 45) -> D köşesi 90° dik açı
+        p1, p2, p3 = "60,160", "260,160", "60,45"
         labels = ("D", "E", "F")
-        vals = ("90°", fmt(aci2_val), fmt(aci3_val))
+        pos = {"D": "x='35' y='178'", "L": "x='270' y='178'", "M": "x='45' y='35'"} # L=E, M=F
+        vals = {"K": "x='90' y='145'", "L": "x='210' y='145'", "M": "x='75' y='75'"}
+        # Dik açı simgesi (kare)
+        semboller = '<rect x="60" y="140" width="20" height="20" fill="none" stroke="#2c3e50" stroke-width="2"/>'
     elif tip == "ikizkenar":
-        p1, p2, p3 = "70,170", "250,170", "160,35"
+        # P(60, 160), R(260, 160), S(160, 40) -> |PS| = |RS|
+        p1, p2, p3 = "60,160", "260,160", "160,40"
         labels = ("P", "R", "S")
-        vals = (fmt(aci1_val), fmt(aci2_val), fmt(aci3_val))
+        pos = {"K": "x='35' y='175'", "L": "x='275' y='175'", "M": "x='150' y='30'"}
+        vals = {"K": "x='80' y='145'", "L": "x='220' y='145'", "M": "x='145' y='70'"}
+        # İkizkenar eşitlik çizgileri
+        semboller = '<line x1="103" y1="95" x2="115" y2="105" stroke="#e74c3c" stroke-width="3"/><line x1="207" y1="95" x2="217" y2="105" stroke="#e74c3c" stroke-width="3"/>'
     else:  # eskenar
-        p1, p2, p3 = "70,170", "250,170", "160,20"
+        p1, p2, p3 = "60,160", "260,160", "160,26"
         labels = ("A", "B", "C")
-        vals = ("60°", "60°", "60°")
+        pos = {"K": "x='35' y='175'", "L": "x='275' y='175'", "M": "x='150' y='18'"}
+        vals = {"K": "x='85' y='145'", "L": "x='220' y='145'", "M": "x='145' y='65'"}
+        # Eşkenar üçgen tüm kenarlara tek çizgi işareti
+        semboller = '<line x1="105" y1="95" x2="115" y2="105" stroke="#27ae60" stroke-width="3"/><line x1="205" y1="95" x2="215" y2="105" stroke="#27ae60" stroke-width="3"/><line x1="153" y1="168" x2="167" y2="168" stroke="#27ae60" stroke-width="3"/>'
+
+    v_vals = (fmt(aci1_val), fmt(aci2_val), fmt(aci3_val))
 
     svg_code = f"""
-    <div style="display: flex; justify-content: center; background-color: #ffffff; padding: 15px; border-radius: 12px; border: 2px solid #e0e0e0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
-        <svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="{p1} {p2} {p3}" fill="#f0f7ff" stroke="#1f77b4" stroke-width="3" stroke-linejoin="round"/>
-            <text x="50" y="185" font-family="Arial" font-weight="bold" font-size="16" fill="#333">{labels[0]}</text>
-            <text x="270" y="185" font-family="Arial" font-weight="bold" font-size="16" fill="#333">{labels[1]}</text>
-            <text x="150" y="20" font-family="Arial" font-weight="bold" font-size="16" fill="#333">{labels[2]}</text>
-            <text x="85" y="150" font-family="Arial" font-weight="600" font-size="13" fill="#d62728">{vals[0]}</text>
-            <text x="220" y="150" font-family="Arial" font-weight="600" font-size="13" fill="#d62728">{vals[1]}</text>
-            <text x="140" y="60" font-family="Arial" font-weight="600" font-size="13" fill="#d62728">{vals[2]}</text>
+    <div style="display: flex; justify-content: center; background-color: #ffffff; padding: 15px; border-radius: 12px; border: 2px solid #dcdde1; box-shadow: 0 4px 6px rgba(0,0,0,0.03);">
+        <svg width="340" height="200" viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Izgara / Dolgu -->
+            <polygon points="{p1} {p2} {p3}" fill="#f5fafd" stroke="#2980b9" stroke-width="3.5" stroke-linejoin="round"/>
+            
+            <!-- Özel Şekil Sembolleri (Diklik / Eşitlik) -->
+            {semboller}
+            
+            <!-- Köşe Harfleri -->
+            <text {pos["K"]} font-family="Arial" font-weight="bold" font-size="16" fill="#2c3e50">{labels[0]}</text>
+            <text {pos["L"]} font-family="Arial" font-weight="bold" font-size="16" fill="#2c3e50">{labels[1]}</text>
+            <text {pos["M"]} font-family="Arial" font-weight="bold" font-size="16" fill="#2c3e50">{labels[2]}</text>
+            
+            <!-- İç Açı Ölçüleri -->
+            <text {vals["K"]} font-family="Arial" font-weight="bold" font-size="14" fill="#c0392b">{v_vals[0]}</text>
+            <text {vals["L"]} font-family="Arial" font-weight="bold" font-size="14" fill="#c0392b">{v_vals[1]}</text>
+            <text {vals["M"]} font-family="Arial" font-weight="bold" font-size="14" fill="#c0392b">{v_vals[2]}</text>
         </svg>
     </div>
     """
@@ -215,54 +239,69 @@ def uniteye_ozel_soru_uret(ders, unite):
             soru = f"{kaynak_turu}<br><br><b>[Açı Ölçme]</b> Geometrik kavramlar konusuna göre açı çeşitleriyle ilgili hangisi doğrudur?"
             return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
         elif "Üçgende Açılar" in unite:
-            ucgen_turu = random.choice(["eskenar", "dik", "ikizkenar", "cesitkenar"])
+            tip_secimi = random.choice(["eskenar", "dik", "ikizkenar", "cesitkenar_aci", "genis_aci"])
             
-            if ucgen_turu == "eskenar":
+            if tip_secimi == "eskenar":
                 dogru = "60°"
                 yanlislar = ["45°", "90°", "30°"]
                 svg_gorsel = svg_ucgen_ciz("eskenar", 60, 60, 60)
                 soru = (
-                    f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - Eşkenar Üçgen Sınav Sorusu]</b><br>"
+                    f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - Eşkenar Üçgen Analizi]</b><br>"
                     f"{svg_gorsel}<br>"
-                    "Yukarıdaki vektörel şemada tüm kenar uzunlukları ve iç açıları birbirine eşit olan bir <b>ABC eşkenar üçgeni</b> verilmiştir. Bu üçgenin bir iç açısının ölçüsü kaç derecedir?"
+                    "Yukarıdaki vektörel şemada tüm kenar uzunlukları ve iç açıları birbirine eşit olan <b>ABC eşkenar üçgeni</b> verilmiştir. Bu üçgenin bir iç açısının ölçüsü kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
-            elif ucgen_turu == "dik":
-                aci1 = random.randint(30, 60)
+            elif tip_secimi == "dik":
+                aci1 = random.choice([30, 35, 40, 45, 50, 55, 60])
                 dogru_val = 90 - aci1
                 dogru = f"{dogru_val}°"
-                yanlislar = [f"{dogru_val + 10}°", f"{dogru_val - 10}°", f"{dogru_val + 20}°"]
+                yanlislar = [f"{dogru_val + 10}°", f"{dogru_val - 10}°", f"{dogru_val + 15}°"]
                 svg_gorsel = svg_ucgen_ciz("dik", 90, aci1, "?")
                 soru = (
-                    f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - Dik Üçgen Sınav Sorusu]</b><br>"
+                    f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - Dik Üçgen Soru Tipi]</b><br>"
                     f"{svg_gorsel}<br>"
-                    f"Yukarıdaki vektörel şemada D köşesi 90° ve E köşesi <b>{aci1}°</b> olan bir <b>DEF dik üçgeni</b> gösterilmiştir. Buna göre verilmeyen F köşesindeki dar açının ölçüsü kaç derecedir?"
+                    f"Yukarıdaki şemada D köşesi 90° dik açı ve E köşesi <b>{aci1}°</b> olan bir <b>DEF dik üçgeni</b> gösterilmiştir. Buna göre verilmeyen F köşesindeki dar açının ölçüsü kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
-            elif ucgen_turu == "ikizkenar":
-                tepe_aci = random.choice([40, 50, 70, 80])
+            elif tip_secimi == "ikizkenar":
+                tepe_aci = random.choice([40, 50, 60, 70, 80])
                 taban_aci = (180 - tepe_aci) // 2
                 dogru = f"{taban_aci}°"
                 yanlislar = [f"{taban_aci + 10}°", f"{tepe_aci}°", f"{taban_aci - 5}°"]
                 svg_gorsel = svg_ucgen_ciz("ikizkenar", tepe_aci, "?", "?")
                 soru = (
-                    f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - İkizkenar Üçgen Sınav Sorusu]</b><br>"
+                    f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - İkizkenar Üçgen Özelliği]</b><br>"
                     f"{svg_gorsel}<br>"
-                    f"Yukarıdaki vektörel şemada |PR| = |PS| olan PRS ikizkenar üçgeninin tepe açısı <b>{tepe_aci}°</b> verilmiştir. Buna göre R köşesindeki taban açısının ölçüsü kaç derecedir?"
+                    f"Yukarıdaki şemada |PS| = |RS| olan PRS ikizkenar üçgeninin tepe açısı (S) <b>{tepe_aci}°</b> verilmiştir. Buna göre tabandaki R açısının ölçüsü kaç derecedir?"
+                )
+                return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
+                
+            elif tip_secimi == "genis_aci":
+                genis_aci = random.choice([100, 110, 120, 130])
+                kalan = 180 - genis_aci
+                dar1 = random.randint(25, kalan - 15)
+                dar2 = kalan - dar1
+                dogru = f"{genis_aci}°"
+                yanlislar = [f"{genis_aci - 15}°", f"90°", f"{genis_aci + 10}°"]
+                svg_gorsel = svg_ucgen_ciz("cesitkenar", dar1, dar2, "?")
+                soru = (
+                    f"{kaynak_turu}<br><br><b>[MEB Soru Bankası - Geniş Açılı Üçgen]</b><br>"
+                    f"{svg_gorsel}<br>"
+                    f"Yukarıdaki çeşitkenar üçgen şemasında iki iç açı <b>{dar1}°</b> ve <b>{dar2}°</b> olarak ölçülmüştür. Bu üçgenin en büyük açısı (Geniş Açı) kaç derecedir?"
                 )
                 return {"soru": soru, "siklar": [dogru] + yanlislar, "dogru": dogru}
                 
             else:
-                a_aci = random.randint(40, 70)
-                b_aci = random.randint(40, 70)
+                a_aci = random.randint(45, 75)
+                b_aci = random.randint(35, 65)
                 c_aci = 180 - (a_aci + b_aci)
                 dogru = f"{c_aci}°"
                 yanlislar = [f"{c_aci + 10}°", f"{c_aci - 15}°", f"{c_aci + 20}°"]
                 svg_gorsel = svg_ucgen_ciz("cesitkenar", a_aci, b_aci, "?")
                 soru = (
-                    f"{kaynak_turu}<br><br><b>[Üçgen Çeşitleri - Çeşitkenar Üçgen Sınav Sorusu]</b><br>"
+                    f"{kaynak_turu}<br><br><b>[MEB Yeni Nesil - Üçgende İç Açılar Toplamı]</b><br>"
                     f"{svg_gorsel}<br>"
                     f"Yukarıdaki vektörel şemada verilen KLM çeşitkenar üçgeninin K açısı <b>{a_aci}°</b> ve L açısı <b>{b_aci}°</b>'dir. Buna göre verilmeyen üçüncü iç açı (M) kaç derecedir?"
                 )
