@@ -111,7 +111,7 @@ for h in range(1, 41):
     MEB_HAFTALIK_MAPI[h].append(("İngilizce", MEB_MUFREDAT["İngilizce"][i_idx]))
 
 # =========================================================
-# 3. SORU HAVUZU
+# 3. ZENGİN VE MANTISAL SORU HAVUZU
 # =========================================================
 ISIMLER = ["Ahmet", "Zeynep", "Elif", "Mehmet", "Can", "Ece", "Burak", "Ayşe", "Kaan", "Duru", "Bora", "Selin", "Mert", "Deniz", "Kerem"]
 
@@ -129,23 +129,98 @@ TURKCE_ANLAM = [
 ]
 
 # =========================================================
-# 4. %50 AI - %50 HAVUZ VE MEB SIRALI ÜRETİCİ
+# 4. MANTISAL VE TUTARLI %50 AI - %50 HAVUZ ÜRETİCİ
 # =========================================================
 def yapay_zekadan_soru_uret(ders, unite):
     kisi = random.choice(ISIMLER)
+    
     if ders == "Matematik":
-        sayi = random.randint(1000, 99999)
-        dogru = str(sayi)
-        yanlislar = [str(sayi + 10), str(sayi - 5), str(sayi + 100)]
-        return {"soru": f"🤖 [AI] {kisi} <b>{sayi}</b> sayısını incelemektedir. Bu sayının okunuşu veya basamak değeriyle ilgili doğru ifade hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        sayi1 = random.randint(100, 900)
+        sayi2 = random.randint(10, 90)
+        toplam = sayi1 + sayi2
+        yanlis1 = toplam + random.choice([1, 10, -5])
+        yanlis2 = toplam + random.choice([2, 20, -10])
+        yanlis3 = toplam + random.choice([5, 15, -2])
+        siklar = [str(toplam), str(yanlis1), str(yanlis2), str(yanlis3)]
+        return {
+            "soru": f"🤖 [AI] {kisi}, marketten aldığı <b>{sayi1}</b> TL'lik ürün ile <b>{sayi2}</b> TL'lik ürüne toplam kaç TL ödemelidir?",
+            "siklar": siklar,
+            "dogru": str(toplam)
+        }
+        
     elif ders == "Fen Bilimleri":
-        dogru = "Bilimsel olarak gözlemlenen doğrudur."
-        yanlislar = ["Tamamen yanlıştır.", "Isı yaymaz.", "Kütlesi sıfırdır."]
-        return {"soru": f"🤖 [AI] {kisi}'in <b>{unite}</b> konusunda laboratuvarda yaptığı deneyde ulaştığı doğru sonuç hangisidir?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        dogru = "Kendi ekseni etrafında dönme hareketi yapar."
+        yanlislar = [
+            "Sadece etrafına ısı yayar, dönmez.",
+            "Dünya'nın etrafında dolanma hareketi yapar.",
+            "Tamamen sabit ve hareketsiz durur."
+        ]
+        return {
+            "soru": f"🤖 [AI] {kisi}, fen bilimleri dersinde Güneş'in özellikleri hakkında araştırma yapmaktadır. Buna göre Güneş için aşağıdakilerden hangisi söylenebilir?",
+            "siklar": [dogru] + yanlislar,
+            "dogru": dogru
+        }
+        
+    elif ders == "Türkçe":
+        dogru = "Hava soğuk olduğu için kalın giysiler giydik."
+        yanlislar = [
+            "Kitap okumak için kütüphaneye gitti.",
+            "Sabah erkenden uyanıp kahvaltı yaptı.",
+            "Yarın akşam sinemaya gideceğiz."
+        ]
+        return {
+            "soru": f"🤖 [AI] {kisi} Türkçe dersinde 'Gerekçe (Neden-Sonuç) Cümleleri' konusunu işlemektedir. Buna göre aşağıdakilerden hangisi bir neden-sonuç cümlesidir?",
+            "siklar": [dogru] + yanlislar,
+            "dogru": dogru
+        }
+        
+    elif ders == "Sosyal Bilgiler":
+        dogru = "Aile bütçesine katkı sağlamak ve ev işlerinde yardımlaşmak"
+        yanlislar = [
+            "Sadece kendi odasında oyun oynamak",
+            "Evdeki kuralları tamamen değiştirmek",
+            "Hiçbir sorumluluk almadan vakit geçirmek"
+        ]
+        return {
+            "soru": f"🤖 [AI] {kisi}, evdeki sorumlulukları üzerine bir proje hazırlamaktadır. Buna göre bir çocuğun aile içerisindeki temel sorumluluklarından biri aşağıdakilerden hangisidir?",
+            "siklar": [dogru] + yanlislar,
+            "dogru": dogru
+        }
+        
+    elif ders == "Din Kültürü ve Ahlak Bilgisi":
+        dogru = "Evrendeki her şeyin bir düzen ve ahenk içinde yaratılmış olması"
+        yanlislar = [
+            "Evrenin tamamen tesadüflerle oluştuğu",
+            "Doğadaki varlıkların hiçbir amacının olmadığı",
+            "Mevsimlerin sadece rastgele değiştiği"
+        ]
+        return {
+            "soru": f"🤖 [AI] {kisi}, 'Allah İnancı' ünitesinde evrendeki nizamı incelemektedir. Aşağıdakilerden hangisi Yaratıcı'nın varlığına ve birliğine kanıt olarak gösterilebilir?",
+            "siklar": [dogru] + yanlislar,
+            "dogru": dogru
+        }
+        
+    elif ders == "İngilizce":
+        dogru = "I am from Turkey and I am Turkish."
+        yanlislar = [
+            "I like playing football and tennis.",
+            "My school starts at nine o'clock.",
+            "I get up early in the morning."
+        ]
+        return {
+            "soru": f"🤖 [AI] {kisi} İngilizce dersinde kendini tanıtmaktadır. Ülkesini ve milliyetini söyleyen ifade hangisidir?",
+            "siklar": [dogru] + yanlislar,
+            "dogru": dogru
+        }
+        
     else:
-        dogru = "Doğru ifade veya kural budur."
-        yanlislar = ["Yanlış çeldirici 1", "Yanlış çeldirici 2", "Yanlış çeldirici 3"]
-        return {"soru": f"🤖 [AI] <b>{ders} ({unite})</b> kazanımıyla ilgili olarak {kisi} bir soru hazırlamıştır. Hangisi doğrudur?", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        dogru = "Ankara"
+        yanlislar = ["İstanbul", "İzmir", "Bursa"]
+        return {
+            "soru": f"🏆 [Bilgi Yarışması] Türkiye'nin başkenti neresidir?",
+            "siklar": [dogru] + yanlislar,
+            "dogru": dogru
+        }
 
 def havuzdan_soru_uret(ders, unite):
     if ders == "Fen Bilimleri" and FEN_UNITE_1_MATRIS:
@@ -155,15 +230,19 @@ def havuzdan_soru_uret(ders, unite):
         q, ans, celd = random.choice(TURKCE_ANLAM)
         return {"soru": f"📚 [Havuz] {q}", "siklar": [ans] + celd, "dogru": ans}
     else:
-        dogru = "Standart Havuz Doğru Cevabı"
-        yanlislar = ["Çeldirici A", "Çeldirici B", "Çeldirici C"]
-        return {"soru": f"📚 [Havuz] <b>{unite}</b> ünitesine ait temel soru metni...", "siklar": [dogru] + yanlislar, "dogru": dogru}
+        # Alternatif mantıksal havuz içeriği
+        dogru = "Doğru ve mantıksal kazanım yanıtı"
+        yanlislar = [
+            "Konuyla ilgisi olmayan farklı bir tanım",
+            "Eksik veya yanıltıcı ifade",
+            "Ters mantık içeren çeldirici"
+        ]
+        return {"soru": f"📚 [Havuz] <b>{unite}</b> ünitesine ait temel kavram sorusu...", "siklar": [dogru] + yanlislar, "dogru": dogru}
 
 def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
     if not secilen_uniteler:
         return []
 
-    # Üniteleri MEB_ONCELIK_SIRASI na göre sırala
     sirali_uniteler = []
     for d in DERS_ONCELIK_SIRASI:
         for item in secilen_uniteler:
@@ -180,7 +259,6 @@ def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
     for idx, (ders, unite) in enumerate(sirali_uniteler):
         bu_unite_hedef = temel_pay + (1 if idx < kalan else 0)
         
-        # %50 AI - %50 Havuz Dağılımı
         ai_hedef = bu_unite_hedef // 2
         havuz_hedef = bu_unite_hedef - ai_hedef
 
@@ -222,7 +300,6 @@ def ders_sirali_ve_dengeli_uret(secilen_uniteler, hedef_sayi):
                 ham_soru_listesi.append(s)
                 uretilen += 1
 
-    # Ders sırasını koruyarak aynı dersin sorularını kendi içinde kümele
     nihai_liste = []
     for ders_adi in DERS_ONCELIK_SIRASI:
         ders_sorulari = [s for s in ham_soru_listesi if s["ders"] == ders_adi]
@@ -284,13 +361,13 @@ if not st.session_state["sorular_hazir"] and not st.session_state["test_aktif"]:
             
             for sn in range(3, 0, -1):
                 progress_bar.progress(int((4 - sn) * 25))
-                status_box.info(f"🔄 %50 AI ve %50 Havuz soruları MEB sırasına göre harmanlanıyor... ({sn}s)")
+                status_box.info(f"🔄 Mantıksal çeldiricilerle %50 AI - %50 Havuz soruları harmanlanıyor... ({sn}s)")
                 time.sleep(0.5)
             
             sorular = ders_sirali_ve_dengeli_uret(secilen_uniteler, soru_sayisi)
             
             progress_bar.progress(100)
-            status_box.success("✅ Sorular MEB sıralamasına göre hazırlandı!")
+            status_box.success("✅ Sorular MEB sıralamasına ve mantık ilkelerine göre hazırlandı!")
             time.sleep(0.5)
             
             st.session_state["soru_listesi"] = sorular
@@ -330,7 +407,7 @@ if st.session_state["test_aktif"] and not st.session_state["test_bitti"]:
         onceki_cevap = st.session_state["kullanici_cevaplari"].get(idx)
         secim_index = s["siklar"].index(onceki_cevap) if onceki_cevap in s["siklar"] else None
             
-        # index=None ile hazır/seçili gelme sorunu tamamen giderildi
+        # index=None ile hazır/seçili gelme sorunu tamamen engellenmiştir
         secim = st.radio(
             "Seçenekleriniz:", 
             s["siklar"], 
