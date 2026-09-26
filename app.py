@@ -564,7 +564,7 @@ GENEL_KULTUR_SORULARI = [
         "soru": "Quentin Tarantino'nun yönettiği, non-lineer (doğrusal olmayan) kurgusu ve unutulmaz diyaloglarıyla sinema tarihine damga vuran 1994 yapımı film hangisidir?",
         "siklar": ["Ucuz Roman (Pulp Fiction)", "Rezervuar Köpekleri", "Kill Bill", "Django Unchained"],
         "dogru": "Ucuz Roman (Pulp Fiction)"
-    }
+    },
 
     # --- BÖLÜM 2: TARİH VE COĞRAFYA (26-50) ---
     {
