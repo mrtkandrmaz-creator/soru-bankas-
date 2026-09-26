@@ -281,7 +281,27 @@ TURK_MUTFAGI_YORESEL = {
     "Bartın": {"yemek": "Bartın Yumurtalı Pidesi", "ipucu": "Pide hamurunun içine peynir ve kırılan bütün yumurtaların pişmeye yakın eklenmesiyle yapılır."},
     "Karabük": {"yemek": "Safranbolu Bükmesi", "ipucu": "Haşhaşlı ve kıymalı iç harcın açılan hamura sarılarak fırında çıtır pişirilmesidir."},
     "Bilecik": {"yemek": "Bilecik Büzgülü Tatlısı", "ipucu": "Yufkanın büzgülü şekilde tepsiye dizilip içi cevizle doldurulduktan sonra şerbetlenmesidir."},
-    "Kütahya": {"yemek": "Cimcik Mantısı", "ipucu": "Hamurun çok küçük kareler halinde kesilip ortasından sıkılarak şekillendirilmesiyle yapılır."}
+    "Kütahya": {"yemek": "Cimcik Mantısı", "ipucu": "Hamurun çok küçük kareler halinde kesilip ortasından sıkılarak şekillendirilmesiyle yapılır."},
+    "Hünkar Beğendi": {"yemek": "Hünkar Beğendi", "ipucu": "Közlenmiş patlıcanların tereyağı ve unla kavrulup sütle püre haline getirilmesi ve üzerine kuşbaşı kuzu eti eklenmesiyle yapılır."},
+    "Mutancana": {"yemek": "Mutancana", "ipucu": "Kuzu etinin kuru üzüm, badem, hurma, erik kurusu ve bal ile tatlandırılarak tencerede kısık ateşte pişirildiği saray yemeğidir."},
+    "Kavun Dolması": {"yemek": "Kavun Dolması", "ipucu": "Bütün bir kavunun tepesinin kesilip içi boşaltıldıktan sonra pirinç, kıyma, badem ve kuş üzümü harcıyla doldurularak fırınlanmasıdır."},
+    "Keşkül-ü Fukara": {"yemek": "Keşkül-ü Fukara", "ipucu": "Badem tozu, toz şeker, nişasta ve sütün kaynatılmasıyla yapılan, üzerine fıstık serpiştirilerek sunulan saray sütlü tatlısıdır."},
+    "Zerde": {"yemek": "Zerde", "ipucu": "Pirincin suyla haşlanıp şeker, safran, gül suyu ve çam fıstığı ile tatlandırılmasıyla hazırlanan geleneksel saray tatlı pilavıdır."},
+    "Demirhindi Şerbeti": {"yemek": "Demirhindi Şerbeti", "ipucu": "Demirhindi meyvesi, karanfil, tarçın, zencefil ve çeşitli baharatların günlerce suda bekletilip kaynatılmasıyla yapılır."},
+    "Tavukgöğsü": {"yemek": "Tavukgöğsü", "ipucu": "Haşlanmış tavuk etinin beyaz liflerinin dövülerek süt, pirinç unu ve damla sakızıyla kazanda muhallebi kıvamına getirilmesidir."},
+    "Mahmudiye": {"yemek": "Mahmudiye", "ipucu": "Tavuk etinin tarçın, badem, kuru kayısı, kayısı suyu ve bal ile harmanlanarak fırında pişirildiği saray yemeğidir."},
+    "İmamiye Pilavı": {"yemek": "İmamiye Pilavı", "ipucu": "Kuzu eti, badem, tarçın ve tereyağlı pirinç pilavının özel kaplarda kat kat pişirilerek sunulduğu ihtişamlı yemektir."},
+    "Keşkek": {"yemek": "Keşkek", "ipucu": "Buğday ve kemikli kuzu etinin büyük bakır kazanlarda odun ateşinde ahşap tokmaklarla dövülerek macun kıvamına getirilmesidir."},
+    "Güllaç": {"yemek": "Güllaç", "ipucu": "Mısır nişastasından yapılan ince yufkaların sıcak süt ve şeker karışımıyla ıslatılıp arasına ceviz koyulmasıyla yapılır."},
+    "Badem Ezmesi": {"yemek": "Hakiki Badem Ezmesi", "ipucu": "Kabuksuz tatlı bademlerin kaynar suda haşlanıp havanda macun kıvamına gelene kadar şeker ve gül suyuyla dövülmesidir."},
+    "Sirkencübin": {"yemek": "Sirkencübin", "ipucu": "Bal ve sirkenin belirli oranlarda suyla karıştırılmasıyla yapılan, Osmanlı sarayında mideyi rahatlatmak için içilen şerbettir."},
+    "Külbastı": {"yemek": "Külbastı", "ipucu": "Kuzu budundan çıkarılan ince et dilimlerinin hafifçe dövülüp baharatlanarak mangal telinde veya sac üzerinde pişirilmesidir."},
+    "Paşa Çorbası": {"yemek": "Paşa Çorbası", "ipucu": "Kuzu incik eti, pirinç, yoğurt, yumurta sarısı ve limon suyu ile terbiye edilerek yapılan zengin bir saray çorbasıdır."},
+    "Sübye": {"yemek": "Sübye", "ipucu": "Kurutulmuş kavun çekirdeklerinin öğütülüp su ve şekerle özleştirilmesiyle elde edilen serinletici saray içeceğidir."},
+    "Ispanak Borani": {"yemek": "Ispanak Borani", "ipucu": "Ispanakların sotelenip sarımsaklı süzme yoğurtla karıştırılması, üzerine kızdırılmış tereyağı ve ceviz gezdirilmesidir."},
+    "Erikli Et": {"yemek": "Erikli Et", "ipucu": "Kuzu etinin tike doğranıp ekşi mürdüm eriği, soğan ve nane ile birlikte tencerede pişirildiği saray yemeğidir."},
+    "Kerebiç": {"yemek": "Kerebiç", "ipucu": "İrmikla yapılan hamurun içi ceviz veya fıstıkla doldurulup fırınlanması ve köven otu köpüğüyle yenmesidir."},
+    "Saray Helvası": {"yemek": "Saray Helvası", "ipucu": "Unun tereyağında kavrulup pudra şekeriyle harmanlanarak tel tel yapıltıktan sonra sıkıştırılmasıdır."}
 }
 
 # =========================================================
