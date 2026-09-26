@@ -361,6 +361,81 @@ GENEL_KULTUR_SORULARI = [
         "dogru": "Altın"
     },
     {
+        "soru": "Modern Olimpiyat Oyunları'nı 1896 yılında yeniden başlatan ve uluslararası Olimpiyat Komitesi'nin kurucusu olan Fransız tarihçi kimdir?",
+        "siklar": ["Pierre de Coubertin", "Louis Pasteur", "Victor Hugo", "Emile Zola"],
+        "dogru": "Pierre de Coubertin"
+    },
+    {
+        "soru": "İtalya mutfağının dünyaca ünlü 'Risotto' yemeği temel olarak hangi ana malzemeden yapılır?",
+        "siklar": ["Pirinç", "Makarna", "Patates", "Bulgur"],
+        "dogru": "Pirinç"
+    },
+    {
+        "soru": "Dünya'nın en derin noktası olan Mariana Çukuru hangi okyanusta yer almaktadır?",
+        "siklar": ["Pasifik Okyanusu", "Atlantik Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"],
+        "dogru": "Pasifik Okyanusu"
+    },
+    {
+        "soru": "Ünlü 'Yıldızları Gözleyen' veya 'Yıldızlı Gece' tablosuyla tanınan post-empresyonist ressam kimdir?",
+        "siklar": ["Vincent van Gogh", "Claude Monet", "Pablo Picasso", "Salvador Dali"],
+        "dogru": "Vincent van Gogh"
+    },
+    {
+        "soru": "Hangi ülke 1930 yılında düzenlenen ilk FIFA Dünya Kupası'na hem ev sahipliği yapmış hem de kupayı kazanmıştır?",
+        "siklar": ["Uruguay", "Brezilya", "Arjantin", "İtalya"],
+        "dogru": "Uruguay"
+    },
+    {
+        "soru": "Meksika mutfağına ait olan ve geleneksel olarak avokado bazlı hazırlanan soğuk meze/sosun adı nedir?",
+        "siklar": ["Guacamole", "Salsa", "Humus", "Tapas"],
+        "dogru": "Guacamole"
+    },
+    {
+        "soru": "Rock müzik tarihinin efsanevi grubu Queen'in solisti olan ve ikonik sesiyle tanınan sanatçı kimdir?",
+        "siklar": ["Freddie Mercury", "Mick Jagger", "David Bowie", "John Lennon"],
+        "dogru": "Freddie Mercury"
+    },
+    {
+        "soru": "Anadolu'nun en eski yazılı belgelerinin bulunduğu, Hitit İmparatorluğu'nun başkenti olan antik şehir hangisidir?",
+        "siklar": ["Hattuşa", "Ephesus", "Troy", "Zeugma"],
+        "dogru": "Hattuşa"
+    },
+    {
+        "soru": "Japon sinemasının ve animasyon dünyasının devi Studio Ghibli'nin kurucularından olan ünlü yönetmen kimdir?",
+        "siklar": ["Hayao Miyazaki", "Akira Kurosawa", "Makoto Shinkai", "Takeshi Kitano"],
+        "dogru": "Hayao Miyazaki"
+    },
+    {
+        "soru": "Dünyanın en uzun nehirlerinden biri olan Nil Nehri hangi denize dökülmektedir?",
+        "siklar": ["Akdeniz", "Kızıldeniz", "Hazar Denizi", "Karadeniz"],
+        "dogru": "Akdeniz"
+    },
+    {
+        "soru": "İspanya'nın geleneksel pirinç bazlı, deniz ürünleri veya etle yapılan ünlü ulusal yemeğinin adı nedir?",
+        "siklar": ["Paella", "Lasagna", "Fondue", "Kebab"],
+        "dogru": "Paella"
+    },
+    {
+        "soru": "Basketbol ligi NBA'de tüm zamanların en çok sayı atan oyuncuları listesinde zirvede yer alan yıldız basketbolcu kimdir?",
+        "siklar": ["LeBron James", "Kareem Abdul-Jabbar", "Michael Jordan", "Kobe Bryant"],
+        "dogru": "LeBron James"
+    },
+    {
+        "soru": "Osmanlı İmparatorluğu'nda 'Lale Devri' hangi padişah döneminde yaşanmıştır?",
+        "siklar": ["III. Ahmet", "I. Ahmed", "Kanuni Sultan Süleyman", "II. Mahmud"],
+        "dogru": "III. Ahmet"
+    },
+    {
+        "soru": "Klasik batı müziğinde 'Ay Işığı Sonatı' (Moonlight Sonata) kim tarafından bestelenmiştir?",
+        "siklar": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Johann Sebastian Bach", "Frédéric Chopin"],
+        "dogru": "Ludwig van Beethoven"
+    },
+    {
+        "soru": "Coğrafi keşifler döneminde Ümit Burnu'nu ilk kez aşarak Hindistan deniz yolunu bulan Portokalsefer kaşif kimdir?",
+        "siklar": ["Vasco da Gama", "Kristof Kolomb", "Macellan", "Amerigo Vespucci"],
+        "dogru": "Vasco da Gama"
+    }
+    {
         "soru": "Eiffel Kulesi yaz aylarında sıcaklığın etkisiyle termal genleşme sebebiyle yaklaşık kaç santimetre uzar?",
         "siklar": ["15 cm", "5 cm", "30 cm", "2 cm"],
         "dogru": "15 cm"
@@ -440,6 +515,56 @@ GENEL_KULTUR_SORULARI = [
         "siklar": ["Klavesin (Cembalo)", "Piyano", "Akordiyon", "Org"],
         "dogru": "Klavesin (Cembalo)"
     },
+{
+        "soru": "Sinema tarihinin en çok Oscar kazanan (11 Oscar) yapımları arasında yer alan, Jack Nicholson'ın başrolünde oynadığı 1975 yapımı dram filmi hangisidir?",
+        "siklar": ["Guguk Kuşu (One Flew Over the Cuckoo's Nest)", "Baba (The Godfather)", "Titanic", "Yüzüklerin Efendisi: Kralın Dönüşü"],
+        "dogru": "Guguk Kuşu (One Flew Over the Cuckoo's Nest)"
+    },
+    {
+        "soru": "Tüm zamanların en çok gişe yapan bilim kurgu serilerinden biri olan 'Matrix' film trilojisinin yönetmenleri kimlerdir?",
+        "siklar": ["Wachowski Kardeşler", "Christopher Nolan", "Quentin Tarantino", "Martin Scorsese"],
+        "dogru": "Wachowski Kardeşler"
+    },
+    {
+        "soru": "Marvel Sinematik Evreni'nin temellerini atan ve 2008 yılında vizyona giren ilk film hangisidir?",
+        "siklar": ["Iron Man", "Thor", "Captain America: The First Avenger", "The Avengers"],
+        "dogru": "Iron Man"
+    },
+    {
+        "soru": "Hangi animasyon filmi, Akademi Önerleri'nde (Oscar) 'En İyi Animasyon Film' ödülünü kazanan ilk el çizimi (geleneksel animasyon) olmayan veya ilk Pixar yapımı olma özelliğini taşır?",
+        "siklar": ["Oyuncak Hikayesi (Toy Story)", "Kayıp Balık Nemo", "Shrek", "Aslan Kral"],
+        "dogru": "Oyuncak Hikayesi (Toy Story)"
+    },
+    {
+        "soru": "Stanley Kubrick'in yönettiği, sinema tarihinin başyapıtlarından biri olan 2001: Bir Uzay Macerası (2001: A Space Odyssey) filmindeki ikonik yapay zeka bilgisayarının adı nedir?",
+        "siklar": ["HAL 9000", "Skynet", "JARVIS", "DATA"],
+        "dogru": "HAL 9000"
+    },
+    {
+        "soru": "J.R.R. Tolkien'in epik fantastik evreni 'Yüzüklerin Efendisi' üçlemesinin sinema uyarlamasını yöneten ve En İyi Yönetmen Oscar'ı kazanan Yeni Zelandalı yönetmen kimdir?",
+        "siklar": ["Peter Jackson", "James Cameron", "Steven Spielberg", "Ridley Scott"],
+        "dogru": "Peter Jackson"
+    },
+    {
+        "soru": "Müzik dünyasında 'Popun Kralı' olarak anılan ve ikonik 'Moonwalk' dansıyla tanınan efsanevi sanatçı kimdir?",
+        "siklar": ["Michael Jackson", "Elvis Presley", "Prince", "Freddie Mercury"],
+        "dogru": "Michael Jackson"
+    },
+    {
+        "soru": "Christopher Nolan'ın yönettiği ve rüyalar içinde rüya konseptini işleyen 2010 yapımı bilim kurgu filmi hangisidir?",
+        "siklar": ["Başlangıç (Inception)", "Yıldızlararası (Interstellar)", "Tenet", "Prestij"],
+        "dogru": "Başlangıç (Inception)"
+    },
+    {
+        "soru": "Harry Potter serisinde Hogwarts'ın bilge ve sevilen müdürü Profesör Albus Dumbledore karakterini canlandıran oyunculardan biri değildir?",
+        "siklar": ["Daniel Radcliffe", "Richard Harris", "Michael Gambon", "Jude Law"],
+        "dogru": "Daniel Radcliffe"
+    },
+    {
+        "soru": "Quentin Tarantino'nun yönettiği, non-lineer (doğrusal olmayan) kurgusu ve unutulmaz diyaloglarıyla sinema tarihine damga vuran 1994 yapımı film hangisidir?",
+        "siklar": ["Ucuz Roman (Pulp Fiction)", "Rezervuar Köpekleri", "Kill Bill", "Django Unchained"],
+        "dogru": "Ucuz Roman (Pulp Fiction)"
+    }
 
     # --- BÖLÜM 2: TARİH VE COĞRAFYA (26-50) ---
     {
@@ -507,6 +632,306 @@ GENEL_KULTUR_SORULARI = [
         "siklar": ["İzmit (1934)", "İstanbul (1926)", "Zonguldak (1940)", "Bursa (1930)"],
         "dogru": "İzmit (1934)"
     },
+{
+        "soru": "Dünyanın en yüksek şelalesi olan ve Venezüela'da yer alan Angel Şelalesi, hangi nehrin kolu üzerinde bulunur?",
+        "siklar": ["Churun Nehri", "Amazon Nehri", "Orinoco Nehri", "Parana Nehri"],
+        "dogru": "Churun Nehri"
+    },
+    {
+        "soru": "Yüzölçümü bakımından dünyanın en büyük adası olan ve topraklarının büyük kısmı buzulla kaplı olan ada hangisidir?",
+        "siklar": ["Grönland", "Madagaskar", "Borneo", "Büyük Britanya"],
+        "dogru": "Grönland"
+    },
+    {
+        "soru": "Afrika kıtasının en yüksek dağ masifi olan ve aynı zamanda tırmanılması en kolay sönmüş volkanlardan biri kabul edilen zirve hangisidir?",
+        "siklar": ["Kilimanjaro Dağı", "Kenya Dağı", "Ruwenzori Dağı", "Atlas Dağları"],
+        "dogru": "Kilimanjaro Dağı"
+    },
+    {
+        "soru": "Dünya üzerindeki tatlı su kaynaklarının en büyük kısmını barındıran, hacim olarak en büyük tatlı su gölü hangisidir?",
+        "siklar": ["Baykal Gölü", "Üstün Göl (Lake Superior)", "Victoria Gölü", "Hazar Denizi"],
+        "dogru": "Baykal Gölü"
+    },
+    {
+        "soru": "Avrupa ve Asya kıtalarını birbirinden ayıran, aynı zamanda Karadeniz'i Azak Denizi'ne bağlayan boğaz hangisidir?",
+        "siklar": ["Kerç Boğazı", "İstanbul Boğazı", "Çanakkale Boğazı", "Cebelitarık Boğazı"],
+        "dogru": "Kerç Boğazı"
+    },
+    {
+        "soru": "Dünyanın en kurak çöllerinden biri olan ve Şili sınırları içerisinde yer alan Atakama Çölü hangi okyanus kıyısındadır?",
+        "siklar": ["Pasifik Okyanusu", "Atlantik Okyanusu", "Hint Okyanusu", "Arktik Okyanusu"],
+        "dogru": "Pasifik Okyanusu"
+    },
+    {
+        "soru": "Hangi ülke, topraklarının tamamı başka bir tek ülkenin (İtalya) sınırları içinde yer alan bir 'enklav' (şehir-devlet) olma özelliğini taşır?",
+        "siklar": ["Vatikan", "Monako", "San Marino", "Liechtenstein"],
+        "dogru": "Vatikan"
+    },
+{
+        "soru": "Antik Yunan mitolojisinde gökyüzünün, şimşeğin ve tanrıların kralı olan, Olympos'un lideri tanrı kimdir?",
+        "siklar": ["Zeus", "Poseidon", "Hades", "Apollo"],
+        "dogru": "Zeus"
+    },
+    {
+        "soru": "Roma İmparatorluğu'nu cumhuriyetten imparatorluğa dönüştüren, suikasta kurban giden ünlü Roma lideri kimdir?",
+        "siklar": ["Jul Sezar", "Augustus", "Neron", "Mark Antony"],
+        "dogru": "Jul Sezar"
+    },
+    {
+        "soru": "Mezopotamya'da inşa edilen, dini törenlerin yapıldığı ve aynı zamanda gözlemevi olarak kullanılan kadim tapınak kulelerinin adı nedir?",
+        "siklar": ["Ziggurat", "Piramit", "Obelisk", "Agora"],
+        "dogru": "Ziggurat"
+    },
+    {
+        "soru": "Eski Mısır'da firavunların mumyalandıktan sonra konulduğu devasa anıt mezarların genel adı nedir?",
+        "siklar": ["Piramit", "Sfenks", "Lahit", "Mastaba"],
+        "dogru": "Piramit"
+    },
+    {
+        "soru": "İskenderiye Kütüphanesi'nin de bulunduğu, Büyük İskender tarafından MÖ 331 yılında kurulan antik Mısır liman kenti hangisidir?",
+        "siklar": ["İskenderiye", "Babil", "Kartaca", "Memfis"],
+        "dogru": "İskenderiye"
+    },
+    {
+        "soru": "Türk mitolojisinde yeryüzünün yaratıcısı, gök tanrısı ve tüm evrenin hâkimi olarak kabul edilen ulu tanrı kimdir?",
+        "siklar": ["Gök Tanrı (Ülgen / Han Tengri)", "Erlik Han", "Kayra Han", "Umay Ana"],
+        "dogru": "Gök Tanrı (Ülgen / Han Tengri)"
+    },
+    {
+        "soru": "Orta Çağ Avrupa'sında kilisenin skolastik düşüncesine karşı çıkarak bilimin, sanatın ve antik kültürün yeniden doğuşunu simgeleyen dönem hangisidir?",
+        "siklar": ["Rönesans", "Reform", "Aydınlanma Çağ", "Endüstri Devrimi"],
+        "dogru": "Rönesans"
+    },
+    {
+        "soru": "İskandinav mitolojisinde gök gürültüsü tanrısı olan,sihirli çekici Mjölnir ile tanınan güçlü tanrı kimdir?",
+        "siklar": ["Thor", "Odin", "Loki", "Freyr"],
+        "dogru": "Thor"
+    },
+    {
+        "soru": "Anadolu'da kurulmuş olan Lidyalıların para birimini (sikkeyi) icat etmeden önce ticaret hangi yöntemle yapılırdı?",
+        "siklar": ["Takas (Barter) usulü", "Değerli taşlar", "İstiridye kabukları", "Kâğıt senetler"],
+        "dogru": "Takas (Barter) usulü"
+    },
+    {
+        "soru": "Fransız İhtilali'nin patlak vermesinde ve halkın monarşiye karşı ayaklanmasında simgesel bir dönüm noktası olan hapishane baskını hangisidir?",
+        "siklar": ["Bastille Baskını", "Versay Sarayı Kuşatması", "Paris Komünü", "Guillotine Devrimi"],
+        "dogru": "Bastille Baskını"
+    },
+{
+        "soru": "İtalya'nın Napoli şehrinde doğan ve dünya çapında en popüler fast-food ürünlerinden biri olan geleneksel hamur işi hangisidir?",
+        "siklar": ["Pizza", "Hamburger", "Sushi", "Tacos"],
+        "dogru": "Pizza"
+    },
+    {
+        "soru": "Japon mutfağının temel taşlarından biri olan, genellikle sirkeli pirinç ve çiğ balık kombinasyonuyla hazırlanan yemeğin adı nedir?",
+        "siklar": ["Sushi", "Ramen", "Tempura", "Sashimi"],
+        "dogru": "Sushi"
+    },
+    {
+        "soru": "Meksika kökenli olan, mısır unundan yapılan sert veya yumuşak kabukların içerisine et, sebze ve soslar doldurularak servis edilen popüler lezzet hangisidir?",
+        "siklar": ["Taco", "Paella", "Falafel", "Kebab"],
+        "dogru": "Taco"
+    },
+    {
+        "soru": "Orta Doğu mutfağına ait olan, nohut veya bakla ezmesinin baharatlarla harmanlanıp kızartılmasıyla yapılan popüler vejetaryen lezzet nedir?",
+        "siklar": ["Falafel", "Humus", "Tabule", "Şakshuka"],
+        "dogru": "Falafel"
+    },
+    {
+        "soru": "Fransız mutfağının en ünlü soslarından biri olan ve temelinde eritilmiş tereyağı, yumurta sarısı ve limon suyu bulunan emülsiyon sos hangisidir?",
+        "siklar": ["Hollandez Sosu", "Beşamel Sos", "Mayonez", "Pesto Sos"],
+        "dogru": "Hollandez Sosu"
+    },
+    {
+        "soru": "Hindistan mutfağının vazgeçilmezi olan, onlarca farklı baharatın (zerdeçal, kimyon, kişniş vb.) öğütülmesiyle elde edilen karışımın adı nedir?",
+        "siklar": ["Garam Masala (Köri)", "Paprika", "Zahter", "Kimyon"],
+        "dogru": "Garam Masala (Köri)"
+    },
+    {
+        "soru": "İtalya'nın kuzeyinde doğan, un ve yumurta ile yapılan, ince şeritler halinde kesilen ve genellikle et veya krema soslarıyla sunulan uzun makarna çeşidi hangisidir?",
+        "siklar": ["Tagliatelle", "Spagetti", "Penne", "Macaroni"],
+        "dogru": "Tagliatelle"
+    },
+    {
+        "soru": "Güney Amerika ülkesi Peru'nun milli yemeği kabul edilen, taze çiğ balığın limon suyu, soğan ve acı biberle marine edilerek pişirilmeden hazırlandığı lezzet nedir?",
+        "siklar": ["Ceviche", "Empanada", "Arepa", "Asado"],
+        "dogru": "Ceviche"
+    },
+    {
+        "soru": "Çin mutfağında kökenleri yüzyıllar öncesine dayanan, genellikle buharda pişmiş küçük sepetlerde veya kızartılarak servis edilen içi dolgulu hamur işinin adı nedir?",
+        "siklar": ["Dim Sum", "Bao", "Wonton", "Spring Roll"],
+        "dogru": "Dim Sum"
+    },
+{
+        "soru": "Rönesans döneminin dahi sanatçısı Leonardo da Vinci'nin Paris'teki Louvre Müzesi'nde sergilenen ünlü tablosunun adı nedir?",
+        "siklar": ["Mona Lisa", "Son Akşam Yemeği", "İnci Küpeli Kız", "Venüs'ün Doğuşu"],
+        "dogru": "Mona Lisa"
+    },
+    {
+        "soru": "Barok dönemin en büyük Alman bestecilerinden biri olan, özellikle 'Brandenburg Konçertoları' ve kilise müziği eserleriyle tanınan sanatçı kimdir?",
+        "siklar": ["Johann Sebastian Bach", "Wolfgang Amadeus Mozart", "Antonio Vivaldi", "Frédéric Chopin"],
+        "dogru": "Johann Sebastian Bach"
+    },
+    {
+        "soru": "Kübizm akımının öncülerinden olan, 'Guernica' tablosuyla savaşın acılarını gözler önüne seren İspanyol ressam kimdir?",
+        "siklar": ["Pablo Picasso", "Salvador Dali", "Claude Monet", "Henri Matisse"],
+        "dogru": "Pablo Picasso"
+    },
+    {
+        "soru": "İtalyan besteci Antonio Vivaldi'nin doğanın döngüsünü keman konçertolarıyla betimlediği dünyaca ünlü eser serisinin adı nedir?",
+        "siklar": ["Dört Mevsim", "Requiem", "Gece Müziği", "Saraydan Kız Kaçırma"],
+        "dogru": "Dört Mevsim"
+    },
+    {
+        "soru": "Sürrealizm (gerçeküstücülük) akımının en önemli temsilcilerinden biri olan, eriyen saatler temalı 'Belleğin Azmi' tablosunun ressamı kimdir?",
+        "siklar": ["Salvador Dali", "Rene Magritte", "Joan Miro", "Frida Kahlo"],
+        "dogru": "Salvador Dali"
+    },
+    {
+        "soru": "Klasik dönemde henüz çocuk yaşta besteler yapmaya başlayan, 'Sihirli Flüt' ve 'Don Giovanni' gibi operalarıyla bilinen Avusturyalı deha kimdir?",
+        "siklar": ["Wolfgang Amadeus Mozart", "Ludwig van Beethoven", "Franz Schubert", "Giuseppe Verdi"],
+        "dogru": "Wolfgang Amadeus Mozart"
+    },
+    {
+        "soru": "Vatikan'daki Sistina Şapeli'nin tavanını süsleyen 'Adem'in Yaratılışı' freskini yapan İtalyan Rönesans sanatçısı kimdir?",
+        "siklar": ["Michelangelo", "Raffaello Sanzio", "Donatello", "Giotto di Bondone"],
+        "dogru": "Michelangelo"
+    },
+    {
+        "soru": "Piyanonun şairi olarak anılan ve özellikle romantik dönem piyano nocturne (gece müziği) eserleriyle tanınan Polonyalı besteci kimdir?",
+        "siklar": ["Frédéric Chopin", "Franz Liszt", "Johannes Brahms", "Pyotr İlyiç Çaykovski"],
+        "dogru": "Frédéric Chopin"
+    },
+    {
+        "soru": "Hollandalı ressam Johannes Vermeer'in en ünlü eseri olan ve bakışlarıyla ikonlaşan tablosunun adı nedir?",
+        "siklar": ["İnci Küpeli Kız", "Sütçü Kız", "Gece Nöbeti", "Ayçiçekleri"],
+        "dogru": "İnci Küpeli Kız"
+    },
+    {
+        "soru": "Kuğu Gölü, Fındıkkıran ve Uyuyan Güzel gibi dünyaca ünlü balelerin müziklerini besteleyen Rus romantik dönem sanatçısı kimdir?",
+        "siklar": ["Pyotr İlyiç Çaykovski", "Sergey Rachmaninoff", "İgor Stravinski", "Dmitri Şostakoviç"],
+        "dogru": "Pyotr İlyiç Çaykovski"
+    },
+{
+        "soru": "Modern Olimpiyat Oyunları tarihinde en çok altın madalya kazanan (23'ü bireysel olmak üzere toplam 23 altın) efsanevi Amerikan yüzücü kimdir?",
+        "siklar": ["Michael Phelps", "Mark Spitz", "Usain Bolt", "Carl Lewis"],
+        "dogru": "Michael Phelps"
+    },
+    {
+        "soru": "Futbol tarihindeki en prestijli bireysel ödül olan ve her yıl yılın en iyi futbolcusuna verilen ödülün adı nedir?",
+        "siklar": ["Ballon d'Or (Altın Top)", "FIFA The Best", "Altın Ayakkabı", "UEFA Yılın Futbolcusu"],
+        "dogru": "Ballon d'Or (Altın Top)"
+    },
+    {
+        "soru": "Atletizmde 100 metre ve 200 metre rekorlarını elinde bulunduran, 'dünyanın en hızlı insanı' unvanlı Jamaikalı eski sprinter kimdir?",
+        "siklar": ["Usain Bolt", "Yohan Blake", "Justin Gatlin", "Tyson Gay"],
+        "dogru": "Usain Bolt"
+    },
+    {
+        "soru": "Tenis dünyasında 'Grand Slam' turnuvaları arasında yer alan toprak kort turnuvası olarak bilinen organizasyon hangisidir?",
+        "siklar": ["Roland Garros (Fransa Açık)", "Wimbledon", "Amerika Açık", "Avustralya Açık"],
+        "dogru": "Roland Garros (Fransa Açık)"
+    },
+    {
+        "soru": "Basketbolun mucidi olarak kabul edilen ve bu sporu ilk kez kurallara bağlayan beden eğitimi öğretmeni kimdir?",
+        "siklar": ["James Naismith", "Abner Doubleday", "William G. Morgan", "Dr. John Naismith"],
+        "dogru": "James Naismith"
+    },
+    {
+        "soru": "Formula 1 tarihinde en çok pilotlar şampiyonluğu kazanan rekortmen pilotlar arasında kimler yer alır?",
+        "siklar": ["Michael Schumacher ve Lewis Hamilton", "Ayrton Senna ve Alain Prost", "Max Verstappen ve Sebastian Vettel", "Fernando Alonso ve Niki Lauda"],
+        "dogru": "Michael Schumacher ve Lewis Hamilton"
+    },
+    {
+        "soru": "Dünya Kupası tarihinde en çok şampiyonluk kazanan ülke futbol takımı hangisidir?",
+        "siklar": ["Brezilya", "Almanya", "Arjantin", "İtalya"],
+        "dogru": "Brezilya"
+    },
+    {
+        "soru": "Bisiklet yarışlarının en ünlüsü ve en prestijlisi olan 'Tour de France' (Fransa Bisiklet Turu) geleneksel olarak hangi renkteki mayo ile lideri ödüllendirir?",
+        "siklar": ["Sarı Mayo", "Kırmızı Mayo", "Pembe Mayo", "Yeşil Mayo"],
+        "dogru": "Sarı Mayo"
+    },
+{
+        "soru": "Dünya çapında milyonlarca oyuncunun katıldığı, internet kültüründe bir fenomene dönüşen ve 'Battle Royale' türünün popülerleşmesini sağlayan oyun hangisidir?",
+        "siklar": ["Fortnite", "Minecraft", "World of Warcraft", "League of Legends"],
+        "dogru": "Fortnite"
+    },
+    {
+        "soru": "Sosyal medyada kısa ve dikey video akışının popülerleşmesini başlatan, günümüzde TikTok'un öncüsü olarak kabul edilen video paylaşım uygulaması hangisiydi?",
+        "siklar": ["Vine", "Periscope", "MySpace", "Tumblr"],
+        "dogru": "Vine"
+    },
+    {
+        "soru": "Tüm zamanların en çok izlenen televizyon dizilerinden biri olan, 'Demir Taht' mücadelesini konu alıp fantastik kurguya yeni bir soluk getiren dizi hangisidir?",
+        "siklar": ["Game of Thrones", "Breaking Bad", "Stranger Things", "The Walking Dead"],
+        "dogru": "Game of Thrones"
+    },
+    {
+        "soru": "İnternet ansiklopedisi olan Wikipedia hangi yıl hayata geçirilmiştir?",
+        "siklar": ["2001", "1998", "2005", "2010"],
+        "dogru": "2001"
+    },
+    {
+        "soru": "Gelişmiş yapay zeka teknolojileriyle kasım 2022'de halka açık olarak piyasaya sürülerek dünyayı sarsan sohbet botunun geliştiricisi olan şirket hangisidir?",
+        "siklar": ["OpenAI", "Google", "Microsoft", "Meta"],
+        "dogru": "OpenAI"
+    },
+    {
+        "soru": "Sinema tarihinin en büyük gişe rekorlarından birini kıran, Pandora gezegenindeki Na'vi halkını konu alan James Cameron imzalı bilim kurgu serisi hangisidir?",
+        "siklar": ["Avatar", "Yıldız Savaşları", "Yüzüklerin Efendisi", "Marvel Sinematik Evreni"],
+        "dogru": "Avatar"
+    },
+    {
+        "soru": "İnternet dünyasında ilk arama motorlarından biri olan ve 1990'larda web dünyasının kapılarını açan popüler platform hangisiydi?",
+        "siklar": ["Yahoo!", "Google", "Bing", "DuckDuckGo"],
+        "dogru": "Yahoo!"
+    },
+    {
+        "soru": "1980'lerin nostaljik havasını ve bilim kurgu / korku öğelerini harmanlayan, Netflix'in en popüler orijinal dizilerinden biri hangisidir?",
+        "siklar": ["Stranger Things", "Black Mirror", "Dark", "The Witcher"],
+        "dogru": "Stranger Things"
+    },
+    {
+        "soru": "Dünya genelinde 'Kpop' kültürünün küresel bir akım haline gelmesinde en büyük paya sahip olan ve milyonlarca hayranı (ARMY) bulunan müzik grubu hangisidir?",
+        "siklar": ["BTS", "BLACKPINK", "EXO", "Stray Kids"],
+        "dogru": "BTS"
+    },
+    {
+        "soru": "İnternet üzerindeki ilk 'tweet' hangi sosyal medya platformunda ve hangi yıl atılmıştır?",
+        "siklar": ["Twitter (X) - 2006", "Facebook - 2004", "Instagram - 2010", "Tumblr - 2007"],
+        "dogru": "Twitter (X) - 2006"
+    }
+    {
+        "soru": "Boks tarihinin en büyük simgelerinden biri olan, 'kelebek gibi uçarım arı gibi sokarım' sözüyle özdeşleşen efsanevi boksör kimdir?",
+        "siklar": ["Muhammad Ali", "Mike Tyson", "Joe Frazier", "George Foreman"],
+        "dogru": "Muhammad Ali"
+    },
+    {
+        "soru": "Hangi uluslararası spor organizasyonu her dört yılda bir kış sporları branşlarında (kayak, buz pateni vb.) düzenlenir?",
+        "siklar": ["Kış Olimpiyat Oyunları", "Akdeniz Oyunları", "Universiade", "X Games"],
+        "dogru": "Kış Olimpiyat Oyunları"
+    }
+    {
+        "soru": "İspanya ve Latin Amerika mutfaklarında yaygın olan, içi kıyma, peynir veya sebze dolgulu ay şeklinde kapatılarak fırınlanan veya kızartılan hamur işi hangisidir?",
+        "siklar": ["Empanada", "Burrito", "Quesadilla", "Churro"],
+        "dogru": "Empanada"
+    }
+    {
+        "soru": "Güney Amerika'nın omurgasını oluşturan ve dünyanın en uzun kara dağ silsilesi olan dağ sırası hangisidir?",
+        "siklar": ["And Dağları", "Alpler", "Kayalık Dağları", "Himalaya Dağları"],
+        "dogru": "And Dağları"
+    },
+    {
+        "soru": "Dünya'nın en büyük mercan resifi sistemi olan Büyük Bariyer Resifi hangi ülkenin kuzeydoğu kıyılarında yer alır?",
+        "siklar": ["Avustralya", "Endonezya", "Filipinler", "Meksika"],
+        "dogru": "Avustralya"
+    },
+    {
+        "soru": "Kuzey Kutbu'nu çevreleyen ve üzerinde kalıcı bir kara parçası bulunmayıp tamamen buzulla kaplı olan okyanus hangisidir?",
+        "siklar": ["Arktik Okyanusu", "Güney Okyanusu", "Atlantik Okyanusu", "Pasifik Okyanusu"],
+        "dogru": "Arktik Okyanusu"
+    }
     {
         "soru": "Hangi ünlü buluşuyla tanınan Thomas Edison, aynı zamanda hangi akım savaşlarında doğrudan yer almıştır?",
         "siklar": ["Doğru Akım (DC)", "Alternatif Akım (AC)", "Kablosuz Elektrik", "Manyetik Dalga"],
