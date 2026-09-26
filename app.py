@@ -434,7 +434,7 @@ GENEL_KULTUR_SORULARI = [
         "soru": "Coğrafi keşifler döneminde Ümit Burnu'nu ilk kez aşarak Hindistan deniz yolunu bulan Portokalsefer kaşif kimdir?",
         "siklar": ["Vasco da Gama", "Kristof Kolomb", "Macellan", "Amerigo Vespucci"],
         "dogru": "Vasco da Gama"
-    }
+    },
     {
         "soru": "Eiffel Kulesi yaz aylarında sıcaklığın etkisiyle termal genleşme sebebiyle yaklaşık kaç santimetre uzar?",
         "siklar": ["15 cm", "5 cm", "30 cm", "2 cm"],
@@ -515,7 +515,7 @@ GENEL_KULTUR_SORULARI = [
         "siklar": ["Klavesin (Cembalo)", "Piyano", "Akordiyon", "Org"],
         "dogru": "Klavesin (Cembalo)"
     },
-{
+    {
         "soru": "Sinema tarihinin en çok Oscar kazanan (11 Oscar) yapımları arasında yer alan, Jack Nicholson'ın başrolünde oynadığı 1975 yapımı dram filmi hangisidir?",
         "siklar": ["Guguk Kuşu (One Flew Over the Cuckoo's Nest)", "Baba (The Godfather)", "Titanic", "Yüzüklerin Efendisi: Kralın Dönüşü"],
         "dogru": "Guguk Kuşu (One Flew Over the Cuckoo's Nest)"
@@ -911,12 +911,12 @@ GENEL_KULTUR_SORULARI = [
         "soru": "Hangi uluslararası spor organizasyonu her dört yılda bir kış sporları branşlarında (kayak, buz pateni vb.) düzenlenir?",
         "siklar": ["Kış Olimpiyat Oyunları", "Akdeniz Oyunları", "Universiade", "X Games"],
         "dogru": "Kış Olimpiyat Oyunları"
-    }
+    },
     {
         "soru": "İspanya ve Latin Amerika mutfaklarında yaygın olan, içi kıyma, peynir veya sebze dolgulu ay şeklinde kapatılarak fırınlanan veya kızartılan hamur işi hangisidir?",
         "siklar": ["Empanada", "Burrito", "Quesadilla", "Churro"],
         "dogru": "Empanada"
-    }
+    },
     {
         "soru": "Güney Amerika'nın omurgasını oluşturan ve dünyanın en uzun kara dağ silsilesi olan dağ sırası hangisidir?",
         "siklar": ["And Dağları", "Alpler", "Kayalık Dağları", "Himalaya Dağları"],
@@ -931,7 +931,7 @@ GENEL_KULTUR_SORULARI = [
         "soru": "Kuzey Kutbu'nu çevreleyen ve üzerinde kalıcı bir kara parçası bulunmayıp tamamen buzulla kaplı olan okyanus hangisidir?",
         "siklar": ["Arktik Okyanusu", "Güney Okyanusu", "Atlantik Okyanusu", "Pasifik Okyanusu"],
         "dogru": "Arktik Okyanusu"
-    }
+    },
     {
         "soru": "Hangi ünlü buluşuyla tanınan Thomas Edison, aynı zamanda hangi akım savaşlarında doğrudan yer almıştır?",
         "siklar": ["Doğru Akım (DC)", "Alternatif Akım (AC)", "Kablosuz Elektrik", "Manyetik Dalga"],
