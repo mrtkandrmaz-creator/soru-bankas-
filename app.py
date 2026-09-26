@@ -443,7 +443,7 @@ DUNYA_MUTFAGI_LEZZETLER = {
     "Jamaika": {"yemek": "Jamaika Jerk Chicken", "ipucu": "Tavuk etinin scotch bonnet acı biberi, yenibahar ve özel otlarla marine edilip tütsülenerek pişirilmesidir."},
     "Bahamalar": {"yemek": "Bahamalar Conch Salad", "ipucu": "Deniz salyangozu etinin taze limon, portakal suyu, soğan ve biberle çiğ olarak salata yapılmasıdır."},
     "Barbados": {"yemek": "Barbados Cou-Cou and Flying Fish", "ipucu": "Mısır unu ve bamya ile yapılan püre üzerinde uçan balık filetosunun sunulmasıdır."},
-    "Trinidad ve Tobago": {"yemek": "Trinidad Pelau", "ipucu": "Karamelize edilmiş şeker içinde kavrulan tavuk, pirinç, hindistan cevizi sütü ve bezelyenin tek tencere yemeğidir."}
+    "Trinidad ve Tobago": {"yemek": "Trinidad Pelau", "ipucu": "Karamelize edilmiş şeker içinde kavrulan tavuk, pirinç, hindistan cevizi sütü ve bezelyenin tek tencere yemeğidir."},
     "Tayland": {"yemek": "Tayland Pad Thai", "ipucu": "Pirinç eriştelerinin yumurta, tofu, fıstık, balık sosu ve karidesle wok tavada harmanlanıp pişirilmesidir."},
     "Güney Kore": {"yemek": "Güney Kore Kimchi", "ipucu": "Çin lahanası ve turpun sarımsak, zencefil ve acı biber salçasıyla fermente edilmesiyle yapılan garnitürdür."},
     "Brezilya": {"yemek": "Brezilya Feijoada", "ipucu": "Siyah fasulye, domuz eti ve sığır etinin toprak tencerede kısık ateşte uzun süre pişirilmesiyle yapılan ulusal yemektir."},
