@@ -901,7 +901,7 @@ GENEL_KULTUR_SORULARI = [
         "soru": "İnternet üzerindeki ilk 'tweet' hangi sosyal medya platformunda ve hangi yıl atılmıştır?",
         "siklar": ["Twitter (X) - 2006", "Facebook - 2004", "Instagram - 2010", "Tumblr - 2007"],
         "dogru": "Twitter (X) - 2006"
-    ,
+    },
     {
         "soru": "Boks tarihinin en büyük simgelerinden biri olan, 'kelebek gibi uçarım arı gibi sokarım' sözüyle özdeşleşen efsanevi boksör kimdir?",
         "siklar": ["Muhammad Ali", "Mike Tyson", "Joe Frazier", "George Foreman"],
