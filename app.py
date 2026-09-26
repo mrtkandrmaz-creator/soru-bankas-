@@ -216,8 +216,8 @@ DUNYA_ULKELERI = {
     "Vatikan": "Vatikan",
     "San Marino": "San Marino",
     "Andorra": "Andorra la Vella",
-    "Liechtenstein": "Vaduz"
-    "Küba": "Havana"
+    "Liechtenstein": "Vaduz",
+    "Küba": "Havana",
 }
 # =========================================================
 # TÜRK MUTFAĞI VE YÖRESEL LEZZETLER SÖZLÜĞÜ (60 Adet)
